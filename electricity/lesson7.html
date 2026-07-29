@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدارة الكهربائية المستقصرة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- MathJax -->
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #6366f1; /* الظواهر الكهربائية */
+            --accent2:#818cf8;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background: var(--dark); color: var(--text); line-height: 1.6; padding-bottom: 50px; }
+
+        /* شريط التنقل العلوي الثابت */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 10px; }
+
+        .lesson-header {
+            background: linear-gradient(135deg, var(--dark3), var(--dark2));
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .lesson-header span:first-child { color: var(--muted); font-size: 0.9rem; display: block; margin-bottom: 10px; }
+        .lesson-badge { background: var(--accent); color: #fff; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; }
+        .lesson-header h1 { font-size: 2.2rem; color: #fff; margin: 15px 0; }
+        .lesson-header h1 em { font-style: normal; color: var(--accent2); border-bottom: 3px double var(--accent2); }
+        .lesson-meta { color: var(--muted); font-size: 0.95rem; }
+
+        /* شريط التبويبات الإلزامي */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* الدرس النظري */
+        .objectives-box { background: rgba(99,102,241,0.05); border-right: 4px solid var(--accent); padding: 1.5rem; border-radius: 8px; margin-bottom: 20px; }
+        .objectives-box h3 { color: var(--accent2); margin-bottom: 10px; }
+        .objectives-box ul { margin-right: 20px; }
+        
+        .sec-title { display: flex; align-items: center; gap: 10px; margin: 30px 0 15px; }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-title h2 { font-size: 1.5rem; color: #fff; }
+        .sec-line { flex-grow: 1; height: 1px; background: var(--border); border: none; }
+
+        .def-box { background: var(--card); border: 1px solid var(--border); border-right: 4px solid var(--gold); padding: 1.5rem; border-radius: 8px; margin-bottom: 20px; }
+        .def-box strong { font-family: 'Amiri', serif; font-size: 1.2rem; color: var(--gold); }
+        .def-box .fr { color: var(--muted); font-size: 0.9rem; font-family: sans-serif; }
+
+        /* الرسوم بـ SVG */
+        .diagram-figure { background: var(--dark3); border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin: 20px 0; text-align: center; }
+        .diagram-wrap { width: 100%; max-width: 600px; margin: 0 auto; background: var(--dark2); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
+        .lesson-diagram { width: 100%; height: auto; display: block; }
+        .fig-title { margin-top: 10px; color: var(--muted); font-size: 0.95rem; }
+
+        /* المعادلات */
+        .formula-box { background: var(--dark3); border: 1px solid var(--accent); border-radius: 8px; padding: 20px; text-align: center; margin: 20px 0; }
+        .formula-title { color: var(--accent2); font-weight: bold; margin-bottom: 15px; }
+        .formula-display { font-size: 1.8rem; margin-bottom: 20px; color: #fff; }
+        
+        .symbol-table { width: 100%; overflow-x: auto; }
+        .symbol-table table { width: 100%; border-collapse: collapse; min-width: 400px; }
+        .symbol-table th { background: var(--dark4); color: var(--accent2); padding: 10px; text-align: right; border-bottom: 2px solid var(--accent); }
+        .symbol-table td { padding: 10px; text-align: right; border-bottom: 1px solid var(--border); }
+        .sym-cell { font-family: 'Amiri', serif; font-style: italic; font-size: 1.3rem; color: #fff; }
+        .unit-cell { color: var(--gold); font-family: sans-serif; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .info-table th { background: var(--accent); color: #fff; padding: 12px; text-align: right; }
+        .info-table td { background: var(--card); padding: 12px; border-bottom: 1px solid var(--border); }
+        .info-table tr:nth-child(even) td { background: var(--dark3); }
+
+        .highlight-box { padding: 15px; border-radius: 8px; margin: 20px 0; font-weight: 600; border-right: 4px solid; }
+        .highlight-box.warn { background: rgba(239, 68, 68, 0.1); border-color: var(--red); color: #fca5a5; }
+
+        /* المحاكاة */
+        .sim-wrap { background: var(--dark3); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 30px; }
+        .sim-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .sim-title { font-size: 1.3rem; color: #fff; font-weight: bold; }
+        .sim-badge { background: rgba(245, 158, 11, 0.2); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; }
+        .sim-description { background: var(--dark2); padding: 12px; border-radius: 8px; margin-bottom: 15px; border-right: 3px solid var(--accent); font-size: 0.95rem; color: var(--text); }
+        .sim-controls { display: flex; flex-wrap: wrap; gap: 15px; background: var(--dark4); padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .control-group { display: flex; flex-direction: column; gap: 8px; }
+        .sim-btn { background: var(--accent); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: 'Cairo'; font-weight: bold; }
+        .sim-btn:hover { background: var(--accent2); }
+        .sim-btn.danger { background: var(--red); }
+        .sim-btn.danger:hover { background: #f87171; }
+        .canvas-container { width: 100%; height: 350px; background: #fff; border-radius: 8px; position: relative; overflow: hidden; }
+        .canvas-container canvas { position: absolute; top: 0; left: 0; }
+
+        /* التمارين */
+        .q-card { background: var(--dark3); border: 1px solid var(--border); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .q-num { color: var(--accent2); font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; }
+        .q-text { font-size: 1.1rem; color: #fff; margin-bottom: 15px; }
+        .q-options { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { background: var(--dark2); border: 1px solid var(--border); padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; display: flex; gap: 10px; align-items: center; }
+        .option-label:hover { border-color: var(--accent); }
+        .option-label input { accent-color: var(--accent); width: 18px; height: 18px; }
+        .q-feedback { display: none; margin-top: 15px; padding: 12px; border-radius: 8px; font-size: 0.95rem; font-weight: bold; }
+        .feedback-correct { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid var(--green); }
+        .feedback-wrong { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid var(--red); }
+        .q-diagram-type { border: 2px dashed var(--accent); }
+
+        /* الملخص */
+        .summary-card { background: var(--dark2); padding: 30px; border-radius: 12px; border-top: 5px solid var(--accent); }
+        .summary-header { text-align: center; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .summary-title { font-size: 1.8rem; color: #fff; }
+        .summary-subtitle { color: var(--muted); }
+        .summary-section { margin-bottom: 30px; }
+        .summary-section-title { color: var(--accent2); font-size: 1.4rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .concept-map-wrap { background: #fff; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 20px; }
+        .summary-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .summary-list li { background: var(--dark3); padding: 12px; border-radius: 6px; border-right: 3px solid var(--accent); }
+        .print-btn { background: #fff; color: #000; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; display: block; margin: 0 auto; }
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar, header { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #000 !important; }
+            .summary-card { border: none; box-shadow: none; }
+            .summary-section-title { color: #000 !important; border-bottom: 2px solid #000; }
+            .summary-list li { background: none; border: 1px solid #ccc; color: #000; }
+            canvas { display: none; }
+            svg { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="../index.html#electricity">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <div class="container">
+        <div class="lesson-header">
+            <span>السنة الأولى متوسط › المقطع الأول: الظواهر الكهربائية › الدرس 7</span>
+            <span class="lesson-badge">الدرس 07</span>
+            <h1>الدارة الكهربائية <em>المستقصرة</em></h1>
+            <p class="lesson-meta">المستوى: 1AM | الميدان: الظواهر الكهربائية</p>
+        </div>
+
+        <!-- شريط التبويبات -->
+        <nav class="tabs-nav">
+            <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+            <a href="محاكاة الإستقصار.html" class="tab-btn">⚗️ المحاكاة التفاعلية</a>
+            <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+            <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+        </nav>
+
+        <!-- التبويب 1: الدرس -->
+        <div id="tab-lesson" class="tab-content active">
+            <div class="objectives-box">
+                <h3>🎯 الأهداف التعلمية</h3>
+                <ul>
+                    <li>أن يفهم التلميذ معنى استقصار عنصر في دارة كهربائية.</li>
+                    <li>أن يميّز بين الاستقصار في الربط على التسلسل والربط على التفرع.</li>
+                    <li>أن يدرك أخطار الاستقصار ويتعرف على دور المنصهرة والقاطع.</li>
+                </ul>
+            </div>
+
+            <!-- الفقرة 1 -->
+            <div class="sec-title">
+                <span class="sec-icon">⚡</span>
+                <h2>1. مفهوم استقصار عنصر كهربائي</h2>
+                <hr class="sec-line">
+            </div>
+            <div class="def-box">
+                <strong>الاستقصار</strong> <span class="fr">(Court-circuit)</span>: هو توصيل مربطي (طرفي) عنصر كهربائي (مثل المصباح) بواسطة سلك ناقل للكهرباء. نتيجة لذلك، يسلك التيار الكهربائي طريق السلك الناقل (لأنه الأسهل ومقاومته شبه معدومة) ولا يمر عبر العنصر المستقصر، مما يؤدي إلى انطفائه أو توقفه عن العمل.
+            </div>
+            
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (1) — دارة كهربائية مستقصرة</figcaption>
+                <div class="diagram-wrap">
+                   <svg viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                      <defs>
+                          <radialGradient id="glowOff" cx="50%" cy="50%" r="50%">
+                              <stop offset="0%" stop-color="#fff" />
+                              <stop offset="100%" stop-color="#e2e8f0" />
+                          </radialGradient>
+                          <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                              <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--green)"/>
+                          </marker>
+                      </defs>
+            
+                      <!-- الرمز النظامي للبطارية -->
+                      <g id="battery">
+                          <!-- سلك التوصيل الأيسر -->
+                          <line x1="50" y1="120" x2="75" y2="120" stroke="#cbd5e1" stroke-width="3" />
+                
+                          <!-- القطب السالب (قصير وسميك) على اليسار -->
+                          <line x1="75" y1="110" x2="75" y2="130" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round" />
+                          <text x="65" y="105" text-anchor="middle" font-family="Cairo" font-size="14" fill="#cbd5e1" font-weight="bold">-</text>
+
+                          <!-- القطب الموجب (طويل ورفيع) على اليمين -->
+                          <line x1="85" y1="95" x2="85" y2="145" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" />
+                          <text x="95" y="105" text-anchor="middle" font-family="Cairo" font-size="14" fill="#cbd5e1" font-weight="bold">+</text>
+                
+                          <!-- سلك التوصيل الأيمن -->
+                          <line x1="85" y1="120" x2="110" y2="120" stroke="#cbd5e1" stroke-width="3" />
+                
+                          <!-- التسمية -->
+                          <text x="80" y="165" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="12" fill="#cbd5e1" font-weight="bold">بطارية</text>
+                      </g>
+
+                          <!-- أسلاك الدارة -->
+                          <path d="M 110 120 L 400 120" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+                          <path d="M 50 120 L 20 120 L 20 220 L 400 220 L 400 120" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+            
+                          <!-- المصباح المستقصر -->
+                          <circle cx="300" cy="120" r="25" fill="url(#glowOff)" stroke="#475569" stroke-width="3"/>
+                          <line x1="282" y1="102" x2="318" y2="138" stroke="#475569" stroke-width="2"/>
+                          <line x1="282" y1="138" x2="318" y2="102" stroke="#475569" stroke-width="2"/>
+                          <text x="300" y="80" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="12" fill="#fff">مصباح منطفئ</text>
+            
+                          <!-- سلك الاستقصار -->
+                          <path d="M 240 120 L 240 50 L 370 50 L 370 120" stroke="var(--red)" stroke-width="4" fill="none" stroke-dasharray="6"/>
+                          <text x="400" y="35" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="12" fill="var(--red)" font-weight="bold">سلك الاستقصار</text>
+            
+                          <!-- مسار التيار -->
+                          <path d="M 300 50 L 330 50" stroke="var(--green)" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+                          <text x="250" y="180" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="14" fill="var(--green)">التيار يفضل طريق السلك الخالي من المقاومة</text>
+                   </svg>
+                </div>
+            </figure>
+
+            <!-- الفقرة 2 -->
+            <div class="sec-title">
+                <span class="sec-icon">🔗</span>
+                <h2>2. الاستقصار في حالة الربط على التسلسل</h2>
+                <hr class="sec-line">
+            </div>
+            <p>عند ربط مصباحين على التسلسل واستقصار أحدهما، نلاحظ أن:</p>
+            <ul>
+                <li>المصباح المستقصر <strong>ينطفئ</strong>.</li>
+                <li>المصباح الآخر <strong>تزداد شدة إضاءته</strong> بقوة.</li>
+            </ul>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (2) — استقصار على التسلسل</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <radialGradient id="glowOn" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#fef08a" />
+                                <stop offset="100%" stop-color="#eab308" />
+                            </radialGradient>
+                            <filter id="shadowGlow">
+                                <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#eab308" />
+                            </filter>
+                        </defs>
+                        <!-- الرمز النظامي للبطارية -->
+            <g id="battery">
+                <!-- سلك التوصيل الأيسر -->
+                <line x1="220" y1="210" x2="240" y2="210" stroke="#cbd5e1" stroke-width="3" />
+                
+                <!-- القطب السالب (قصير وسميك) على اليسار -->
+                <line x1="240" y1="195" x2="240" y2="225" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round" />
+                <text x="230" y="190" text-anchor="middle" font-family="Cairo" font-size="14" fill="#fff" font-weight="bold">-</text>
+
+                <!-- القطب الموجب (طويل ورفيع) على اليمين -->
+                <line x1="255" y1="180" x2="255" y2="240" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" />
+                <text x="265" y="190" text-anchor="middle" font-family="Cairo" font-size="14" fill="#fff" font-weight="bold">+</text>
+                
+                <!-- سلك التوصيل الأيمن -->
+                <line x1="255" y1="210" x2="280" y2="210" stroke="#cbd5e1" stroke-width="3" />
+                
+                <!-- التسمية -->
+                <text x="247" y="240" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="12" fill="#fff" font-weight="bold">بطارية</text>
+            </g>
+                        <!-- أسلاك -->
+                        <path d="M 220 210 L 50 210 L 50 100 L 125 100" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+                        <path d="M 280 210 L 450 210 L 450 100 L 375 100" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+                        <line x1="175" y1="100" x2="325" y2="100" stroke="#cbd5e1" stroke-width="3"/>
+                        <!-- مصباح 1 (مستقصر) -->
+                        <circle cx="150" cy="100" r="25" fill="url(#glowOff)" stroke="#475569" stroke-width="3"/>
+                        <line x1="132" y1="82" x2="168" y2="118" stroke="#475569" stroke-width="2"/>
+                        <line x1="132" y1="118" x2="168" y2="82" stroke="#475569" stroke-width="2"/>
+                        <text x="150" y="60" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="12" fill="#fff">L1 منطفئ</text>
+                        <!-- مصباح 2 (مضيء) -->
+                        <circle cx="350" cy="100" r="25" fill="url(#glowOn)" stroke="#eab308" stroke-width="3" filter="url(#shadowGlow)"/>
+                        <line x1="332" y1="82" x2="368" y2="118" stroke="#333" stroke-width="2"/>
+                        <line x1="332" y1="118" x2="368" y2="82" stroke="#333" stroke-width="2"/>
+                        <text x="350" y="60" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="12" fill="#fff">L2 مضيء بقوة</text>
+                        <!-- سلك الاستقصار -->
+                        <path d="M 90 100 L 90 30 L 210 30 L 210 100" stroke="var(--red)" stroke-width="4" fill="none"/>
+                        <text x="150" y="15" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="11" fill="var(--red)" font-weight="bold">سلك استقصار</text>
+                    </svg>
+                </div>
+            </figure>
+
+            <div class="formula-box">
+                <div class="formula-title">التفسير الفيزيائي لزيادة الإضاءة</div>
+                <div class="formula-display">
+                    $$ R_{Total} \downarrow \implies I \uparrow $$
+                </div>
+                <div class="symbol-table">
+                    <table>
+                        <thead><tr><th>الرمز</th><th>التسمية</th><th>الملاحظة</th></tr></thead>
+                        <tbody>
+                            <tr><td class="sym-cell">R_{Total}</td><td>المقاومة الكلية للدارة</td><td>تنقص بسبب خروج المصباح المستقصر من الدارة</td></tr>
+                            <tr><td class="sym-cell">I</td><td>شدة التيار الكهربائي</td><td>تزداد بشكل كبير مما يسبب توهج المصباح المتبقي بقوة</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- الفقرة 3 -->
+            <div class="sec-title">
+                <span class="sec-icon">🔀</span>
+                <h2>3. الاستقصار في حالة الربط على التفرع</h2>
+                <hr class="sec-line">
+            </div>
+            <div class="highlight-box warn">
+                ⚠️ <strong>خطر حقيقي!</strong> في الربط على التفرع، استقصار أي مصباح يعني استقصار المولد مباشرة! التيار يرجع للبطارية دون المرور بأي جهاز.
+            </div>
+            <p>النتائج:</p>
+            <ul>
+                <li>انطفاء جميع المصابيح في الدارة.</li>
+                <li>سخونة أسلاك التوصيل وانصهار غلافها.</li>
+                <li>تلف البطارية (المولد) واحتمال نشوب حريق.</li>
+            </ul>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (3) — استقصار على التفرع (كارثة)</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                       <defs>
+                           <filter id="fireGlow">
+                               <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ef4444" />
+                           </filter>
+                        </defs>
+
+                        <!-- توهج وخطر خلف المولد للدلالة على الحرارة بسبب الاستقصار -->
+                        <circle cx="100" cy="110" r="25" fill="#ef4444" opacity="0.2" filter="url(#fireGlow)"/>
+                        <text x="100" y="65" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="14" fill="#ef4444" font-weight="bold">🔥 خطر</text>
+
+                        <!-- الرمز النظامي للبطارية (المولد) -->
+                        <!-- القطب السالب (-) قصير وسميك -->
+                        <line x1="90" y1="95" x2="90" y2="125" stroke="#475569" stroke-width="5"/>
+                        <text x="75" y="110" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="18" fill="#475569" font-weight="bold">-</text>
+            
+                        <!-- القطب الموجب (+) طويل ورفيع -->
+                        <line x1="110" y1="85" x2="110" y2="135" stroke="#475569" stroke-width="2"/>
+                        <text x="125" y="110" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#475569" font-weight="bold">+</text>
+
+                        <!-- أسلاك الدارة الرئيسية (تم تنسيقها كزوايا قائمة منتظمة) -->
+                        <!-- السلك الموجب من البطارية إلى نقطة التفرع -->
+                        <path d="M 110 110 L 250 110" stroke="var(--red, #ef4444)" stroke-width="4" fill="none"/>
+            
+                        <!-- تفرع المصباح 1 (العلوي) -->
+                        <path d="M 250 110 L 250 70 L 280 70" stroke="var(--red, #ef4444)" stroke-width="4" fill="none"/>
+                        <path d="M 320 70 L 350 70 L 350 110" stroke="var(--red, #ef4444)" stroke-width="4" fill="none"/>
+            
+                        <!-- تفرع المصباح 2 (السفلي) -->
+                        <path d="M 250 110 L 250 170 L 280 170" stroke="var(--red, #ef4444)" stroke-width="4" fill="none"/>
+                        <path d="M 320 170 L 350 170 L 350 110" stroke="var(--red, #ef4444)" stroke-width="4" fill="none"/>
+            
+                        <!-- السلك السالب (مسار العودة من التفرع إلى البطارية) -->
+                        <path d="M 350 110 L 400 110 L 400 220 L 50 220 L 50 110 L 90 110" stroke="var(--red, #ef4444)" stroke-width="4" fill="none"/>
+
+                        <!-- مصباح 1 (العلوي) منطفئ -->
+                        <circle cx="300" cy="70" r="20" fill="url(#glowOff)" stroke="#475569" stroke-width="2"/>
+                        <line x1="290" y1="60" x2="310" y2="80" stroke="#475569" stroke-width="2"/>
+                        <line x1="290" y1="80" x2="310" y2="60" stroke="#475569" stroke-width="2"/>
+
+                        <!-- مصباح 2 (السفلي) منطفئ -->
+                        <circle cx="300" cy="170" r="20" fill="url(#glowOff)" stroke="#475569" stroke-width="2"/>
+                        <line x1="290" y1="160" x2="310" y2="180" stroke="#475569" stroke-width="2"/>
+                        <line x1="290" y1="180" x2="310" y2="160" stroke="#475569" stroke-width="2"/>
+
+                        <!-- سلك استقصار المولد المباشر (يوصل الموجب بالسالب قبل المصابيح) -->
+                        <path d="M 180 110 L 180 30 L 380 30 L 380 110" stroke="var(--red, #ef4444)" stroke-width="5" fill="none" stroke-dasharray="8"/>
+                        <text x="280" y="15" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="12" fill="var(--red, #ef4444)" font-weight="bold">سلك يسبب استقصار المولد مباشرة</text>
+                    </svg>
+                </div>
+            </figure>
+
+            <!-- الفقرة 4 -->
+            <div class="sec-title">
+                <span class="sec-icon">🛡️</span>
+                <h2>4. أخطار الاستقصار وطرق الحماية</h2>
+                <hr class="sec-line">
+            </div>
+            
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (4) — المنصهرة (Fusible) للحماية</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <linearGradient id="glass" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="rgba(255,255,255,0.4)" />
+                                <stop offset="50%" stop-color="rgba(255,255,255,0.1)" />
+                                <stop offset="100%" stop-color="rgba(255,255,255,0.3)" />
+                            </linearGradient>
+                            <linearGradient id="metal" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#94a3b8" />
+                                <stop offset="100%" stop-color="#475569" />
+                            </linearGradient>
+                        </defs>
+                        <!-- غلاف زجاجي -->
+                        <rect x="150" y="50" width="200" height="50" rx="10" fill="url(#glass)" stroke="#cbd5e1" stroke-width="2"/>
+                        <!-- طرف معدني أيمن وأيسر -->
+                        <rect x="130" y="45" width="40" height="60" rx="5" fill="url(#metal)" stroke="#334155" stroke-width="2"/>
+                        <rect x="330" y="45" width="40" height="60" rx="5" fill="url(#metal)" stroke="#334155" stroke-width="2"/>
+                        <!-- السلك الرقيق المنصهر -->
+                        <path d="M 170 75 Q 250 110 330 75" stroke="#fca5a5" stroke-width="2" fill="none" stroke-dasharray="5"/>
+                        <text x="250" y="130" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="14" fill="#fff">سلك رفيع ينصهر عند ارتفاع التيار فجأة ليقطع الدارة</text>
+                    </svg>
+                </div>
+            </figure>
+
+            <table class="info-table">
+                <thead>
+                    <tr>
+                        <th>وسيلة الحماية</th>
+                        <th>دورها</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>المنصهرة (Fusible)</strong></td>
+                        <td>تحتوي سلكاً شعيرياً ينصهر ويقطع الدارة إذا زادت الشدة عن الحد المسموح.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>القاطع الآلي (Disjoncteur)</strong></td>
+                        <td>يقطع التيار الكهربائي آلياً عن المنزل بأكمله عند حدوث استقصار لحماية الشبكة.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>تغليف الأسلاك بالعازل</strong></td>
+                        <td>يمنع تلامس الأسلاك النحاسية مع بعضها البعض.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- التبويب 2: المحاكاة -->
+        <div id="tab-sim" class="tab-content">
+            
+            <!-- محاكاة 1 -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 1: الاستقصار في التسلسل</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي أثر الاستقصار لدارة على التسلسل. اضغط على الأزرار لترى كيف يتغيّر توهج المصباح المتبقي عند استقصار الأول.</p>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <button class="sim-btn" onclick="setSim1('normal')">حالة عادية (بدون استقصار)</button>
+                        <button class="sim-btn danger" onclick="setSim1('short')">استقصار المصباح L1</button>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="simCanvas1"></canvas>
+                </div>
+            </div>
+
+            <!-- محاكاة 2 -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 2: الاستقصار في التفرع ودور المنصهرة</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي كارثة الاستقصار على التفرع. تحكّم في إدراج المنصهرة، وأحدث استقصاراً لترى كيف تقطع المنصهرة التيار لحماية البطارية، وماذا يحدث بغيابها.</p>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label style="color:#fff;"><input type="checkbox" id="fuseToggle" checked onchange="drawSim2()"> إدراج منصهرة حماية</label>
+                    </div>
+                    <div class="control-group" style="flex-direction: row;">
+                        <button class="sim-btn" onclick="setSim2('normal')">حالة عادية</button>
+                        <button class="sim-btn danger" onclick="setSim2('short')">استقصار المصباح L2</button>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="simCanvas2"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- التبويب 3: التمارين -->
+        <div id="tab-exercises" class="tab-content">
+            <!-- Q1 -->
+            <div class="q-card" id="q1">
+                <div class="q-num">السؤال 1</div>
+                <p class="q-text">ما المقصود باستقصار عنصر كهربائي؟</p>
+                <div class="q-options">
+                    <label class="option-label"><input type="radio" name="q1" value="a" onclick="checkAnswer('q1','a')"> ربط مربطيه بسلك ناقل للكهرباء.</label>
+                    <label class="option-label"><input type="radio" name="q1" value="b" onclick="checkAnswer('q1','b')"> فتح القاطعة.</label>
+                    <label class="option-label"><input type="radio" name="q1" value="c" onclick="checkAnswer('q1','c')"> إضافة بطارية أخرى للدارة.</label>
+                </div>
+                <div class="q-feedback"></div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="q-card" id="q2">
+                <div class="q-num">السؤال 2</div>
+                <p class="q-text">في دارة على التسلسل، عند استقصار المصباح الأول، ماذا يحدث للثاني؟</p>
+                <div class="q-options">
+                    <label class="option-label"><input type="radio" name="q2" value="a" onclick="checkAnswer('q2','a')"> ينطفئ هو الآخر.</label>
+                    <label class="option-label"><input type="radio" name="q2" value="b" onclick="checkAnswer('q2','b')"> تزداد شدة إضاءته وتوهجه.</label>
+                    <label class="option-label"><input type="radio" name="q2" value="c" onclick="checkAnswer('q2','c')"> تبقى إضاءته عادية.</label>
+                </div>
+                <div class="q-feedback"></div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="q-card" id="q3">
+                <div class="q-num">السؤال 3</div>
+                <p class="q-text">لماذا يعد الاستقصار في الربط على التفرع خطيراً جداً؟</p>
+                <div class="q-options">
+                    <label class="option-label"><input type="radio" name="q3" value="a" onclick="checkAnswer('q3','a')"> لأنه يحرق مصباحاً واحداً فقط.</label>
+                    <label class="option-label"><input type="radio" name="q3" value="b" onclick="checkAnswer('q3','b')"> لأنه يمنع مرور التيار تماماً.</label>
+                    <label class="option-label"><input type="radio" name="q3" value="c" onclick="checkAnswer('q3','c')"> لأنه يستقصر المولد مباشرة مسبباً حرارة عالية وحرائق.</label>
+                </div>
+                <div class="q-feedback"></div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="q-card" id="q4">
+                <div class="q-num">السؤال 4</div>
+                <p class="q-text">ما هي الوسيلة المستخدمة لحماية الأجهزة من الاستقصار؟</p>
+                <div class="q-options">
+                    <label class="option-label"><input type="radio" name="q4" value="a" onclick="checkAnswer('q4','a')"> المنصهرة (Fusible).</label>
+                    <label class="option-label"><input type="radio" name="q4" value="b" onclick="checkAnswer('q4','b')"> القاطعة.</label>
+                    <label class="option-label"><input type="radio" name="q4" value="c" onclick="checkAnswer('q4','c')"> أسلاك التوصيل.</label>
+                </div>
+                <div class="q-feedback"></div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="q-card" id="q5">
+                <div class="q-num">السؤال 5</div>
+                <p class="q-text">كيف نمنع تلامس الأسلاك العارية المؤدي للاستقصار؟</p>
+                <div class="q-options">
+                    <label class="option-label"><input type="radio" name="q5" value="a" onclick="checkAnswer('q5','a')"> نغلفها بمادة عازلة كالبلاستيك.</label>
+                    <label class="option-label"><input type="radio" name="q5" value="b" onclick="checkAnswer('q5','b')"> ننزع عنها البلاستيك لتهويتها.</label>
+                    <label class="option-label"><input type="radio" name="q5" value="c" onclick="checkAnswer('q5','c')"> نغسلها بالماء.</label>
+                </div>
+                <div class="q-feedback"></div>
+            </div>
+
+            <!-- Q6 مخطط -->
+            <div class="q-card q-diagram-type" id="q6">
+                <div class="q-num">السؤال 6 (تحديد على الرسم)</div>
+                <p class="q-text">في المخطط التالي (تفرع)، أين يكمن خطر الاستقصار المباشر للمولد؟</p>
+                <svg viewBox="0 0 400 150" style="background:#fff; border-radius:8px; padding:10px; cursor:pointer;" onclick="checkDiagramAnswer()">
+                    <!-- مولد -->
+                    <rect x="20" y="50" width="40" height="30" fill="#ccc" stroke="#000" stroke-width="2"/>
+                    <!-- أسلاك -->
+                    <path d="M 60 65 L 150 65 L 150 30 L 250 30" stroke="#000" stroke-width="2" fill="none"/>
+                    <path d="M 150 65 L 150 100 L 250 100" stroke="#000" stroke-width="2" fill="none"/>
+                    <!-- مصابيح -->
+                    <circle cx="270" cy="30" r="15" fill="#fff" stroke="#000" stroke-width="2"/>
+                    <circle cx="270" cy="100" r="15" fill="#fff" stroke="#000" stroke-width="2"/>
+                    <!-- عودة -->
+                    <path d="M 290 30 L 350 30 L 350 130 L 40 130 L 40 80" stroke="#000" stroke-width="2" fill="none"/>
+                    <path d="M 290 100 L 350 100" stroke="#000" stroke-width="2" fill="none"/>
+                    <!-- سلك استقصار -->
+                    <path d="M 100 65 L 100 10 L 320 10 L 320 30" stroke="red" stroke-width="3" fill="none" stroke-dasharray="4"/>
+                    <text x="210" y="25" fill="red" font-size="12" font-weight="bold">انقر هنا لتحديد الخطر</text>
+                </svg>
+                <div class="q-feedback" id="q6-feedback"></div>
+            </div>
+        </div>
+
+        <!-- التبويب 4: الملخص -->
+        <div id="tab-summary" class="tab-content">
+            <div class="summary-card">
+                <div class="summary-header">
+                    <div class="summary-subtitle">السنة 1 متوسط | الظواهر الكهربائية</div>
+                    <h2 class="summary-title">ملخص: الدارة الكهربائية المستقصرة</h2>
+                </div>
+
+                <div class="concept-map-wrap">
+                    <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                    <svg viewBox="0 0 600 200" style="max-width: 100%;">
+                        <rect x="200" y="10" width="200" height="40" rx="20" fill="var(--accent)" stroke="#fff" stroke-width="2"/>
+                        <text x="300" y="35" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="16" fill="#fff" font-weight="bold">الاستقصار (سلك ناقل بين المربطين)</text>
+                        
+                        <path d="M 300 50 L 300 80 L 150 80 L 150 100" stroke="var(--accent)" stroke-width="2" fill="none"/>
+                        <path d="M 300 80 L 450 80 L 450 100" stroke="var(--accent)" stroke-width="2" fill="none"/>
+
+                        <rect x="50" y="100" width="200" height="40" rx="10" fill="var(--dark3)" stroke="var(--accent2)" stroke-width="2"/>
+                        <text x="150" y="125" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="14" fill="#fff">على التسلسل</text>
+                        <text x="150" y="160" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="12" fill="var(--text)">المصباح ينطفئ، البقية تزداد توهجاً</text>
+
+                        <rect x="350" y="100" width="200" height="40" rx="10" fill="var(--dark3)" stroke="var(--red)" stroke-width="2"/>
+                        <text x="450" y="125" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="14" fill="#fff">على التفرع (خطر)</text>
+                        <text x="450" y="160" text-anchor="middle" dominant-baseline="middle" font-family="Cairo" font-size="12" fill="var(--text)">استقصار المولد، حرائق وتلف</text>
+                    </svg>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+                    <ul class="summary-list">
+                        <li><strong>الاستقصار:</strong> توصيل طرفي جهاز كهربائي بسلك ناقل، مما يمنع مرور التيار فيه.</li>
+                        <li><strong>في التسلسل:</strong> تنقص المقاومة الكلية للدارة فتزداد شدة التيار وتتوهج المصابيح الأخرى.</li>
+                        <li><strong>في التفرع:</strong> يؤدي لاستقصار المولد المباشر، فينطفئ كل شيء وتسخن الأسلاك وتتلف البطارية.</li>
+                        <li><strong>للحماية:</strong> نستعمل <strong>المنصهرة (Fusible)</strong> والقاطع الآلي وعزل الأسلاك.</li>
+                    </ul>
+                </div>
+
+                <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- كود JavaScript الإلزامي -->
+    <script>
+        // ✅ الكود الصحيح لتبديل التبويبات وضمان ظهور المحاكاة فوراً
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+            
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    drawSim1();
+                    drawSim2();
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    drawSim1();
+                    drawSim2();
+                }, 50);
+            }
+            window.addEventListener('resize', resizeCanvas);
+        });
+
+        // ------------------ Canvas محاكيات ------------------
+        const canvas1 = document.getElementById('simCanvas1');
+        const ctx1 = canvas1.getContext('2d');
+        const canvas2 = document.getElementById('simCanvas2');
+        const ctx2 = canvas2.getContext('2d');
+
+        let stateSim1 = 'normal';
+        let stateSim2 = 'normal';
+
+        function resizeCanvas() {
+            const container1 = canvas1.parentElement;
+            if (container1.clientWidth > 0) {
+                const dpr = window.devicePixelRatio || 1;
+                canvas1.width = container1.clientWidth * dpr;
+                canvas1.height = container1.clientHeight * dpr;
+                canvas1.style.width = container1.clientWidth + 'px';
+                canvas1.style.height = container1.clientHeight + 'px';
+                ctx1.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                canvas2.width = container1.clientWidth * dpr;
+                canvas2.height = container1.clientHeight * dpr;
+                canvas2.style.width = container1.clientWidth + 'px';
+                canvas2.style.height = container1.clientHeight + 'px';
+                ctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+            drawSim1();
+            drawSim2();
+        }
+
+        function setSim1(s) { stateSim1 = s; drawSim1(); }
+        function setSim2(s) { stateSim2 = s; drawSim2(); }
+
+        // رسم محاكاة 1
+        function drawSim1() {
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+            let w = canvas1.clientWidth, h = canvas1.clientHeight;
+            let cx = w/2, cy = h/2;
+
+            // أسلاك
+            ctx1.beginPath();
+            ctx1.moveTo(cx - 100, cy + 60);
+            ctx1.lineTo(cx - 150, cy + 60);
+            ctx1.lineTo(cx - 150, cy - 40);
+            ctx1.lineTo(cx + 150, cy - 40);
+            ctx1.lineTo(cx + 150, cy + 60);
+            ctx1.lineTo(cx + 100, cy + 60);
+            ctx1.lineWidth = 4;
+            ctx1.strokeStyle = '#475569';
+            ctx1.stroke();
+
+            // بطارية
+            ctx1.fillStyle = '#cbd5e1';
+            ctx1.fillRect(cx - 100, cy + 40, 200, 40);
+            ctx1.fillStyle = '#000';
+            ctx1.font = "bold 16px Cairo";
+            ctx1.textAlign = "center";
+            ctx1.textBaseline = "middle";
+            ctx1.fillText("بطارية", cx, cy + 60);
+
+            // مصباح 1
+            ctx1.beginPath();
+            ctx1.arc(cx - 75, cy - 40, 25, 0, Math.PI*2);
+            ctx1.fillStyle = stateSim1==='short' ? '#e2e8f0' : '#fef08a';
+            if(stateSim1==='normal') {
+                ctx1.shadowColor = '#eab308'; ctx1.shadowBlur = 15;
+            } else {
+                ctx1.shadowBlur = 0;
+            }
+            ctx1.fill();
+            ctx1.lineWidth=2; ctx1.strokeStyle='#1e293b'; ctx1.stroke();
+            ctx1.shadowBlur = 0; // reset
+            
+            // مصباح 2
+            ctx1.beginPath();
+            ctx1.arc(cx + 75, cy - 40, 25, 0, Math.PI*2);
+            ctx1.fillStyle = '#fef08a';
+            ctx1.shadowColor = '#eab308'; 
+            ctx1.shadowBlur = stateSim1==='short' ? 30 : 15; // توهج أقوى
+            ctx1.fill();
+            ctx1.lineWidth=2; ctx1.strokeStyle='#1e293b'; ctx1.stroke();
+            ctx1.shadowBlur = 0;
+
+            if(stateSim1 === 'short') {
+                ctx1.beginPath();
+                ctx1.moveTo(cx - 120, cy - 40);
+                ctx1.lineTo(cx - 120, cy - 90);
+                ctx1.lineTo(cx - 30, cy - 90);
+                ctx1.lineTo(cx - 30, cy - 40);
+                ctx1.strokeStyle = '#ef4444';
+                ctx1.lineWidth = 4;
+                ctx1.setLineDash([5, 5]);
+                ctx1.stroke();
+                ctx1.setLineDash([]);
+                
+                ctx1.fillStyle = '#ef4444';
+                ctx1.fillText("سلك استقصار", cx - 75, cy - 105);
+            }
+        }
+
+        // رسم محاكاة 2
+        function drawSim2() {
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+            let w = canvas2.clientWidth, h = canvas2.clientHeight;
+            let cx = w/2, cy = h/2;
+            let hasFuse = document.getElementById('fuseToggle').checked;
+
+            let danger = (stateSim2 === 'short' && !hasFuse);
+            let brokenFuse = (stateSim2 === 'short' && hasFuse);
+            
+            let wireColor = danger ? '#ef4444' : '#475569';
+            let batColor = danger ? '#fca5a5' : '#cbd5e1';
+
+            // أسلاك أساسية
+            ctx2.beginPath();
+            ctx2.moveTo(cx - 150, cy + 80);
+            ctx2.lineTo(cx - 200, cy + 80);
+            ctx2.lineTo(cx - 200, cy - 80);
+            // إذا انكسرت المنصهرة نقطع السلك
+            if (brokenFuse) {
+                ctx2.lineTo(cx - 120, cy - 80);
+                ctx2.moveTo(cx - 80, cy - 80);
+            }
+            ctx2.lineTo(cx + 150, cy - 80);
+            ctx2.lineTo(cx + 150, cy + 80);
+            ctx2.lineTo(cx + 50, cy + 80);
+            ctx2.strokeStyle = wireColor;
+            ctx2.lineWidth = 4;
+            ctx2.stroke();
+
+            // فروع المصابيح
+            [0, 100].forEach(offset => {
+                ctx2.beginPath();
+                ctx2.moveTo(cx + offset, cy - 80);
+                ctx2.lineTo(cx + offset, cy + 80);
+                ctx2.stroke();
+            });
+
+            // بطارية
+            ctx2.fillStyle = batColor;
+            ctx2.fillRect(cx - 150, cy + 60, 200, 40);
+            ctx2.fillStyle = '#000';
+            ctx2.font = "bold 16px Cairo";
+            ctx2.textAlign = "center";
+            ctx2.textBaseline = "middle";
+            ctx2.fillText(danger ? "🔥 خطر حريق" : "بطارية", cx - 50, cy + 80);
+
+            // منصهرة
+            if(hasFuse) {
+                ctx2.fillStyle = '#fff';
+                ctx2.fillRect(cx - 120, cy - 90, 40, 20);
+                ctx2.strokeRect(cx - 120, cy - 90, 40, 20);
+                if (!brokenFuse) {
+                    ctx2.beginPath();
+                    ctx2.moveTo(cx - 120, cy - 80);
+                    ctx2.lineTo(cx - 80, cy - 80);
+                    ctx2.strokeStyle = '#ef4444';
+                    ctx2.lineWidth = 2;
+                    ctx2.stroke();
+                } else {
+                    ctx2.fillStyle = '#ef4444';
+                    ctx2.fillText("مقطوعة!", cx - 100, cy - 105);
+                }
+            }
+
+            // المصابيح (تنطفئ عند الخطر أو قطع المنصهرة)
+            let lampOn = (stateSim2 === 'normal');
+            [0, 100].forEach(offset => {
+                ctx2.beginPath();
+                ctx2.arc(cx + offset, cy, 20, 0, Math.PI*2);
+                ctx2.fillStyle = lampOn ? '#fef08a' : '#e2e8f0';
+                if(lampOn) {
+                    ctx2.shadowColor = '#eab308'; ctx2.shadowBlur = 15;
+                }
+                ctx2.fill();
+                ctx2.lineWidth=2; ctx2.strokeStyle='#1e293b'; ctx2.stroke();
+                ctx2.shadowBlur = 0;
+            });
+
+            // سلك استقصار للمصباح الثاني
+            if(stateSim2 === 'short') {
+                ctx2.beginPath();
+                ctx2.moveTo(cx + 100, cy - 40);
+                ctx2.lineTo(cx + 160, cy - 40);
+                ctx2.lineTo(cx + 160, cy + 40);
+                ctx2.lineTo(cx + 100, cy + 40);
+                ctx2.strokeStyle = danger ? '#991b1b' : '#ef4444';
+                ctx2.lineWidth = 4;
+                ctx2.setLineDash([5, 5]);
+                ctx2.stroke();
+                ctx2.setLineDash([]);
+                ctx2.fillStyle = danger ? '#991b1b' : '#ef4444';
+                ctx2.fillText("سلك استقصار", cx + 160, cy);
+            }
+        }
+
+        // ------------------ التمارين ------------------
+        const answers = { q1: 'a', q2: 'b', q3: 'c', q4: 'a', q5: 'a' }; // q5 'a' هو التغليف
+        
+        function checkAnswer(qId, val) {
+            const card = document.getElementById(qId);
+            const feedback = card.querySelector('.q-feedback');
+            const opts = card.querySelectorAll('.option-label');
+            
+            opts.forEach(opt => opt.style.border = '1px solid var(--border)');
+            
+            feedback.style.display = 'block';
+            if(val === answers[qId]) {
+                feedback.className = 'q-feedback feedback-correct';
+                feedback.innerHTML = '✅ إجابة صحيحة! أحسنت.';
+            } else {
+                feedback.className = 'q-feedback feedback-wrong';
+                feedback.innerHTML = '❌ إجابة خاطئة. حاول مرة أخرى.';
+            }
+        }
+
+        function checkDiagramAnswer() {
+            const fb = document.getElementById('q6-feedback');
+            fb.style.display = 'block';
+            fb.className = 'q-feedback feedback-correct';
+            fb.innerHTML = '✅ ممتاز! السلك الأحمر يربط مباشرة بين خطي المولد مشكّلاً استقصاراً على التفرع، مما يتسبب في سخونة المولد وحريق.';
+        }
+    </script>
+    <script src="credit.js"></script>
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 4 | عدد رسوم SVG في الدرس النظري = 4 | عدد المحاكيات = 2 -->
+</body>
+</html>

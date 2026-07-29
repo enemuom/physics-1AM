@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاكاة الاستقصار في الدارات الكهربائية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0f172a; /* tailwind slate-900 */
+            color: #f8fafc; /* tailwind slate-50 */
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+        canvas {
+            background-color: #1e293b; /* tailwind slate-800 */
+            border-radius: 0.75rem;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 800px;
+            display: block;
+            margin: 1.5rem auto;
+            border: 1px solid #334155;
+        }
+        .control-panel {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+        .btn-inactive {
+            background-color: #475569; /* slate-600 */
+            color: #cbd5e1; /* slate-300 */
+        }
+        .btn-inactive:hover {
+            background-color: #334155;
+        }
+        .btn-active-blue {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+        }
+        .btn-active-red {
+            background-color: #dc2626; /* red-600 */
+            color: white;
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+        }
+		/* شريط التنقل العلوي الثابت */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="lesson7.html">←العودة إلى الدرس</a>
+    </div>   
+    <div class="max-w-4xl mx-auto space-y-16">
+        <header class="text-center">
+            <h1 class="text-4xl font-bold text-blue-400 mb-2">الظواهر الكهربائية</h1>
+            <p class="text-slate-400 text-lg">الاستقصار في الدارات الكهربائية و دور المنصهرة</p>
+        </header>
+
+        <!-- Section: Figure 01 -->
+        <section class="bg-slate-800/50 p-6 md:p-8 rounded-2xl border border-slate-700 shadow-xl">
+            <h2 class="text-2xl font-bold mb-6 text-center text-slate-200">شكل (1) — دارة كهربائية مستقصرة</h2>
+            
+            <div class="control-panel">
+                <button id="btn-fig1-normal" class="btn btn-active-blue">حالة عادية</button>
+                <button id="btn-fig1-short" class="btn btn-inactive">إحداث استقصار</button>
+            </div>
+            
+            <canvas id="canvas-fig1" width="800" height="350"></canvas>
+            
+            <div class="text-center mt-4">
+                <p class="text-sm text-emerald-400 font-semibold" id="msg-fig1">
+                    التيار يمر عبر المصباح ويضيء بشكل طبيعي.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section: Figure 02 -->
+        <section class="bg-slate-800/50 p-6 md:p-8 rounded-2xl border border-slate-700 shadow-xl">
+            <h2 class="text-2xl font-bold mb-6 text-center text-slate-200">شكل (2) — دارة على التفرع (دور المنصهرة)</h2>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4 px-4">
+                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer bg-slate-700 px-4 py-2 rounded-lg border border-slate-600">
+                    <input type="checkbox" id="chk-fuse" class="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500 bg-slate-900 border-slate-500" checked>
+                    <span class="font-semibold text-slate-200">إدراج منصهرة حماية</span>
+                </label>
+                
+                <div class="control-panel !mb-0">
+                    <button id="btn-fig2-normal" class="btn btn-active-blue">حالة عادية</button>
+                    <button id="btn-fig2-short" class="btn btn-inactive">استقصار المصباح L2</button>
+                </div>
+            </div>
+            
+            <canvas id="canvas-fig2" width="800" height="420"></canvas>
+            
+            <div class="text-center mt-4">
+                <p class="text-sm text-slate-400 max-w-2xl mx-auto">
+                    تم تصحيح الخطأ العلمي: الدارة تتكون من فرعين فقط، والاستقصار يحدث عند تركيب سلك ناقل بين طرفي المصباح L2.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Global State Objects
+        const state1 = { 
+            shorted: false 
+        };
+        
+        const state2 = { 
+            mode: 'normal', 
+            hasFuse: true, 
+            fuseBroken: false, 
+            timerId: null 
+        };
+
+        // Animation timing
+        let startTime = Date.now();
+
+        // Helper: Draw simple wire segment
+        function drawWire(ctx, x1, y1, x2, y2, color = '#94a3b8', width = 3, dashed = false) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = width;
+            ctx.lineCap = 'round';
+            if (dashed) ctx.setLineDash([10, 8]);
+            else ctx.setLineDash([]);
+            ctx.stroke();
+            ctx.setLineDash([]); // Reset
+        }
+
+        // Helper: Draw standard battery symbol
+        function drawBattery(ctx, x, y, isVertical) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.strokeStyle = '#f8fafc';
+            ctx.fillStyle = '#f8fafc';
+            ctx.lineWidth = 3;
+
+            if (isVertical) {
+                // Positive Top (+), Negative Bottom (-)
+                ctx.beginPath(); ctx.moveTo(-22, -10); ctx.lineTo(22, -10); ctx.stroke(); // Long
+                ctx.beginPath(); ctx.moveTo(-12, 10); ctx.lineTo(12, 10); ctx.lineWidth = 6; ctx.stroke(); // Short thick
+                
+                ctx.font = "14px Tahoma, sans-serif";
+                ctx.fillText("+", -40, -5);
+                ctx.fillText("-", -38, 15);
+            } else {
+                // Positive Left (+), Negative Right (-)
+                ctx.beginPath(); ctx.moveTo(-10, -22); ctx.lineTo(-10, 22); ctx.stroke(); // Long
+                ctx.beginPath(); ctx.moveTo(10, -12); ctx.lineTo(10, 12); ctx.lineWidth = 6; ctx.stroke(); // Short thick
+                
+                ctx.font = "14px Tahoma, sans-serif";
+                ctx.fillText("+", -25, -30);
+                ctx.fillText("-", 5, -30);
+            }
+            ctx.restore();
+        }
+
+        // Helper: Draw standard lamp symbol
+        function drawLamp(ctx, x, y, isOn, label) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Yellow Glow if ON
+            if (isOn) {
+                ctx.beginPath();
+                ctx.arc(0, 0, 30, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(253, 224, 71, 0.3)'; // yellow-300 with opacity
+                ctx.fill();
+            }
+
+            // Bulb Background
+            ctx.beginPath();
+            ctx.arc(0, 0, 18, 0, Math.PI * 2);
+            ctx.fillStyle = isOn ? '#fef08a' : '#334155'; // yellow-200 or slate-700
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = isOn ? '#ca8a04' : '#94a3b8';
+            ctx.stroke();
+
+            // The 'X' inside
+            ctx.strokeStyle = isOn ? '#854d0e' : '#cbd5e1';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            const r = 12.7; // 18 * sin(45) approx
+            ctx.moveTo(-r, -r); ctx.lineTo(r, r);
+            ctx.moveTo(r, -r); ctx.lineTo(-r, r);
+            ctx.stroke();
+
+            // Label
+            if (label) {
+                ctx.font = "bold 16px Cairo";
+                ctx.fillStyle = "#cbd5e1";
+                ctx.textAlign = "center";
+                ctx.fillText(label, 0, -35);
+            }
+
+            ctx.restore();
+        }
+
+        // Helper: Draw standard fuse symbol
+        function drawFuse(ctx, x, y, isBroken) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Rectangle body
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(-24, -12, 48, 24);
+            ctx.strokeStyle = '#38bdf8'; // sky-400 border
+            ctx.lineWidth = 2;
+            ctx.strokeRect(-24, -12, 48, 24);
+
+            // Wire inside
+            ctx.strokeStyle = '#f8fafc';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            if (isBroken) {
+                ctx.moveTo(-35, 0); ctx.lineTo(-12, 0);
+                ctx.moveTo(12, 0); ctx.lineTo(35, 0);
+                // Break spark
+                ctx.strokeStyle = '#fb923c'; // orange-400
+                ctx.moveTo(-12, 0); ctx.lineTo(-6, -6);
+                ctx.moveTo(12, 0); ctx.lineTo(6, 6);
+            } else {
+                ctx.moveTo(-35, 0); ctx.lineTo(35, 0);
+            }
+            ctx.stroke();
+
+            ctx.font = "14px Cairo";
+            ctx.fillStyle = "#94a3b8";
+            ctx.textAlign = "center";
+            ctx.fillText("منصهرة", 0, -20);
+
+            ctx.restore();
+        }
+
+        // Helper: Draw danger fire/sparks
+        function drawFire(ctx, x, y, time) {
+            ctx.save();
+            ctx.translate(x, y);
+            
+            // Pulsate scale based on time
+            const scale = 1 + Math.sin(time * 20) * 0.15;
+            ctx.scale(scale, scale);
+
+            // Outer red flame
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.moveTo(0, -25);
+            ctx.quadraticCurveTo(15, -10, 20, 5);
+            ctx.quadraticCurveTo(10, 15, 0, 25);
+            ctx.quadraticCurveTo(-10, 15, -20, 5);
+            ctx.quadraticCurveTo(-15, -10, 0, -25);
+            ctx.fill();
+
+            // Inner yellow flame
+            ctx.fillStyle = '#facc15';
+            ctx.scale(0.5, 0.5);
+            ctx.beginPath();
+            ctx.moveTo(0, -20);
+            ctx.quadraticCurveTo(15, -10, 15, 5);
+            ctx.quadraticCurveTo(10, 15, 0, 20);
+            ctx.quadraticCurveTo(-10, 15, -15, 5);
+            ctx.quadraticCurveTo(-15, -10, 0, -20);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Helper: Animate current (electrons) along a path
+        function drawCurrentFlow(ctx, pathPoints, time, speed, color, dotCount) {
+            if(pathPoints.length < 2) return;
+            
+            let totalLength = 0;
+            let lengths = [];
+            for (let i = 0; i < pathPoints.length - 1; i++) {
+                let dx = pathPoints[i+1][0] - pathPoints[i][0];
+                let dy = pathPoints[i+1][1] - pathPoints[i][1];
+                let len = Math.hypot(dx, dy);
+                lengths.push(len);
+                totalLength += len;
+            }
+
+            let spacing = totalLength / dotCount;
+            let offset = (time * speed) % spacing; 
+
+            for (let i = 0; i < dotCount; i++) {
+                let distAlongPath = (offset + i * spacing) % totalLength;
+                
+                let accumulated = 0;
+                for (let j = 0; j < pathPoints.length - 1; j++) {
+                    if (distAlongPath <= accumulated + lengths[j]) {
+                        let segDist = distAlongPath - accumulated;
+                        let ratio = segDist / lengths[j];
+                        let x = pathPoints[j][0] + (pathPoints[j+1][0] - pathPoints[j][0]) * ratio;
+                        let y = pathPoints[j][1] + (pathPoints[j+1][1] - pathPoints[j][1]) * ratio;
+                        
+                        ctx.beginPath();
+                        ctx.arc(x, y, 4, 0, Math.PI * 2);
+                        ctx.fillStyle = color;
+                        ctx.fill();
+                        
+                        // Add slight glow
+                        ctx.shadowBlur = 6;
+                        ctx.shadowColor = color;
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+                        break;
+                    }
+                    accumulated += lengths[j];
+                }
+            }
+        }
+
+        function renderFig1(time) {
+            const canvas = document.getElementById('canvas-fig1');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Coordinates setup
+            const leftX = 200, rightX = 600;
+            const topY = 100, bottomY = 250;
+            const batY = 175;
+            const lampY = 175;
+
+            // Draw Base Circuit Wires (with gaps for components)
+            drawWire(ctx, leftX, topY, rightX, topY); // Top wire
+            drawWire(ctx, leftX, bottomY, rightX, bottomY); // Bottom wire
+            
+            drawWire(ctx, leftX, batY - 15, leftX, topY); // Left top
+            drawWire(ctx, leftX, batY + 15, leftX, bottomY); // Left bottom
+            
+            drawWire(ctx, rightX, lampY - 25, rightX, topY); // Right top
+            drawWire(ctx, rightX, lampY + 25, rightX, bottomY); // Right bottom
+
+            // Draw Components
+            drawBattery(ctx, leftX, batY, true); // Vertical battery
+            drawLamp(ctx, rightX, lampY, !state1.shorted, "مصباح");
+
+            // Short Circuit Overlay
+            if (state1.shorted) {
+                // Red dashed wire forming a parallel bypass
+                const bypassX = rightX + 80;
+                drawWire(ctx, rightX, topY + 20, bypassX, topY + 20, '#ef4444', 3, true);
+                drawWire(ctx, bypassX, topY + 20, bypassX, bottomY - 20, '#ef4444', 3, true);
+                drawWire(ctx, bypassX, bottomY - 20, rightX, bottomY - 20, '#ef4444', 3, true);
+                
+                // Connection dots
+                ctx.fillStyle = '#ef4444';
+                ctx.beginPath(); ctx.arc(rightX, topY + 20, 6, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(rightX, bottomY - 20, 6, 0, Math.PI*2); ctx.fill();
+
+                // Labels
+                ctx.font = "bold 16px Cairo";
+                ctx.fillStyle = "#ef4444";
+                ctx.fillText("سلك استقصار", bypassX, topY + 10);
+                
+                ctx.fillStyle = "#34d399"; // emerald-400
+                ctx.textAlign = "center";
+                ctx.fillText("التيار يفضل طريق السلك الخالي من المقاومة", 400, 310);
+            }
+
+            // Animate Current (from + top of battery, around loop, to - bottom)
+            let particleColor = state1.shorted ? '#ef4444' : '#60a5fa';
+            let particleSpeed = state1.shorted ? 250 : 100;
+            
+            let path = [];
+            if (state1.shorted) {
+                // Path goes through bypass
+                path = [
+                    [leftX, batY-15], [leftX, topY], [rightX, topY],
+                    [rightX, topY+20], [rightX+80, topY+20], [rightX+80, bottomY-20], [rightX, bottomY-20],
+                    [rightX, bottomY], [leftX, bottomY], [leftX, batY+15]
+                ];
+            } else {
+                // Normal path through lamp
+                path = [
+                    [leftX, batY-15], [leftX, topY], [rightX, topY],
+                    [rightX, lampY-25], /* jump bulb */ [rightX, lampY+25],
+                    [rightX, bottomY], [leftX, bottomY], [leftX, batY+15]
+                ];
+            }
+            
+            drawCurrentFlow(ctx, path, time, particleSpeed, particleColor, state1.shorted ? 15 : 10);
+        }
+
+        function renderFig2(time) {
+            const canvas = document.getElementById('canvas-fig2');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Coordinates setup
+            const leftWireX = 200, rightWireX = 650;
+            const topWireY = 120, bottomWireY = 320;
+            
+            const batCenter = 425; // X center for bottom wire
+            const batLeft = batCenter - 15; // Positive terminal
+            const batRight = batCenter + 15; // Negative terminal
+            
+            const junc1 = 450; // X coord for L1 branch
+            const junc2 = 650; // X coord for L2 branch (far right edge)
+
+            // Draw Base Circuit Wires
+            drawWire(ctx, batLeft, bottomWireY, leftWireX, bottomWireY); // Bot Left
+            drawWire(ctx, leftWireX, bottomWireY, leftWireX, topWireY);  // Vert Left
+            drawWire(ctx, leftWireX, topWireY, junc2, topWireY);         // Top Horizontal
+            drawWire(ctx, junc2, topWireY, junc2, bottomWireY);          // Vert Right (L2)
+            drawWire(ctx, junc2, bottomWireY, batRight, bottomWireY);    // Bot Right
+            drawWire(ctx, junc1, topWireY, junc1, bottomWireY);          // Vert Middle (L1)
+
+            // Draw Battery (Horizontal)
+            ctx.clearRect(batLeft - 10, bottomWireY - 25, 50, 50); // Clear wire space
+            drawBattery(ctx, batCenter, bottomWireY, false); // false = horizontal, + on left
+
+            // Draw Fuse
+            const fuseX = 325;
+            ctx.clearRect(fuseX - 30, topWireY - 15, 60, 30);
+            if (state2.hasFuse) {
+                drawFuse(ctx, fuseX, topWireY, state2.fuseBroken);
+            } else {
+                drawWire(ctx, fuseX - 30, topWireY, fuseX + 30, topWireY); // Bridge gap if no fuse
+            }
+
+            // Draw Lamps
+            const lampY = 220;
+            ctx.clearRect(junc1 - 25, lampY - 25, 50, 50);
+            ctx.clearRect(junc2 - 25, lampY - 25, 50, 50);
+            
+            // Lamps are ON if normal AND fuse is intact
+            let l1On = state2.mode === 'normal' && !state2.fuseBroken;
+            let l2On = state2.mode === 'normal' && !state2.fuseBroken;
+            
+            drawLamp(ctx, junc1, lampY, l1On, "L1");
+            drawLamp(ctx, junc2, lampY, l2On, "L2");
+
+            // Short Circuit Rendering (L2)
+            if (state2.mode === 'shorted') {
+                const shortX = junc2 + 70;
+                const shortY1 = 150;
+                const shortY2 = 290;
+                
+                // Red wire
+                drawWire(ctx, junc2, shortY1, shortX, shortY1, '#ef4444', 3, true);
+                drawWire(ctx, shortX, shortY1, shortX, shortY2, '#ef4444', 3, true);
+                drawWire(ctx, shortX, shortY2, junc2, shortY2, '#ef4444', 3, true);
+                
+                ctx.fillStyle = '#ef4444';
+                ctx.beginPath(); ctx.arc(junc2, shortY1, 6, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(junc2, shortY2, 6, 0, Math.PI*2); ctx.fill();
+
+                ctx.font = "bold 14px Cairo";
+                ctx.fillStyle = "#ef4444";
+                ctx.fillText("سلك استقصار", shortX + 40, (shortY1+shortY2)/2);
+
+                if (!state2.hasFuse) {
+                    // Disaster mode! No fuse protection
+                    drawFire(ctx, batCenter, bottomWireY - 10, time);
+                    ctx.font = "bold 18px Cairo";
+                    ctx.fillStyle = "#ef4444";
+                    ctx.textAlign = "center";
+                    ctx.fillText("خطر! تيار عالي جداً يؤدي لتلف البطارية أو حريق", 400, 70);
+                }
+            }
+
+            // Messages / Status
+            if (state2.fuseBroken) {
+                ctx.font = "bold 18px Cairo";
+                ctx.fillStyle = "#f59e0b"; // amber-500
+                ctx.textAlign = "center";
+                ctx.fillText("المنصهرة انصهرت لحماية الدارة! الدارة مفتوحة الآن.", 400, 70);
+            }
+
+            // Animate Current
+            if (!state2.fuseBroken) {
+                if (state2.mode === 'normal') {
+                    // Split paths
+                    let path1 = [
+                        [batLeft, bottomWireY], [leftWireX, bottomWireY], [leftWireX, topWireY],
+                        [junc1, topWireY], [junc1, lampY-25], /*jump*/ [junc1, lampY+25], [junc1, bottomWireY], [batRight, bottomWireY]
+                    ];
+                    let path2 = [
+                        [batLeft, bottomWireY], [leftWireX, bottomWireY], [leftWireX, topWireY],
+                        [junc2, topWireY], [junc2, lampY-25], /*jump*/ [junc2, lampY+25], [junc2, bottomWireY], [batRight, bottomWireY]
+                    ];
+                    drawCurrentFlow(ctx, path1, time, 100, '#60a5fa', 8);
+                    drawCurrentFlow(ctx, path2, time, 100, '#60a5fa', 10);
+                } else if (state2.mode === 'shorted' && !state2.hasFuse) {
+                    // Massive current through short ONLY
+                    let pathShort = [
+                        [batLeft, bottomWireY], [leftWireX, bottomWireY], [leftWireX, topWireY],
+                        [junc2, topWireY], [junc2, 150], [junc2+70, 150], [junc2+70, 290], [junc2, 290],
+                        [junc2, bottomWireY], [batRight, bottomWireY]
+                    ];
+                    drawCurrentFlow(ctx, pathShort, time, 400, '#ef4444', 25); // Fast, red, dense
+                } else if (state2.mode === 'shorted' && state2.hasFuse) {
+                    // This block executes for the brief ~0.5s BEFORE fuse breaks
+                    let pathShort = [
+                        [batLeft, bottomWireY], [leftWireX, bottomWireY], [leftWireX, topWireY],
+                        [junc2, topWireY], [junc2, 150], [junc2+70, 150], [junc2+70, 290], [junc2, 290],
+                        [junc2, bottomWireY], [batRight, bottomWireY]
+                    ];
+                    drawCurrentFlow(ctx, pathShort, time, 400, '#fb923c', 20); // Fast orange current
+                }
+            }
+        }
+
+        function animate() {
+            let now = Date.now();
+            let time = (now - startTime) / 1000;
+
+            renderFig1(time);
+            renderFig2(time);
+
+            requestAnimationFrame(animate);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fig 1 UI Setup
+            const btnF1Normal = document.getElementById('btn-fig1-normal');
+            const btnF1Short = document.getElementById('btn-fig1-short');
+            const msgF1 = document.getElementById('msg-fig1');
+
+            btnF1Normal.addEventListener('click', () => {
+                state1.shorted = false;
+                btnF1Normal.className = 'btn btn-active-blue';
+                btnF1Short.className = 'btn btn-inactive';
+                msgF1.textContent = 'التيار يمر عبر المصباح ويضيء بشكل طبيعي.';
+                msgF1.className = 'text-sm text-emerald-400 font-semibold';
+            });
+
+            btnF1Short.addEventListener('click', () => {
+                state1.shorted = true;
+                btnF1Short.className = 'btn btn-active-red';
+                btnF1Normal.className = 'btn btn-inactive';
+                msgF1.textContent = 'التيار يسلك مسار الاستقصار (المقاومة الأقل)، المصباح ينطفئ.';
+                msgF1.className = 'text-sm text-red-400 font-semibold';
+            });
+
+            // Fig 2 UI Setup
+            const btnF2Normal = document.getElementById('btn-fig2-normal');
+            const btnF2Short = document.getElementById('btn-fig2-short');
+            const chkFuse = document.getElementById('chk-fuse');
+
+            btnF2Normal.addEventListener('click', () => {
+                state2.mode = 'normal';
+                state2.fuseBroken = false; // "Repair" the fuse when returning to normal
+                clearTimeout(state2.timerId);
+                
+                btnF2Normal.className = 'btn btn-active-blue';
+                btnF2Short.className = 'btn btn-inactive';
+            });
+
+            btnF2Short.addEventListener('click', () => {
+                if (state2.mode === 'shorted') return;
+                
+                state2.mode = 'shorted';
+                btnF2Short.className = 'btn btn-active-red';
+                btnF2Normal.className = 'btn btn-inactive';
+
+                if (state2.hasFuse && !state2.fuseBroken) {
+                    // Simulate fuse breaking after a short delay of high current
+                    state2.timerId = setTimeout(() => {
+                        state2.fuseBroken = true;
+                    }, 500); // 0.5s delay
+                }
+            });
+
+            chkFuse.addEventListener('change', (e) => {
+                state2.hasFuse = e.target.checked;
+                // If we disable fuse while it was broken, and we are in normal mode, reset it
+                if (!state2.hasFuse) {
+                    state2.fuseBroken = false;
+                }
+            });
+
+            // Start loop
+            animate();
+        });
+    </script>
+</body>
+</html>

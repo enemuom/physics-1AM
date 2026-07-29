@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الكسوف والخسوف - الظواهر الضوئية</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* المتغيرات الإلزامية */
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #f97316; /* الظواهر الضوئية */
+            --accent2:#fb923c;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 10px;
+        }
+
+        /* 0.4 — شريط التنقل العلوي الثابت */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        /* الترويسة */
+        .lesson-header {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--dark3);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .lesson-header > span:first-child {
+            color: var(--muted);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .lesson-badge {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .lesson-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .lesson-header h1 em {
+            color: var(--accent);
+            font-style: normal;
+        }
+        .lesson-meta { color: var(--muted); font-size: 0.9rem; }
+
+        /* 0.1 — شريط التبويبات الإلزامي */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* الدرس النظري */
+        .objectives-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--accent);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .objectives-box h3 { color: var(--text); margin-bottom: 10px; }
+        .objectives-box ul { margin-right: 20px; color: var(--muted); }
+
+        .sec-title { display: flex; align-items: center; gap: 10px; margin: 30px 0 15px; }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-line { flex: 1; border: none; border-top: 1px solid var(--border); }
+
+        .def-box {
+            background: var(--card);
+            border-right: 4px solid var(--gold);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .def-box strong { font-family: 'Amiri', serif; font-size: 1.2rem; color: var(--text); }
+        .def-box span.fr { color: var(--muted); font-size: 0.9rem; }
+
+        .highlight-box { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600; }
+        .highlight-box.tip { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--green); color: #6ee7b7; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .info-table th, .info-table td { padding: 12px; border: 1px solid var(--border); text-align: right; }
+        .info-table th { background: var(--accent); color: #fff; }
+        .info-table tr:nth-child(even) { background: var(--card); }
+
+        /* الرسوم SVG */
+        .diagram-figure {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .diagram-wrap { max-width: 100%; overflow: hidden; border-radius: 8px; background: var(--dark2); }
+        .lesson-diagram { width: 100%; height: auto; max-width: 500px; }
+        .fig-title { margin-top: 10px; color: var(--muted); font-size: 0.9rem; }
+
+        /* المحاكاة */
+        .sim-wrap { background: var(--dark3); border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 25px; }
+        .sim-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
+        .sim-title { color: var(--text); font-size: 1.2rem; }
+        /* 0.3 — شارة المحاكاة */
+        .sim-badge { background: rgba(245, 158, 11, 0.2); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; }
+        .sim-description { background: var(--card); border-right: 3px solid var(--accent); padding: 10px; margin-bottom: 15px; font-size: 0.95rem; border-radius: 4px; }
+        .sim-canvas-container { width: 100%; height: 250px; background: #000; border-radius: 8px; overflow: hidden; position: relative; border: 1px solid var(--border); }
+        canvas { display: block; width: 100%; height: 100%; }
+        
+        .sim-controls { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .control-group { display: flex; align-items: center; gap: 10px; background: var(--dark4); padding: 10px; border-radius: 6px; }
+        .control-group label { flex: 1; color: var(--muted); font-size: 0.9rem; }
+        .val-badge { background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
+        input[type="range"] { flex: 2; accent-color: var(--accent); }
+
+        /* التمارين */
+        .q-card { background: var(--dark3); border: 1px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .q-num { color: var(--accent); font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; }
+        .q-text { margin-bottom: 15px; font-size: 1.1rem; }
+        .q-options { display: flex; flex-direction: column; gap: 8px; }
+        .q-option { background: var(--dark4); padding: 10px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; }
+        .q-option:hover { border-color: var(--accent); }
+        .q-option input { margin-left: 10px; accent-color: var(--accent); }
+        .q-feedback { margin-top: 10px; padding: 10px; border-radius: 6px; display: none; font-size: 0.9rem; }
+        .q-feedback.correct { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--green); color: var(--green); }
+        .q-feedback.wrong { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--red); color: #fca5a5; }
+        .q-diagram { width: 100%; max-width: 400px; display: block; margin: 0 auto 15px; background: var(--dark2); border-radius: 8px; }
+        .submit-btn { background: var(--accent); color: #fff; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; width: 100%; font-size: 1.1rem; font-weight: bold; margin-top: 10px; }
+
+        /* الملخص */
+        .summary-card { background: var(--dark3); border-radius: 12px; padding: 20px; border: 1px solid var(--border); }
+        .summary-header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .summary-title { color: var(--accent); font-size: 1.5rem; }
+        .summary-section-title { color: var(--gold); margin: 20px 0 10px; font-size: 1.2rem; border-bottom: 1px dashed var(--border); padding-bottom: 5px; }
+        .concept-map { width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; }
+        .summary-list { list-style: none; padding: 0; }
+        .summary-list li { position: relative; padding-right: 25px; margin-bottom: 10px; color: var(--text); }
+        .summary-list li::before { content: "✦"; position: absolute; right: 0; color: var(--accent); }
+        .print-btn { background: var(--dark4); color: var(--text); border: 1px solid var(--border); padding: 10px 20px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 20px; font-size: 1rem; transition: background 0.3s; }
+        .print-btn:hover { background: var(--accent); color: #fff; }
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #111 !important; }
+            .summary-card { box-shadow: none; border: 1px solid #ccc; padding: 0; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; } 
+            body { font-size: 12pt; }
+            .summary-section-title { font-size: 14pt; color: #000; }
+            .print-btn { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 0.4 — شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="../index.html">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <div class="lesson-header">
+        <span>السنة الأولى متوسط › الظواهر الضوئية › الدرس 07</span>
+        <span class="lesson-badge">المقطع الرابع</span>
+        <h1>الكسوف <em>والخسوف</em></h1>
+        <p class="lesson-meta">منهاج الجيل الثاني | حصة واحدة</p>
+    </div>
+
+    <!-- 0.1 — شريط التبويبات -->
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+        <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+        <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+        <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+    </nav>
+
+    <!-- التبويب 1: الدرس النظري -->
+    <div id="tab-lesson" class="tab-content active">
+        
+        <div class="objectives-box">
+            <h3>🎯 الأهداف التعلمية</h3>
+            <ul>
+                <li>تفسير ظاهرتي الكسوف والخسوف استناداً لمبدأ الانتشار المستقيمي للضوء.</li>
+                <li>تحديد شروط حدوث كل ظاهرة (استقامة الأجرام).</li>
+                <li>التمييز بين منطقة الظل (الظاهرة الكلية) وشبه الظل (الظاهرة الجزئية).</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box tip">
+            📌 <strong>تذكير مهم:</strong> الكسوف والخسوف هما تطبيقان طبيعيان ومباشران لتشكل الظل وشبه الظل نتيجة حجب جسم معتم (القمر أو الأرض) لمنبع ضوئي واسع (الشمس).
+        </div>
+
+        <div class="sec-title">
+            <span class="sec-icon">🌑</span>
+            <h2>1. كسوف الشمس</h2>
+            <hr class="sec-line">
+        </div>
+
+        <div class="def-box">
+            <strong>كسوف الشمس</strong> <span class="fr">(Éclipse solaire)</span>
+            <p>يحدث نهاراً عندما يقع <strong>القمر بين الأرض والشمس</strong>، وتكون الأجرام الثلاثة على استقامة واحدة. يحجب القمر ضوء الشمس عن جزء من الأرض، ويكون القمر في طور المحاق.</p>
+        </div>
+
+        <!-- شكل 1: كسوف الشمس ثلاثي الأبعاد -->
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (1) — آلية حدوث كسوف الشمس وتشكل ظل القمر</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#fcd34d" />
+                            <stop offset="70%" stop-color="#f59e0b" />
+                            <stop offset="100%" stop-color="#d97706" />
+                        </radialGradient>
+                        <radialGradient id="earthGrad" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#60a5fa" />
+                            <stop offset="100%" stop-color="#1e3a8a" />
+                        </radialGradient>
+                        <radialGradient id="moonGrad" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#cbd5e1" />
+                            <stop offset="100%" stop-color="#334155" />
+                        </radialGradient>
+                    </defs>
+
+                    <!-- خط الاستقامة -->
+                    <line x1="50" y1="110" x2="450" y2="110" stroke="rgba(255,255,255,0.2)" stroke-dasharray="4,4"/>
+
+                    <!-- أشعة الشمس (حدود الظل وشبه الظل) -->
+                    <!-- شبه الظل -->
+                    <polygon points="250,95 250,125 450,60 450,160" fill="rgba(255,255,255,0.1)"/>
+                    <line x1="90" y1="70" x2="450" y2="160" stroke="#fcd34d" stroke-width="1" stroke-dasharray="2,2"/>
+                    <line x1="90" y1="150" x2="450" y2="60" stroke="#fcd34d" stroke-width="1" stroke-dasharray="2,2"/>
+                    
+                    <!-- مخروط الظل الكلي -->
+                    <polygon points="250,95 250,125 350,110" fill="#000" opacity="0.9"/>
+                    <line x1="90" y1="70" x2="350" y2="110" stroke="#f59e0b" stroke-width="1"/>
+                    <line x1="90" y1="150" x2="350" y2="110" stroke="#f59e0b" stroke-width="1"/>
+
+                    <!-- الشمس -->
+                    <circle cx="50" cy="110" r="40" fill="url(#sunGrad)" filter="drop-shadow(0 0 10px #f59e0b)"/>
+                    <text x="50" y="170" fill="#fbbf24" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">الشمس</text>
+
+                    <!-- الأرض -->
+                    <g transform="translate(420, 110)">
+                        <circle cx="0" cy="0" r="35" fill="url(#earthGrad)"/>
+                        <path d="M 0,-35 A 35,35 0 0,0 0,35 Z" fill="#000" opacity="0.6"/> <!-- الليل -->
+                        <text x="0" y="60" fill="#60a5fa" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">الأرض</text>
+                    </g>
+
+                    <!-- القمر (في المنتصف) -->
+                    <g transform="translate(250, 110)">
+                        <circle cx="0" cy="0" r="15" fill="url(#moonGrad)"/>
+                        <path d="M 0,-15 A 15,15 0 0,1 0,15 Z" fill="#000" opacity="0.8"/> <!-- مظلم من جهة الأرض -->
+                        <text x="0" y="40" fill="#cbd5e1" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">القمر</text>
+                    </g>
+
+                    <!-- التسميات -->
+                    <text x="350" y="85" fill="#fcd34d" font-size="10" text-anchor="middle">شبه ظل (جزئي)</text>
+                    <text x="310" y="125" fill="#ef4444" font-size="10" text-anchor="middle">ظل (كلي)</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">🌕</span>
+            <h2>2. خسوف القمر</h2>
+            <hr class="sec-line">
+        </div>
+
+        <div class="def-box">
+            <strong>خسوف القمر</strong> <span class="fr">(Éclipse lunaire)</span>
+            <p>يحدث ليلاً عندما تقع <strong>الأرض بين الشمس والقمر</strong>، على استقامة واحدة. يحجب ظل الأرض ضوء الشمس عن القمر، ويحدث الخسوف حصراً عندما يكون القمر في طور البدر.</p>
+        </div>
+
+        <!-- شكل 2: خسوف القمر ثلاثي الأبعاد -->
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (2) — آلية حدوث خسوف القمر ودخوله في ظل الأرض</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <!-- خط الاستقامة -->
+                    <line x1="50" y1="110" x2="450" y2="110" stroke="rgba(255,255,255,0.2)" stroke-dasharray="4,4"/>
+
+                    <!-- أشعة الشمس وظل الأرض -->
+                    <!-- شبه الظل -->
+                    <polygon points="250,75 250,145 480,40 480,180" fill="rgba(255,255,255,0.05)"/>
+                    <line x1="90" y1="70" x2="480" y2="180" stroke="#fcd34d" stroke-width="1" stroke-dasharray="2,2"/>
+                    <line x1="90" y1="150" x2="480" y2="40" stroke="#fcd34d" stroke-width="1" stroke-dasharray="2,2"/>
+                    
+                    <!-- مخروط الظل الكلي للأرض -->
+                    <polygon points="250,75 250,145 480,95 480,125" fill="#000" opacity="0.8"/>
+                    <line x1="90" y1="70" x2="480" y2="95" stroke="#f59e0b" stroke-width="1"/>
+                    <line x1="90" y1="150" x2="480" y2="125" stroke="#f59e0b" stroke-width="1"/>
+
+                    <!-- الشمس -->
+                    <circle cx="50" cy="110" r="40" fill="url(#sunGrad)" filter="drop-shadow(0 0 10px #f59e0b)"/>
+                    <text x="50" y="170" fill="#fbbf24" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">الشمس</text>
+
+                    <!-- الأرض (في المنتصف) -->
+                    <g transform="translate(250, 110)">
+                        <circle cx="0" cy="0" r="35" fill="url(#earthGrad)"/>
+                        <path d="M 0,-35 A 35,35 0 0,1 0,35 Z" fill="#000" opacity="0.6"/> <!-- الليل يمين -->
+                        <text x="0" y="55" fill="#60a5fa" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">الأرض</text>
+                    </g>
+
+                    <!-- القمر (في منطقة الظل) -->
+                    <g transform="translate(420, 110)">
+                        <!-- لون القمر المحمر أثناء الخسوف الكلي -->
+                        <circle cx="0" cy="0" r="15" fill="#7f1d1d" filter="drop-shadow(0 0 3px #ef4444)"/>
+                        <text x="0" y="40" fill="#cbd5e1" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">القمر</text>
+                    </g>
+
+                    <text x="350" y="100" fill="#ef4444" font-size="10" text-anchor="middle">ظل الأرض</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">⚖️</span>
+            <h2>3. جدول المقارنة</h2>
+            <hr class="sec-line">
+        </div>
+
+        <table class="info-table">
+            <tr>
+                <th>وجه المقارنة</th>
+                <th>الكسوف (سولار)</th>
+                <th>الخسوف (لونار)</th>
+            </tr>
+            <tr>
+                <td><strong>الجسم الحاجز للضوء</strong></td>
+                <td>القمر (بين الأرض والشمس)</td>
+                <td>الأرض (بين القمر والشمس)</td>
+            </tr>
+            <tr>
+                <td><strong>طور القمر</strong></td>
+                <td>محاق (لا يرى)</td>
+                <td>بدر (مكتمل)</td>
+            </tr>
+            <tr>
+                <td><strong>الجسم المتأثر بالظل</strong></td>
+                <td>الأرض يقع عليها ظل القمر</td>
+                <td>القمر يقع عليه ظل الأرض</td>
+            </tr>
+            <tr>
+                <td><strong>وقت الحدوث</strong></td>
+                <td>في النهار</td>
+                <td>في الليل</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <!-- التبويب 2: المحاكاة التفاعلية -->
+    <div id="tab-sim" class="tab-content">
+        
+        <!-- المحاكاة 1: كسوف الشمس -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">المحاكاة 1: مسار القمر وكسوف الشمس</h3>
+                <span class="sim-badge">تفاعلي - مداري</span>
+            </div>
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>تكون ظل القمر على الأرض</strong>. حرّك <strong>شريط مدار القمر</strong> لترى كيف يقطع القمر المسافة بين الأرض والشمس مشكلاً الكسوف عند وصوله لمنطقة الاستقامة.</p>
+            </div>
+            
+            <div class="sim-canvas-container">
+                <canvas id="simCanvasSolar"></canvas>
+            </div>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>موقع القمر في المدار: <span id="val-solar" class="val-badge">عادي</span></label>
+                    <input type="range" id="slider-solar" min="0" max="180" value="0" step="1">
+                </div>
+            </div>
+        </div>
+
+        <!-- المحاكاة 2: خسوف القمر -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">المحاكاة 2: دخول القمر في مخروط الظل</h3>
+                <span class="sim-badge">تفاعلي - ألوان</span>
+            </div>
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>ظاهرة الخسوف الكلي والجزئي</strong>. حرّك <strong>شريط مسار القمر</strong> لترى كيف يتغير لون القمر إلى الأحمر الداكن عند دخوله كلياً في ظل الأرض (خسوف كلي).</p>
+            </div>
+            
+            <div class="sim-canvas-container">
+                <canvas id="simCanvasLunar"></canvas>
+            </div>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>دخول القمر في الظل: <span id="val-lunar" class="val-badge">مضاء</span></label>
+                    <input type="range" id="slider-lunar" min="0" max="180" value="0" step="1">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- التبويب 3: التمارين -->
+    <div id="tab-exercises" class="tab-content">
+        <div class="objectives-box">
+            <h3>اختبر معلوماتك</h3>
+            <p style="color: var(--muted); font-size:0.9rem;">أجب عن الأسئلة لتقييم استيعابك للمفاهيم الفيزيائية والفلكية المدروسة.</p>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 1</div>
+            <div class="q-text">ما هو الترتيب الصحيح للأجرام السماوية أثناء حدوث الكسوف؟</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q1" value="0"> الأرض - الشمس - القمر.</label>
+                <label class="q-option"><input type="radio" name="q1" value="1"> الشمس - القمر - الأرض.</label>
+                <label class="q-option"><input type="radio" name="q1" value="0"> الشمس - الأرض - القمر.</label>
+            </div>
+            <div class="q-feedback" id="fb1">الشرح: في الكسوف، يقطع القمر ضوء الشمس عن الأرض.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 2</div>
+            <div class="q-text">الظاهرتان (الكسوف والخسوف) تعتمدان على مبدأ فيزيائي هو:</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q2" value="0"> انكسار الضوء عبر الغلاف الجوي.</label>
+                <label class="q-option"><input type="radio" name="q2" value="1"> الانتشار المستقيمي للضوء وتكون الظلال.</label>
+                <label class="q-option"><input type="radio" name="q2" value="0"> انعكاس الضوء على سطح الماء.</label>
+            </div>
+            <div class="q-feedback" id="fb2">الشرح: تشكل الظل وشبه الظل دليل على أن الضوء ينتشر في خطوط مستقيمة.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 3</div>
+            <div class="q-text">يحدث الخسوف الكلي للقمر عندما:</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q3" value="1"> يدخل القمر بالكامل في منطقة ظل الأرض.</label>
+                <label class="q-option"><input type="radio" name="q3" value="0"> يدخل القمر في منطقة شبه ظل الأرض.</label>
+                <label class="q-option"><input type="radio" name="q3" value="0"> يمر القمر أمام الشمس تماماً.</label>
+            </div>
+            <div class="q-feedback" id="fb3">الشرح: الخسوف الكلي يتطلب حجب الضوء كلياً، أي التواجد في مخروط الظل التام للأرض.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 4</div>
+            <div class="q-text">في أي طور يكون القمر عادة عند حدوث خسوف القمر؟</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q4" value="0"> المحاق.</label>
+                <label class="q-option"><input type="radio" name="q4" value="1"> البدر.</label>
+                <label class="q-option"><input type="radio" name="q4" value="0"> التربيع الأول.</label>
+            </div>
+            <div class="q-feedback" id="fb4">الشرح: في الخسوف تكون الأرض في المنتصف، مما يعني أن القمر في الجهة المقابلة، وهو موضع البدر.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 5</div>
+            <div class="q-text">أي الظاهرتين يمكن لسكان الأرض رؤيتها بشكل أوسع ولمدة أطول؟</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q5" value="0"> كسوف الشمس.</label>
+                <label class="q-option"><input type="radio" name="q5" value="1"> خسوف القمر.</label>
+                <label class="q-option"><input type="radio" name="q5" value="0"> لهما نفس مدة ومساحة الرؤية.</label>
+            </div>
+            <div class="q-feedback" id="fb5">الشرح: ظل الأرض كبير جداً مقارنة بالقمر، لذا يستمر الخسوف طويلاً ويرى من نصف الكرة الليلي، عكس ظل القمر الصغير أثناء الكسوف.</div>
+        </div>
+
+        <!-- السؤال السادس: المخطط -->
+        <div class="q-card q-diagram-type">
+            <div class="q-num">السؤال 6</div>
+            <div class="q-text">تأمل المخطط الهندسي أدناه. أي ظاهرة فلكية يمثلها هذا المخطط؟</div>
+            <svg class="q-diagram" viewBox="0 0 400 150">
+                <line x1="20" y1="75" x2="380" y2="75" stroke="rgba(255,255,255,0.2)" stroke-dasharray="4,4"/>
+                <circle cx="50" cy="75" r="30" fill="#f59e0b"/>
+                <circle cx="200" cy="75" r="20" fill="#3b82f6"/>
+                <circle cx="330" cy="75" r="10" fill="#94a3b8"/>
+                <polygon points="200,55 200,95 350,75" fill="#000" opacity="0.6"/>
+                <text x="50" y="125" fill="#fcd34d" font-size="12" text-anchor="middle">الجسم 1</text>
+                <text x="200" y="115" fill="#60a5fa" font-size="12" text-anchor="middle">الجسم 2</text>
+                <text x="330" y="105" fill="#cbd5e1" font-size="12" text-anchor="middle">الجسم 3</text>
+            </svg>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q6" value="0"> كسوف الشمس.</label>
+                <label class="q-option"><input type="radio" name="q6" value="1"> خسوف القمر.</label>
+                <label class="q-option"><input type="radio" name="q6" value="0"> أطوار القمر العادية.</label>
+            </div>
+            <div class="q-feedback" id="fb6">الشرح: الجسم الكبير الأزرق في المنتصف يمثل الأرض، وهي تحجب الضوء عن الجسم الأصغر (القمر)، مما يعني حدوث خسوف.</div>
+        </div>
+
+        <button class="submit-btn" onclick="checkQuiz()">تحقق من الإجابات</button>
+    </div>
+
+    <!-- التبويب 4: ملخص الكراس -->
+    <div id="tab-summary" class="tab-content">
+        <div class="summary-card">
+            <div class="summary-header">
+                <div class="lesson-meta">السنة الأولى متوسط | المقطع 4 | الظواهر الضوئية</div>
+                <h2 class="summary-title">ملخص: الكسوف والخسوف</h2>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                <div class="concept-map-wrap">
+                    <svg class="concept-map" viewBox="0 0 500 220">
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--muted)"/>
+                            </marker>
+                        </defs>
+                        
+                        <!-- المبدأ الأساسي -->
+                        <rect x="175" y="10" width="150" height="40" rx="5" fill="var(--dark4)" stroke="var(--accent)"/>
+                        <text x="250" y="35" fill="var(--text)" font-size="12" text-anchor="middle">الانتشار المستقيمي للضوء</text>
+
+                        <!-- تفريع الظلال -->
+                        <line x1="250" y1="50" x2="250" y2="70" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                        <rect x="175" y="70" width="150" height="30" rx="5" fill="var(--dark2)" stroke="var(--border)"/>
+                        <text x="250" y="90" fill="var(--text)" font-size="12" text-anchor="middle">تشكل الظل وشبه الظل</text>
+
+                        <!-- المسار الأيمن (خسوف) -->
+                        <line x1="250" y1="100" x2="125" y2="130" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                        <rect x="50" y="130" width="150" height="35" rx="5" fill="var(--dark3)" stroke="var(--accent2)"/>
+                        <text x="125" y="152" fill="var(--text)" font-size="12" text-anchor="middle">الأرض في المنتصف</text>
+                        <line x1="125" y1="165" x2="125" y2="185" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                        <rect x="50" y="185" width="150" height="30" rx="5" fill="rgba(239, 68, 68, 0.2)" stroke="var(--red)"/>
+                        <text x="125" y="205" fill="var(--text)" font-size="12" font-weight="bold" text-anchor="middle">خسوف القمر</text>
+
+                        <!-- المسار الأيسر (كسوف) -->
+                        <line x1="250" y1="100" x2="375" y2="130" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                        <rect x="300" y="130" width="150" height="35" rx="5" fill="var(--dark3)" stroke="var(--gold)"/>
+                        <text x="375" y="152" fill="var(--text)" font-size="12" text-anchor="middle">القمر في المنتصف</text>
+                        <line x1="375" y1="165" x2="375" y2="185" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                        <rect x="300" y="185" width="150" height="30" rx="5" fill="rgba(251, 191, 36, 0.2)" stroke="var(--gold)"/>
+                        <text x="375" y="205" fill="var(--text)" font-size="12" font-weight="bold" text-anchor="middle">كسوف الشمس</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+                <ul class="summary-list">
+                    <li>يجب أن تتواجد المراكز الثلاثة (الشمس، الأرض، القمر) على نفس الاستقامة وفي مستوى واحد لحدوث الظاهرة.</li>
+                    <li><strong>الكسوف (سولار):</strong> نهاراً، القمر يحجب الشمس عن الأرض. يقع ظل القمر على جزء من الأرض.</li>
+                    <li><strong>الخسوف (لونار):</strong> ليلاً، الأرض تحجب الشمس عن القمر. يدخل القمر في مخروط ظل الأرض الممتد في الفضاء.</li>
+                    <li>الخسوف الكلي يظهر فيه القمر بلون أحمر داكن ولا يختفي تماماً بسبب انكسار بعض الأشعة عبر الغلاف الجوي للأرض.</li>
+                </ul>
+            </div>
+
+            <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+        </div>
+    </div>
+
+    <script>
+        // 3.9.1 كود إدارة التبويبات (إلزامي لحل مشكلة الكانفاس المخفي)
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSimulations === 'function') updateSimulations();
+                }, 50);
+            }
+        }
+
+        // إعدادات Canvas
+        const canvasSolar = document.getElementById('simCanvasSolar');
+        const ctxSolar = canvasSolar.getContext('2d');
+        const canvasLunar = document.getElementById('simCanvasLunar');
+        const ctxLunar = canvasLunar.getContext('2d');
+
+        // متغيرات المحاكاة
+        let simSolarAngle = 0; // زاوية دوران القمر في محاكاة الكسوف
+        let simLunarAngle = 0; // زاوية دوران القمر في محاكاة الخسوف
+
+        // 0.2 — دالة resizeCanvas الإلزامية لمنع التغبيش
+        function resizeCanvas() {
+            const containers = [
+                { canvas: canvasSolar, ctx: ctxSolar },
+                { canvas: canvasLunar, ctx: ctxLunar }
+            ];
+
+            containers.forEach(item => {
+                const container = item.canvas.parentElement;
+                if (container.clientWidth === 0) return;
+                
+                const dpr = window.devicePixelRatio || 1;
+                item.canvas.width  = container.clientWidth  * dpr;
+                item.canvas.height = container.clientHeight * dpr;
+                item.canvas.style.width  = container.clientWidth  + 'px';
+                item.canvas.style.height = container.clientHeight + 'px';
+                
+                item.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            });
+        }
+
+        // --- رسم محاكاة 1: كسوف الشمس ---
+        function drawSolarSim() {
+            // البند 0.5: clearRect كأول سطر
+            const w = canvasSolar.parentElement.clientWidth;
+            const h = canvasSolar.parentElement.clientHeight;
+            ctxSolar.clearRect(0, 0, w, h);
+            if (w === 0) return;
+
+            const cx = w / 2;
+            const cy = h / 2;
+
+            // الشمس على اليسار
+            const sunX = 50;
+            ctxSolar.beginPath();
+            ctxSolar.arc(sunX, cy, 35, 0, Math.PI * 2);
+            ctxSolar.fillStyle = "#f59e0b";
+            ctxSolar.fill();
+
+            // الأرض على اليمين
+            const earthX = cx + 100;
+            ctxSolar.beginPath();
+            ctxSolar.arc(earthX, cy, 25, 0, Math.PI * 2);
+            ctxSolar.fillStyle = "#3b82f6";
+            ctxSolar.fill();
+
+            // القمر يدور في مسار (قوس) حول الأرض
+            const orbitR = 80;
+            ctxSolar.beginPath();
+            ctxSolar.arc(earthX, cy, orbitR, Math.PI/2, Math.PI*1.5);
+            ctxSolar.strokeStyle = "rgba(255,255,255,0.1)";
+            ctxSolar.stroke();
+
+            // حساب موضع القمر بناء على الزاوية (من 0 إلى 180 درجة)
+            // الزاوية 90 تعني استقامة تامة (كسوف)
+            const rad = (simSolarAngle + 90) * Math.PI / 180; 
+            const moonX = earthX + orbitR * Math.cos(rad);
+            const moonY = cy + orbitR * Math.sin(rad);
+
+            // الظل (فقط إذا كان القمر قريباً من المنتصف)
+            let isEclipse = false;
+            let statusText = "عادي (لا كسوف)";
+            if (simSolarAngle > 75 && simSolarAngle < 105) {
+                isEclipse = true;
+                statusText = simSolarAngle === 90 ? "⚠️ كسوف كلي!" : "كسوف جزئي";
+                
+                ctxSolar.beginPath();
+                ctxSolar.moveTo(moonX, moonY - 10);
+                ctxSolar.lineTo(earthX, cy);
+                ctxSolar.lineTo(moonX, moonY + 10);
+                ctxSolar.fillStyle = "rgba(0, 0, 0, 0.8)";
+                ctxSolar.fill();
+            }
+
+            document.getElementById('val-solar').innerText = statusText;
+            document.getElementById('val-solar').style.color = isEclipse ? "#fff" : "var(--accent)";
+            document.getElementById('val-solar').style.backgroundColor = isEclipse ? "var(--red)" : "var(--accent)";
+
+            // رسم القمر
+            ctxSolar.beginPath();
+            ctxSolar.arc(moonX, moonY, 10, 0, Math.PI * 2);
+            ctxSolar.fillStyle = "#cbd5e1";
+            ctxSolar.fill();
+        }
+
+        // --- رسم محاكاة 2: خسوف القمر ---
+        function drawLunarSim() {
+            const w = canvasLunar.parentElement.clientWidth;
+            const h = canvasLunar.parentElement.clientHeight;
+            ctxLunar.clearRect(0, 0, w, h);
+            if (w === 0) return;
+
+            const cx = w / 2;
+            const cy = h / 2;
+
+            // الشمس على اليسار
+            const sunX = 30;
+            ctxLunar.beginPath();
+            ctxLunar.arc(sunX, cy, 40, 0, Math.PI * 2);
+            ctxLunar.fillStyle = "#f59e0b";
+            ctxLunar.fill();
+
+            // الأرض في المنتصف
+            const earthX = cx;
+            ctxLunar.beginPath();
+            ctxLunar.arc(earthX, cy, 25, 0, Math.PI * 2);
+            ctxLunar.fillStyle = "#3b82f6";
+            ctxLunar.fill();
+
+            // ظل الأرض يمتد لليمين
+            ctxLunar.beginPath();
+            ctxLunar.moveTo(earthX, cy - 25);
+            ctxLunar.lineTo(w, cy - 10);
+            ctxLunar.lineTo(w, cy + 10);
+            ctxLunar.lineTo(earthX, cy + 25);
+            ctxLunar.fillStyle = "rgba(0,0,0,0.7)";
+            ctxLunar.fill();
+
+            // شبه الظل
+            ctxLunar.beginPath();
+            ctxLunar.moveTo(earthX, cy - 25);
+            ctxLunar.lineTo(w, cy - 50);
+            ctxLunar.lineTo(w, cy + 50);
+            ctxLunar.lineTo(earthX, cy + 25);
+            ctxLunar.fillStyle = "rgba(255,255,255,0.05)";
+            ctxLunar.fill();
+
+            // القمر يدور في قوس خلف الأرض
+            const orbitR = 120;
+            ctxLunar.beginPath();
+            ctxLunar.arc(earthX, cy, orbitR, -Math.PI/4, Math.PI/4);
+            ctxLunar.strokeStyle = "rgba(255,255,255,0.1)";
+            ctxLunar.stroke();
+
+            // حساب موضع القمر (زاوية من -45 إلى +45، نحولها من السلايدر 0-180)
+            const rad = ((simLunarAngle / 180) * 90 - 45) * Math.PI / 180;
+            const moonX = earthX + orbitR * Math.cos(rad);
+            const moonY = cy + orbitR * Math.sin(rad);
+
+            // تحديد حالة الظل ولون القمر
+            let moonColor = "#cbd5e1"; // مضاء
+            let statusText = "مضاء (بدر)";
+            let badgeBg = "var(--accent)";
+
+            // إذا دخل في مخروط الظل المركزي (Y قريب من المركز)
+            if (Math.abs(moonY - cy) < 15) {
+                moonColor = "#7f1d1d"; // أحمر دموي
+                statusText = "⚠️ خسوف كلي!";
+                badgeBg = "var(--red)";
+            } else if (Math.abs(moonY - cy) < 45) {
+                moonColor = "#475569"; // باهت
+                statusText = "خسوف جزئي";
+                badgeBg = "var(--gold)";
+            }
+
+            document.getElementById('val-lunar').innerText = statusText;
+            document.getElementById('val-lunar').style.backgroundColor = badgeBg;
+
+            // رسم القمر
+            ctxLunar.beginPath();
+            ctxLunar.arc(moonX, moonY, 12, 0, Math.PI * 2);
+            ctxLunar.fillStyle = moonColor;
+            ctxLunar.fill();
+            // توهج أحمر خفيف أثناء الخسوف الكلي
+            if(moonColor === "#7f1d1d") {
+                ctxLunar.beginPath();
+                ctxLunar.arc(moonX, moonY, 14, 0, Math.PI * 2);
+                ctxLunar.fillStyle = "rgba(239, 68, 68, 0.2)";
+                ctxLunar.fill();
+            }
+        }
+
+        function updateSimulations() {
+            drawSolarSim();
+            drawLunarSim();
+        }
+
+        // مستمعات التفاعل
+        document.getElementById('slider-solar').addEventListener('input', (e) => {
+            simSolarAngle = parseInt(e.target.value);
+            drawSolarSim();
+        });
+
+        document.getElementById('slider-lunar').addEventListener('input', (e) => {
+            simLunarAngle = parseInt(e.target.value);
+            drawLunarSim();
+        });
+
+        // 3.9.1 ضمان الرسم عند تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    updateSimulations();
+                }, 50);
+            }
+        });
+        
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            updateSimulations();
+        });
+
+        // نظام التمارين
+        function checkQuiz() {
+            const answers = { q1: "1", q2: "1", q3: "1", q4: "1", q5: "1", q6: "1" };
+            let score = 0;
+            
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                const feedback = document.getElementById(`fb${q.replace('q','')}`);
+                
+                if (selected) {
+                    if (selected.value === answers[q]) {
+                        feedback.innerHTML = "✅ إجابة صحيحة! <br>" + feedback.innerHTML.split('الشرح:')[1];
+                        feedback.className = "q-feedback correct";
+                        score++;
+                    } else {
+                        feedback.innerHTML = "❌ إجابة خاطئة. راجع الشرح: <br>" + feedback.innerHTML.split('الشرح:')[1];
+                        feedback.className = "q-feedback wrong";
+                    }
+                    feedback.style.display = "block";
+                } else {
+                    feedback.textContent = "⚠️ يرجى اختيار إجابة.";
+                    feedback.className = "q-feedback wrong";
+                    feedback.style.display = "block";
+                }
+            }
+        }
+    </script>
+
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 2 | عدد رسوم SVG في الدرس النظري = 2 | عدد المحاكيات = 2 -->
+    <script src="credit.js"></script>
+</body>
+</html>

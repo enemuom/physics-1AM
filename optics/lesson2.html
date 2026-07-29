@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإنتشار المستقيم للضوء | الفيزياء السهلة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #f97316; /* لون برتقالي للمقطع 4 */
+            --accent2:#fb923c;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* شريط التنقل العلوي الثابت (البند 0.4 الإلزامية) */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .lesson-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+        .lesson-header span:not(.lesson-badge) {
+            color: var(--muted);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .lesson-badge {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--accent) !important;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .lesson-header h1 { font-size: 2.2rem; margin: 5px 0 15px; color: #fff; }
+        .lesson-header h1 em { color: var(--accent); font-style: normal; }
+        .lesson-meta { color: var(--muted); font-size: 0.95rem; }
+
+        /* كود التبويبات الإلزامي (البند 0.1) */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* مكونات الدرس */
+        .objectives-box {
+            background: var(--dark2);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px 0 0 8px;
+            margin-bottom: 30px;
+        }
+        .objectives-box h3 { color: var(--accent); margin-bottom: 15px; }
+        .objectives-box ul { padding-right: 20px; }
+        .objectives-box li { margin-bottom: 8px; }
+
+        .sec-title { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px; }
+        .sec-icon { font-size: 1.8rem; color: var(--accent); }
+        .sec-title h2 { color: #fff; font-size: 1.6rem; }
+        .sec-line { flex-grow: 1; height: 1px; background: var(--border); border: none; }
+
+        .def-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .def-box strong { font-family: 'Amiri', serif; font-size: 1.2rem; color: var(--gold); display: block; margin-bottom: 10px; }
+        .french-term { font-family: sans-serif; color: var(--muted); font-size: 0.9em; direction: ltr; display: inline-block; }
+
+        .highlight-box {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+        .highlight-box.warn { background: rgba(239, 68, 68, 0.1); border-right: 4px solid var(--red); color: #fca5a5; }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--dark2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .info-table th, .info-table td { padding: 15px; border: 1px solid var(--border); text-align: right; }
+        .info-table th { background: var(--dark3); color: var(--accent); }
+        .info-table td.center-svg { text-align: center; vertical-align: middle; padding: 10px; }
+		/* حاوية الجداول المتجاوبة (إلزامي للهواتف) */
+        .table-responsive { width: 100%; overflow-x: auto; border-radius: 8px; margin: 20px 0; }
+
+        .diagram-figure {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .fig-title { color: var(--muted); margin-top: 15px; font-size: 0.95rem; font-weight: 600; }
+        .diagram-wrap { max-width: 600px; margin: 0 auto; overflow: hidden; }
+        .lesson-diagram { width: 100%; height: auto; display: block; }
+
+        /* المحاكاة */
+        .sim-wrap {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 15px;
+        }
+        .sim-title { color: #fff; font-size: 1.3rem; }
+        .sim-badge { /* الكود الإلزامي البند 0.3 */
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        .sim-description {
+            background: var(--card);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-right: 3px solid var(--accent2);
+            color: var(--text);
+        }
+        .sim-controls {
+            display: flex; flex-wrap: wrap; gap: 20px; background: var(--dark3);
+            padding: 15px; border-radius: 8px; margin-bottom: 20px; align-items: center;
+        }
+        .control-group { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 200px; }
+        .val-badge { color: var(--gold); font-weight: bold; }
+        
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%;
+            background: var(--accent); cursor: pointer; margin-top: -8px; box-shadow: 0 0 10px var(--accent);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 6px; cursor: pointer; background: var(--dark4); border-radius: 3px;
+        }
+        
+        .sim-canvas-container {
+            width: 100%; height: 350px; background: #000; border-radius: 8px;
+            border: 1px solid var(--border); overflow: hidden; position: relative;
+        }
+        .sim-canvas-container canvas { display: block; width: 100%; height: 100%; }
+
+        /* التمارين */
+        .q-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .q-num { display: inline-block; background: var(--dark3); color: var(--accent); padding: 4px 12px; border-radius: 6px; font-weight: bold; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; color: #fff; }
+        .q-options { display: flex; flex-direction: column; gap: 10px; }
+        .q-option {
+            background: var(--dark3); padding: 12px 15px; border-radius: 8px; cursor: pointer;
+            border: 1px solid var(--border); transition: 0.2s; display: flex; align-items: center; gap: 10px;
+        }
+        .q-option:hover { background: var(--dark4); border-color: var(--muted); }
+        .q-feedback { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; }
+        .q-feedback.correct { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--green); color: var(--green); }
+        .q-feedback.wrong { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--red); color: var(--red); }
+        .btn-check {
+            background: var(--accent); color: #fff; border: none; padding: 12px 30px; font-size: 1.1rem;
+            font-family: inherit; border-radius: 8px; cursor: pointer; display: block; margin: 30px auto; transition: 0.3s;
+        }
+        .btn-check:hover { opacity: 0.9; }
+
+        /* الملخص */
+        .summary-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 30px; }
+        .summary-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+        .summary-title { color: var(--accent); font-size: 2rem; margin: 10px 0; }
+        .summary-subtitle { color: var(--muted); }
+        .summary-section { margin-bottom: 30px; }
+        .summary-section-title {
+            color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 10px;
+            margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+        }
+        .s-def-item { background: var(--card); padding: 15px; border-radius: 8px; margin-bottom: 10px; border-right: 3px solid var(--accent); }
+        .s-def-term { font-weight: bold; color: #fff; display: block; margin-bottom: 5px; font-size: 1.1rem; }
+        .summary-list { list-style: none; padding: 0; }
+        .summary-list li { position: relative; padding-right: 25px; margin-bottom: 10px; }
+        .summary-list li::before { content: '▪'; color: var(--accent); position: absolute; right: 0; top: 0; font-size: 1.5rem; line-height: 1; }
+        .print-btn { background: var(--muted); color: var(--dark); border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: bold; display: flex; align-items: center; gap: 10px; margin: 0 auto; }
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar, .lesson-header { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #111 !important; padding: 0; font-size: 12pt; }
+            .summary-card { border: none; box-shadow: none; padding: 0; }
+            .summary-title, .summary-section-title { color: #000; }
+            .s-def-item { border-right-color: #555; background: #f9f9f9; }
+            .summary-section-title { border-bottom-color: #ccc; font-size: 14pt; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- شريط التنقل العلوي الثابت -->
+<div class="top-nav-bar">
+    <a href="../index.html#optics">← العودة إلى فهرس الميدان</a>
+</div>
+
+<div class="lesson-header">
+    <span>السنة الأولى متوسط › المقطع الرابع: الظواهر الضوئية › الدرس الثاني</span>
+    <span class="lesson-badge">الدرس 02</span>
+    <h1><em>الإنتشار المستقيم</em> للضوء</h1>
+    <p class="lesson-meta">السنة الدراسية الحالية | المقطع 04 | حصة واحدة</p>
+</div>
+
+<!-- شريط التبويبات الإلزامي (البند 0.1) -->
+<nav class="tabs-nav">
+    <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+    <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+    <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+    <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+</nav>
+
+<div id="tab-lesson" class="tab-content active">
+    
+    <div class="objectives-box">
+        <h3>🎯 الأهداف التعلمية</h3>
+        <ul>
+            <li>إبراز مبدأ الإنتشار المستقيم للضوء في الأوساط الشفافة المتجانسة.</li>
+            <li>نمذجة مسار الضوء بالشعاع الضوئي وتحديد جهته.</li>
+            <li>تصنيف الحزم الضوئية إلى ثلاثة أنواع (متوازية، متقاربة، متباعدة).</li>
+            <li>تحديد شرط الرؤية المباشرة لنقطة من شيء.</li>
+        </ul>
+    </div>
+
+    <!-- المفهوم 1 -->
+    <div class="sec-title">
+        <span class="sec-icon">🔦</span>
+        <h2>مبدأ الإنتشار المستقيم للضوء</h2>
+        <hr class="sec-line">
+    </div>
+
+    <div class="def-box">
+        <strong>القاعدة الأساسية <span class="french-term">(Principe de propagation)</span></strong>
+        <p>في وسط <strong>شفاف ومتجانس</strong> (مثل الفراغ، الهواء النقي، الزجاج الأملس)، ينتشر الضوء من المنبع الضوئي في جميع الاتجاهات المتاحة وفق <strong>خطوط مستقيمة</strong>.</p>
+    </div>
+
+    <div class="highlight-box warn">
+        ⚠️ ملاحظة مهمة: يتوقف الضوء عن الإنتشار في خطوط مستقيمة إذا صادف حاجزاً عاتماً، مما يؤدي إلى تشكل "الظل".
+    </div>
+
+    <figure class="diagram-figure">
+        <figcaption class="fig-title">شكل (1) — الضوء يسلك مساراً مستقيماً في الهواء ولا ينحني خلف الحاجز</figcaption>
+        <div class="diagram-wrap">
+            <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                <!-- الميثاق الهندسي 0.6: استخدام فلاتر وتدرجات للعمق -->
+                <defs>
+                    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                        <path d="M 0 0 L 8 4 L 0 8 Z" fill="#ef4444"/>
+                    </marker>
+                    <radialGradient id="laserGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.8" />
+                        <stop offset="100%" stop-color="#ef4444" stop-opacity="0" />
+                    </radialGradient>
+                    <linearGradient id="wallGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#475569" />
+                        <stop offset="100%" stop-color="#1e293b" />
+                    </linearGradient>
+                    <filter id="shadow">
+                        <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/>
+                    </filter>
+                </defs>
+
+                <!-- جهاز الليزر -->
+                <rect x="20" y="80" width="60" height="40" rx="5" fill="#334155" filter="url(#shadow)"/>
+                <rect x="80" y="95" width="10" height="10" fill="#1e293b"/>
+                <text x="50" y="140" fill="#fff" font-size="14" font-family="Cairo" text-anchor="middle" dominant-baseline="middle">ليزر</text>
+
+                <!-- الحاجز העاتم -->
+                <rect x="250" y="40" width="20" height="120" rx="3" fill="url(#wallGrad)" stroke="#0f172a" filter="url(#shadow)"/>
+                <text x="260" y="180" fill="var(--muted)" font-size="14" font-family="Cairo" text-anchor="middle" dominant-baseline="middle">حاجز عاتم</text>
+
+                <!-- الشعاع الضوئي المستقيم -->
+                <line x1="90" y1="100" x2="250" y2="100" stroke="#ef4444" stroke-width="3" marker-end="url(#arrowhead)"/>
+                
+                <!-- التوهج مكان الإصطدام -->
+                <circle cx="245" cy="100" r="15" fill="url(#laserGlow)"/>
+
+                <!-- شعاع وهمي متقطع (مسار مرفوض) -->
+                <path d="M 245 100 Q 245 20 330 30 T 400 100" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5,5"/>
+                <line x1="390" y1="90" x2="410" y2="110" stroke="var(--red)" stroke-width="3"/>
+                <line x1="390" y1="110" x2="410" y2="90" stroke="var(--red)" stroke-width="3"/>
+                <text x="320" y="20" fill="var(--muted)" font-size="12" font-family="Cairo" text-anchor="middle" dominant-baseline="middle">الضوء لا يلتف حول الحاجز</text>
+            </svg>
+        </div>
+    </figure>
+
+    <!-- المفهوم 2 -->
+    <div class="sec-title">
+        <span class="sec-icon">📏</span>
+        <h2>الشعاع الضوئي <span class="french-term">(Le rayon lumineux)</span></h2>
+        <hr class="sec-line">
+    </div>
+
+    <p>بما أن الضوء ينتشر في خطوط مستقيمة، فقد اتفق الفيزيائيون على تمثيله بنموذج هندسي بسيط يسمى <strong>الشعاع الضوئي</strong>.</p>
+    
+    <div class="def-box">
+        <p>يُمثل الشعاع الضوئي <strong>بخط مستقيم</strong> يحمل <strong>سهماً</strong>. يوضح هذا السهم جهة انتقال الضوء من المنبع نحو الجسم المضاء أو المستقبل (كالعين).</p>
+    </div>
+
+    <figure class="diagram-figure">
+        <figcaption class="fig-title">شكل (2) — التمثيل النظامي للشعاع الضوئي</figcaption>
+        <div class="diagram-wrap">
+            <svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                <!-- استخدام علامة marker الإلزامية -->
+                <defs>
+                    <marker id="arrowRay" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                        <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--accent)"/>
+                    </marker>
+                    <radialGradient id="bulbGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#fde047" stop-opacity="1" />
+                        <stop offset="100%" stop-color="var(--dark2)" stop-opacity="0" />
+                    </radialGradient>
+                </defs>
+
+                <!-- المنبع -->
+                <circle cx="50" cy="60" r="30" fill="url(#bulbGlow)"/>
+                <circle cx="50" cy="60" r="10" fill="#fde047"/>
+                <text x="50" y="105" fill="#fff" font-size="14" font-family="Cairo" text-anchor="middle" dominant-baseline="middle">منبع ضوئي</text>
+
+                <!-- الشعاع -->
+                <line x1="70" y1="60" x2="330" y2="60" stroke="var(--accent)" stroke-width="3" marker-end="url(#arrowRay)"/>
+                
+                <text x="200" y="40" fill="var(--gold)" font-size="14" font-family="Cairo" text-anchor="middle" dominant-baseline="middle">خط مستقيم + سهم (جهة الانتشار)</text>
+            </svg>
+        </div>
+    </figure>
+
+    <!-- المفهوم 3 -->
+    <div class="sec-title">
+        <span class="sec-icon">✨</span>
+        <h2>أنواع الحزم الضوئية <span class="french-term">(Les faisceaux lumineux)</span></h2>
+        <hr class="sec-line">
+    </div>
+
+    <p>عملياً، المنبع الضوئي لا يصدر شعاعاً واحداً فقط، بل يصدر عدداً هائلاً من الأشعة. نسمي مجموعة الأشعة الضوئية الصادرة من نفس المنبع بـ <strong>الحزمة الضوئية</strong>. وتصنف هندسياً إلى ثلاثة أنواع:</p>
+    <div class="table-responsive">
+    <table class="info-table">
+        <thead>
+            <tr>
+                <th>نوع الحزمة</th>
+                <th>التعريف العلمي</th>
+                <th>النموذج الهندسي (SVG)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>أسطوانية / متوازية</strong><br><span class="french-term">Cylindrique / Parallèle</span></td>
+                <td>تكون فيها الأشعة الضوئية متوازية ولا تتقاطع. (مثل ضوء الليزر، وأشعة الشمس التي تصل الأرض).</td>
+                <td class="center-svg">
+                    <svg viewBox="0 0 160 80" width="160" height="80" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arr1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                                <path d="M 0 0 L 6 3 L 0 6 Z" fill="#38bdf8"/>
+                            </marker>
+                        </defs>
+                        <line x1="10" y1="20" x2="140" y2="20" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr1)"/>
+                        <line x1="10" y1="40" x2="140" y2="40" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr1)"/>
+                        <line x1="10" y1="60" x2="140" y2="60" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr1)"/>
+                    </svg>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>متباعدة / متفرقة</strong><br><span class="french-term">Divergent</span></td>
+                <td>تنطلق فيها الأشعة من نقطة واحدة وتتباعد في الفضاء. (مثل ضوء المصباح العادي أو شمعة).</td>
+                <td class="center-svg">
+                    <svg viewBox="0 0 160 80" width="160" height="80" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arr2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                                <path d="M 0 0 L 6 3 L 0 6 Z" fill="#fde047"/>
+                            </marker>
+                        </defs>
+                        <circle cx="15" cy="40" r="4" fill="#fde047"/>
+                        <line x1="20" y1="40" x2="140" y2="10" stroke="#fde047" stroke-width="2" marker-end="url(#arr2)"/>
+                        <line x1="20" y1="40" x2="140" y2="40" stroke="#fde047" stroke-width="2" marker-end="url(#arr2)"/>
+                        <line x1="20" y1="40" x2="140" y2="70" stroke="#fde047" stroke-width="2" marker-end="url(#arr2)"/>
+                    </svg>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>متقاربة / متجمعة</strong><br><span class="french-term">Convergent</span></td>
+                <td>تكون فيها الأشعة واسعة ثم تتقارب لتتجمع في نقطة واحدة. (مثل الضوء المار عبر عدسة مكبرة).</td>
+                <td class="center-svg">
+                    <svg viewBox="0 0 160 80" width="160" height="80" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arr3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                                <path d="M 0 0 L 6 3 L 0 6 Z" fill="#a855f7"/>
+                            </marker>
+                        </defs>
+                        <line x1="10" y1="10" x2="140" y2="40" stroke="#a855f7" stroke-width="2" marker-end="url(#arr3)"/>
+                        <line x1="10" y1="40" x2="140" y2="40" stroke="#a855f7" stroke-width="2" marker-end="url(#arr3)"/>
+                        <line x1="10" y1="70" x2="140" y2="40" stroke="#a855f7" stroke-width="2" marker-end="url(#arr3)"/>
+                        <circle cx="145" cy="40" r="4" fill="#a855f7"/>
+                    </svg>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <!-- المفهوم 4 -->
+    <div class="sec-title">
+        <span class="sec-icon">👁️</span>
+        <h2>شرط الرؤية المباشرة (تجربة الشاشات المثقوبة)</h2>
+        <hr class="sec-line">
+    </div>
+
+    <div class="def-box">
+        <p>لكي نتمكن من رؤية نقطة مضيئة (أو مضاءة) بالعين المجردة، يُشترط أن <strong>يكون المسار بين تلك النقطة والعين مستقيماً تماماً</strong> ولا يقطعه أي حاجز عاتم.</p>
+    </div>
+
+</div>
+
+<div id="tab-sim" class="tab-content">
+    
+    <!-- المحاكاة 1: أنواع الحزم (Canvas) -->
+    <div class="sim-wrap">
+        <div class="sim-head">
+            <h3 class="sim-title">محاكاة 1: توليد الحزم الضوئية</h3>
+            <span class="sim-badge">تفاعلي</span>
+        </div>
+        
+        <div class="sim-description">
+            <p>يوضّح هذا المحاكي <strong>أنواع الحزم الضوئية الثلاثة</strong>. غيّر <strong>نوع العدسة/الفتحة</strong> لترى كيف يتغيّر <strong>شكل مسار الأشعة المنطلقة من المنبع، إما متوازية، متباعدة، أو متجمعة</strong>.</p>
+        </div>
+
+        <div class="sim-controls">
+            <div class="control-group">
+                <label>نوع الحزمة: <span id="val-beam" class="val-badge">متباعدة (طبيعي)</span></label>
+                <input type="range" id="slider-beam" min="0" max="2" value="0" step="1">
+            </div>
+        </div>
+
+        <div class="sim-canvas-container">
+            <canvas id="canvasSim1"></canvas>
+        </div>
+    </div>
+
+    <!-- المحاكاة 2: شرط الرؤية (Canvas) -->
+    <div class="sim-wrap">
+        <div class="sim-head">
+            <h3 class="sim-title">محاكاة 2: شرط الرؤية (الشاشات المثقوبة)</h3>
+            <span class="sim-badge">تفاعلي</span>
+        </div>
+        
+        <div class="sim-description">
+            <p>يوضّح هذا المحاكي <strong>شرط الاستقامة للرؤية المباشرة</strong>. حرّك <strong>شريط إزاحة الشاشة الوسطى</strong> لترى كيف يتغيّر <strong>مسار الشعاع الضوئي، وإمكانية وصوله للعين (الرؤية)</strong>.</p>
+        </div>
+
+        <div class="sim-controls">
+            <div class="control-group">
+                <label>إزاحة الشاشة الوسطى: <span id="val-screen" class="val-badge">0 cm (استقامة محققة)</span></label>
+                <input type="range" id="slider-screen" min="-80" max="80" value="0">
+            </div>
+        </div>
+
+        <div class="sim-canvas-container">
+            <canvas id="canvasSim2"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<div id="tab-exercises" class="tab-content">
+    
+    <div class="q-card">
+        <div class="q-num">السؤال 1</div>
+        <div class="q-text">ينتشر الضوء في الفراغ والهواء وفق:</div>
+        <div class="q-options">
+            <label class="q-option"><input type="radio" name="q1" value="wrong"> خطوط منحنية عشوائية.</label>
+            <label class="q-option"><input type="radio" name="q1" value="correct"> خطوط مستقيمة وفي جميع الاتجاهات الممكنة.</label>
+            <label class="q-option"><input type="radio" name="q1" value="wrong"> مسارات دائرية فقط.</label>
+        </div>
+        <div class="q-feedback" id="fb-q1">الشرح: مبدأ الإنتشار المستقيم ينص على أن الضوء يسلك أقصر طريق في الوسط المتجانس، وهو الخط المستقيم.</div>
+    </div>
+
+    <div class="q-card">
+        <div class="q-num">السؤال 2</div>
+        <div class="q-text">الشعاع الضوئي هو:</div>
+        <div class="q-options">
+            <label class="q-option"><input type="radio" name="q2" value="correct"> نموذج هندسي يمثل بخط مستقيم عليه سهم يحدد جهة الإنتشار.</label>
+            <label class="q-option"><input type="radio" name="q2" value="wrong"> جهاز فيزيائي حقيقي يمكن لمسه.</label>
+            <label class="q-option"><input type="radio" name="q2" value="wrong"> نقطة ضوئية ساكنة في الفضاء.</label>
+        </div>
+        <div class="q-feedback" id="fb-q2">الشرح: الشعاع الضوئي ليس مادة ملموسة، بل هو تمثيل هندسي نستخدمه في الفيزياء لفهم وتتبع مسار الضوء.</div>
+    </div>
+
+    <div class="q-card">
+        <div class="q-num">السؤال 3</div>
+        <div class="q-text">الحزمة الضوئية الصادرة من ضوء الليزر تعتبر:</div>
+        <div class="q-options">
+            <label class="q-option"><input type="radio" name="q3" value="wrong"> حزمة متقاربة.</label>
+            <label class="q-option"><input type="radio" name="q3" value="correct"> حزمة أسطوانية (متوازية).</label>
+            <label class="q-option"><input type="radio" name="q3" value="wrong"> حزمة متباعدة.</label>
+        </div>
+        <div class="q-feedback" id="fb-q3">الشرح: أشعة الليزر لا تتباعد ولا تتقارب بشكل ملحوظ، بل تبقى متوازية لمسافات طويلة (حزمة أسطوانية).</div>
+    </div>
+
+    <!-- سؤال الرسم الإلزامي (البند 3.7) -->
+    <div class="q-card q-diagram-type">
+        <div class="q-num">السؤال 4 (تطبيقي)</div>
+        <div class="q-text">تأمل المخطط الذي يمثل تجربة الشاشات المثقوبة. في أي حالة من الحالات التالية لن يتمكن الملاحظ من رؤية ضوء الشمعة؟</div>
+        <svg viewBox="0 0 400 150" style="width: 100%; max-width: 400px; background: #fff; border-radius: 8px; margin-bottom: 15px;">
+            <!-- منبع -->
+            <rect x="20" y="60" width="10" height="40" fill="#f97316"/>
+            <!-- شاشات -->
+            <rect x="100" y="20" width="8" height="120" fill="#64748b"/>
+            <rect x="100" y="70" width="8" height="20" fill="#fff"/>
+            
+            <rect x="200" y="20" width="8" height="120" fill="#64748b"/>
+            <!-- الثقب مزاح للأسفل -->
+            <rect x="200" y="100" width="8" height="20" fill="#fff"/>
+
+            <rect x="300" y="20" width="8" height="120" fill="#64748b"/>
+            <rect x="300" y="70" width="8" height="20" fill="#fff"/>
+            
+            <!-- عين -->
+            <circle cx="360" cy="80" r="10" fill="#38bdf8"/>
+        </svg>
+        <div class="q-options">
+            <label class="q-option"><input type="radio" name="q4" value="wrong"> عندما تكون الشاشات شفافة.</label>
+            <label class="q-option"><input type="radio" name="q4" value="correct"> عندما يكون أحد الثقوب غير موجود على استقامة واحدة مع المنبع والعين (كما في الرسم).</label>
+            <label class="q-option"><input type="radio" name="q4" value="wrong"> عندما نستخدم شمعة قوية الإضاءة.</label>
+        </div>
+        <div class="q-feedback" id="fb-q4">الشرح: بما أن الضوء ينتشر في خطوط مستقيمة، فإن إزاحة أي ثقب عن مسار الاستقامة (كما في الشاشة الوسطى) سيؤدي إلى اصطدام الضوء بالحاجز العاتم ولن يصل للعين.</div>
+    </div>
+
+    <button class="btn-check" onclick="checkQuiz()">تحقق من الإجابات</button>
+</div>
+
+<div id="tab-summary" class="tab-content">
+    <div class="summary-card">
+        <div class="summary-header">
+            <div class="summary-subtitle">السنة الأولى متوسط | المقطع: الظواهر الضوئية | الدرس 02</div>
+            <h2 class="summary-title">ملخص: الإنتشار المستقيم للضوء</h2>
+            <div class="summary-subtitle">إعداد الأستاذ — منهاج الجيل الثاني</div>
+        </div>
+
+        <!-- خريطة المفاهيم الإلزامية (البند 3.8) -->
+        <div class="concept-map-wrap">
+            <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+            <svg viewBox="0 0 600 250" style="width: 100%; max-width: 600px; margin: 0 auto; display: block;">
+                <defs>
+                    <linearGradient id="boxGrad1" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="var(--dark3)"/>
+                        <stop offset="100%" stop-color="var(--dark4)"/>
+                    </linearGradient>
+                    <marker id="mapArr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                        <path d="M 0 0 L 6 3 L 0 6 Z" fill="var(--accent)"/>
+                    </marker>
+                </defs>
+                
+                <!-- المركز -->
+                <rect x="200" y="10" width="200" height="40" rx="8" fill="url(#boxGrad1)" stroke="var(--accent)"/>
+                <text x="300" y="35" fill="#fff" font-family="Cairo" font-weight="bold" text-anchor="middle">الإنتشار المستقيم للضوء</text>
+
+                <!-- خطوط -->
+                <line x1="300" y1="50" x2="300" y2="90" stroke="var(--accent)" stroke-width="2" marker-end="url(#mapArr)"/>
+                <line x1="300" y1="70" x2="120" y2="70" stroke="var(--accent)" stroke-width="2"/>
+                <line x1="120" y1="70" x2="120" y2="90" stroke="var(--accent)" stroke-width="2" marker-end="url(#mapArr)"/>
+                <line x1="300" y1="70" x2="480" y2="70" stroke="var(--accent)" stroke-width="2"/>
+                <line x1="480" y1="70" x2="480" y2="90" stroke="var(--accent)" stroke-width="2" marker-end="url(#mapArr)"/>
+
+                <!-- المستويات 2 -->
+                <rect x="50" y="90" width="140" height="40" rx="8" fill="url(#boxGrad1)" stroke="#38bdf8"/>
+                <text x="120" y="115" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle">شرط الحدوث</text>
+                
+                <rect x="230" y="90" width="140" height="40" rx="8" fill="url(#boxGrad1)" stroke="var(--gold)"/>
+                <text x="300" y="115" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle">الشعاع الضوئي</text>
+
+                <rect x="410" y="90" width="140" height="40" rx="8" fill="url(#boxGrad1)" stroke="#a855f7"/>
+                <text x="480" y="115" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle">الحزمة الضوئية</text>
+
+                <!-- مستويات 3 -->
+                <line x1="120" y1="130" x2="120" y2="170" stroke="#38bdf8" stroke-width="2" marker-end="url(#mapArr)"/>
+                <rect x="60" y="170" width="120" height="30" rx="4" fill="var(--card)" stroke="#38bdf8"/>
+                <text x="120" y="190" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="middle">وسط شفاف متجانس</text>
+
+                <line x1="300" y1="130" x2="300" y2="170" stroke="var(--gold)" stroke-width="2" marker-end="url(#mapArr)"/>
+                <rect x="240" y="170" width="120" height="30" rx="4" fill="var(--card)" stroke="var(--gold)"/>
+                <text x="300" y="190" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="middle">خط مستقيم + سهم</text>
+
+                <line x1="480" y1="130" x2="480" y2="150" stroke="#a855f7" stroke-width="2"/>
+                <line x1="420" y1="150" x2="540" y2="150" stroke="#a855f7" stroke-width="2"/>
+                
+                <line x1="420" y1="150" x2="420" y2="170" stroke="#a855f7" stroke-width="2" marker-end="url(#mapArr)"/>
+                <rect x="380" y="170" width="80" height="30" rx="4" fill="var(--card)" stroke="#a855f7"/>
+                <text x="420" y="190" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="middle">أسطوانية</text>
+
+                <line x1="480" y1="150" x2="480" y2="170" stroke="#a855f7" stroke-width="2" marker-end="url(#mapArr)"/>
+                <rect x="465" y="170" width="30" height="30" rx="4" fill="var(--card)" stroke="#a855f7"/>
+                <text x="480" y="190" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="middle">متفرقة</text>
+
+                <line x1="540" y1="150" x2="540" y2="170" stroke="#a855f7" stroke-width="2" marker-end="url(#mapArr)"/>
+                <rect x="500" y="170" width="80" height="30" rx="4" fill="var(--card)" stroke="#a855f7"/>
+                <text x="540" y="190" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="middle">متجمعة</text>
+            </svg>
+        </div>
+
+        <div class="summary-section">
+            <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+            <div class="s-def-item">
+                <span class="s-def-term">مبدأ الإنتشار المستقيم للضوء:</span>
+                <span>ينتشر الضوء في الأوساط الشفافة والمتجانسة وفق خطوط مستقيمة وفي كل الاتجاهات.</span>
+            </div>
+            <div class="s-def-item">
+                <span class="s-def-term">الشعاع الضوئي:</span>
+                <span>نموذج يمثل المسار الذي يسلكه الضوء، ويُرسم بخط مستقيم عليه سهم يشير لجهة الإنتشار.</span>
+            </div>
+            <div class="s-def-item">
+                <span class="s-def-term">شرط الرؤية:</span>
+                <span>تُرى النقطة الضوئية إذا أمكن رسم خط مستقيم بينها وبين العين لا يعترضه حاجز عاتم.</span>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+            <ul class="summary-list">
+                <li>الحزمة الضوئية المتوازية (الأسطوانية) لا تتقاطع أشعتها.</li>
+                <li>الحزمة المتباعدة تنطلق من نقطة وتتوسع.</li>
+                <li>الحزمة المتقاربة تتجه نحو نقطة واحدة لتتجمع فيها.</li>
+                <li>تجربة "الشاشات المثقوبة" تثبت مخبرياً أن الضوء لا ينحني ولا يلتف حول الأجسام العاتمة.</li>
+            </ul>
+        </div>
+
+        <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+    </div>
+</div>
+
+<script>
+    // ----------------------------------------------------
+    // 1. نظام التبويبات الإلزامي (3.9.1)
+    // ----------------------------------------------------
+    function openTab(tabId, btnElement) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        if (btnElement) btnElement.classList.add('active');
+
+        // تأخير زمني إلزامي للسماح بحساب أبعاد الكانفاس
+        if (tabId === 'tab-sim') {
+            setTimeout(() => {
+                resizeCanvasSim1();
+                resizeCanvasSim2();
+                updateSim1();
+                updateSim2();
+            }, 50);
+        }
+    }
+
+    // ----------------------------------------------------
+    // 2. المحاكاة 1: توليد الحزم (Canvas)
+    // ----------------------------------------------------
+    const canvas1 = document.getElementById('canvasSim1');
+    const ctx1 = canvas1.getContext('2d');
+    const slider1 = document.getElementById('slider-beam');
+    const valText1 = document.getElementById('val-beam');
+
+    const beamTypes = [
+        { name: "متباعدة (منبع عادي)", type: "divergent" },
+        { name: "متوازية (أسطوانية - ليزر)", type: "parallel" },
+        { name: "متقاربة (عبر عدسة)", type: "convergent" }
+    ];
+
+    function resizeCanvasSim1() {
+        const container = canvas1.parentElement;
+        if (container.clientWidth === 0) return;
+        const dpr = window.devicePixelRatio || 1;
+        canvas1.width = container.clientWidth * dpr;
+        canvas1.height = container.clientHeight * dpr;
+        canvas1.style.width = container.clientWidth + 'px';
+        canvas1.style.height = container.clientHeight + 'px';
+        ctx1.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function updateSim1() {
+        if (canvas1.width === 0) return;
+        ctx1.clearRect(0, 0, canvas1.width, canvas1.height); // الإلزامي البند 0.5
+        
+        const w = canvas1.parentElement.clientWidth;
+        const h = canvas1.parentElement.clientHeight;
+        const val = parseInt(slider1.value);
+        const beam = beamTypes[val];
+        
+        valText1.innerText = beam.name;
+
+        const originX = 50;
+        const originY = h / 2;
+        const targetX = w - 50;
+
+        // رسم الجهاز المنبع
+        ctx1.fillStyle = '#334155';
+        ctx1.fillRect(20, originY - 30, 40, 60);
+        ctx1.fillStyle = '#fde047';
+        ctx1.beginPath(); ctx1.arc(60, originY, 15, 0, Math.PI*2); ctx1.fill();
+
+        // رسم الأشعة مع الأسهم
+        ctx1.strokeStyle = '#fde047';
+        ctx1.lineWidth = 3;
+        ctx1.fillStyle = '#fde047';
+
+        function drawRayWithArrow(x1, y1, x2, y2) {
+            ctx1.beginPath();
+            ctx1.moveTo(x1, y1);
+            ctx1.lineTo(x2, y2);
+            ctx1.stroke();
+            
+            // حساب الزاوية لرسم رأس السهم
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+            const midX = (x1 + x2) / 2;
+            const midY = (y1 + y2) / 2;
+            
+            ctx1.beginPath();
+            ctx1.moveTo(midX, midY);
+            ctx1.lineTo(midX - 12 * Math.cos(angle - Math.PI/6), midY - 12 * Math.sin(angle - Math.PI/6));
+            ctx1.lineTo(midX - 12 * Math.cos(angle + Math.PI/6), midY - 12 * Math.sin(angle + Math.PI/6));
+            ctx1.closePath();
+            ctx1.fill();
+        }
+
+        if(beam.type === "divergent") {
+            drawRayWithArrow(75, originY, targetX, originY - 80);
+            drawRayWithArrow(75, originY, targetX, originY);
+            drawRayWithArrow(75, originY, targetX, originY + 80);
+        } 
+        else if (beam.type === "parallel") {
+            drawRayWithArrow(75, originY - 30, targetX, originY - 30);
+            drawRayWithArrow(75, originY, targetX, originY);
+            drawRayWithArrow(75, originY + 30, targetX, originY + 30);
+        }
+        else if (beam.type === "convergent") {
+            // إضافة عدسة وهمية
+            ctx1.fillStyle = 'rgba(56, 189, 248, 0.3)';
+            ctx1.beginPath();
+            ctx1.ellipse(120, originY, 10, 60, 0, 0, Math.PI*2);
+            ctx1.fill();
+
+            // أشعة قبل العدسة (متوازية)
+            ctx1.strokeStyle = 'rgba(253, 224, 71, 0.4)';
+            ctx1.beginPath(); ctx1.moveTo(75, originY-40); ctx1.lineTo(120, originY-40); ctx1.stroke();
+            ctx1.beginPath(); ctx1.moveTo(75, originY); ctx1.lineTo(120, originY); ctx1.stroke();
+            ctx1.beginPath(); ctx1.moveTo(75, originY+40); ctx1.lineTo(120, originY+40); ctx1.stroke();
+
+            // أشعة بعد العدسة (متقاربة)
+            ctx1.strokeStyle = '#fde047';
+            drawRayWithArrow(120, originY - 40, targetX - 50, originY);
+            drawRayWithArrow(120, originY, targetX - 50, originY);
+            drawRayWithArrow(120, originY + 40, targetX - 50, originY);
+
+            // نقطة التجمع
+            ctx1.beginPath(); ctx1.arc(targetX - 50, originY, 5, 0, Math.PI*2); ctx1.fill();
+        }
+    }
+    slider1.addEventListener('input', updateSim1);
+
+    // ----------------------------------------------------
+    // 3. المحاكاة 2: شرط الرؤية (Canvas)
+    // ----------------------------------------------------
+    const canvas2 = document.getElementById('canvasSim2');
+    const ctx2 = canvas2.getContext('2d');
+    const slider2 = document.getElementById('slider-screen');
+    const valText2 = document.getElementById('val-screen');
+
+    function resizeCanvasSim2() {
+        const container = canvas2.parentElement;
+        if (container.clientWidth === 0) return;
+        const dpr = window.devicePixelRatio || 1;
+        canvas2.width = container.clientWidth * dpr;
+        canvas2.height = container.clientHeight * dpr;
+        canvas2.style.width = container.clientWidth + 'px';
+        canvas2.style.height = container.clientHeight + 'px';
+        ctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function updateSim2() {
+        if (canvas2.width === 0) return;
+        ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+        
+        const w = canvas2.parentElement.clientWidth;
+        const h = canvas2.parentElement.clientHeight;
+        const offset = parseInt(slider2.value);
+        
+        const isAligned = Math.abs(offset) < 10;
+        if(isAligned) {
+            valText2.innerText = `استقامة محققة (الضوء يمر)`;
+            valText2.style.color = "var(--green)";
+        } else {
+            valText2.innerText = `حاجز عاتم (الضوء محجوب)`;
+            valText2.style.color = "var(--red)";
+        }
+
+        const originY = h / 2;
+        const screen1X = w * 0.3;
+        const screen2X = w * 0.5;
+        const screen3X = w * 0.7;
+        const eyeX = w - 40;
+
+        // رسم المنبع (شمعة)
+        ctx2.fillStyle = '#e2e8f0'; ctx2.fillRect(30, originY + 10, 15, 40);
+        ctx2.fillStyle = '#f97316';
+        ctx2.beginPath(); ctx2.moveTo(37, originY-15); ctx2.quadraticCurveTo(45, originY, 37, originY+10); ctx2.quadraticCurveTo(30, originY, 37, originY-15); ctx2.fill();
+
+        // دالة رسم شاشة
+        function drawScreen(x, yOffset) {
+            ctx2.fillStyle = '#475569';
+            // الجزء العلوي
+            ctx2.fillRect(x - 5, 20, 10, (originY - 10) + yOffset - 20);
+            // الجزء السفلي
+            ctx2.fillRect(x - 5, (originY + 10) + yOffset, 10, h - ((originY + 10) + yOffset) - 20);
+            // الثقب
+            ctx2.fillStyle = 'rgba(255,255,255,0.1)';
+            ctx2.fillRect(x - 5, (originY - 10) + yOffset, 10, 20);
+        }
+
+        drawScreen(screen1X, 0);
+        drawScreen(screen2X, offset);
+        drawScreen(screen3X, 0);
+
+        // رسم العين
+        ctx2.strokeStyle = isAligned ? '#10b981' : '#64748b';
+        ctx2.lineWidth = 2;
+        ctx2.beginPath(); ctx2.ellipse(eyeX, originY, 15, 25, 0, -Math.PI/2, Math.PI/2); ctx2.stroke();
+        ctx2.fillStyle = isAligned ? '#10b981' : '#64748b';
+        ctx2.beginPath(); ctx2.arc(eyeX, originY, 6, 0, Math.PI*2); ctx2.fill();
+
+        // رسم الشعاع الضوئي
+        ctx2.strokeStyle = '#f97316';
+        ctx2.lineWidth = 4;
+        ctx2.beginPath();
+        ctx2.moveTo(45, originY);
+        
+        if(isAligned) {
+            // يمر للعين
+            ctx2.lineTo(eyeX - 15, originY);
+            ctx2.stroke();
+            // توهج في العين
+            ctx2.fillStyle = 'rgba(249, 115, 22, 0.3)';
+            ctx2.beginPath(); ctx2.arc(eyeX, originY, 20, 0, Math.PI*2); ctx2.fill();
+        } else {
+            // يصطدم بالشاشة الوسطى
+            ctx2.lineTo(screen2X - 5, originY);
+            ctx2.stroke();
+            // توهج الاصطدام
+            ctx2.fillStyle = 'rgba(249, 115, 22, 0.5)';
+            ctx2.beginPath(); ctx2.arc(screen2X - 5, originY, 10, 0, Math.PI*2); ctx2.fill();
+        }
+    }
+    slider2.addEventListener('input', updateSim2);
+
+    window.addEventListener('resize', () => {
+        if(document.getElementById('tab-sim').classList.contains('active')) {
+            resizeCanvasSim1(); resizeCanvasSim2();
+            updateSim1(); updateSim2();
+        }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+            setTimeout(() => {
+                resizeCanvasSim1(); resizeCanvasSim2();
+                updateSim1(); updateSim2();
+            }, 50);
+        }
+    });
+
+    // ----------------------------------------------------
+    // 4. نظام التصحيح للتمارين
+    // ----------------------------------------------------
+    function checkQuiz() {
+        const total = 4;
+        let score = 0;
+        
+        for(let i=1; i<=total; i++) {
+            const options = document.getElementsByName('q'+i);
+            let selected = null;
+            for(let opt of options) {
+                if(opt.checked) selected = opt.value;
+            }
+            
+            const feedback = document.getElementById('fb-q'+i);
+            feedback.style.display = 'block';
+            
+            if(selected === 'correct') {
+                feedback.className = 'q-feedback correct';
+                feedback.innerHTML = '✅ إجابة صحيحة. ' + feedback.innerText.replace('الشرح: ', '').replace('✅ إجابة صحيحة.', '').replace('❌ إجابة خاطئة.', '');
+                score++;
+            } else {
+                feedback.className = 'q-feedback wrong';
+                feedback.innerHTML = '❌ إجابة خاطئة. ' + feedback.innerText.replace('الشرح: ', '').replace('✅ إجابة صحيحة.', '').replace('❌ إجابة خاطئة.', '');
+            }
+        }
+    }
+</script>
+
+<script src="credit.js"></script>
+<!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 4 | عدد رسوم SVG في الدرس النظري = 4 | عدد المحاكيات = 2 -->
+</body>
+</html>

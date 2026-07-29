@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس 05: المحلول المائي (1) - الفيزياء السهلة</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- تضمين MathJax للمعادلات العلمية -->
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #14b8a6; /* المادة وتحولاتها */
+            --accent2:#2dd4bf;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 15px;
+        }
+
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(180deg, var(--dark3) 0%, var(--dark) 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .lesson-header span:first-child { color: var(--muted); font-size: 0.9rem; }
+        .lesson-badge {
+            display: inline-block;
+            background: rgba(20, 184, 166, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .lesson-header h1 { color: #fff; font-size: 2rem; margin-bottom: 5px; }
+        .lesson-header h1 em { color: var(--accent); font-family: 'Amiri', serif; font-style: italic; }
+        .lesson-meta { color: var(--muted); font-size: 0.9rem; }
+
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+        }
+        /* 1. إخفاء كل محتوى التبويبات افتراضياً */
+        .tab-content { 
+            display: none; 
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        /* 2. إظهار المحتوى الذي يحمل كلاس active فقط */
+        .tab-content.active { 
+            display: block !important; /* إضافة !important للتأكد من تفوقها على أي تنسيق آخر */
+            opacity: 1;
+        }
+
+        /* 3. التأكد من أن التبويبات ليست معروضة في حالة عدم وجود الكلاس */
+        /* أضف هذا السطر للتأكد من إخفاء أي تبويب غير نشط */
+        .tab-content:not(.active) {
+            display: none !important;
+        }
+
+        .objectives-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .objectives-box h3 { color: #fff; margin-bottom: 10px; }
+        .objectives-box ul { padding-right: 20px; color: var(--text); }
+        .objectives-box li { margin-bottom: 8px; }
+
+        .sec-title { display: flex; align-items: center; gap: 10px; margin: 30px 0 15px 0; }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-title h2 { color: #fff; font-size: 1.5rem; }
+        .sec-line { flex-grow: 1; height: 2px; background: var(--border); border: none; margin-right: 15px; }
+
+        .def-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .def-box strong { color: var(--gold); font-size: 1.1rem; }
+        .def-box span.fr { color: var(--muted); font-size: 0.9rem; font-family: sans-serif; }
+        .def-box p { font-family: 'Amiri', serif; font-size: 1.2rem; margin-top: 10px; line-height: 1.8; }
+
+        .highlight-box { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600; }
+        .highlight-box.warn { background: rgba(239, 68, 68, 0.1); border-right: 4px solid var(--red); color: #fff; }
+        .highlight-box.tip { background: rgba(16, 185, 129, 0.1); border-right: 4px solid var(--green); color: #fff; }
+        .highlight-box.info { background: rgba(245, 158, 11, 0.1); border-right: 4px solid var(--gold); color: #fff; }
+
+        .formula-box { background: var(--dark3); border: 1px solid var(--accent); border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center; }
+        .formula-title { color: var(--gold); font-weight: 700; margin-bottom: 15px; font-size: 1.1rem; }
+        .formula-display { font-size: 1.6rem; color: #fff; margin-bottom: 20px; background: var(--dark4); padding: 15px; border-radius: 8px; overflow-x: auto; }
+        .symbol-table { width: 100%; text-align: right; margin-top: 15px; border-collapse: collapse; }
+        .symbol-table th, .symbol-table td { padding: 10px; border-bottom: 1px solid var(--border); }
+        .sym-cell { font-family: 'Amiri', serif; font-style: italic; font-size: 1.2rem; color: #fff; }
+        .unit-cell { color: var(--gold); }
+
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: var(--dark3); border-radius: 8px; overflow: hidden; }
+        .info-table th, .info-table td { padding: 15px; text-align: right; border-bottom: 1px solid var(--border); }
+        .info-table th { background: var(--dark4); color: var(--accent); font-weight: 700; }
+        .info-table td.unit { color: var(--muted); font-style: italic; }
+
+        .diagram-figure {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .fig-title { color: var(--muted); font-size: 0.9rem; margin-top: 10px; font-weight: 600; }
+        .diagram-wrap { display: flex; justify-content: center; align-items: center; }
+        .lesson-diagram { width: 100%; height: auto; max-width: 500px; display: block; }
+
+        .sim-wrap {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .sim-title { color: #fff; font-size: 1.2rem; }
+        
+        .sim-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        
+        .sim-description {
+            background: var(--dark4);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: var(--text);
+            font-size: 0.95rem;
+            border-right: 3px solid var(--accent);
+        }
+
+        .sim-container { display: flex; flex-direction: column; gap: 20px; }
+        @media (min-width: 768px) { .sim-container { flex-direction: row; } }
+        
+        .sim-canvas-wrap {
+            flex: 1;
+            background: var(--dark);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas { display: block; width: 100%; height: 100%; }
+        
+        .sim-controls { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+        .control-group label { display: block; color: var(--muted); margin-bottom: 8px; font-size: 0.9rem; }
+        .val-badge { color: var(--gold); font-weight: bold; background: var(--dark); padding: 2px 6px; border-radius: 4px; }
+        input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+        .sim-btn { background: var(--dark4); color: var(--text); border: 1px solid var(--border); padding: 10px; border-radius: 6px; cursor: pointer; transition: 0.3s; font-family: 'Cairo'; }
+        .sim-btn:hover { background: var(--accent); color: #fff; }
+
+        .q-card { background: var(--dark3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .q-num { display: inline-block; background: var(--accent); color: #fff; width: 30px; height: 30px; text-align: center; line-height: 30px; border-radius: 50%; font-weight: bold; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; color: #fff; margin-bottom: 15px; }
+        .q-options { display: flex; flex-direction: column; gap: 10px; }
+        .q-opt { background: var(--dark4); padding: 12px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
+        .q-opt:hover { border-color: var(--border); }
+        .q-opt.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--green); }
+        .q-opt.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--red); }
+        .q-feedback { margin-top: 15px; padding: 12px; border-radius: 6px; display: none; font-size: 0.9rem; }
+        .q-feedback.show-correct { display: block; background: rgba(16, 185, 129, 0.1); color: var(--green); border-right: 3px solid var(--green); }
+        .q-feedback.show-wrong { display: block; background: rgba(239, 68, 68, 0.1); color: var(--red); border-right: 3px solid var(--red); }
+        .q-diagram { width: 100%; max-width: 400px; margin: 10px auto; display: block; background: var(--dark4); border-radius: 8px; padding: 10px; border: 1px solid var(--border); }
+
+        .summary-card { background: #fff; color: #111; padding: 40px; border-radius: 12px; display: none; }
+        #tab-summary.active .summary-card { display: block; }
+        .summary-header { text-align: center; border-bottom: 2px solid var(--accent); padding-bottom: 15px; margin-bottom: 30px; }
+        .summary-meta { color: #666; font-size: 0.9rem; }
+        .summary-title { color: #111; font-size: 2rem; margin: 10px 0; }
+        .summary-subtitle { color: var(--accent); font-weight: 700; }
+        .summary-section { margin-bottom: 30px; }
+        .summary-section-title { font-size: 1.4rem; color: var(--dark2); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        
+        .concept-map-wrap { text-align: center; margin-bottom: 30px; }
+        .concept-map { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+        
+        .summary-defs { display: grid; gap: 15px; }
+        .s-def-item { background: #f8fafc; padding: 15px; border-right: 4px solid var(--accent); border-radius: 6px; }
+        .s-def-term { font-weight: 800; color: var(--dark2); display: block; margin-bottom: 5px; }
+        .s-def-text { font-family: 'Amiri', serif; font-size: 1.1rem; }
+        
+        .summary-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .summary-table th, .summary-table td { border: 1px solid #cbd5e1; padding: 10px; text-align: right; }
+        .summary-table th { background: #f1f5f9; color: var(--dark2); }
+        .summary-list { padding-right: 20px; line-height: 1.8; }
+        
+        .summary-diagram { text-align: center; margin: 20px 0; }
+        .s-main-diagram { max-width: 100%; height: auto; }
+        
+        .print-btn { background: var(--accent); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; display: block; margin: 30px auto; font-family: 'Cairo', sans-serif; font-weight: bold; }
+
+        @media print {
+            .tabs-nav, .top-nav-bar, .print-btn { display: none !important; }
+            .tab-content:not(#tab-summary) { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #111 !important; padding: 0; font-size: 12pt; }
+            .summary-card { box-shadow: none; border: 1px solid #ccc; padding: 20px; }
+            .summary-section-title { font-size: 14pt; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav-bar">
+        <a href="../index.html#matter">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <div class="lesson-header">
+        <span>السنة الأولى متوسط › المادة وتحولاتها › الدرس 05</span>
+        <br>
+        <span class="lesson-badge">الدرس 05</span>
+        <h1>مفهوم <em>المحلول المائي</em> وخصائصه</h1>
+        <p class="lesson-meta">العلوم الفيزيائية والتكنولوجيا | 2 حصص</p>
+    </div>
+
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+        <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+        <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+        <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- التبويب 1: الدرس النظري -->
+    <!-- ========================================== -->
+    <div id="tab-lesson" class="tab-content active">
+        
+        <div class="objectives-box">
+            <h3>🎯 الأهداف التعلمية</h3>
+            <ul>
+                <li>التمييز بين المُحِل والمُنحَل في عملية الذوبان.</li>
+                <li>تحديد شروط تشكل "المحلول المائي".</li>
+                <li>حساب التركيز الكتلي وتطبيق قانونه الرياضي.</li>
+                <li>فهم عمليات تمديد (تخفيف) وتركيز المحاليل.</li>
+                <li>التعرف على المحلول المائي المشبع.</li>
+            </ul>
+        </div>
+
+        <div class="sec-title">
+            <span class="sec-icon">💧</span>
+            <h2>1. المُحِل والمُنحَل (المذيب والمذاب)</h2>
+            <hr class="sec-line">
+        </div>
+        <p style="margin-bottom: 20px;">عندما نضع ملعقة من السكر في كأس به ماء ونحرك، نلاحظ اختفاء السكر وتشكّل خليط متجانس. تُسمى هذه العملية <strong>بالذوبان (Dissolution)</strong>.</p>
+        
+        <div class="def-box">
+            <strong>مكونات الذوبان</strong>
+            <p><strong>الـمُحِل (Solvant):</strong> هو السائل الغالب الذي يقوم بعملية تفكيك وإذابة المادة الأخرى (مثل الماء).</p>
+            <p><strong>الـمُنحَل (Soluté):</strong> هو المادة (صلبة، سائلة، أو غازية) التي تذوب وتختفي داخل المُحِل (مثل السكر أو الملح).</p>
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (1) — عملية ذوبان السكر في الماء لتشكيل خليط متجانس</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <linearGradient id="glassDef" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="rgba(255,255,255,0.3)" />
+                            <stop offset="20%" stop-color="rgba(255,255,255,0.05)" />
+                            <stop offset="80%" stop-color="rgba(255,255,255,0.05)" />
+                            <stop offset="100%" stop-color="rgba(255,255,255,0.3)" />
+                        </linearGradient>
+                        <linearGradient id="waterDef" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(56, 189, 248, 0.4)" />
+                            <stop offset="100%" stop-color="rgba(2, 132, 199, 0.6)" />
+                        </linearGradient>
+                        <filter id="shadowDef" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+                        </filter>
+                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--text)"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Beaker -->
+                    <path d="M 120,80 L 120,200 Q 120,220 140,220 L 260,220 Q 280,220 280,200 L 280,80" fill="none" stroke="url(#glassDef)" stroke-width="4"/>
+                    <!-- Liquid -->
+                    <path d="M 122,120 L 278,120 L 278,200 Q 278,218 260,218 L 140,218 Q 122,218 122,200 Z" fill="url(#waterDef)"/>
+                    
+                    <!-- Spoon adding Solute -->
+                    <path d="M 350,20 L 220,90 Q 210,95 200,90 L 190,85" fill="none" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
+                    <ellipse cx="205" cy="88" rx="15" ry="8" fill="#e2e8f0" transform="rotate(25 205 88)"/>
+                    
+                    <!-- Solute Particles (Sugar/Salt) falling -->
+                    <g filter="url(#shadowDef)">
+                        <rect x="195" y="100" width="6" height="6" fill="#fff" transform="rotate(15 195 100)"/>
+                        <rect x="205" y="110" width="5" height="5" fill="#fff" transform="rotate(45 205 110)"/>
+                        <rect x="185" y="115" width="7" height="7" fill="#fff" transform="rotate(30 185 115)"/>
+                        <rect x="215" y="105" width="4" height="4" fill="#fff" transform="rotate(10 215 105)"/>
+                    </g>
+
+                    <!-- Dissolved particles (glowy) -->
+                    <circle cx="150" cy="150" r="3" fill="#fbbf24"/>
+                    <circle cx="200" cy="180" r="3" fill="#fbbf24"/>
+                    <circle cx="250" cy="140" r="3" fill="#fbbf24"/>
+                    <circle cx="170" cy="200" r="3" fill="#fbbf24"/>
+                    <circle cx="230" cy="170" r="3" fill="#fbbf24"/>
+
+                    <!-- Labels -->
+                    <line x1="100" y1="160" x2="140" y2="160" stroke="var(--text)" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <text x="30" y="160" fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="end" dominant-baseline="middle">مُحِل (الماء)</text>
+
+                    <line x1="320" y1="120" x2="210" y2="105" stroke="var(--text)" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <text x="400" y="135" fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="start" dominant-baseline="middle">مُنحَل (ملح/سكر)</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">🧪</span>
+            <h2>2. المحلول المائي (Solution Aqueuse)</h2>
+            <hr class="sec-line">
+        </div>
+        
+        <div class="def-box">
+            <strong>المحلول المائي</strong> <span class="fr">(Solution Aqueuse)</span>
+            <p>هو خليط متجانس يتم الحصول عليه بإذابة مادة (المُنحل) في <strong>الماء</strong>.</p>
+        </div>
+
+        <div class="highlight-box warn">
+            ⚠️ <strong>شرط التسمية:</strong> لكي نسمي الخليط المتجانس "محلولاً مائياً"، يجب أن يكون السائل المُحِل هو <strong>الماء حصراً</strong>. إذا أذبنا مادة في الزيت أو الكحول، لا يسمى محلولاً مائياً.
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (2) — شرط المحلول المائي: المذيب يجب أن يكون ماءً</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <linearGradient id="oilDef" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(253, 224, 71, 0.6)" />
+                            <stop offset="100%" stop-color="rgba(202, 138, 4, 0.8)" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Beaker 1: Water -->
+                    <path d="M 60,60 L 60,160 Q 60,170 70,170 L 150,170 Q 160,170 160,160 L 160,60" fill="none" stroke="url(#glassDef)" stroke-width="3"/>
+                    <path d="M 62,90 L 158,90 L 158,160 Q 158,168 150,168 L 70,168 Q 62,168 62,160 Z" fill="url(#waterDef)"/>
+                    <!-- Particles in water -->
+                    <circle cx="90" cy="110" r="2" fill="#fff"/><circle cx="130" cy="130" r="2" fill="#fff"/><circle cx="110" cy="150" r="2" fill="#fff"/>
+                    <text x="110" y="190" fill="var(--green)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">محلول مائي (المذيب ماء)</text>
+                    <path d="M 110,40 L 110,20 M 100,30 L 110,40 L 120,30" fill="none" stroke="var(--green)" stroke-width="2"/>
+
+                    <!-- Beaker 2: Oil -->
+                    <path d="M 240,60 L 240,160 Q 240,170 250,170 L 330,170 Q 340,170 340,160 L 340,60" fill="none" stroke="url(#glassDef)" stroke-width="3"/>
+                    <path d="M 242,90 L 338,90 L 338,160 Q 338,168 330,168 L 250,168 Q 242,168 242,160 Z" fill="url(#oilDef)"/>
+                    <!-- Particles in oil -->
+                    <circle cx="270" cy="120" r="2" fill="#fff"/><circle cx="310" cy="140" r="2" fill="#fff"/><circle cx="290" cy="160" r="2" fill="#fff"/>
+                    <text x="290" y="190" fill="var(--red)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">ليس محلولاً مائياً (المذيب زيت)</text>
+                    <path d="M 280,30 L 300,50 M 300,30 L 280,50" fill="none" stroke="var(--red)" stroke-width="2"/>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">⚖️</span>
+            <h2>3. التركيز الكتلي للمحلول (Concentration Massique)</h2>
+            <hr class="sec-line">
+        </div>
+        <p>يُعبر التركيز الكتلي عن <strong>كتلة المادة المنحلة</strong> المتواجدة في <strong>حجم معين من المذيب</strong> (الماء).</p>
+
+        <div class="formula-box">
+            <div class="formula-title">قانون التركيز الكتلي</div>
+            <div class="formula-display">
+                <!-- Using MathJax for the formula -->
+                $$ C = \frac{m}{V} $$
+            </div>
+            <table class="symbol-table">
+                <thead>
+                    <tr>
+                        <th>الرمز</th>
+                        <th>الدلالة الفيزيائية</th>
+                        <th>الوحدة الدولية</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="sym-cell">C</td>
+                        <td>التركيز الكتلي (Concentration)</td>
+                        <td class="unit-cell">g/L (غرام على اللتر)</td>
+                    </tr>
+                    <tr>
+                        <td class="sym-cell">m</td>
+                        <td>كتلة المُنحَل (Masse du soluté)</td>
+                        <td class="unit-cell">g (غرام)</td>
+                    </tr>
+                    <tr>
+                        <td class="sym-cell">V</td>
+                        <td>حجم المُحِل (Volume du solvant)</td>
+                        <td class="unit-cell">L (لتر)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (3) — العلاقة بين الكتلة والحجم لتعيين التركيز</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <!-- Balance and Mass -->
+                    <rect x="60" y="140" width="80" height="10" fill="#64748b" rx="2"/>
+                    <path d="M 80,140 L 100,100 L 120,140 Z" fill="#94a3b8"/>
+                    <rect x="50" y="90" width="100" height="10" fill="#e2e8f0" rx="2"/>
+                    <!-- Mass Object -->
+                    <rect x="85" y="60" width="30" height="30" fill="var(--gold)" rx="2"/>
+                    <text x="100" y="50" fill="var(--gold)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">الكتلة m (g)</text>
+                    
+                    <!-- Division Sign -->
+                    <text x="200" y="120" fill="var(--accent)" font-family="Cairo" font-weight="bold" font-size="40" text-anchor="middle">÷</text>
+
+                    <!-- Graduated Cylinder -->
+                    <rect x="270" y="40" width="40" height="120" fill="none" stroke="#cbd5e1" stroke-width="3" rx="5"/>
+                    <path d="M 272,80 L 308,80 L 308,158 Q 308,158 290,158 Q 272,158 272,158 Z" fill="var(--accent)" opacity="0.4"/>
+                    <!-- Ticks -->
+                    <line x1="270" y1="60" x2="285" y2="60" stroke="#cbd5e1" stroke-width="2"/>
+                    <line x1="270" y1="80" x2="285" y2="80" stroke="#cbd5e1" stroke-width="2"/>
+                    <line x1="270" y1="100" x2="285" y2="100" stroke="#cbd5e1" stroke-width="2"/>
+                    <line x1="270" y1="120" x2="285" y2="120" stroke="#cbd5e1" stroke-width="2"/>
+                    <line x1="270" y1="140" x2="285" y2="140" stroke="#cbd5e1" stroke-width="2"/>
+                    <text x="290" y="30" fill="var(--accent)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">الحجم V (L)</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">🎨</span>
+            <h2>4. التمديد والتركيز (Dilution et Concentration)</h2>
+            <hr class="sec-line">
+        </div>
+        <p>يمكننا تغيير تركيز المحلول المائي لتخفيفه أو زيادة تركيزه حسب الحاجة:</p>
+
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th>العملية</th>
+                    <th>الطريقة (كيف تتم؟)</th>
+                    <th>النتيجة على التركيز (C)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>التمديد (التخفيف)</strong></td>
+                    <td>إضافة كمية من <strong>الماء النقي</strong> (المُحِل) للمحلول.</td>
+                    <td><strong style="color:var(--red);">ينقص</strong> التركيز (يصبح المحلول ممدداً).</td>
+                </tr>
+                <tr>
+                    <td><strong>التركيز</strong></td>
+                    <td>إضافة كمية من <strong>المادة المُنحلة</strong> (أو تبخير الماء).</td>
+                    <td><strong style="color:var(--green);">يزداد</strong> التركيز (يصبح المحلول مركزاً).</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (4) — تأثير إضافة الماء (التمديد) وإضافة المُنحَل (التركيز) على اللون</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <!-- Beaker 1: Diluted -->
+                    <path d="M 50,60 L 50,150 Q 50,160 60,160 L 120,160 Q 130,160 130,150 L 130,60" fill="none" stroke="url(#glassDef)" stroke-width="3"/>
+                    <path d="M 52,100 L 128,100 L 128,150 Q 128,158 120,158 L 60,158 Q 52,158 52,150 Z" fill="#38bdf8" opacity="0.3"/>
+                    <text x="90" y="185" fill="var(--text)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">محلول ممدد</text>
+                    <text x="90" y="120" fill="#fff" font-family="Cairo" font-size="12" text-anchor="middle">لون فاتح</text>
+
+                    <!-- Arrows -->
+                    <line x1="140" y1="120" x2="190" y2="120" stroke="var(--gold)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="165" y="110" fill="var(--gold)" font-family="Cairo" font-size="10" text-anchor="middle">+ مُنحَل</text>
+                    <line x1="190" y1="140" x2="140" y2="140" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="165" y="155" fill="var(--accent)" font-family="Cairo" font-size="10" text-anchor="middle">+ ماء</text>
+
+                    <!-- Beaker 2: Normal -->
+                    <path d="M 210,60 L 210,150 Q 210,160 220,160 L 280,160 Q 290,160 290,150 L 290,60" fill="none" stroke="url(#glassDef)" stroke-width="3"/>
+                    <path d="M 212,100 L 288,100 L 288,150 Q 288,158 280,158 L 220,158 Q 212,158 212,150 Z" fill="#0284c7" opacity="0.6"/>
+                    <text x="250" y="185" fill="var(--text)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">محلول عادي</text>
+
+                    <!-- Arrows -->
+                    <line x1="300" y1="120" x2="350" y2="120" stroke="var(--gold)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="325" y="110" fill="var(--gold)" font-family="Cairo" font-size="10" text-anchor="middle">+ مُنحَل</text>
+                    <line x1="350" y1="140" x2="300" y2="140" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="325" y="155" fill="var(--accent)" font-family="Cairo" font-size="10" text-anchor="middle">+ ماء</text>
+
+                    <!-- Beaker 3: Concentrated -->
+                    <path d="M 370,60 L 370,150 Q 370,160 380,160 L 440,160 Q 450,160 450,150 L 450,60" fill="none" stroke="url(#glassDef)" stroke-width="3"/>
+                    <path d="M 372,100 L 448,100 L 448,150 Q 448,158 440,158 L 380,158 Q 372,158 372,150 Z" fill="#0f172a" opacity="0.9"/>
+                    <text x="410" y="185" fill="var(--text)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">محلول مركز</text>
+                    <text x="410" y="120" fill="#fff" font-family="Cairo" font-size="12" text-anchor="middle">لون داكن</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">🛑</span>
+            <h2>5. المحلول المشبع (Solution Saturée)</h2>
+            <hr class="sec-line">
+        </div>
+        
+        <div class="def-box">
+            <strong>المحلول المشبع</strong>
+            <p>هو المحلول المائي الذي <strong>لا يمكنه إذابة أي كمية إضافية</strong> من المُنحل (في درجة حرارة معينة). عند تجاوز هذا الحد، تترسب الكمية الزائدة في قاع الإناء ويصبح الخليط <strong>غير متجانس</strong>.</p>
+        </div>
+
+        <div class="highlight-box tip">
+            💡 <strong>هل تعلم؟</strong> لكل مادة حد ذوبان معين في الماء. مثلاً، حد ذوبان ملح الطعام في الماء في درجة الحرارة العادية هو حوالي 360g في اللتر الواحد.
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (5) — ترسب المادة الزائدة في المحلول المشبع</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <path d="M 100,40 L 100,160 Q 100,170 110,170 L 190,170 Q 200,170 200,160 L 200,40" fill="none" stroke="url(#glassDef)" stroke-width="4"/>
+                    <path d="M 102,80 L 198,80 L 198,160 Q 198,168 190,168 L 110,168 Q 102,168 102,160 Z" fill="url(#waterDef)"/>
+                    
+                    <!-- Saturated particles heavy -->
+                    <circle cx="150" cy="120" r="3" fill="#fbbf24"/><circle cx="130" cy="100" r="3" fill="#fbbf24"/><circle cx="170" cy="140" r="3" fill="#fbbf24"/><circle cx="120" cy="150" r="3" fill="#fbbf24"/><circle cx="180" cy="110" r="3" fill="#fbbf24"/>
+                    
+                    <!-- Precipitate (Pile of solid) at bottom -->
+                    <path d="M 110,168 Q 150,140 190,168 Z" fill="#f59e0b"/>
+                    
+                    <line x1="220" y1="160" x2="170" y2="160" stroke="var(--gold)" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <text x="300" y="160" fill="var(--gold)" font-family="Cairo" font-size="12" text-anchor="start" dominant-baseline="middle">راسب صلب (زائد)</text>
+                    <text x="150" y="190" fill="var(--text)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">محلول مشبع (غير متجانس)</text>
+                </svg>
+            </div>
+        </figure>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 2: المحاكاة التفاعلية -->
+    <!-- ========================================== -->
+    <div id="tab-sim" class="tab-content">
+        
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">1. محاكاة: حساب وتغيير التركيز الكتلي</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>تأثير الكتلة والحجم على التركيز الكتلي (C = m/V)</strong>. حرّك <strong>شريط الكتلة أو الحجم</strong> لترى كيف يتغيّر <strong>لون المحلول (دلالة على التركيز) وتوزيع الحبيبات</strong>.</p>
+            </div>
+            
+            <div class="sim-container">
+                <div class="sim-canvas-wrap" id="canvasContainerSim1" style="background: var(--dark3);">
+                    <canvas id="canvasSim1"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>كتلة المُذاب m (غرام): <span id="valMass" class="val-badge">20 g</span></label>
+                        <input type="range" id="sliderMass" min="5" max="100" value="20" step="5">
+                    </div>
+                    <div class="control-group">
+                        <label>حجم الماء V (لتر): <span id="valVol" class="val-badge">0.5 L</span></label>
+                        <input type="range" id="sliderVol" min="0.1" max="1.0" value="0.5" step="0.1">
+                    </div>
+                    <div class="highlight-box info" style="margin-top: 15px; text-align: center;">
+                        التركيز الكتلي C:<br>
+                        <strong style="font-size: 1.5rem; font-family: monospace;" id="valConc">40.0 g/L</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">2. محاكاة: حد الإشباع والترسيب</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>مفهوم المحلول المشبع</strong>. انقر على الزر لإضافة <strong>ملاعق من الملح (10g لكل ملعقة) لـ 100mL من الماء</strong>، لترى متى يعجز الماء عن الإذابة و<strong>يبدأ تشكل الراسب</strong>.</p>
+            </div>
+
+            <div class="sim-container">
+                <div class="sim-canvas-wrap" id="canvasContainerSim2" style="background: var(--dark3);">
+                    <canvas id="canvasSim2"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div style="text-align: center; margin-bottom: 10px; color: var(--muted); font-size: 0.9rem;">
+                        حجم الماء ثابت: <strong>0.1 L (100 mL)</strong><br>
+                        حد إشباع الملح ≈ <strong>36 g/100mL</strong>
+                    </div>
+                    <button class="sim-btn" onclick="addSalt()" style="background: var(--gold); color: #000; font-weight: bold; margin-bottom: 10px;">🥄 أضف 10g ملح</button>
+                    <button class="sim-btn" onclick="resetSim2()" style="background: var(--dark4);">🔄 إفراغ الكأس</button>
+                    
+                    <div class="highlight-box" id="satFeedback" style="margin-top: 15px; border-left: 4px solid var(--accent); background: rgba(20, 184, 166, 0.1);">
+                        كتلة الملح: <strong>0 g</strong><br>المحلول <strong>غير مشبع</strong> (يذوب كلياً).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 3: التمارين -->
+    <!-- ========================================== -->
+    <div id="tab-exercises" class="tab-content">
+        
+        <div class="q-card">
+            <div class="q-num">1</div>
+            <div class="q-text">في محلول الماء المالح، يُسمى الماء بـ:</div>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q1" value="0"> المُنحَل (المذاب)</label>
+                <label class="q-opt"><input type="radio" name="q1" value="1"> المُحِل (المذيب)</label>
+                <label class="q-opt"><input type="radio" name="q1" value="2"> الراسب</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">2</div>
+            <div class="q-text">ما هو الشرط الأساسي لتسمية خليط متجانس بـ "المحلول المائي"؟</div>
+            <div class="q-options" data-correct="2">
+                <label class="q-opt"><input type="radio" name="q2" value="0"> أن يكون سائلاً وشفافاً.</label>
+                <label class="q-opt"><input type="radio" name="q2" value="1"> أن يحتوي على الملح أو السكر فقط.</label>
+                <label class="q-opt"><input type="radio" name="q2" value="2"> أن يكون السائل المُحِل هو الماء حصراً.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">3</div>
+            <div class="q-text">أذبنا 20g من السكر في 0.5L من الماء. كم يبلغ التركيز الكتلي (C)؟</div>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q3" value="0"> 10 g/L</label>
+                <label class="q-opt"><input type="radio" name="q3" value="1"> 40 g/L</label>
+                <label class="q-opt"><input type="radio" name="q3" value="2"> 0.025 g/L</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">4</div>
+            <div class="q-text">لدينا عصير حلو جداً (مركز)، كيف نقوم بتمديده (تخفيفه)؟</div>
+            <div class="q-options" data-correct="0">
+                <label class="q-opt"><input type="radio" name="q4" value="0"> بإضافة كمية من الماء النقي.</label>
+                <label class="q-opt"><input type="radio" name="q4" value="1"> بإضافة المزيد من السكر.</label>
+                <label class="q-opt"><input type="radio" name="q4" value="2"> بتبخير جزء من الماء.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">5</div>
+            <div class="q-text">المحلول المشبع هو المحلول الذي:</div>
+            <div class="q-options" data-correct="2">
+                <label class="q-opt"><input type="radio" name="q5" value="0"> تركيزه ضعيف جداً (ممدد).</label>
+                <label class="q-opt"><input type="radio" name="q5" value="1"> لا يحتوي على أي منحل.</label>
+                <label class="q-opt"><input type="radio" name="q5" value="2"> لا يمكنه إذابة أي كمية إضافية من المنحل وتترسب فيه الزيادة.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card q-diagram-type">
+            <div class="q-num">6</div>
+            <div class="q-text">تأمل الرسم التوضيحي أدناه الذي يمثل كأساً به ماء أضفنا إليه كمية كبيرة جداً من الملح. ماذا يمثل الجزء المشار إليه بالسهم (A) في القاع؟</div>
+            <svg class="q-diagram" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 100,20 L 100,120 Q 100,130 110,130 L 190,130 Q 200,130 200,120 L 200,20" fill="none" stroke="#94a3b8" stroke-width="3"/>
+                <path d="M 102,60 L 198,60 L 198,120 Q 198,128 190,128 L 110,128 Q 102,128 102,120 Z" fill="rgba(20, 184, 166, 0.4)"/>
+                
+                <!-- Precipitate -->
+                <path d="M 110,128 Q 150,100 190,128 Z" fill="#fbbf24"/>
+                
+                <line x1="240" y1="115" x2="170" y2="115" stroke="var(--text)" stroke-width="2" marker-end="url(#arrow)"/>
+                <text x="250" y="115" fill="var(--gold)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="start" dominant-baseline="middle">(A)</text>
+            </svg>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q6" value="0"> سائل مُحِل (ماء).</label>
+                <label class="q-opt"><input type="radio" name="q6" value="1"> راسب صلب (ملح زائد لم يذب).</label>
+                <label class="q-opt"><input type="radio" name="q6" value="2"> خليط متجانس.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <button class="print-btn" onclick="checkAnswers()" style="margin-top: 20px; background:var(--accent); color:#000;">تحقق من إجاباتي ✅</button>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 4: ملخص الكراس -->
+    <!-- ========================================== -->
+    <div id="tab-summary" class="tab-content">
+        <div class="summary-card">
+            
+            <div class="summary-header">
+                <div class="summary-meta">العلوم الفيزيائية والتكنولوجيا | السنة الأولى متوسط | المادة وتحولاتها</div>
+                <h2 class="summary-title">ملخص شامل: المحلول المائي</h2>
+                <div class="summary-subtitle">وفق منهاج الجيل الثاني</div>
+            </div>
+
+            <div class="concept-map-wrap">
+                <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                <svg class="concept-map" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="s-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--dark2)"/>
+                        </marker>
+                    </defs>
+                    
+                    <rect x="190" y="10" width="220" height="40" rx="8" fill="var(--accent)" />
+                    <text x="300" y="35" fill="#000" font-family="Cairo" font-weight="bold" font-size="16" text-anchor="middle">المحلول المائي (خليط متجانس)</text>
+                    
+                    <path d="M 300 50 L 300 80" stroke="var(--dark2)" stroke-width="2"/>
+                    <path d="M 150 80 L 450 80" stroke="var(--dark2)" stroke-width="2"/>
+                    
+                    <path d="M 150 80 L 150 100" stroke="var(--dark2)" stroke-width="2" marker-end="url(#s-arrow)"/>
+                    <path d="M 450 80 L 450 100" stroke="var(--dark2)" stroke-width="2" marker-end="url(#s-arrow)"/>
+                    
+                    <!-- المُحِل -->
+                    <rect x="75" y="100" width="150" height="40" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+                    <text x="150" y="125" fill="#0369a1" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">الـمُحِل (المذيب)</text>
+                    <text x="150" y="155" fill="#64748b" font-family="Cairo" font-size="12" text-anchor="middle">الماء النقي (شرط أساسي)</text>
+
+                    <!-- المُنحَل -->
+                    <rect x="375" y="100" width="150" height="40" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+                    <text x="450" y="125" fill="#b45309" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">الـمُنحَل (المذاب)</text>
+                    <text x="450" y="155" fill="#64748b" font-family="Cairo" font-size="12" text-anchor="middle">مادة صلبة، سائلة، أو غازية</text>
+
+                    <path d="M 300 130 L 300 180" stroke="var(--dark2)" stroke-width="2" stroke-dasharray="4" marker-end="url(#s-arrow)"/>
+                    <rect x="225" y="180" width="150" height="40" rx="8" fill="#f1f5f9" stroke="var(--dark2)" stroke-width="2"/>
+                    <text x="300" y="205" fill="var(--dark2)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">التركيز الكتلي C</text>
+                    <text x="300" y="235" fill="var(--dark2)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle" direction="ltr">C = m / V</text>
+                </svg>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">📚 التعاريف والقوانين</h3>
+                <div class="summary-defs">
+                    <div class="s-def-item">
+                        <span class="s-def-term">المحلول المائي:</span>
+                        <span class="s-def-text">خليط متجانس ناتج عن ذوبان مُنحَل في مُحِل يشترط أن يكون <strong>الماء</strong>.</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">قانون التركيز الكتلي:</span>
+                        <span class="s-def-text">يحسب بقسمة كتلة المذاب (m) بالغرام على حجم المذيب (V) باللتر. <strong>C = m / V</strong> (وحدته g/L).</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">التمديد والتركيز:</span>
+                        <span class="s-def-text">التمديد هو إضافة <strong>الماء</strong> لتخفيف التركيز. والتركيز هو إضافة <strong>المذاب</strong> لزيادة التركيز.</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">المحلول المشبع:</span>
+                        <span class="s-def-text">محلول غير قادر على إذابة كمية إضافية من المذاب، وتترسب الزيادة في القاع (يصبح غير متجانس).</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="print-btn" onclick="window.print()" style="background:var(--accent); color:#000; font-weight:bold; border:none; padding:10px 20px;">🖨️ طباعة الملخص</button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. كود إدارة التبويبات الإلزامي (البند 3.9.1)
+        // ==========================================
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim === 'function') updateSim();
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim === 'function') updateSim();
+                }, 50);
+            }
+            resizeCanvas();
+        });
+
+        // ==========================================
+        // 2. إدارة الكانفاس (البند الإلزامي 0.2 و 0.5)
+        // ==========================================
+        const canvas1 = document.getElementById('canvasSim1');
+        const ctx1 = canvas1.getContext('2d');
+        const container1 = document.getElementById('canvasContainerSim1');
+
+        const canvas2 = document.getElementById('canvasSim2');
+        const ctx2 = canvas2.getContext('2d');
+        const container2 = document.getElementById('canvasContainerSim2');
+
+        function resizeCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            
+            // Canvas 1
+            if (container1 && container1.clientWidth > 0) {
+                canvas1.width = container1.clientWidth * dpr;
+                canvas1.height = container1.clientHeight * dpr;
+                canvas1.style.width = container1.clientWidth + 'px';
+                canvas1.style.height = container1.clientHeight + 'px';
+                ctx1.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            // Canvas 2
+            if (container2 && container2.clientWidth > 0) {
+                canvas2.width = container2.clientWidth * dpr;
+                canvas2.height = container2.clientHeight * dpr;
+                canvas2.style.width = container2.clientWidth + 'px';
+                canvas2.style.height = container2.clientHeight + 'px';
+                ctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            drawSim1();
+            drawSim2();
+        });
+
+        // ==========================================
+        // 3. المحاكاة الأولى (حساب التركيز)
+        // ==========================================
+        let sim1Mass = 20;
+        let sim1Vol = 0.5;
+        let particles1 = [];
+
+        const sliderMass = document.getElementById('sliderMass');
+        const sliderVol = document.getElementById('sliderVol');
+        const valMass = document.getElementById('valMass');
+        const valVol = document.getElementById('valVol');
+        const valConc = document.getElementById('valConc');
+
+        function updateSim1Data() {
+            sim1Mass = parseFloat(sliderMass.value);
+            sim1Vol = parseFloat(sliderVol.value);
+            valMass.innerText = sim1Mass + " g";
+            valVol.innerText = sim1Vol.toFixed(1) + " L";
+            
+            let conc = sim1Mass / sim1Vol;
+            valConc.innerText = conc.toFixed(1) + " g/L";
+
+            // توليد حبيبات عشوائية للتوضيح
+            particles1 = [];
+            let pCount = Math.floor(conc / 2); // عدد الحبيبات متناسب مع التركيز
+            for(let i=0; i<pCount; i++) {
+                particles1.push({
+                    x: Math.random(), // relative 0 to 1
+                    y: Math.random()  // relative 0 to 1
+                });
+            }
+            drawSim1();
+        }
+
+        sliderMass.addEventListener('input', updateSim1Data);
+        sliderVol.addEventListener('input', updateSim1Data);
+
+        function drawSim1() {
+            if(!ctx1) return;
+            const w = container1.clientWidth || canvas1.width;
+            const h = container1.clientHeight || canvas1.height;
+            // البند الإلزامي 0.5: clearRect
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+
+            const bx = w/2 - 60;
+            const by = 40;
+            const bw = 120;
+            const bh = h - 60;
+
+            // نسبة ارتفاع السائل من الحجم (0.1 إلى 1.0)
+            const fillRatio = sim1Vol; 
+            const liqH = bh * fillRatio;
+            const liqY = by + bh - liqH;
+
+            // تركيز اللون (أغمق كلما زاد C)
+            let conc = sim1Mass / sim1Vol;
+            let opacity = Math.min(0.2 + (conc / 200), 0.9);
+
+            // السائل
+            ctx1.fillStyle = `rgba(20, 184, 166, ${opacity})`;
+            ctx1.fillRect(bx+5, liqY, bw-10, liqH-5);
+
+            // الحبيبات المذابة
+            ctx1.fillStyle = '#fbbf24';
+            particles1.forEach(p => {
+                let px = bx + 10 + p.x * (bw - 20);
+                let py = liqY + 10 + p.y * (liqH - 20);
+                ctx1.beginPath();
+                ctx1.arc(px, py, 3, 0, Math.PI*2);
+                ctx1.fill();
+            });
+
+            // الكأس
+            ctx1.strokeStyle = 'rgba(255,255,255,0.4)';
+            ctx1.lineWidth = 3;
+            ctx1.beginPath();
+            ctx1.moveTo(bx, by);
+            ctx1.lineTo(bx, by+bh);
+            ctx1.lineTo(bx+bw, by+bh);
+            ctx1.lineTo(bx+bw, by);
+            ctx1.stroke();
+            
+            // تدريجات الكأس
+            ctx1.lineWidth = 1;
+            for(let i=0; i<=10; i++) {
+                let ty = by + bh - (bh * (i/10));
+                ctx1.beginPath();
+                ctx1.moveTo(bx, ty);
+                ctx1.lineTo(bx + (i%5===0 ? 15 : 8), ty);
+                ctx1.stroke();
+            }
+        }
+
+        // ==========================================
+        // 4. المحاكاة الثانية (التشبع)
+        // ==========================================
+        let sim2Mass = 0; // كتلة الملح المضافة بـ g
+        const sim2Vol = 0.1; // لتر (100 مل) ثابت
+        const saturationLimit = 36; // g per 100mL (360 g/L)
+
+        function addSalt() {
+            sim2Mass += 10;
+            updateSim2Data();
+        }
+
+        function resetSim2() {
+            sim2Mass = 0;
+            updateSim2Data();
+        }
+
+        function updateSim2Data() {
+            const feedback = document.getElementById('satFeedback');
+            if (sim2Mass <= saturationLimit) {
+                feedback.innerHTML = `كتلة الملح: <strong>${sim2Mass} g</strong><br>المحلول <strong style="color:var(--green)">غير مشبع</strong> (يذوب كلياً).`;
+                feedback.style.borderColor = 'var(--green)';
+            } else {
+                let excess = sim2Mass - saturationLimit;
+                feedback.innerHTML = `كتلة الملح: <strong>${sim2Mass} g</strong><br>المحلول <strong style="color:var(--red)">مشبع</strong>. ترسّب <strong>${excess} g</strong> في القاع.`;
+                feedback.style.borderColor = 'var(--red)';
+            }
+            drawSim2();
+        }
+
+        function drawSim2() {
+            if(!ctx2) return;
+            const w = container2.clientWidth || canvas2.width;
+            const h = container2.clientHeight || canvas2.height;
+            // البند الإلزامي 0.5: clearRect
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+            const bx = w/2 - 50;
+            const by = 40;
+            const bw = 100;
+            const bh = h - 60;
+
+            // الماء ثابت
+            const liqY = by + (bh * 0.3); // 70% fill
+            ctx2.fillStyle = 'rgba(20, 184, 166, 0.4)';
+            ctx2.fillRect(bx+5, liqY, bw-10, by+bh - liqY - 5);
+
+            // رسم الجزيئات الذائبة
+            ctx2.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            let dissolved = Math.min(sim2Mass, saturationLimit);
+            for(let i=0; i<dissolved*2; i++) {
+                // random fixed pos based on seed to avoid flicker
+                let sx = Math.sin(i*123) * 10000; sx = sx - Math.floor(sx);
+                let sy = Math.cos(i*321) * 10000; sy = sy - Math.floor(sy);
+                let px = bx + 10 + sx * (bw - 20);
+                let py = liqY + 10 + sy * (by+bh - liqY - 20);
+                ctx2.beginPath();
+                ctx2.arc(px, py, 2, 0, Math.PI*2);
+                ctx2.fill();
+            }
+
+            // رسم الراسب (إن وجد)
+            if (sim2Mass > saturationLimit) {
+                let excess = sim2Mass - saturationLimit;
+                let moundHeight = Math.min(excess * 0.5, 30);
+                ctx2.fillStyle = '#fef08a';
+                ctx2.beginPath();
+                ctx2.moveTo(bx+5, by+bh-5);
+                ctx2.quadraticCurveTo(bx+bw/2, by+bh-5 - moundHeight*2, bx+bw-5, by+bh-5);
+                ctx2.fill();
+            }
+
+            // الكأس
+            ctx2.strokeStyle = 'rgba(255,255,255,0.4)';
+            ctx2.lineWidth = 3;
+            ctx2.beginPath();
+            ctx2.moveTo(bx, by);
+            ctx2.lineTo(bx, by+bh);
+            ctx2.lineTo(bx+bw, by+bh);
+            ctx2.lineTo(bx+bw, by);
+            ctx2.stroke();
+            
+            // علامة 100 مل
+            ctx2.strokeStyle = 'var(--gold)';
+            ctx2.beginPath();
+            ctx2.moveTo(bx, liqY);
+            ctx2.lineTo(bx+15, liqY);
+            ctx2.stroke();
+            ctx2.fillStyle = 'var(--gold)';
+            ctx2.font = '12px Cairo';
+            ctx2.fillText('100 mL', bx-45, liqY+4);
+        }
+
+        function updateSim() {
+            updateSim1Data();
+            updateSim2Data();
+        }
+
+        // ==========================================
+        // 5. التحقق من التمارين
+        // ==========================================
+        function checkAnswers() {
+            const cards = document.querySelectorAll('.q-card');
+            cards.forEach(card => {
+                const correctVal = card.querySelector('.q-options').dataset.correct;
+                const options = card.querySelectorAll('input[type="radio"]');
+                const feedback = card.querySelector('.q-feedback');
+                let answered = false;
+
+                options.forEach(opt => {
+                    const optLabel = opt.parentElement;
+                    optLabel.classList.remove('correct', 'wrong');
+                    
+                    if(opt.checked) {
+                        answered = true;
+                        if(opt.value === correctVal) {
+                            optLabel.classList.add('correct');
+                            feedback.className = 'q-feedback show-correct';
+                            feedback.innerHTML = 'إجابة صحيحة! أحسنت.';
+                        } else {
+                            optLabel.classList.add('wrong');
+                            feedback.className = 'q-feedback show-wrong';
+                            feedback.innerHTML = 'إجابة غير موفقة. (الخيار الصحيح مضلل بالأخضر).';
+                        }
+                    }
+                    if(opt.value === correctVal) {
+                        optLabel.classList.add('correct'); // إظهار الصحيح دائما
+                    }
+                });
+
+                if(!answered) {
+                    feedback.className = 'q-feedback show-wrong';
+                    feedback.innerHTML = 'يرجى اختيار إجابة لمعرفة التقييم.';
+                }
+            });
+        }
+    </script>
+    
+    <!-- السكريبت الإلزامي المركزي -->
+    <script src="credit.js"></script>
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 5 | عدد رسوم SVG في الدرس النظري = 5 | عدد المحاكيات = 2 -->
+</body>
+</html>

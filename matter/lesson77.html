@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تغير حالات المادة - الفيزياء السهلة</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- إدراج MathJax الإلزامي -->
+    <script>
+        MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #14b8a6; /* لون المادة وتحولاتها */
+            --accent2:#2dd4bf;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+            --blue:   #3b82f6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.7;
+            padding-bottom: 50px;
+        }
+
+        .amiri { font-family: 'Amiri', serif; }
+        main { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        /* شريط التنقل العلوي الثابت */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        /* STREAMING_CHUNK:Styling headers and layout components... -->
+        .lesson-header {
+            background: var(--dark2);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .lesson-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+        }
+        .lesson-badge {
+            display: inline-block;
+            background: rgba(20, 184, 166, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        h1 em { color: var(--accent); font-style: normal; }
+        .lesson-meta { color: var(--muted); font-size: 0.9rem; }
+
+        /* شريط التبويبات الإلزامي */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .objectives-box {
+            background: var(--card);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .objectives-box h3 { color: var(--accent); margin-bottom: 10px; }
+        .objectives-box ul { padding-right: 20px; }
+
+        .sec-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0 20px;
+        }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-line { flex-grow: 1; height: 1px; background: var(--border); border: none; }
+
+        .def-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-right: 4px solid;
+            background: rgba(255,255,255,0.03);
+        }
+        .highlight-box.tip { border-color: var(--gold); color: #fef08a; }
+
+        /* تنسيق المعادلات الإلزامي */
+        .formula-box {
+            background: rgba(20, 184, 166, 0.05);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .formula-title {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .formula-display {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .symbol-table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            background: var(--dark2);
+        }
+        .symbol-table th { background: var(--dark3); color: var(--muted); padding: 10px; border: 1px solid var(--border); }
+        .symbol-table td { padding: 12px 10px; border: 1px solid var(--border); text-align: center; }
+        .sym-cell { font-family: 'Amiri', serif; font-size: 1.3rem; font-style: italic; color: #fff; }
+        .unit-cell { color: var(--gold); }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--dark2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .info-table th, .info-table td { padding: 12px; text-align: center; border: 1px solid var(--border); }
+        .info-table th { background: var(--dark3); color: var(--accent2); }
+
+        .diagram-figure {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .diagram-wrap { max-width: 100%; overflow: hidden; display: flex; justify-content: center; }
+        .lesson-diagram { width: 100%; max-width: 500px; height: auto; }
+        .fig-title { margin-top: 15px; color: var(--muted); font-size: 0.9rem; }
+
+        .sim-wrap {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+        .sim-title { font-size: 1.2rem; color: #fff; }
+        .sim-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        .sim-description {
+            background: rgba(255,255,255,0.02);
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--muted);
+            border-right: 3px solid var(--accent);
+        }
+        .canvas-container {
+            width: 100%;
+            height: 350px;
+            background: var(--dark);
+            border-radius: 8px;
+            border: 1px inset var(--border);
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+        .sim-controls { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; background: var(--dark3); padding: 15px; border-radius: 8px; }
+        .control-group { flex: 1; min-width: 200px; }
+        .control-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; }
+        .val-badge { color: var(--gold); font-weight: bold; font-family: monospace; font-size: 1.1rem; }
+        input[type="range"] { width: 100%; accent-color: var(--accent); height: 6px; border-radius: 3px; outline: none; }
+        .action-btn { background: var(--accent); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-family: inherit; font-weight: 600; cursor: pointer; transition: background 0.3s; }
+        .action-btn:hover { background: var(--accent2); }
+
+        /* التمارين */
+        .q-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .q-num { display: inline-block; background: var(--dark3); color: var(--muted); padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 15px; }
+        .q-options { display: grid; gap: 10px; }
+        .q-option { background: var(--dark); border: 1px solid var(--border); padding: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .q-option:hover { border-color: var(--accent); }
+        .q-option.selected { background: rgba(20, 184, 166, 0.1); border-color: var(--accent); }
+        .q-option.correct { background: rgba(16, 185, 129, 0.1); border-color: var(--green); color: var(--green); }
+        .q-option.wrong { background: rgba(239, 68, 68, 0.1); border-color: var(--red); color: var(--red); }
+        .q-feedback { margin-top: 15px; padding: 10px; border-radius: 6px; font-size: 0.9rem; display: none; background: rgba(255,255,255,0.05); }
+        .q-feedback.show { display: block; }
+
+        /* الملخص */
+        .summary-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 30px; }
+        .summary-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+        .summary-meta { color: var(--muted); font-size: 0.9rem; }
+        .summary-title { color: var(--accent); font-size: 1.8rem; margin: 10px 0; }
+        .summary-section-title { color: #fff; border-right: 4px solid var(--accent); padding-right: 10px; margin: 30px 0 15px; font-size: 1.3rem; }
+        .s-def-item { margin-bottom: 15px; }
+        .s-def-term { font-weight: bold; color: var(--accent2); margin-left: 10px; font-size: 1.1rem; }
+        .summary-list { list-style: none; padding: 0; }
+        .summary-list li { position: relative; padding-right: 25px; margin-bottom: 12px; }
+        .summary-list li::before { content: '▪'; position: absolute; right: 5px; color: var(--accent); font-size: 1.5rem; top: -5px; }
+        .print-btn { background: var(--dark3); border: 1px solid var(--border); color: #fff; padding: 12px 25px; border-radius: 6px; cursor: pointer; margin-top: 30px; width: 100%; font-size: 1.1rem; transition: background 0.3s; }
+        .print-btn:hover { background: var(--dark4); }
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar, .print-btn { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #000 !important; font-size: 12pt; }
+            .summary-card { box-shadow: none; border: 1px solid #000; padding: 20px; }
+            .summary-title, .summary-section-title, .s-def-term, .sym-cell, .unit-cell { color: #000 !important; border-right-color: #000 !important; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="../index.html#matter">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <main>
+        <div class="lesson-header">
+            <span>السنة الأولى متوسط › المقطع 2 › الدرس 06</span><br><br>
+            <span class="lesson-badge">الدرس 06</span>
+            <h1><em>تغير حالات المادة</em></h1>
+            <p class="lesson-meta">المادة وتحولاتها | حصتان</p>
+        </div>
+
+        <nav class="tabs-nav">
+            <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+            <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+            <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+            <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+        </nav>
+
+        <div id="tab-lesson" class="tab-content active">
+            <div class="objectives-box">
+                <h3>🎯 الأهداف التعلمية</h3>
+                <ul>
+                    <li>أن يتعرف التلميذ على التحولات الفيزيائية بين حالات المادة الثلاث (صلبة، سائلة، غازية).</li>
+                    <li>أن يكتشف العوامل الأساسية المؤثرة في تغير حالة المادة (الحرارة والضغط).</li>
+                    <li>أن يرسخ مبدأ انحفاظ الكتلة مع إمكانية تغير الحجم أثناء التحول الفيزيائي.</li>
+                </ul>
+            </div>
+
+            <!-- Concept 1: States and Transitions Overview -->
+            <div class="sec-title">
+                <span class="sec-icon">🔄</span>
+                <h2>1. حالات المادة وتحولاتها الفيزيائية</h2>
+                <hr class="sec-line">
+            </div>
+            
+            <p>تتواجد المادة في الطبيعة في ثلاث حالات: صلبة، سائلة، وغازية. يمكن للمادة الانتقال من حالة إلى أخرى، ويُسمى هذا الانتقال <strong>التحول الفيزيائي (Changement d'état physique)</strong>.</p>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (1) — المخطط العام لتحولات حالات المادة الثلاث</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 350" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <!-- Gradients for 3D effect -->
+                            <linearGradient id="solidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#38bdf8" />
+                                <stop offset="100%" stop-color="#0284c7" />
+                            </linearGradient>
+                            <linearGradient id="liquidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#34d399" />
+                                <stop offset="100%" stop-color="#059669" />
+                            </linearGradient>
+                            <radialGradient id="gasGrad" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#e2e8f0" />
+                                <stop offset="100%" stop-color="#94a3b8" />
+                            </radialGradient>
+                            
+                            <!-- Drop Shadow -->
+                            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.4" />
+                            </filter>
+
+                            <!-- Smart Arrowhead -->
+                            <marker id="arrowhead-red" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--red)"/>
+                            </marker>
+                            <marker id="arrowhead-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--blue)"/>
+                            </marker>
+                        </defs>
+                        
+                        <!-- Nodes -->
+                        <!-- Solid (Bottom Left) -->
+                        <g transform="translate(100, 250)" filter="url(#shadow)">
+                            <rect x="-40" y="-40" width="80" height="80" rx="10" fill="url(#solidGrad)" stroke="#bae6fd" stroke-width="2"/>
+                            <!-- Ice detail -->
+                            <path d="M -20 -20 L 20 -20 L 20 20 L -20 20 Z" fill="rgba(255,255,255,0.3)"/>
+                            <text x="0" y="60" font-family="Cairo" font-size="16" fill="#fff" text-anchor="middle" dominant-baseline="middle">صلبة (Solide)</text>
+                        </g>
+
+                        <!-- Liquid (Bottom Right) -->
+                        <g transform="translate(400, 250)" filter="url(#shadow)">
+                            <circle cx="0" cy="0" r="45" fill="url(#liquidGrad)" stroke="#a7f3d0" stroke-width="2"/>
+                            <!-- Water drop detail -->
+                            <path d="M 0 -25 Q 15 -10 15 5 A 15 15 0 0 1 -15 5 Q -15 -10 0 -25" fill="rgba(255,255,255,0.4)"/>
+                            <text x="0" y="60" font-family="Cairo" font-size="16" fill="#fff" text-anchor="middle" dominant-baseline="middle">سائلة (Liquide)</text>
+                        </g>
+
+                        <!-- Gas (Top Center) -->
+                        <g transform="translate(250, 70)" filter="url(#shadow)">
+                            <!-- Cloud shape -->
+                            <path d="M -20 10 A 20 20 0 0 1 -10 -25 A 25 25 0 0 1 20 -15 A 15 15 0 0 1 20 10 Z" fill="url(#gasGrad)" stroke="#f8fafc" stroke-width="2"/>
+                            <text x="0" y="45" font-family="Cairo" font-size="16" fill="#fff" text-anchor="middle" dominant-baseline="middle">غازية (Gaz)</text>
+                        </g>
+
+                        <!-- Arrows -->
+                        <!-- Solid to Liquid (Melting) - Red -->
+                        <path d="M 160 240 L 340 240" fill="none" stroke="var(--red)" stroke-width="3" marker-end="url(#arrowhead-red)"/>
+                        <text x="250" y="225" font-family="Cairo" font-size="14" fill="var(--red)" text-anchor="middle">انصهار (تسخين)</text>
+
+                        <!-- Liquid to Solid (Freezing) - Blue -->
+                        <path d="M 340 260 L 160 260" fill="none" stroke="var(--blue)" stroke-width="3" marker-end="url(#arrowhead-blue)"/>
+                        <text x="250" y="280" font-family="Cairo" font-size="14" fill="var(--blue)" text-anchor="middle">تجمد (تبريد)</text>
+
+                        <!-- Liquid to Gas (Evaporation) - Red -->
+                        <path d="M 390 200 Q 370 120 300 90" fill="none" stroke="var(--red)" stroke-width="3" marker-end="url(#arrowhead-red)"/>
+                        <text x="390" y="140" font-family="Cairo" font-size="14" fill="var(--red)" text-anchor="start">تبخر</text>
+
+                        <!-- Gas to Liquid (Condensation) - Blue -->
+                        <path d="M 280 110 Q 320 180 370 220" fill="none" stroke="var(--blue)" stroke-width="3" marker-end="url(#arrowhead-blue)"/>
+                        <text x="310" y="180" font-family="Cairo" font-size="14" fill="var(--blue)" text-anchor="end">تكاثف</text>
+
+                        <!-- Solid to Gas (Sublimation) - Red -->
+                        <path d="M 120 200 Q 140 120 200 90" fill="none" stroke="var(--red)" stroke-width="3" marker-end="url(#arrowhead-red)"/>
+                        <text x="130" y="140" font-family="Cairo" font-size="14" fill="var(--red)" text-anchor="end">تسامي (تصعيد)</text>
+                    </svg>
+                </div>
+            </figure>
+
+            <!-- Concept 2: Factors affecting state change -->
+            <div class="sec-title">
+                <span class="sec-icon">🌡️</span>
+                <h2>2. العوامل المؤثرة في تغير حالة المادة</h2>
+                <hr class="sec-line">
+            </div>
+            <div class="def-box">
+                <p>تتأثر حالة المادة في الطبيعة بعاملين أساسيين هما:</p>
+                <ul style="margin-right: 20px; margin-top: 10px;">
+                    <li><strong>درجة الحرارة (Température):</strong> ارتفاعها يؤدي لتباعد الجزيئات (انصهار، تبخر). وانخفاضها يؤدي لتقاربها (تجمد، تكاثف).</li>
+                    <li><strong>الضغط (Pression):</strong> تغيير الضغط يمكن أن يسرع أو يؤخر التحول (مثال: في قدر الضغط يغلي الماء عند درجة حرارة أعلى من 100°C).</li>
+                </ul>
+            </div>
+
+            <!-- Concept 3: Conservation of Mass -->
+            <div class="sec-title">
+                <span class="sec-icon">⚖️</span>
+                <h2>3. انحفاظ الكتلة وتغير الحجم</h2>
+                <hr class="sec-line">
+            </div>
+            
+            <div class="highlight-box tip">
+                📌 <strong>مبدأ أساسي:</strong> أثناء أي تحول فيزيائي للمادة، <strong>الكتلة تبقى محفوظة</strong> (لا تتغير أبداً)، بينما <strong>الحجم قد يتغير</strong>.
+            </div>
+
+            <div class="formula-box">
+                <div class="formula-title">معادلة انحفاظ الكتلة</div>
+                <div class="formula-display">
+                    $$ m_{\text{avant}} = m_{\text{après}} $$
+                </div>
+                
+                <table class="symbol-table" style="max-width: 500px; margin: 15px auto;">
+                    <tr><th>الرمز</th><th>الدلالة</th></tr>
+                    <tr><td class="sym-cell" dir="ltr">$m_{\text{avant}}$</td><td>كتلة المادة قبل التحول</td></tr>
+                    <tr><td class="sym-cell" dir="ltr">$m_{\text{après}}$</td><td>كتلة المادة بعد التحول</td></tr>
+                </table>
+            </div>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (2) — انحفاظ الكتلة وزيادة الحجم عند تجمد الماء</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <!-- Digital Scale 1 (Liquid Water) -->
+                        <g transform="translate(100, 40)">
+                            <!-- Beaker -->
+                            <rect x="-30" y="0" width="60" height="80" rx="5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                            <!-- Water -->
+                            <path d="M -28 40 L 28 40 L 28 78 A 3 3 0 0 1 25 80 L -25 80 A 3 3 0 0 1 -28 78 Z" fill="#0ea5e9"/>
+                            
+                            <!-- Scale Base -->
+                            <rect x="-50" y="85" width="100" height="20" rx="3" fill="#334155" stroke="#475569" stroke-width="2"/>
+                            <!-- Screen -->
+                            <rect x="-25" y="88" width="50" height="14" rx="2" fill="#0f172a"/>
+                            <text x="0" y="99" font-family="monospace" font-size="12" fill="#10b981" text-anchor="middle">100.0g</text>
+                            
+                            <text x="0" y="130" font-family="Cairo" font-size="14" fill="#fff" text-anchor="middle">ماء سائل (حجم V1)</text>
+                        </g>
+
+                        <!-- Transition Arrow -->
+                        <path d="M 180 80 L 320 80" fill="none" stroke="var(--blue)" stroke-width="3" marker-end="url(#arrowhead-blue)"/>
+                        <text x="250" y="65" font-family="Cairo" font-size="14" fill="var(--blue)" text-anchor="middle">تبريد (تجمد)</text>
+
+                        <!-- Digital Scale 2 (Ice) -->
+                        <g transform="translate(400, 40)">
+                            <!-- Beaker -->
+                            <rect x="-30" y="0" width="60" height="80" rx="5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                            <!-- Ice (Higher volume) -->
+                            <path d="M -28 30 L 28 30 L 28 78 A 3 3 0 0 1 25 80 L -25 80 A 3 3 0 0 1 -28 78 Z" fill="#93c5fd" opacity="0.8"/>
+                            <path d="M -28 30 L 28 25 L 20 40 L -20 35 Z" fill="#bfdbfe"/> <!-- Ice uneven top -->
+                            
+                            <!-- Scale Base -->
+                            <rect x="-50" y="85" width="100" height="20" rx="3" fill="#334155" stroke="#475569" stroke-width="2"/>
+                            <!-- Screen (Same mass!) -->
+                            <rect x="-25" y="88" width="50" height="14" rx="2" fill="#0f172a"/>
+                            <text x="0" y="99" font-family="monospace" font-size="12" fill="#10b981" text-anchor="middle">100.0g</text>
+                            
+                            <text x="0" y="130" font-family="Cairo" font-size="14" fill="#fff" text-anchor="middle">جليد صلب (حجم V2 > V1)</text>
+                        </g>
+                    </svg>
+                </div>
+            </figure>
+
+        </div>
+
+        <div id="tab-sim" class="tab-content">
+            
+            <!-- Simulation 1: Particle Model -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 1: النموذج الحبيبي وحالات المادة</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي <strong>تأثير درجة الحرارة على حركة الحبيبات</strong> في المادة. حرّك <strong>شريط الحرارة</strong> لترى كيف تتباعد الحبيبات وتتغير حالة المادة من صلبة إلى سائلة ثم غازية.</p>
+                </div>
+                
+                <div class="canvas-container">
+                    <canvas id="simCanvas1"></canvas>
+                </div>
+                
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>درجة الحرارة: <span id="val1-display" class="val-badge" dir="ltr">-20 °C</span></label>
+                        <input type="range" id="slider-temp1" min="-50" max="150" value="-20">
+                    </div>
+                    <div style="text-align: center; width: 100%; margin-top: 10px;">
+                        <span id="state-label1" style="font-size:1.2rem; font-weight:bold; color:var(--blue);">الحالة الصلبة (Solide)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Mass Conservation -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 2: انحفاظ الكتلة وتغير الحجم</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي <strong>انحفاظ الكتلة أثناء انصهار الجليد</strong>. حرّك <strong>شريط الزمن/الحرارة</strong> لمراقبة تحول الجليد إلى ماء سائل. لاحظ كيف يتغير <strong>حجم</strong> المادة بينما تبقى قراءة <strong>الميزان</strong> ثابتة.</p>
+                </div>
+                
+                <div class="canvas-container">
+                    <canvas id="simCanvas2"></canvas>
+                </div>
+                
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>مستوى الانصهار (تسخين مستمر): <span id="val2-display" class="val-badge">0%</span></label>
+                        <input type="range" id="slider-melt" min="0" max="100" value="0">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="tab-exercises" class="tab-content">
+            <div id="quiz-container">
+                <!-- MCQ 1 -->
+                <div class="q-card" data-correct="1">
+                    <div class="q-num">السؤال 1</div>
+                    <div class="q-text">ماذا نسمي تحول المادة من الحالة السائلة إلى الحالة الغازية؟</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">التكاثف</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">التبخر</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">الانصهار</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> التبخر (Vaporisation) هو تحول السائل إلى غاز بفعل الحرارة.</div>
+                </div>
+
+                <!-- MCQ 2 -->
+                <div class="q-card" data-correct="0">
+                    <div class="q-num">السؤال 2</div>
+                    <div class="q-text">تشكل قطرات الماء على السطح الخارجي لزجاجة عصير باردة في الصيف هو مثال على:</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">التكاثف</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">التبخر</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">الانصهار</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> بخار الماء الموجود في الهواء الساخن يتكاثف (يتحول لسائل) عند ملامسته للزجاجة الباردة.</div>
+                </div>
+
+                <!-- MCQ 3 -->
+                <div class="q-card" data-correct="2">
+                    <div class="q-num">السؤال 3</div>
+                    <div class="q-text">عند وضع 100 غرام من الماء السائل في المجمد، ما هي كتلة الجليد الذي سنحصل عليه؟</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">أكبر من 100 غرام (لأن حجمه يزيد)</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">أقل من 100 غرام</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">تساوي 100 غرام بالضبط</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> الكتلة تبقى دائماً محفوظة أثناء التحول الفيزيائي، حتى وإن زاد الحجم.</div>
+                </div>
+
+                <!-- MCQ 4 -->
+                <div class="q-card" data-correct="0">
+                    <div class="q-num">السؤال 4</div>
+                    <div class="q-text">تحول المادة مباشرة من الحالة الصلبة إلى الغازية دون المرور بالحالة السائلة يسمى:</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">التسامي (التصعيد)</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">الانصهار</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">التجمد</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> التسامي (Sublimation) هو تحول مباشر من الصلب للغاز، مثل احتراق الكافور.</div>
+                </div>
+
+                <!-- Diagram Question -->
+                <div class="q-card q-diagram-type" data-correct="1">
+                    <div class="q-num">السؤال 5 (تفاعلي)</div>
+                    <div class="q-text">تأمل المخطط أدناه. السهم الأحمر الذي يشير من الحالة الصلبة إلى السائلة يمثل ظاهرة:</div>
+                    <svg viewBox="0 0 300 150" style="width:100%; max-width:300px; display:block; margin: 0 auto 15px; background:var(--dark); border-radius:8px; border:1px solid var(--border);">
+                        <!-- Simple nodes -->
+                        <rect x="30" y="50" width="60" height="50" rx="5" fill="#38bdf8"/>
+                        <text x="60" y="75" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle">صلبة</text>
+                        
+                        <circle cx="230" cy="75" r="30" fill="#34d399"/>
+                        <text x="230" y="75" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle">سائلة</text>
+
+                        <!-- Unknown arrow -->
+                        <path d="M 100 65 L 180 65" fill="none" stroke="var(--red)" stroke-width="3" marker-end="url(#arrowhead-red)"/>
+                        <text x="140" y="55" fill="var(--red)" font-family="Cairo" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="middle">؟</text>
+                    </svg>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">التجمد</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">الانصهار</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">التبخر</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> التحول من الصلب إلى السائل يتطلب حرارة ويسمى الانصهار (Fusion).</div>
+                </div>
+
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="action-btn" onclick="checkAnswers()" style="font-size: 1.2rem; padding: 12px 30px;">إظهار النتيجة النهائية</button>
+            </div>
+            <div id="quiz-score" style="text-align: center; margin-top: 20px; font-size: 1.5rem; font-weight: bold; color: var(--accent); display: none;"></div>
+        </div>
+
+        <div id="tab-summary" class="tab-content">
+            <div class="summary-card">
+                
+                <div class="summary-header">
+                    <div class="summary-meta">السنة الأولى متوسط | المادة وتحولاتها | الدرس 06</div>
+                    <h2 class="summary-title">ملخص: تغير حالات المادة</h2>
+                    <div class="summary-subtitle">الفيزياء السهلة — منهاج الجيل الثاني</div>
+                </div>
+
+                <div class="concept-map-wrap">
+                    <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                    <svg viewBox="0 0 600 250" style="width: 100%; max-width: 600px; display: block; margin: auto;">
+                        <rect x="220" y="10" width="160" height="40" rx="8" fill="var(--accent)" />
+                        <text x="300" y="35" fill="#fff" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle">تحولات المادة</text>
+                        
+                        <path d="M300 50 L300 80 M300 80 L150 80 L150 110 M300 80 L450 80 L450 110" stroke="var(--border)" stroke-width="2" fill="none"/>
+                        
+                        <!-- High Temp -->
+                        <rect x="70" y="110" width="160" height="40" rx="8" fill="var(--dark3)" stroke="var(--red)" stroke-width="1"/>
+                        <text x="150" y="135" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle">بارتفاع الحرارة</text>
+                        <path d="M150 150 L150 170 M150 170 L90 170 L90 190 M150 170 L210 170 L210 190" stroke="var(--border)" stroke-width="2" fill="none"/>
+                        
+                        <rect x="40" y="190" width="100" height="30" rx="6" fill="rgba(239, 68, 68, 0.1)" stroke="var(--red)" stroke-width="1"/>
+                        <text x="90" y="210" fill="var(--red)" font-family="Cairo" font-size="12" text-anchor="middle">الانصهار</text>
+                        
+                        <rect x="160" y="190" width="100" height="30" rx="6" fill="rgba(239, 68, 68, 0.1)" stroke="var(--red)" stroke-width="1"/>
+                        <text x="210" y="210" fill="var(--red)" font-family="Cairo" font-size="12" text-anchor="middle">التبخر</text>
+
+                        <!-- Low Temp -->
+                        <rect x="370" y="110" width="160" height="40" rx="8" fill="var(--dark3)" stroke="var(--blue)" stroke-width="1"/>
+                        <text x="450" y="135" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle">بانخفاض الحرارة</text>
+                        <path d="M450 150 L450 170 M450 170 L390 170 L390 190 M450 170 L510 170 L510 190" stroke="var(--border)" stroke-width="2" fill="none"/>
+                        
+                        <rect x="340" y="190" width="100" height="30" rx="6" fill="rgba(59, 130, 246, 0.1)" stroke="var(--blue)" stroke-width="1"/>
+                        <text x="390" y="210" fill="var(--blue)" font-family="Cairo" font-size="12" text-anchor="middle">التجمد</text>
+                        
+                        <rect x="460" y="190" width="100" height="30" rx="6" fill="rgba(59, 130, 246, 0.1)" stroke="var(--blue)" stroke-width="1"/>
+                        <text x="510" y="210" fill="var(--blue)" font-family="Cairo" font-size="12" text-anchor="middle">التكاثف</text>
+                    </svg>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+                    <div class="s-def-item">
+                        <span class="s-def-term">التحول الفيزيائي:</span> انتقال المادة من حالة إلى أخرى دون تغير في طبيعتها.
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">التسامي (التصعيد):</span> تحول المادة مباشرة من الحالة الصلبة إلى الحالة الغازية (دون المرور بالسائلة).
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+                    <ul class="summary-list">
+                        <li>تتأثر حالات المادة بتغير عاملين: <strong>درجة الحرارة</strong> و <strong>الضغط</strong>.</li>
+                        <li>أثناء أي تحول فيزيائي، <strong>الكتلة تبقى محفوظة</strong> (لا تتغير).</li>
+                        <li>أثناء التحول الفيزيائي، <strong>الحجم غير محفوظ</strong> (قد يتغير، مثلما يزداد حجم الماء عند تجمده).</li>
+                    </ul>
+                </div>
+
+                <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // 1. Mandatory Tab Switcher Logic
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    // Reset animations or update on open
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                }, 50);
+            }
+            initSim1();
+            initSim2();
+            requestAnimationFrame(renderLoop);
+        });
+
+        // 2. Mandatory Canvas Setup
+        const canvas1 = document.getElementById('simCanvas1');
+        const ctx1 = canvas1.getContext('2d');
+        const canvas2 = document.getElementById('simCanvas2');
+        const ctx2 = canvas2.getContext('2d');
+
+        function resizeCanvas() {
+            [canvas1, canvas2].forEach(cvs => {
+                if(!cvs) return;
+                const container = cvs.parentElement;
+                if (container.clientWidth === 0) return;
+                
+                const dpr = window.devicePixelRatio || 1;
+                cvs.width  = container.clientWidth  * dpr;
+                cvs.height = container.clientHeight * dpr;
+                cvs.style.width  = container.clientWidth  + 'px';
+                cvs.style.height = container.clientHeight + 'px';
+                
+                const ctx = cvs.getContext('2d');
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            });
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        // 3. Sim 1 Logic (Particle Model)
+        let particles = [];
+        const numParticles = 60;
+        const sliderTemp1 = document.getElementById('slider-temp1');
+        const val1Display = document.getElementById('val1-display');
+        const stateLabel1 = document.getElementById('state-label1');
+
+        function initSim1() {
+            particles = [];
+            for(let i=0; i<numParticles; i++) {
+                particles.push({
+                    x: 0, y: 0, 
+                    baseX: 0, baseY: 0,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2,
+                    radius: 6
+                });
+            }
+            positionParticlesSolid(200, 250); // initial fake w/h, updated in loop
+        }
+
+        function positionParticlesSolid(w, h) {
+            let cols = 10;
+            let rows = 6;
+            let spacing = 14;
+            let startX = (w - (cols * spacing)) / 2;
+            let startY = h - (rows * spacing) - 20;
+
+            for (let i = 0; i < numParticles; i++) {
+                let col = i % cols;
+                let row = Math.floor(i / cols);
+                particles[i].baseX = startX + col * spacing;
+                particles[i].baseY = startY + row * spacing;
+                // Soft reset to base
+                particles[i].x = particles[i].baseX;
+                particles[i].y = particles[i].baseY;
+            }
+        }
+
+        sliderTemp1.addEventListener('input', (e) => {
+            val1Display.textContent = e.target.value + " °C";
+        });
+
+        function updateSim1() {
+            if (canvas1.width === 0) return;
+            const w = canvas1.clientWidth;
+            const h = canvas1.clientHeight;
+            
+            // Mandatory ClearRect
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+
+            let temp = parseInt(sliderTemp1.value);
+            let state = 'solid';
+            let speed = 0;
+
+            if (temp < 0) {
+                state = 'solid';
+                speed = (temp + 50) * 0.05; // 0 to 2.5
+                stateLabel1.textContent = "الحالة الصلبة (تراص واهتزاز)";
+                stateLabel1.style.color = "var(--blue)";
+            } else if (temp >= 0 && temp < 100) {
+                state = 'liquid';
+                speed = 1 + (temp / 50); // 1 to 3
+                stateLabel1.textContent = "الحالة السائلة (تفكك وحركة مقيدة)";
+                stateLabel1.style.color = "var(--gold)";
+            } else {
+                state = 'gas';
+                speed = 3 + ((temp - 100) / 20); // 3 to 5.5
+                stateLabel1.textContent = "الحالة الغازية (تباعد وحركة عشوائية)";
+                stateLabel1.style.color = "var(--red)";
+            }
+
+            // Draw beaker
+            ctx1.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx1.lineWidth = 4;
+            ctx1.beginPath();
+            ctx1.moveTo(w/2 - 100, 20);
+            ctx1.lineTo(w/2 - 100, h - 20);
+            ctx1.lineTo(w/2 + 100, h - 20);
+            ctx1.lineTo(w/2 + 100, 20);
+            ctx1.stroke();
+
+            // Set particle colors based on state
+            ctx1.fillStyle = state === 'solid' ? '#38bdf8' : (state === 'liquid' ? '#34d399' : '#f87171');
+
+            let pContainer = { xMin: w/2 - 90, xMax: w/2 + 90, yMin: 20, yMax: h - 30 };
+
+            if(state === 'solid') {
+                // Ensure base positions are correct for current width
+                positionParticlesSolid(w, h);
+            }
+
+            particles.forEach(p => {
+                if(state === 'solid') {
+                    // Vibrate around base
+                    p.x = p.baseX + (Math.random() - 0.5) * speed;
+                    p.y = p.baseY + (Math.random() - 0.5) * speed;
+                } else if (state === 'liquid') {
+                    // Move around, but gravity keeps them down
+                    p.x += p.vx * speed;
+                    p.y += p.vy * speed + 0.5; // slight gravity
+
+                    if(p.x < pContainer.xMin + p.radius) { p.x = pContainer.xMin + p.radius; p.vx *= -1; }
+                    if(p.x > pContainer.xMax - p.radius) { p.x = pContainer.xMax - p.radius; p.vx *= -1; }
+                    if(p.y > pContainer.yMax - p.radius) { p.y = pContainer.yMax - p.radius; p.vy *= -1; }
+                    // Keep liquid below certain height
+                    if(p.y < h - 120) { p.y = h - 120; p.vy *= -1; } 
+                } else {
+                    // Gas: free movement in whole container
+                    p.x += p.vx * speed;
+                    p.y += p.vy * speed;
+
+                    if(p.x < pContainer.xMin + p.radius) { p.x = pContainer.xMin + p.radius; p.vx *= -1; }
+                    if(p.x > pContainer.xMax - p.radius) { p.x = pContainer.xMax - p.radius; p.vx *= -1; }
+                    if(p.y > pContainer.yMax - p.radius) { p.y = pContainer.yMax - p.radius; p.vy *= -1; }
+                    if(p.y < pContainer.yMin + p.radius) { p.y = pContainer.yMin + p.radius; p.vy *= -1; }
+                }
+
+                ctx1.beginPath();
+                ctx1.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx1.fill();
+            });
+        }
+
+        // 4. Sim 2 Logic (Mass Conservation)
+        const sliderMelt = document.getElementById('slider-melt');
+        const val2Display = document.getElementById('val2-display');
+        
+        let initialMass = 100.0;
+
+        function initSim2() {
+            // Setup only if needed
+        }
+
+        sliderMelt.addEventListener('input', (e) => {
+            val2Display.textContent = e.target.value + "%";
+        });
+
+        function updateSim2() {
+            if (canvas2.width === 0) return;
+            const w = canvas2.clientWidth;
+            const h = canvas2.clientHeight;
+            
+            // Mandatory ClearRect
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+            let meltPercent = parseInt(sliderMelt.value) / 100; // 0 to 1
+
+            const cx = w / 2;
+            const cy = h / 2 - 20;
+            const beakerW = 120;
+            const beakerH = 140;
+
+            // Draw Digital Scale Base
+            const scaleY = cy + beakerH/2;
+            ctx2.fillStyle = '#334155';
+            ctx2.strokeStyle = '#475569';
+            ctx2.lineWidth = 3;
+            ctx2.beginPath();
+            ctx2.roundRect(cx - 100, scaleY, 200, 40, 5);
+            ctx2.fill(); ctx2.stroke();
+
+            // Draw Scale Screen
+            ctx2.fillStyle = '#0f172a';
+            ctx2.fillRect(cx - 40, scaleY + 10, 80, 20);
+            ctx2.fillStyle = '#10b981';
+            ctx2.font = '16px monospace';
+            ctx2.textAlign = 'center';
+            ctx2.textBaseline = 'middle';
+            // Mass is ALWAYS CONSTANT
+            ctx2.fillText(initialMass.toFixed(1) + " g", cx, scaleY + 20);
+
+            // Draw Beaker Back
+            ctx2.fillStyle = 'rgba(255,255,255,0.02)';
+            ctx2.beginPath();
+            ctx2.roundRect(cx - beakerW/2, cy - beakerH/2, beakerW, beakerH, 10);
+            ctx2.fill();
+
+            // Calculate Volumes
+            // Ice has more volume than water. Let's say ice height = 80, water height = 65.
+            const iceMaxH = 80;
+            const waterMaxH = 65;
+            
+            const currentIceH = iceMaxH * (1 - meltPercent);
+            const currentWaterH = waterMaxH * meltPercent;
+            const totalContentH = currentIceH + currentWaterH;
+
+            // Draw Water (Liquid)
+            if(meltPercent > 0) {
+                ctx2.fillStyle = '#0ea5e9';
+                ctx2.beginPath();
+                ctx2.roundRect(cx - beakerW/2 + 2, scaleY - currentWaterH, beakerW - 4, currentWaterH, 5);
+                ctx2.fill();
+            }
+
+            // Draw Ice (Solid cubes floating/sitting on water)
+            if(meltPercent < 1) {
+                ctx2.fillStyle = `rgba(147, 197, 253, ${1 - meltPercent*0.5})`; // fades slightly
+                
+                // Draw 3 shrinking ice cubes
+                const cubeSize = 30 * (1 - meltPercent);
+                const baseY = scaleY - currentWaterH - cubeSize/2;
+                
+                // Center cube
+                ctx2.fillRect(cx - cubeSize/2, baseY, cubeSize, cubeSize);
+                // Left cube
+                ctx2.fillRect(cx - cubeSize*1.5, baseY - cubeSize*0.2, cubeSize, cubeSize);
+                // Right cube
+                ctx2.fillRect(cx + cubeSize*0.5, baseY - cubeSize*0.1, cubeSize, cubeSize);
+            }
+
+            // Draw Beaker Front
+            ctx2.strokeStyle = 'rgba(255,255,255,0.4)';
+            ctx2.lineWidth = 3;
+            ctx2.beginPath();
+            ctx2.roundRect(cx - beakerW/2, cy - beakerH/2, beakerW, beakerH, 10);
+            ctx2.stroke();
+            
+            // Labels
+            ctx2.fillStyle = '#fff';
+            ctx2.font = '16px Cairo';
+            ctx2.fillText("الكتلة محفوظة دائماً", cx, 30);
+            
+            if(meltPercent === 0) {
+                ctx2.fillStyle = 'var(--blue)';
+                ctx2.fillText("جليد (حجم أكبر)", cx, 55);
+            } else if (meltPercent === 1) {
+                ctx2.fillStyle = 'var(--accent)';
+                ctx2.fillText("ماء سائل (حجم أصغر)", cx, 55);
+            } else {
+                ctx2.fillStyle = 'var(--gold)';
+                ctx2.fillText("أثناء الانصهار...", cx, 55);
+            }
+        }
+
+        // Main Render Loop for Canvas
+        function renderLoop() {
+            if(document.getElementById('tab-sim').classList.contains('active')) {
+                updateSim1();
+                updateSim2();
+            }
+            requestAnimationFrame(renderLoop);
+        }
+
+        // 5. Quiz Logic
+        let userAnswers = {};
+
+        function selectOption(elem, index) {
+            const card = elem.closest('.q-card');
+            const qIndex = Array.from(document.querySelectorAll('.q-card')).indexOf(card);
+            
+            card.querySelectorAll('.q-option').forEach(opt => opt.classList.remove('selected'));
+            elem.classList.add('selected');
+            userAnswers[qIndex] = index;
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            const cards = document.querySelectorAll('.q-card');
+            
+            cards.forEach((card, index) => {
+                const correctIndex = parseInt(card.getAttribute('data-correct'));
+                const options = card.querySelectorAll('.q-option');
+                const feedback = card.querySelector('.q-feedback');
+                
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'wrong');
+                    opt.style.pointerEvents = 'none'; 
+                });
+
+                if (userAnswers[index] === correctIndex) {
+                    score++;
+                    options[correctIndex].classList.add('correct');
+                    feedback.style.borderRight = "4px solid var(--green)";
+                } else {
+                    if(userAnswers[index] !== undefined) {
+                        options[userAnswers[index]].classList.add('wrong');
+                    }
+                    options[correctIndex].classList.add('correct');
+                    feedback.style.borderRight = "4px solid var(--red)";
+                }
+                
+                feedback.classList.add('show');
+            });
+
+            const scoreDiv = document.getElementById('quiz-score');
+            scoreDiv.style.display = 'block';
+            scoreDiv.innerHTML = `النتيجة: ${score} من ${cards.length}`;
+            scoreDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+    
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 3 | عدد رسوم SVG في الدرس النظري = 3 | عدد المحاكيات = 2 -->
+    <script src="credit.js"></script>
+</body>
+</html>

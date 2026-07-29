@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الظل والظليل - العلوم الفيزيائية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;800&display=swap');
+
+        /* 2. نظام الألوان (CSS Variables إلزامية) */
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #f97316; /* الظواهر الضوئية */
+            --accent2:#fb923c;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* شريط التنقل العلوي الثابت (0.4) */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto 2rem auto;
+            padding: 0 15px;
+        }
+
+        .lesson-header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: var(--dark2);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+        .lesson-header span:first-child {
+            display: block;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        .lesson-badge {
+            background: rgba(249, 115, 22, 0.15);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .lesson-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        .lesson-header h1 em {
+            color: var(--accent);
+            font-style: normal;
+        }
+        .lesson-meta {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* 0.1 شريط التبويبات الإلزامي */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* الدرس النظري */
+        .objectives-box {
+            background: var(--card);
+            border-right: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .objectives-box h3 { color: var(--accent); margin-bottom: 10px; }
+        .objectives-box ul { padding-right: 20px; }
+
+        .sec-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 2rem 0 1rem 0;
+        }
+        .sec-icon { color: var(--accent); font-size: 1.5rem; }
+        .sec-line { flex: 1; height: 1px; background: var(--border); border: none; }
+
+        .def-box {
+            background: var(--dark2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-right: 4px solid var(--gold);
+            margin-bottom: 1.5rem;
+            border-left: 1px solid var(--border);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .def-box h3 { font-family: 'Amiri', serif; color: var(--gold); margin-bottom: 10px; }
+        .def-box span.fr { color: var(--muted); font-size: 0.9rem; font-family: sans-serif; }
+
+        .highlight-box {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-weight: 600;
+        }
+        .highlight-box.tip { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--gold); }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--dark2);
+        }
+        .info-table th { background: var(--accent); color: #fff; padding: 12px; text-align: center; }
+        .info-table td { padding: 12px; border: 1px solid var(--border); text-align: center; }
+        .info-table tr:nth-child(even) { background: var(--dark3); }
+        .unit-cell { font-style: italic; color: var(--muted); }
+
+        .diagram-figure {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .fig-title {
+            color: var(--accent2);
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .lesson-diagram { width: 100%; max-width: 600px; height: auto; border-radius: 8px; }
+
+        /* المحاكاة */
+        .sim-wrap {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .sim-head {
+            background: var(--dark3);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .sim-title { color: #fff; margin: 0; }
+        
+        /* 0.3 شارة تفاعلي */
+        .sim-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        .sim-description {
+            padding: 15px 20px;
+            background: var(--dark4);
+            color: var(--text);
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sim-controls {
+            padding: 15px 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: var(--dark);
+        }
+        .control-group { flex: 1; min-width: 200px; }
+        .control-group label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 0.9rem; }
+        .val-badge { color: var(--accent); font-weight: bold; }
+        input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+        .sim-canvas-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            background: #000;
+        }
+        canvas { display: block; width: 100%; height: 100%; }
+
+        /* التمارين */
+        .q-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .q-num { color: var(--accent); font-weight: 800; font-size: 1.2rem; margin-bottom: 1rem; }
+        .q-text { font-size: 1.1rem; margin-bottom: 15px; }
+        .q-options { display: flex; flex-direction: column; gap: 10px; }
+        .q-option {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .q-option:hover { background: var(--dark4); border-color: var(--accent); }
+        .q-feedback {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        .q-feedback.success { background: rgba(16, 185, 129, 0.1); color: var(--green); border: 1px solid var(--green); }
+        .q-feedback.error { background: rgba(239, 68, 68, 0.1); color: var(--red); border: 1px solid var(--red); }
+        .btn-submit {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-submit:hover { background: var(--accent2); }
+        .quiz-score { text-align: center; font-size: 1.5rem; font-weight: bold; color: var(--gold); margin-top: 20px; }
+
+        /* الملخص */
+        .summary-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        .summary-header { text-align: center; margin-bottom: 2rem; border-bottom: 2px solid var(--accent); padding-bottom: 1rem; }
+        .summary-meta { color: var(--muted); font-size: 0.9rem; }
+        .summary-title { font-size: 2rem; color: #fff; margin: 10px 0; }
+        .summary-subtitle { color: var(--accent2); }
+        .summary-section-title { color: var(--accent); margin: 1.5rem 0 1rem 0; font-size: 1.3rem; display: flex; align-items: center; gap: 8px; }
+        .s-def-item { margin-bottom: 10px; padding: 10px; background: var(--dark3); border-radius: 6px; border-right: 3px solid var(--gold); }
+        .s-def-term { font-weight: bold; color: var(--gold); margin-left: 10px; font-family: 'Amiri', serif; }
+        .summary-list { padding-right: 20px; }
+        .summary-list li { margin-bottom: 8px; }
+        .print-btn {
+            background: var(--dark3); color: var(--text); border: 1px solid var(--border);
+            padding: 10px 20px; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; margin-top: 2rem; width: 100%;
+        }
+        .print-btn:hover { background: var(--accent); color: #fff; }
+
+        /* طباعة الملخص */
+        @media print {
+            .top-nav-bar, .lesson-header, .tabs-nav, .tab-content:not(#tab-summary), .print-btn { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #000 !important; }
+            .summary-card { box-shadow: none; border: none; padding: 0; }
+            .summary-section-title { color: #000 !important; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+            .s-def-item { background: #f9f9f9; border-right-color: #000; color: #000; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+            body { font-size: 12pt; }
+            .s-def-term { color: #000; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 0.4 شريط التنقل العلوي -->
+    <div class="top-nav-bar">
+        <a href="../index.html#optics">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <div class="container">
+        
+        <div class="lesson-header">
+            <span>السنة الأولى متوسط › الظواهر الضوئية › الدرس 03</span>
+            <span class="lesson-badge">الظواهر الضوئية</span>
+            <h1><em>الظل</em> و <em>الظليل</em></h1>
+            <p class="lesson-meta">منهاج الجيل الثاني | المقطع 04 | حصتان</p>
+        </div>
+
+        <!-- 0.1 شريط التبويبات -->
+        <nav class="tabs-nav">
+            <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+            <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+            <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+            <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+        </nav>
+
+        <!-- التبويب 1: الدرس النظري -->
+        <div id="tab-lesson" class="tab-content active">
+            
+            <div class="objectives-box">
+                <h3>🎯 الأهداف التعلمية</h3>
+                <ul>
+                    <li>التمييز بين المنبع الضوئي النقطي والمنبع الضوئي الواسع.</li>
+                    <li>تفسير كيفية تشكل منطقتي الظل والظليل باستخدام مبدأ الانتشار المستقيمي للضوء.</li>
+                    <li>التعرف على مناطق الظل المختلفة (الظل الذاتي، الظل المسقط، مخروط الظل).</li>
+                </ul>
+            </div>
+
+            <div class="sec-title">
+                <span class="sec-icon">💡</span>
+                <h2>1. المنبع الضوئي النقطي وتشكّل الظل</h2>
+                <hr class="sec-line">
+            </div>
+
+            <div class="def-box">
+                <h3>المنبع الضوئي النقطي <span class="fr">(Source ponctuelle)</span></h3>
+                <p>هو منبع ضوئي ذو أبعاد صغيرة جداً (أشبه بنقطة)، مثل ثقب صغير تعبر منه أشعة الشمس أو مصباح ليزر. عندما نضع جسماً عاتماً أمامه، يمنع مرور الضوء فتتشكل منطقة مظلمة تماماً تسمى <strong>الظل</strong>.</p>
+            </div>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (1) — تشكل الظل بواسطة منبع نقطي</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <radialGradient id="lightGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#f97316" stop-opacity="0.8"/>
+                                <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+                            </radialGradient>
+                            <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#cbd5e1" />
+                                <stop offset="100%" stop-color="#94a3b8" />
+                            </linearGradient>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--accent)"/>
+                            </marker>
+                            <filter id="shadowGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/>
+                            </filter>
+                        </defs>
+                        
+                        <!-- الشاشة -->
+                        <rect x="500" y="20" width="15" height="210" fill="url(#screenGrad)" rx="5" filter="url(#shadowGlow)"/>
+                        <text x="510" y="245" text-anchor="middle" font-family="Amiri" font-size="14" fill="var(--text)">الشاشة</text>
+
+                        <!-- أشعة الضوء (حدود مخروط الظل) -->
+                        <path d="M 80 125 L 500 40 L 500 210 Z" fill="rgba(30, 41, 59, 0.8)"/>
+                        <line x1="80" y1="125" x2="500" y2="40" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowhead)"/>
+                        <line x1="80" y1="125" x2="500" y2="210" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowhead)"/>
+
+                        <!-- الجسم العاتم -->
+                        <circle cx="280" cy="125" r="40" fill="#334155" filter="url(#shadowGlow)"/>
+                        <!-- الظل الذاتي (تظليل نصف الكرة) -->
+                        <path d="M 280 85 A 40 40 0 0 1 280 165 Z" fill="#0f172a"/>
+                        
+                        <!-- المنبع النقطي -->
+                        <circle cx="80" cy="125" r="30" fill="url(#lightGlow)"/>
+                        <circle cx="80" cy="125" r="4" fill="#fff"/>
+
+                        <!-- التسميات والأسهم القائدة -->
+                        <text x="70" y="170" text-anchor="middle" font-family="Amiri" font-size="14" fill="var(--text)">منبع نقطي</text>
+                        
+                        <line x1="280" y1="190" x2="280" y2="165" stroke="var(--muted)" stroke-width="1.5"/>
+                        <text x="280" y="205" text-anchor="middle" font-family="Amiri" font-size="14" fill="var(--text)">جسم عاتم</text>
+
+                        <line x1="400" y1="100" x2="400" y2="125" stroke="var(--muted)" stroke-width="1.5"/>
+                        <text x="400" y="90" text-anchor="middle" font-family="Amiri" font-size="14" fill="var(--text)">مخروط الظل</text>
+
+                        <line x1="530" y1="125" x2="505" y2="125" stroke="var(--muted)" stroke-width="1.5"/>
+                        <text x="565" y="130" text-anchor="middle" font-family="Amiri" font-size="14" fill="var(--text)">ظل مسقط</text>
+                    </svg>
+                </div>
+            </figure>
+
+
+            <div class="sec-title">
+                <span class="sec-icon">🌞</span>
+                <h2>2. المنبع الضوئي الواسع وتشكّل الظليل</h2>
+                <hr class="sec-line">
+            </div>
+
+            <div class="def-box">
+                <h3>المنبع الضوئي الواسع <span class="fr">(Source étendue)</span></h3>
+                <p>هو منبع ضوئي ذو أبعاد كبيرة نسبياً (مثل الشمس أو مصباح كبير). عند وضع جسم عاتم أمامه، لا يمنع الجسم كل الضوء من الوصول إلى الشاشة، فتتشكل منطقة مظلمة كلياً (الظل) تحيط بها منطقة شبه مظلمة تسمى <strong>الظليل</strong>.</p>
+            </div>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (2) — تشكل الظل والظليل بواسطة منبع واسع</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <linearGradient id="lampGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#fef08a" />
+                                <stop offset="50%" stop-color="#f97316" />
+                                <stop offset="100%" stop-color="#fef08a" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- الشاشة -->
+                        <rect x="500" y="10" width="15" height="230" fill="url(#screenGrad)" rx="5" filter="url(#shadowGlow)"/>
+                        
+                        <!-- الظليل (Pénombre) العلوي والسفلي -->
+                        <path d="M 80 75 L 500 25 L 500 95 Z" fill="rgba(71, 85, 105, 0.5)"/>
+                        <path d="M 80 175 L 500 225 L 500 155 Z" fill="rgba(71, 85, 105, 0.5)"/>
+
+                        <!-- مخروط الظل (Ombre) -->
+                        <path d="M 80 75 L 500 95 L 500 155 L 80 175 Z" fill="rgba(15, 23, 42, 0.9)"/>
+
+                        <!-- الأشعة المتقاطعة -->
+                        <line x1="80" y1="75" x2="500" y2="25" stroke="var(--gold)" stroke-width="1" stroke-dasharray="4"/>
+                        <line x1="80" y1="175" x2="500" y2="225" stroke="var(--gold)" stroke-width="1" stroke-dasharray="4"/>
+                        <line x1="80" y1="75" x2="500" y2="155" stroke="var(--accent)" stroke-width="1" stroke-dasharray="4"/>
+                        <line x1="80" y1="175" x2="500" y2="95" stroke="var(--accent)" stroke-width="1" stroke-dasharray="4"/>
+
+                        <!-- الجسم العاتم -->
+                        <circle cx="280" cy="125" r="40" fill="#334155" filter="url(#shadowGlow)"/>
+                        <path d="M 280 85 A 40 40 0 0 1 280 165 Z" fill="#0f172a"/>
+
+                        <!-- المنبع الواسع -->
+                        <rect x="60" y="75" width="20" height="100" rx="10" fill="url(#lampGrad)" filter="url(#shadowGlow)"/>
+                        <text x="40" y="130" text-anchor="middle" font-family="Amiri" font-size="12" fill="var(--text)" transform="rotate(-90 40,130)">منبع واسع</text>
+
+                        <!-- التسميات -->
+                        <text x="560" y="130" text-anchor="middle" font-family="Amiri" font-size="14" fill="var(--text)">الظل</text>
+                        <text x="560" y="55" text-anchor="middle" font-family="Amiri" font-size="14" fill="var(--muted)">الظليل</text>
+                        <text x="560" y="200" text-anchor="middle" font-family="Amiri" font-size="14" fill="var(--muted)">الظليل</text>
+                    </svg>
+                </div>
+            </figure>
+
+            <div class="highlight-box tip">
+                📌 قاعدة للحفظ: الظليل لا يظهر أبداً مع المنبع النقطي، بل يشترط ظهوره وجود منبع ضوئي واسع.
+            </div>
+
+            <div class="sec-title">
+                <span class="sec-icon">🏷️</span>
+                <h2>3. تسميات مناطق الظل</h2>
+                <hr class="sec-line">
+            </div>
+
+            <table class="info-table">
+                <thead>
+                    <tr>
+                        <th>المنطقة</th>
+                        <th>الوصف</th>
+                        <th>الترجمة <span class="fr">(Fr)</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>الظل الذاتي</strong></td>
+                        <td>الجزء المظلم من الجسم العاتم نفسه (الجهة غير المضاءة).</td>
+                        <td class="unit-cell">Ombre propre</td>
+                    </tr>
+                    <tr>
+                        <td><strong>الظل المسقط</strong></td>
+                        <td>المنطقة المظلمة كلياً التي تتشكل على الشاشة.</td>
+                        <td class="unit-cell">Ombre portée</td>
+                    </tr>
+                    <tr>
+                        <td><strong>مخروط الظل</strong></td>
+                        <td>الفضاء المظلم المحصور بين الجسم العاتم والشاشة.</td>
+                        <td class="unit-cell">Cône d'ombre</td>
+                    </tr>
+                    <tr>
+                        <td><strong>الظليل</strong></td>
+                        <td>المنطقة شبه المظلمة التي تحيط بالظل المسقط (مع المنبع الواسع).</td>
+                        <td class="unit-cell">Pénombre</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- التبويب 2: المحاكاة التفاعلية -->
+        <div id="tab-sim" class="tab-content">
+            
+            <!-- المحاكاة الأولى: تأثير مسافة الجسم (منبع نقطي) -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 1: أبعاد الظل والمسافة</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي تشكل الظل باستخدام <strong>منبع نقطي</strong>. حرّك <strong>موضع الجسم العاتم</strong> لترى كيف يتغيّر <strong>حجم الظل المسقط</strong> على الشاشة.</p>
+                </div>
+                <div class="sim-canvas-container">
+                    <canvas id="canvasSim1"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>بعد الجسم عن المنبع: <span id="val-objDist" class="val-badge">وسط</span></label>
+                        <input type="range" id="slider-objDist" min="150" max="450" value="300">
+                    </div>
+                </div>
+            </div>
+
+            <!-- المحاكاة الثانية: تأثير حجم المنبع (ظهور الظليل) -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 2: تشكل الظليل</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي الفرق بين المنبع النقطي والواسع. حرّك <strong>حجم المنبع الضوئي</strong> لترى كيف يظهر <strong>الظليل</strong> وكيف يتقلص الظل التام.</p>
+                </div>
+                <div class="sim-canvas-container">
+                    <canvas id="canvasSim2"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>حجم المنبع الضوئي: <span id="val-srcSize" class="val-badge">نقطي (0)</span></label>
+                        <input type="range" id="slider-srcSize" min="0" max="60" value="0">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- التبويب 3: التمارين -->
+        <div id="tab-exercises" class="tab-content">
+            <div class="objectives-box" style="margin-bottom: 1.5rem;">
+                <h3>📝 اختبر معلوماتك</h3>
+                <p>أجب عن الأسئلة التالية ثم اضغط على زر التحقق لمعرفة نتيجتك.</p>
+            </div>
+
+            <!-- Q1 -->
+            <div class="q-card">
+                <div class="q-num">السؤال 1</div>
+                <div class="q-text">ماذا يحدث عندما نضع جسماً عاتماً أمام منبع ضوئي نقطي؟</div>
+                <div class="q-options">
+                    <label class="q-option"><input type="radio" name="q1" value="0"> يتشكل ظل وظليل على الشاشة.</label>
+                    <label class="q-option"><input type="radio" name="q1" value="1"> يتشكل ظل فقط (منطقة مظلمة كلياً).</label>
+                    <label class="q-option"><input type="radio" name="q1" value="0"> لا يتشكل أي شيء.</label>
+                </div>
+                <div class="q-feedback" id="fb-q1">الشرح: المنبع النقطي يعطي أشعة ضوئية من نقطة واحدة، لذا يشكل منطقة مظلمة كلياً فقط (ظل).</div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="q-card">
+                <div class="q-num">السؤال 2</div>
+                <div class="q-text">ما هو شرط ظهور منطقة "الظليل"؟</div>
+                <div class="q-options">
+                    <label class="q-option"><input type="radio" name="q2" value="0"> استخدام منبع ضوئي نقطي.</label>
+                    <label class="q-option"><input type="radio" name="q2" value="1"> استخدام منبع ضوئي واسع.</label>
+                    <label class="q-option"><input type="radio" name="q2" value="0"> استخدام جسم شفاف.</label>
+                </div>
+                <div class="q-feedback" id="fb-q2">الشرح: الظليل يظهر عندما تكون أبعاد المنبع الضوئي كبيرة (واسع) بحيث يتسرب جزء من الضوء خلف الجسم.</div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="q-card">
+                <div class="q-num">السؤال 3</div>
+                <div class="q-text">كيف يتغير حجم الظل المسقط إذا قرّبنا الجسم العاتم نحو المنبع الضوئي؟</div>
+                <div class="q-options">
+                    <label class="q-option"><input type="radio" name="q3" value="1"> يكبر حجم الظل المسقط.</label>
+                    <label class="q-option"><input type="radio" name="q3" value="0"> يصغر حجم الظل المسقط.</label>
+                    <label class="q-option"><input type="radio" name="q3" value="0"> يبقى ثابتاً لا يتغير.</label>
+                </div>
+                <div class="q-feedback" id="fb-q3">الشرح: تقريب الجسم من المنبع يجعله يحجب زاوية أكبر من الأشعة، مما يؤدي إلى تكبير الظل على الشاشة.</div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="q-card">
+                <div class="q-num">السؤال 4</div>
+                <div class="q-text">المنطقة المظلمة الموجودة على الجسم العاتم نفسه تسمى:</div>
+                <div class="q-options">
+                    <label class="q-option"><input type="radio" name="q4" value="0"> الظل المسقط</label>
+                    <label class="q-option"><input type="radio" name="q4" value="1"> الظل الذاتي</label>
+                    <label class="q-option"><input type="radio" name="q4" value="0"> الظليل</label>
+                </div>
+                <div class="q-feedback" id="fb-q4">الشرح: الظل الذاتي هو الجزء غير المعرض للضوء من الجسم، أما المسقط فيكون على الشاشة.</div>
+            </div>
+
+            <!-- Q5 (Diagram Type) -->
+            <div class="q-card q-diagram-type">
+                <div class="q-num">السؤال 5</div>
+                <div class="q-text">حسب المخطط التالي الذي يمثل منبعاً واسعاً، ما هو الرقم الذي يشير إلى منطقة "الظليل"؟</div>
+                <svg viewBox="0 0 400 150" style="width: 100%; max-width: 400px; background: var(--dark3); border-radius: 8px; margin: 10px 0;">
+                    <rect x="50" y="40" width="10" height="70" fill="var(--accent)"/>
+                    <circle cx="200" cy="75" r="25" fill="#334155"/>
+                    <rect x="350" y="10" width="10" height="130" fill="#94a3b8"/>
+                    
+                    <path d="M 60 40 L 350 10 L 350 60 Z" fill="rgba(71, 85, 105, 0.5)"/>
+                    <path d="M 60 110 L 350 140 L 350 90 Z" fill="rgba(71, 85, 105, 0.5)"/>
+                    <path d="M 60 40 L 350 60 L 350 90 L 60 110 Z" fill="rgba(15, 23, 42, 0.9)"/>
+                    
+                    <circle cx="365" cy="35" r="10" fill="var(--dark)"/>
+                    <text x="365" y="40" fill="#fff" text-anchor="middle" font-size="12">1</text>
+                    
+                    <circle cx="365" cy="75" r="10" fill="var(--dark)"/>
+                    <text x="365" y="80" fill="#fff" text-anchor="middle" font-size="12">2</text>
+                </svg>
+                <div class="q-options">
+                    <label class="q-option"><input type="radio" name="q5" value="1"> المنطقة رقم (1)</label>
+                    <label class="q-option"><input type="radio" name="q5" value="0"> المنطقة رقم (2)</label>
+                </div>
+                <div class="q-feedback" id="fb-q5">الشرح: المنطقة رقم (1) تمثل الظليل (المنطقة شبه المظلمة)، بينما (2) تمثل الظل المسقط المظلم كلياً.</div>
+            </div>
+
+            <button class="btn-submit" onclick="checkQuiz()">تحقق من الإجابات</button>
+            <div id="quiz-score" class="quiz-score"></div>
+        </div>
+
+        <!-- التبويب 4: ملخص الكراس -->
+        <div id="tab-summary" class="tab-content">
+            <div class="summary-card">
+                
+                <div class="summary-header">
+                    <div class="summary-meta">العلوم الفيزيائية والتكنولوجيا | 1AM | الظواهر الضوئية</div>
+                    <h2 class="summary-title">ملخص: الظل والظليل</h2>
+                    <div class="summary-subtitle">إعداد: الأستاذ — منهاج الجيل الثاني</div>
+                </div>
+
+                <!-- خريطة المفاهيم -->
+                <div class="concept-map-wrap">
+                    <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                    <svg class="concept-map" viewBox="0 0 600 200" style="background: var(--dark3); border-radius: 8px; width:100%;">
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--accent)"/>
+                            </marker>
+                        </defs>
+                        <!-- Nodes -->
+                        <rect x="230" y="20" width="140" height="40" rx="8" fill="var(--dark4)" stroke="var(--accent)" stroke-width="2"/>
+                        <text x="300" y="45" text-anchor="middle" fill="#fff" font-family="Amiri" font-weight="bold">المنبع الضوئي</text>
+
+                        <rect x="100" y="100" width="120" height="40" rx="8" fill="var(--dark4)" stroke="var(--gold)" stroke-width="2"/>
+                        <text x="160" y="125" text-anchor="middle" fill="#fff" font-family="Amiri" font-weight="bold">منبع نقطي</text>
+
+                        <rect x="380" y="100" width="120" height="40" rx="8" fill="var(--dark4)" stroke="var(--gold)" stroke-width="2"/>
+                        <text x="440" y="125" text-anchor="middle" fill="#fff" font-family="Amiri" font-weight="bold">منبع واسع</text>
+
+                        <rect x="100" y="160" width="120" height="30" rx="4" fill="#0f172a" stroke="#fff" stroke-width="1"/>
+                        <text x="160" y="180" text-anchor="middle" fill="#fff" font-family="Amiri">ظل مسقط فقط</text>
+
+                        <rect x="380" y="160" width="120" height="30" rx="4" fill="#334155" stroke="#fff" stroke-width="1"/>
+                        <text x="440" y="180" text-anchor="middle" fill="#fff" font-family="Amiri">ظل + ظليل مسقط</text>
+
+                        <!-- Edges -->
+                        <path d="M 300 60 L 300 80 L 160 80 L 160 95" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow)"/>
+                        <path d="M 300 60 L 300 80 L 440 80 L 440 95" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <line x1="160" y1="140" x2="160" y2="155" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="440" y1="140" x2="440" y2="155" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                    </svg>
+                </div>
+
+                <!-- التعاريف -->
+                <div class="summary-section">
+                    <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+                    <div class="summary-defs">
+                        <div class="s-def-item">
+                            <span class="s-def-term">الظل الذاتي:</span>
+                            <span class="s-def-text">الجزء المظلم من الجسم العاتم (الجهة غير المعرضة للضوء).</span>
+                        </div>
+                        <div class="s-def-item">
+                            <span class="s-def-term">الظل المسقط:</span>
+                            <span class="s-def-text">المنطقة المظلمة كلياً المتشكلة على الشاشة.</span>
+                        </div>
+                        <div class="s-def-item">
+                            <span class="s-def-term">مخروط الظل:</span>
+                            <span class="s-def-text">الفضاء المظلم المحصور بين الجسم العاتم والشاشة.</span>
+                        </div>
+                        <div class="s-def-item">
+                            <span class="s-def-term">الظليل:</span>
+                            <span class="s-def-text">المنطقة شبه المظلمة المحيطة بالظل المسقط (تنتج عن منبع واسع).</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الخلاصة -->
+                <div class="summary-section">
+                    <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+                    <ul class="summary-list">
+                        <li>للحصول على <strong>ظل فقط</strong>، نستعمل منبعاً ضوئياً <strong>نقطياً</strong>.</li>
+                        <li>للحصول على <strong>ظل وظليل</strong> معاً، نستعمل منبعاً ضوئياً <strong>واسعاً</strong>.</li>
+                        <li>كلما قرّبنا الجسم العاتم نحو المنبع الضوئي، <strong>كَبُر</strong> حجم الظل المسقط على الشاشة.</li>
+                        <li>كلما أبعدنا الشاشة عن الجسم العاتم، <strong>كَبُر</strong> حجم الظل المسقط وتشتت.</li>
+                    </ul>
+                </div>
+
+                <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- كود JS الإلزامي (3.9.1) وتبديل التبويبات -->
+    <script>
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            // إلزامي لحل مشكلة الكانفاس
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeAllCanvas === 'function') resizeAllCanvas();
+                    if (typeof drawSim1 === 'function') drawSim1(); 
+                    if (typeof drawSim2 === 'function') drawSim2(); 
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeAllCanvas === 'function') resizeAllCanvas();
+                    if (typeof drawSim1 === 'function') drawSim1(); 
+                    if (typeof drawSim2 === 'function') drawSim2(); 
+                }, 50);
+            }
+        });
+
+        // ----------------------------------------------------
+        // نظام المحاكاة (Canvas) المتوافق مع شاشات الهاتف
+        // ----------------------------------------------------
+        const canvas1 = document.getElementById('canvasSim1');
+        const ctx1 = canvas1.getContext('2d');
+        const canvas2 = document.getElementById('canvasSim2');
+        const ctx2 = canvas2.getContext('2d');
+
+        // دالة تغيير الحجم الموحدة
+        function resizeCanvas(canvas, ctx) {
+            const container = canvas.parentElement;
+            if (container.clientWidth === 0) return false;
+            const dpr = window.devicePixelRatio || 1;
+            
+            canvas.width = container.clientWidth * dpr;
+            canvas.height = container.clientHeight * dpr;
+            canvas.style.width = container.clientWidth + 'px';
+            canvas.style.height = container.clientHeight + 'px';
+            
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            return true;
+        }
+
+        function resizeAllCanvas() {
+            resizeCanvas(canvas1, ctx1);
+            resizeCanvas(canvas2, ctx2);
+        }
+        window.addEventListener('resize', () => {
+            if(document.getElementById('tab-sim').classList.contains('active')){
+                resizeAllCanvas();
+                drawSim1();
+                drawSim2();
+            }
+        });
+
+        // متغيرات المحاكاة
+        const sliderObjDist = document.getElementById('slider-objDist');
+        const valObjDist = document.getElementById('val-objDist');
+        sliderObjDist.addEventListener('input', () => { drawSim1(); });
+
+        const sliderSrcSize = document.getElementById('slider-srcSize');
+        const valSrcSize = document.getElementById('val-srcSize');
+        sliderSrcSize.addEventListener('input', () => { drawSim2(); });
+
+        // المحاكاة 1: مسافة الجسم (نقطي)
+        function drawSim1() {
+            if(!resizeCanvas(canvas1, ctx1)) return;
+            const cw = canvas1.parentElement.clientWidth;
+            const ch = canvas1.parentElement.clientHeight;
+            ctx1.clearRect(0, 0, cw, ch); // القاعدة الإلزامية
+
+            const srcX = 50; const centerY = ch / 2;
+            const screenX = cw - 50;
+            const objX = parseInt(sliderObjDist.value) * (cw/600); // تناسب مع العرض
+            const objR = 25;
+
+            // تحديث النص
+            let distText = "وسط";
+            if(sliderObjDist.value < 250) distText = "قريب";
+            else if(sliderObjDist.value > 350) distText = "بعيد";
+            valObjDist.textContent = distText;
+
+            // حساب الأشعة
+            const m1 = (-objR) / (objX - srcX); // الميل العلوي
+            const m2 = (objR) / (objX - srcX);  // الميل السفلي
+            const y1 = centerY + m1 * (screenX - srcX);
+            const y2 = centerY + m2 * (screenX - srcX);
+
+            // رسم مخروط الظل
+            ctx1.beginPath();
+            ctx1.moveTo(srcX, centerY);
+            ctx1.lineTo(screenX, y1);
+            ctx1.lineTo(screenX, y2);
+            ctx1.fillStyle = 'rgba(15, 23, 42, 0.8)';
+            ctx1.fill();
+
+            // رسم الأشعة
+            ctx1.beginPath();
+            ctx1.moveTo(srcX, centerY); ctx1.lineTo(screenX, y1);
+            ctx1.moveTo(srcX, centerY); ctx1.lineTo(screenX, y2);
+            ctx1.strokeStyle = 'rgba(249, 115, 22, 0.6)';
+            ctx1.setLineDash([5, 5]);
+            ctx1.stroke();
+            ctx1.setLineDash([]);
+
+            // الشاشة
+            ctx1.fillStyle = '#94a3b8';
+            ctx1.fillRect(screenX, 20, 10, ch - 40);
+            
+            // الظل المسقط (داكن)
+            ctx1.fillStyle = '#0a0f1e';
+            ctx1.fillRect(screenX, y1, 10, y2 - y1);
+
+            // الجسم العاتم
+            ctx1.beginPath(); ctx1.arc(objX, centerY, objR, 0, Math.PI*2);
+            ctx1.fillStyle = '#334155'; ctx1.fill(); ctx1.stroke();
+
+            // المنبع النقطي
+            ctx1.beginPath(); ctx1.arc(srcX, centerY, 5, 0, Math.PI*2);
+            ctx1.fillStyle = '#fff'; ctx1.fill();
+            // توهج
+            ctx1.beginPath(); ctx1.arc(srcX, centerY, 15, 0, Math.PI*2);
+            ctx1.fillStyle = 'rgba(249, 115, 22, 0.3)'; ctx1.fill();
+        }
+
+        // المحاكاة 2: حجم المنبع (واسع - ظليل)
+        function drawSim2() {
+            if(!resizeCanvas(canvas2, ctx2)) return;
+            const cw = canvas2.parentElement.clientWidth;
+            const ch = canvas2.parentElement.clientHeight;
+            ctx2.clearRect(0, 0, cw, ch); // القاعدة الإلزامية
+
+            const srcX = 50; const centerY = ch / 2;
+            const screenX = cw - 50;
+            const objX = cw / 2; const objR = 25;
+            const srcR = parseInt(sliderSrcSize.value);
+
+            valSrcSize.textContent = srcR === 0 ? "نقطي" : "واسع";
+
+            // حساب الأشعة
+            const tSrcY = centerY - srcR; const bSrcY = centerY + srcR;
+            const tObjY = centerY - objR; const bObjY = centerY + objR;
+
+            const m1 = (tObjY - tSrcY) / (objX - srcX); const y1 = tSrcY + m1 * (screenX - srcX); // خارجي علوي
+            const m2 = (bObjY - bSrcY) / (objX - srcX); const y2 = bSrcY + m2 * (screenX - srcX); // خارجي سفلي
+            
+            const m3 = (bObjY - tSrcY) / (objX - srcX); const y3 = tSrcY + m3 * (screenX - srcX); // متقاطع 1
+            const m4 = (tObjY - bSrcY) / (objX - srcX); const y4 = bSrcY + m4 * (screenX - srcX); // متقاطع 2
+
+            // مخروط الظليل
+            if (srcR > 0) {
+                ctx2.beginPath();
+                ctx2.moveTo(srcX, tSrcY); ctx2.lineTo(screenX, y4);
+                ctx2.lineTo(screenX, y3); ctx2.lineTo(srcX, bSrcY);
+                ctx2.fillStyle = 'rgba(71, 85, 105, 0.5)';
+                ctx2.fill();
+            }
+
+            // مخروط الظل
+            ctx2.beginPath();
+            if(srcR === 0) { ctx2.moveTo(srcX, centerY); ctx2.lineTo(screenX, y1); ctx2.lineTo(screenX, y2); }
+            else { ctx2.moveTo(srcX, tSrcY); ctx2.lineTo(screenX, y1); ctx2.lineTo(screenX, y2); ctx2.lineTo(srcX, bSrcY); }
+            ctx2.fillStyle = 'rgba(15, 23, 42, 0.9)';
+            ctx2.fill();
+
+            // الشاشة
+            ctx2.fillStyle = '#94a3b8'; ctx2.fillRect(screenX, 20, 10, ch - 40);
+            
+            // تلوين مناطق الشاشة للتوضيح
+            if(srcR > 0) {
+                ctx2.fillStyle = '#475569'; // ظليل
+                ctx2.fillRect(screenX, y4, 10, y1 - y4);
+                ctx2.fillRect(screenX, y2, 10, y3 - y2);
+            }
+            ctx2.fillStyle = '#0a0f1e'; // ظل مسقط
+            ctx2.fillRect(screenX, y1, 10, y2 - y1);
+
+            // الجسم العاتم
+            ctx2.beginPath(); ctx2.arc(objX, centerY, objR, 0, Math.PI*2);
+            ctx2.fillStyle = '#334155'; ctx2.fill(); ctx2.stroke();
+
+            // المنبع الضوئي
+            if(srcR === 0) {
+                ctx2.beginPath(); ctx2.arc(srcX, centerY, 5, 0, Math.PI*2);
+                ctx2.fillStyle = '#fff'; ctx2.fill();
+            } else {
+                ctx2.fillStyle = '#f97316';
+                ctx2.fillRect(srcX-10, tSrcY, 20, srcR*2);
+            }
+        }
+
+        // ----------------------------------------------------
+        // نظام تصحيح التمارين
+        // ----------------------------------------------------
+        const answers = { q1: '1', q2: '1', q3: '1', q4: '1', q5: '1' };
+
+        function checkQuiz() {
+            let score = 0;
+            for(let key in answers) {
+                const selected = document.querySelector(`input[name="${key}"]:checked`);
+                const fb = document.getElementById(`fb-${key}`);
+                fb.style.display = 'block';
+                
+                if(selected) {
+                    if(selected.value === answers[key]) {
+                        fb.className = 'q-feedback success';
+                        fb.innerHTML = '✅ إجابة صحيحة. ' + fb.innerHTML.replace('✅','').replace('❌','');
+                        score++;
+                    } else {
+                        fb.className = 'q-feedback error';
+                        fb.innerHTML = '❌ إجابة خاطئة. ' + fb.innerHTML.replace('✅','').replace('❌','');
+                    }
+                } else {
+                    fb.className = 'q-feedback error';
+                    fb.innerHTML = '⚠️ الرجاء اختيار إجابة!';
+                }
+            }
+            document.getElementById('quiz-score').innerText = `النتيجة: ${score} من 5`;
+        }
+
+    </script>
+
+    <script src="credit.js"></script>
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 2 | عدد رسوم SVG في الدرس النظري = 2 | عدد المحاكيات = 2 -->
+</body>
+</html>

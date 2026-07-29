@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس 03: الخلائط (1) - الفيزياء السهلة</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- تضمين MathJax للمعادلات العلمية -->
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #14b8a6; /* المادة وتحولاتها */
+            --accent2:#2dd4bf;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 15px;
+        }
+
+        /* شريط التنقل العلوي الثابت (الإلزامي البند 0.4) */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(180deg, var(--dark3) 0%, var(--dark) 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .lesson-header span:first-child { color: var(--muted); font-size: 0.9rem; }
+        .lesson-badge {
+            display: inline-block;
+            background: rgba(20, 184, 166, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .lesson-header h1 { color: #fff; font-size: 2rem; margin-bottom: 5px; }
+        .lesson-header h1 em { color: var(--accent); font-family: 'Amiri', serif; font-style: italic; }
+        .lesson-meta { color: var(--muted); font-size: 0.9rem; }
+
+        /* شريط التبويبات (الكود الإلزامي البند 0.1) */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .objectives-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .objectives-box h3 { color: #fff; margin-bottom: 10px; }
+        .objectives-box ul { padding-right: 20px; color: var(--text); }
+        .objectives-box li { margin-bottom: 8px; }
+
+        .sec-title { display: flex; align-items: center; gap: 10px; margin: 30px 0 15px 0; }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-title h2 { color: #fff; font-size: 1.5rem; }
+        .sec-line { flex-grow: 1; height: 2px; background: var(--border); border: none; margin-right: 15px; }
+
+        .def-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .def-box strong { color: var(--gold); font-size: 1.1rem; }
+        .def-box span.fr { color: var(--muted); font-size: 0.9rem; font-family: sans-serif; }
+        .def-box p { font-family: 'Amiri', serif; font-size: 1.2rem; margin-top: 10px; line-height: 1.8; }
+
+        .highlight-box { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600; }
+        .highlight-box.warn { background: rgba(239, 68, 68, 0.1); border-right: 4px solid var(--red); color: #fff; }
+        .highlight-box.tip { background: rgba(16, 185, 129, 0.1); border-right: 4px solid var(--green); color: #fff; }
+        .highlight-box.info { background: rgba(245, 158, 11, 0.1); border-right: 4px solid var(--gold); color: #fff; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: var(--dark3); border-radius: 8px; overflow: hidden; }
+        .info-table th, .info-table td { padding: 15px; text-align: right; border-bottom: 1px solid var(--border); }
+        .info-table th { background: var(--dark4); color: var(--accent); font-weight: 700; }
+        .info-table td.unit { color: var(--muted); font-style: italic; }
+
+        .diagram-figure {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .fig-title { color: var(--muted); font-size: 0.9rem; margin-top: 10px; font-weight: 600; }
+        .diagram-wrap { display: flex; justify-content: center; align-items: center; }
+        .lesson-diagram { width: 100%; height: auto; max-width: 500px; display: block; }
+
+        .sim-wrap {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .sim-title { color: #fff; font-size: 1.2rem; }
+        
+        /* البند الإلزامي 0.3 */
+        .sim-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        
+        .sim-description {
+            background: var(--dark4);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: var(--text);
+            font-size: 0.95rem;
+            border-right: 3px solid var(--accent);
+        }
+        
+        .sim-container { display: flex; flex-direction: column; gap: 20px; }
+        @media (min-width: 768px) { .sim-container { flex-direction: row; } }
+        
+        .sim-canvas-wrap {
+            flex: 1;
+            background: var(--dark);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        canvas { display: block; width: 100%; height: 100%; }
+        
+        .sim-controls { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+        .control-group label { display: block; color: var(--muted); margin-bottom: 8px; font-size: 0.9rem; }
+        .val-badge { color: var(--gold); font-weight: bold; background: var(--dark); padding: 2px 6px; border-radius: 4px; }
+        input[type="range"] { width: 100%; accent-color: var(--accent); }
+        .sim-btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .sim-action-btn {
+            background: var(--dark);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            flex: 1;
+            min-width: 120px;
+            transition: all 0.2s;
+        }
+        .sim-action-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+        .q-card { background: var(--dark3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .q-num { display: inline-block; background: var(--accent); color: #fff; width: 30px; height: 30px; text-align: center; line-height: 30px; border-radius: 50%; font-weight: bold; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; color: #fff; margin-bottom: 15px; }
+        .q-options { display: flex; flex-direction: column; gap: 10px; }
+        .q-opt { background: var(--dark4); padding: 12px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
+        .q-opt:hover { border-color: var(--border); }
+        .q-opt.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--green); }
+        .q-opt.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--red); }
+        .q-feedback { margin-top: 15px; padding: 12px; border-radius: 6px; display: none; font-size: 0.9rem; }
+        .q-feedback.show-correct { display: block; background: rgba(16, 185, 129, 0.1); color: var(--green); border-right: 3px solid var(--green); }
+        .q-feedback.show-wrong { display: block; background: rgba(239, 68, 68, 0.1); color: var(--red); border-right: 3px solid var(--red); }
+        .q-diagram { width: 100%; max-width: 400px; margin: 10px auto; display: block; background: var(--dark4); border-radius: 8px; padding: 10px; }
+
+        .summary-card { background: #fff; color: #111; padding: 40px; border-radius: 12px; display: none; }
+        #tab-summary.active .summary-card { display: block; }
+        .summary-header { text-align: center; border-bottom: 2px solid var(--accent); padding-bottom: 15px; margin-bottom: 30px; }
+        .summary-meta { color: #666; font-size: 0.9rem; }
+        .summary-title { color: #111; font-size: 2rem; margin: 10px 0; }
+        .summary-subtitle { color: var(--accent); font-weight: 700; }
+        .summary-section { margin-bottom: 30px; }
+        .summary-section-title { font-size: 1.4rem; color: var(--dark2); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        
+        .concept-map-wrap { text-align: center; margin-bottom: 30px; }
+        .concept-map { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+        
+        .summary-defs { display: grid; gap: 15px; }
+        .s-def-item { background: #f8fafc; padding: 15px; border-right: 4px solid var(--accent); border-radius: 6px; }
+        .s-def-term { font-weight: 800; color: var(--dark2); display: block; margin-bottom: 5px; }
+        .s-def-text { font-family: 'Amiri', serif; font-size: 1.1rem; }
+        
+        .summary-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .summary-table th, .summary-table td { border: 1px solid #cbd5e1; padding: 10px; text-align: right; }
+        .summary-table th { background: #f1f5f9; color: var(--dark2); }
+        .summary-list { padding-right: 20px; line-height: 1.8; }
+        
+        .summary-diagram { text-align: center; margin: 20px 0; }
+        .s-main-diagram { max-width: 100%; height: auto; }
+        
+        .print-btn { background: var(--accent); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; display: block; margin: 30px auto; font-family: 'Cairo', sans-serif; font-weight: bold; }
+
+        @media print {
+            .tabs-nav, .top-nav-bar, .print-btn { display: none !important; }
+            .tab-content:not(#tab-summary) { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #111 !important; padding: 0; font-size: 12pt; }
+            .summary-card { box-shadow: none; border: 1px solid #ccc; padding: 20px; }
+            .summary-section-title { font-size: 14pt; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="../index.html#matter">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <div class="lesson-header">
+        <span>السنة الأولى متوسط › المادة وتحولاتها › الدرس 03</span>
+        <br>
+        <span class="lesson-badge">الدرس 03</span>
+        <h1><em>الخلائط</em> في محيطنا</h1>
+        <p class="lesson-meta">العلوم الفيزيائية والتكنولوجيا | 2 حصص</p>
+    </div>
+
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+        <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+        <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+        <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- التبويب 1: الدرس النظري -->
+    <!-- ========================================== -->
+    <div id="tab-lesson" class="tab-content active">
+        
+        <div class="objectives-box">
+            <h3>🎯 الأهداف التعلمية</h3>
+            <ul>
+                <li>التمييز بين الجسم النقي والجسم الخليط من خلال الملاحظة العيانية.</li>
+                <li>تصنيف الخلائط إلى متجانسة وغير متجانسة بالاعتماد على معيار الرؤية.</li>
+                <li>تفسير وتمثيل أنواع الخلائط المختلفة باستخدام النموذج الحبيبي للمادة.</li>
+            </ul>
+        </div>
+
+        <div class="sec-title">
+            <span class="sec-icon">💧</span>
+            <h2>1. الجسم النقي والخليط</h2>
+            <hr class="sec-line">
+        </div>
+        
+        <div class="def-box">
+            <strong>الجسم النقي</strong> <span class="fr">(Corps pur)</span>
+            <p>هو كل مادة تتكون من <strong>نوع واحد فقط</strong> من الحبيبات المتماثلة، وتتميز بخصائص فيزيائية ثابتة (مثل درجة حرارة الغليان أو التجمد). من أمثلته في حياتنا: الماء المقطر، الذهب الخالص.</p>
+        </div>
+        
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (1) — النموذج الحبيبي لجسم نقي (ماء مقطر)</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <!-- تدرج ثلاثي الأبعاد للحبيبات -->
+                        <radialGradient id="pureGrad" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#7dd3fc" />
+                            <stop offset="100%" stop-color="#0284c7" />
+                        </radialGradient>
+                        <filter id="shadowPure" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+                        </filter>
+                    </defs>
+                    <!-- وعاء زجاجي -->
+                    <path d="M 50,40 L 50,160 Q 50,180 70,180 L 230,180 Q 250,180 250,160 L 250,40" fill="rgba(255,255,255,0.05)" stroke="var(--border)" stroke-width="3"/>
+                    
+                    <g filter="url(#shadowPure)">
+                        <!-- حبيبات من نوع واحد (دوائر زرقاء) -->
+                        <circle cx="100" cy="150" r="12" fill="url(#pureGrad)"/>
+                        <circle cx="140" cy="160" r="12" fill="url(#pureGrad)"/>
+                        <circle cx="180" cy="145" r="12" fill="url(#pureGrad)"/>
+                        <circle cx="120" cy="120" r="12" fill="url(#pureGrad)"/>
+                        <circle cx="160" cy="115" r="12" fill="url(#pureGrad)"/>
+                        <circle cx="200" cy="130" r="12" fill="url(#pureGrad)"/>
+                        <circle cx="90"  cy="110" r="12" fill="url(#pureGrad)"/>
+                        <circle cx="140" cy="85"  r="12" fill="url(#pureGrad)"/>
+                        <circle cx="190" cy="95"  r="12" fill="url(#pureGrad)"/>
+                    </g>
+                    <text x="150" y="25" fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle">نوع واحد من الحبيبات</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="def-box">
+            <strong>الجسم الخليط</strong> <span class="fr">(Mélange)</span>
+            <p>هو كل مادة ناتجة عن <strong>مزج مادتين مختلفتين أو أكثر</strong> (أي يحتوي على نوعين أو أكثر من الحبيبات)، بحيث تحتفظ كل مادة بخصائصها الأصلية، ويمكننا الفصل بينها لاحقاً.</p>
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (2) — النموذج الحبيبي للخليط (نوعان من الحبيبات)</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <radialGradient id="mixGrad1" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#7dd3fc" />
+                            <stop offset="100%" stop-color="#0284c7" />
+                        </radialGradient>
+                        <radialGradient id="mixGrad2" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#fde047" />
+                            <stop offset="100%" stop-color="#ca8a04" />
+                        </radialGradient>
+                    </defs>
+                    <!-- وعاء زجاجي -->
+                    <path d="M 50,40 L 50,160 Q 50,180 70,180 L 230,180 Q 250,180 250,160 L 250,40" fill="rgba(255,255,255,0.05)" stroke="var(--border)" stroke-width="3"/>
+                    
+                    <g filter="url(#shadowPure)">
+                        <!-- المادة الأولى -->
+                        <circle cx="100" cy="150" r="12" fill="url(#mixGrad1)"/>
+                        <circle cx="170" cy="160" r="12" fill="url(#mixGrad1)"/>
+                        <circle cx="120" cy="110" r="12" fill="url(#mixGrad1)"/>
+                        <circle cx="200" cy="120" r="12" fill="url(#mixGrad1)"/>
+                        <circle cx="150" cy="80"  r="12" fill="url(#mixGrad1)"/>
+                        
+                        <!-- المادة الثانية (أصغر ومختلفة اللون) -->
+                        <circle cx="140" cy="140" r="9" fill="url(#mixGrad2)"/>
+                        <circle cx="210" cy="150" r="9" fill="url(#mixGrad2)"/>
+                        <circle cx="90"  cy="120" r="9" fill="url(#mixGrad2)"/>
+                        <circle cx="160" cy="110" r="9" fill="url(#mixGrad2)"/>
+                        <circle cx="120" cy="75"  r="9" fill="url(#mixGrad2)"/>
+                        <circle cx="190" cy="85"  r="9" fill="url(#mixGrad2)"/>
+                    </g>
+                    <text x="150" y="25" fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle">أنواع مختلفة من الحبيبات</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">🧪</span>
+            <h2>2. أنواع الخلائط (تصنيفها عيانياً)</h2>
+            <hr class="sec-line">
+        </div>
+        <p style="margin-bottom: 20px;">تصنف الخلائط حسب قدرتنا على تمييز مكوناتها بالعين المجردة إلى نوعين:</p>
+
+        <div class="def-box">
+            <strong>الخليط غير المتجانس</strong> <span class="fr">(Mélange hétérogène)</span>
+            <p>هو الخليط الذي <strong>يمكننا التمييز بين مكوناته</strong> (أو بعضها على الأقل) بالعين المجردة، حيث نلاحظ تشكل طبقات أو وجود أجزاء منفصلة.</p>
+        </div>
+        
+        <div class="highlight-box info">
+            💡 <strong>أمثلة:</strong> خليط الماء والزيت (تتشكل طبقتان)، خليط الماء والرمل، صحن العدس.
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (3) — خليط غير متجانس (انفصال المكونات)</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <linearGradient id="oilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(253, 224, 71, 0.8)" />
+                            <stop offset="100%" stop-color="rgba(202, 138, 4, 0.9)" />
+                        </linearGradient>
+                        <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(56, 189, 248, 0.6)" />
+                            <stop offset="100%" stop-color="rgba(2, 132, 199, 0.8)" />
+                        </linearGradient>
+                        <marker id="arrowHead1" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--text)"/>
+                        </marker>
+                    </defs>
+                    <!-- وعاء زجاجي -->
+                    <path d="M 80,40 L 80,160 Q 80,180 100,180 L 200,180 Q 220,180 220,160 L 220,40" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="3"/>
+                    
+                    <!-- طبقة الزيت (العلوية) -->
+                    <rect x="82" y="80" width="136" height="40" fill="url(#oilGrad)"/>
+                    
+                    <!-- طبقة الماء (السفلية) -->
+                    <path d="M 82,120 L 218,120 L 218,160 Q 218,178 200,178 L 100,178 Q 82,178 82,160 Z" fill="url(#waterGrad)"/>
+                    
+                    <!-- خط فاصل -->
+                    <line x1="82" y1="120" x2="218" y2="120" stroke="var(--gold)" stroke-width="2" stroke-dasharray="4"/>
+                    
+                    <!-- أسهم للتوضيح -->
+                    <line x1="225" y1="100" x2="260" y2="100" stroke="var(--text)" stroke-width="1.5" marker-end="url(#arrowHead1)"/>
+                    <text x="280" y="100" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="start" dominant-baseline="middle">زيت</text>
+
+                    <line x1="225" y1="150" x2="260" y2="150" stroke="var(--text)" stroke-width="1.5" marker-end="url(#arrowHead1)"/>
+                    <text x="280" y="150" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="start" dominant-baseline="middle">ماء</text>
+                    
+                    <text x="150" y="20" fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle">حد فاصل مرئي بالعين</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="def-box">
+            <strong>الخليط المتجانس</strong> <span class="fr">(Mélange homogène)</span>
+            <p>هو الخليط الذي <strong>لا يمكننا التمييز بين مكوناته</strong> بالعين المجردة، حيث تمتزج الحبيبات تماماً وتبدو المادة كأنها جسم واحد متناسق.</p>
+        </div>
+
+        <div class="highlight-box tip">
+            📌 <strong>أمثلة:</strong> ماء الحنفية (ماء + أملاح معدنية)، الخل، الحليب السائل، الهواء الذي نتنفسه.
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (4) — خليط متجانس (ذوبان وامتزاج كلي)</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <linearGradient id="solutionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(20, 184, 166, 0.4)" />
+                            <stop offset="100%" stop-color="rgba(20, 184, 166, 0.8)" />
+                        </linearGradient>
+                        <radialGradient id="saltGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#fff" />
+                            <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+                        </radialGradient>
+                    </defs>
+                    <!-- وعاء زجاجي -->
+                    <path d="M 80,40 L 80,160 Q 80,180 100,180 L 200,180 Q 220,180 220,160 L 220,40" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="3"/>
+                    
+                    <!-- محلول متجانس (ماء مالح) -->
+                    <path d="M 82,90 L 218,90 L 218,160 Q 218,178 200,178 L 100,178 Q 82,178 82,160 Z" fill="url(#solutionGrad)"/>
+                    
+                    <!-- إيحاء بذوبان الملح داخل السائل كلياً -->
+                    <circle cx="120" cy="110" r="4" fill="url(#saltGlow)"/>
+                    <circle cx="180" cy="130" r="4" fill="url(#saltGlow)"/>
+                    <circle cx="150" cy="160" r="4" fill="url(#saltGlow)"/>
+                    <circle cx="100" cy="140" r="4" fill="url(#saltGlow)"/>
+                    <circle cx="190" cy="100" r="4" fill="url(#saltGlow)"/>
+                    <circle cx="140" cy="120" r="4" fill="url(#saltGlow)"/>
+
+                    <text x="150" y="20" fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle">مظهر موحد (طور واحد)</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">⚖️</span>
+            <h2>3. جدول مقارنة تلخيصي</h2>
+            <hr class="sec-line">
+        </div>
+        
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th>وجه المقارنة</th>
+                    <th>الخليط المتجانس</th>
+                    <th>الخليط غير المتجانس</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>الرؤية بالعين</strong></td>
+                    <td>لا نميز مكوناته (مظهر موحد)</td>
+                    <td>نميز مكوناته بوضوح (طبقات)</td>
+                </tr>
+                <tr>
+                    <td><strong>حالة الحبيبات</strong></td>
+                    <td>ممتزجة ومنتظمة كلياً</td>
+                    <td>غير ممتزجة ومنفصلة</td>
+                </tr>
+                <tr>
+                    <td><strong>أمثلة</strong></td>
+                    <td>ماء سكري، خل، عصير مصفى</td>
+                    <td>ماء + زيت، ماء + رمل، ضباب</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 2: المحاكاة التفاعلية -->
+    <!-- ========================================== -->
+    <div id="tab-sim" class="tab-content">
+        
+        <!-- المحاكاة 1: مجهر النموذج الحبيبي -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">1. محاكاة: المجهر الحبيبي</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            
+            <!-- البند الإلزامي: وصف المحاكاة 1 -->
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>توزيع وترتيب الحبيبات</strong> على المستوى المجهري. غيّر <strong>نوع المادة</strong> لترى كيف تختلف <strong>بنية الجسم النقي عن الخلائط</strong> وكيف يتميز التجانس بالامتزاج التام.</p>
+            </div>
+            
+            <div class="sim-container">
+                <div class="sim-canvas-wrap" id="canvasContainerMicro">
+                    <canvas id="canvasMicro"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>اختر طبيعة المادة المعروضة:</label>
+                        <div class="sim-btn-group">
+                            <button class="sim-action-btn active" onclick="setMicroMode('pure', this)">جسم نقي</button>
+                            <button class="sim-action-btn" onclick="setMicroMode('homo', this)">خليط متجانس</button>
+                            <button class="sim-action-btn" onclick="setMicroMode('hetero', this)">خليط غير متجانس</button>
+                        </div>
+                    </div>
+                    <div class="highlight-box tip" style="margin-top: 15px;">
+                        <span id="microFeedback">الجسم النقي يحتوي على نوع واحد فقط من الحبيبات المتماثلة في اللون والحجم.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المحاكاة 2: كأس الخلط المخبري -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">2. محاكاة: تجربة المزج والذوبان</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            
+            <!-- البند الإلزامي: وصف المحاكاة 2 -->
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>تأثير الخلط والتحريك</strong> على المواد المضافة للماء. حرّك <strong>نسبة المزج (التحريك)</strong> لترى كيف يتغيّر <strong>المظهر العياني للخليط (متجانس أم غير متجانس)</strong> حسب طبيعة المادة.</p>
+            </div>
+
+            <div class="sim-container">
+                <div class="sim-canvas-wrap" id="canvasContainerBeaker" style="background: var(--dark3);">
+                    <canvas id="canvasBeaker"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>1. المادة المضافة للماء:</label>
+                        <div class="sim-btn-group">
+                            <button class="sim-action-btn active" onclick="setBeakerSubstance('salt', this)">مسحوق الملح</button>
+                            <button class="sim-action-btn" onclick="setBeakerSubstance('oil', this)">زيت الطعام</button>
+                            <button class="sim-action-btn" onclick="setBeakerSubstance('sand', this)">رمل خشن</button>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>2. نسبة التحريك والخلط: <span id="mixVal" class="val-badge">0%</span></label>
+                        <input type="range" id="mixSlider" min="0" max="100" value="0" step="1">
+                    </div>
+                    <div class="highlight-box info" style="margin-top: 15px;">
+                        <span id="beakerFeedback">قبل الخلط، الملح مستقر في القاع ويمكن رؤيته بوضوح (خليط غير متجانس مبدئياً).</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 3: التمارين -->
+    <!-- ========================================== -->
+    <div id="tab-exercises" class="tab-content">
+        
+        <div class="q-card">
+            <div class="q-num">1</div>
+            <div class="q-text">الماء المقطر الخالي من الأملاح يعتبر في الفيزياء:</div>
+            <div class="q-options" data-correct="0">
+                <label class="q-opt"><input type="radio" name="q1" value="0"> جسماً نقياً.</label>
+                <label class="q-opt"><input type="radio" name="q1" value="1"> خليطاً متجانساً.</label>
+                <label class="q-opt"><input type="radio" name="q1" value="2"> خليطاً غير متجانس.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">2</div>
+            <div class="q-text">أي من الخلائط التالية يمكن التمييز بين مكوناتها بالعين المجردة؟</div>
+            <div class="q-options" data-correct="2">
+                <label class="q-opt"><input type="radio" name="q2" value="0"> الخل الأبيض.</label>
+                <label class="q-opt"><input type="radio" name="q2" value="1"> ماء الحنفية.</label>
+                <label class="q-opt"><input type="radio" name="q2" value="2"> خليط الماء وزيت الزيتون.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">3</div>
+            <div class="q-text">تتميز حبيبات المادة في "الجسم النقي" بأنها:</div>
+            <div class="q-options" data-correct="0">
+                <label class="q-opt"><input type="radio" name="q3" value="0"> من نوع واحد ومتماثلة تماماً.</label>
+                <label class="q-opt"><input type="radio" name="q3" value="1"> مختلفة الأشكال والألوان.</label>
+                <label class="q-opt"><input type="radio" name="q3" value="2"> تختفي عند التسخين.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">4</div>
+            <div class="q-text">الماء المعدني التجاري المعبأ في القارورات يمثل:</div>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q4" value="0"> جسماً نقياً لصفائه.</label>
+                <label class="q-opt"><input type="radio" name="q4" value="1"> خليطاً متجانساً لاحتوائه على أملاح معدنية مذابة.</label>
+                <label class="q-opt"><input type="radio" name="q4" value="2"> خليطاً غير متجانس.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">5</div>
+            <div class="q-text">عند سكب كمية من الرمل في كأس ماء، يتشكل لدينا:</div>
+            <div class="q-options" data-correct="2">
+                <label class="q-opt"><input type="radio" name="q5" value="0"> خليط متجانس لأن الرمل دقيق جداً.</label>
+                <label class="q-opt"><input type="radio" name="q5" value="1"> جسم نقي جديد.</label>
+                <label class="q-opt"><input type="radio" name="q5" value="2"> خليط غير متجانس لإمكانية رؤية الرمل منفصلاً.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <!-- السؤال الإلزامي من نوع الرسم (مخطط) -->
+        <div class="q-card q-diagram-type">
+            <div class="q-num">6</div>
+            <div class="q-text">تأمل المخطط الحبيبي التالي الذي يمثل إناءً يحتوي على مادتين. ماذا يمثل هذا المخطط؟</div>
+            <svg class="q-diagram" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                <rect x="50" y="20" width="100" height="90" fill="none" stroke="var(--border)" stroke-width="2"/>
+                <!-- مادة 1 (فوق) -->
+                <circle cx="70" cy="50" r="6" fill="#fbbf24"/>
+                <circle cx="90" cy="40" r="6" fill="#fbbf24"/>
+                <circle cx="110" cy="50" r="6" fill="#fbbf24"/>
+                <circle cx="130" cy="45" r="6" fill="#fbbf24"/>
+                <circle cx="80" cy="60" r="6" fill="#fbbf24"/>
+                <circle cx="120" cy="60" r="6" fill="#fbbf24"/>
+                
+                <!-- مادة 2 (تحت) -->
+                <circle cx="70" cy="85" r="6" fill="var(--accent)"/>
+                <circle cx="90" cy="95" r="6" fill="var(--accent)"/>
+                <circle cx="110" cy="85" r="6" fill="var(--accent)"/>
+                <circle cx="130" cy="95" r="6" fill="var(--accent)"/>
+                <circle cx="80" cy="100" r="6" fill="var(--accent)"/>
+                <circle cx="120" cy="100" r="6" fill="var(--accent)"/>
+            </svg>
+            <div class="q-options" data-correct="2">
+                <label class="q-opt"><input type="radio" name="q6" value="0"> جسماً نقياً.</label>
+                <label class="q-opt"><input type="radio" name="q6" value="1"> خليطاً متجانساً (لوجود ذوبان).</label>
+                <label class="q-opt"><input type="radio" name="q6" value="2"> خليطاً غير متجانس (لوجود انفصال واضح في الحبيبات).</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <button class="print-btn" onclick="checkAnswers()" style="margin-top: 20px;">تحقق من إجاباتي ✅</button>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 4: ملخص الكراس -->
+    <!-- ========================================== -->
+    <div id="tab-summary" class="tab-content">
+        <div class="summary-card">
+            
+            <div class="summary-header">
+                <div class="summary-meta">العلوم الفيزيائية والتكنولوجيا | السنة الأولى متوسط | المادة وتحولاتها</div>
+                <h2 class="summary-title">ملخص شامل: الخلائط (1)</h2>
+                <div class="summary-subtitle">وفق منهاج الجيل الثاني</div>
+            </div>
+
+            <!-- خريطة المفاهيم الإلزامية -->
+            <div class="concept-map-wrap">
+                <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                <svg class="concept-map" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--dark2)"/>
+                        </marker>
+                    </defs>
+                    
+                    <rect x="225" y="10" width="150" height="40" rx="20" fill="var(--accent)" />
+                    <text x="300" y="35" fill="#fff" font-family="Cairo" font-weight="bold" font-size="16" text-anchor="middle">المادة في الطبيعة</text>
+                    
+                    <path d="M 300 50 L 300 70" stroke="var(--dark2)" stroke-width="2"/>
+                    <path d="M 150 70 L 450 70" stroke="var(--dark2)" stroke-width="2"/>
+                    
+                    <path d="M 150 70 L 150 90" stroke="var(--dark2)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <path d="M 450 70 L 450 90" stroke="var(--dark2)" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- الجسم النقي -->
+                    <rect x="75" y="100" width="150" height="40" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+                    <text x="150" y="125" fill="#0369a1" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">جسم نقي</text>
+                    <text x="150" y="155" fill="#64748b" font-family="Cairo" font-size="12" text-anchor="middle">نوع واحد من الحبيبات</text>
+                    <text x="150" y="175" fill="#64748b" font-family="Cairo" font-size="12" text-anchor="middle">(مثل: ماء مقطر)</text>
+
+                    <!-- الخليط -->
+                    <rect x="375" y="100" width="150" height="40" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+                    <text x="450" y="125" fill="#0f766e" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">خليط</text>
+                    
+                    <path d="M 450 140 L 450 160" stroke="var(--dark2)" stroke-width="2"/>
+                    <path d="M 350 160 L 550 160" stroke="var(--dark2)" stroke-width="2"/>
+                    
+                    <path d="M 350 160 L 350 180" stroke="var(--dark2)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <path d="M 550 160 L 550 180" stroke="var(--dark2)" stroke-width="2" marker-end="url(#arrow)"/>
+
+                    <!-- أنواع الخليط -->
+                    <rect x="280" y="190" width="140" height="40" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+                    <text x="350" y="215" fill="#b45309" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">خليط متجانس</text>
+                    <text x="350" y="245" fill="#64748b" font-family="Cairo" font-size="12" text-anchor="middle">لا نميز مكوناته</text>
+                    <text x="350" y="265" fill="#64748b" font-family="Cairo" font-size="12" text-anchor="middle">(ماء معدني، خل)</text>
+
+                    <rect x="480" y="190" width="140" height="40" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+                    <text x="550" y="215" fill="#b91c1c" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">خليط غير متجانس</text>
+                    <text x="550" y="245" fill="#64748b" font-family="Cairo" font-size="12" text-anchor="middle">نميز مكوناته بوضوح</text>
+                    <text x="550" y="265" fill="#64748b" font-family="Cairo" font-size="12" text-anchor="middle">(ماء وزيت، ماء ورمل)</text>
+                </svg>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+                <div class="summary-defs">
+                    <div class="s-def-item">
+                        <span class="s-def-term">الجسم النقي:</span>
+                        <span class="s-def-text">مادة تتكون من نوع واحد فقط من الحبيبات المتماثلة، وخصائصها الفيزيائية ثابتة.</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">الخليط:</span>
+                        <span class="s-def-text">مادة ناتجة عن مزج مادتين مختلفتين أو أكثر، حيث تحتفظ كل مادة بخصائصها الأصلية.</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">الخليط المتجانس:</span>
+                        <span class="s-def-text">خليط لا يمكننا التمييز بين مكوناته بالعين المجردة نظراً للامتزاج الكلي لحبيباته.</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">الخليط غير المتجانس:</span>
+                        <span class="s-def-text">خليط يمكننا التمييز بين مكوناته (أو بعضها) بالعين المجردة لعدم قدرة الحبيبات على الامتزاج.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">🖼️ الرسم التلخيصي</h3>
+                <figure class="summary-diagram">
+                    <svg viewBox="0 0 400 150" class="s-main-diagram">
+                        <!-- نقي -->
+                        <rect x="20" y="20" width="100" height="100" fill="none" stroke="#0284c7" stroke-width="2" rx="8"/>
+                        <circle cx="50" cy="50" r="6" fill="#0284c7"/><circle cx="70" cy="70" r="6" fill="#0284c7"/><circle cx="90" cy="50" r="6" fill="#0284c7"/><circle cx="60" cy="90" r="6" fill="#0284c7"/>
+                        <text x="70" y="140" fill="#111" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">جسم نقي</text>
+                        
+                        <!-- متجانس -->
+                        <rect x="150" y="20" width="100" height="100" fill="none" stroke="#0d9488" stroke-width="2" rx="8"/>
+                        <circle cx="180" cy="50" r="6" fill="#0d9488"/><circle cx="210" cy="70" r="6" fill="#ca8a04"/><circle cx="230" cy="50" r="6" fill="#0d9488"/><circle cx="170" cy="90" r="6" fill="#ca8a04"/><circle cx="200" cy="40" r="6" fill="#ca8a04"/>
+                        <text x="200" y="140" fill="#111" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">متجانس (ممتزج)</text>
+
+                        <!-- غير متجانس -->
+                        <rect x="280" y="20" width="100" height="100" fill="none" stroke="#dc2626" stroke-width="2" rx="8"/>
+                        <circle cx="300" cy="40" r="6" fill="#ca8a04"/><circle cx="320" cy="50" r="6" fill="#ca8a04"/><circle cx="350" cy="45" r="6" fill="#ca8a04"/>
+                        <circle cx="310" cy="90" r="6" fill="#dc2626"/><circle cx="330" cy="100" r="6" fill="#dc2626"/><circle cx="360" cy="85" r="6" fill="#dc2626"/>
+                        <line x1="280" y1="70" x2="380" y2="70" stroke="#111" stroke-width="1" stroke-dasharray="2"/>
+                        <text x="330" y="140" fill="#111" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">غير متجانس (منفصل)</text>
+                    </svg>
+                    <figcaption>الشكل التلخيصي — مقارنة النماذج الحبيبية للخلائط</figcaption>
+                </figure>
+            </div>
+
+            <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. كود إدارة التبويبات الإلزامي (البند 3.9.1)
+        // ==========================================
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim === 'function') updateSim();
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim === 'function') updateSim();
+                }, 50);
+            }
+            resizeCanvas();
+        });
+
+        // ==========================================
+        // 2. إدارة الكانفاس (البند الإلزامي 0.2 و 0.5)
+        // ==========================================
+        const canvasMicro = document.getElementById('canvasMicro');
+        const ctxMicro = canvasMicro.getContext('2d');
+        const containerMicro = document.getElementById('canvasContainerMicro');
+
+        const canvasBeaker = document.getElementById('canvasBeaker');
+        const ctxBeaker = canvasBeaker.getContext('2d');
+        const containerBeaker = document.getElementById('canvasContainerBeaker');
+
+        function resizeCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            
+            // Canvas 1 (Micro)
+            if (containerMicro && containerMicro.clientWidth > 0) {
+                canvasMicro.width = containerMicro.clientWidth * dpr;
+                canvasMicro.height = containerMicro.clientHeight * dpr;
+                canvasMicro.style.width = containerMicro.clientWidth + 'px';
+                canvasMicro.style.height = containerMicro.clientHeight + 'px';
+                ctxMicro.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            // Canvas 2 (Beaker)
+            if (containerBeaker && containerBeaker.clientWidth > 0) {
+                canvasBeaker.width = containerBeaker.clientWidth * dpr;
+                canvasBeaker.height = containerBeaker.clientHeight * dpr;
+                canvasBeaker.style.width = containerBeaker.clientWidth + 'px';
+                canvasBeaker.style.height = containerBeaker.clientHeight + 'px';
+                ctxBeaker.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+            
+            initMicroParticles(); 
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            drawBeakerSim(); // إعادة الرسم للمحاكاة الثابتة
+        });
+
+        // ==========================================
+        // 3. المحاكاة الأولى (المجهر الحبيبي)
+        // ==========================================
+        let microMode = 'pure';
+        let particles = [];
+        let microAnimId;
+
+        function setMicroMode(mode, btn) {
+            microMode = mode;
+            const btns = btn.parentElement.querySelectorAll('.sim-action-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const feedback = document.getElementById('microFeedback');
+            if(mode === 'pure') feedback.innerText = "الجسم النقي يحتوي على نوع واحد فقط من الحبيبات المتماثلة في اللون والحجم.";
+            if(mode === 'homo') feedback.innerText = "الخليط المتجانس يتميز بامتزاج كلي لحبيبات المادتين، فلا يمكننا التمييز بينهما.";
+            if(mode === 'hetero') feedback.innerText = "الخليط غير المتجانس تتجمع فيه حبيبات كل مادة على حدة (انفصال عياني).";
+
+            initMicroParticles();
+        }
+
+        function initMicroParticles() {
+            particles = [];
+            const w = containerMicro.clientWidth || 300;
+            const h = containerMicro.clientHeight || 300;
+            const r1 = 8; // حجم حبيبات الماء
+            const r2 = 6; // حجم المادة المضافة
+            
+            if(microMode === 'pure') {
+                for(let i=0; i<60; i++){
+                    particles.push({
+                        type: 1, x: 20 + Math.random()*(w-40), y: 20 + Math.random()*(h-40), r: r1,
+                        vx: (Math.random()-0.5)*2, vy: (Math.random()-0.5)*2
+                    });
+                }
+            } else if(microMode === 'homo') {
+                for(let i=0; i<40; i++){
+                    particles.push({
+                        type: 1, x: 20 + Math.random()*(w-40), y: 20 + Math.random()*(h-40), r: r1,
+                        vx: (Math.random()-0.5)*2, vy: (Math.random()-0.5)*2
+                    });
+                }
+                for(let i=0; i<20; i++){
+                    particles.push({
+                        type: 2, x: 20 + Math.random()*(w-40), y: 20 + Math.random()*(h-40), r: r2,
+                        vx: (Math.random()-0.5)*2.5, vy: (Math.random()-0.5)*2.5
+                    });
+                }
+            } else if (microMode === 'hetero') {
+                for(let i=0; i<30; i++){
+                    particles.push({
+                        type: 1, x: 20 + Math.random()*(w-40), y: 20 + Math.random()*(h/2-20), r: r1, // النصف العلوي
+                        vx: (Math.random()-0.5)*2, vy: (Math.random()-0.5)*2
+                    });
+                }
+                for(let i=0; i<30; i++){
+                    particles.push({
+                        type: 3, x: 20 + Math.random()*(w-40), y: h/2 + Math.random()*(h/2-20), r: r1, // النصف السفلي
+                        vx: (Math.random()-0.5)*1, vy: (Math.random()-0.5)*1
+                    });
+                }
+            }
+        }
+
+        function updateMicroSim() {
+            const w = containerMicro.clientWidth || canvasMicro.width;
+            const h = containerMicro.clientHeight || canvasMicro.height;
+            // البند الإلزامي 0.5: clearRect
+            ctxMicro.clearRect(0, 0, canvasMicro.width, canvasMicro.height);
+
+            ctxMicro.strokeStyle = 'rgba(255,255,255,0.2)';
+
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                
+                // ارتداد مع مراعاة الطبقات في غير المتجانس
+                if(p.x < p.r || p.x > w - p.r) p.vx *= -1;
+                
+                if (microMode === 'hetero') {
+                    if (p.type === 1) { // مادة 1 فوق
+                        if (p.y < p.r || p.y > h/2 - p.r) p.vy *= -1;
+                    } else { // مادة 2 تحت
+                        if (p.y < h/2 + p.r || p.y > h - p.r) p.vy *= -1;
+                    }
+                } else {
+                    if(p.y < p.r || p.y > h - p.r) p.vy *= -1;
+                }
+
+                ctxMicro.beginPath();
+                ctxMicro.arc(p.x, p.y, p.r, 0, Math.PI*2);
+                if (p.type === 1) {
+                    const grad = ctxMicro.createRadialGradient(p.x-2, p.y-2, 1, p.x, p.y, p.r);
+                    grad.addColorStop(0, '#7dd3fc'); grad.addColorStop(1, '#0284c7');
+                    ctxMicro.fillStyle = grad;
+                } else if (p.type === 2) {
+                    ctxMicro.fillStyle = '#fde047'; // ملح/سكر ذائب
+                } else {
+                    ctxMicro.fillStyle = '#ca8a04'; // زيت/رمل
+                }
+                ctxMicro.fill();
+                ctxMicro.stroke();
+            });
+
+            if (microMode === 'hetero') {
+                ctxMicro.strokeStyle = 'rgba(255,255,255,0.4)';
+                ctxMicro.setLineDash([5, 5]);
+                ctxMicro.beginPath();
+                ctxMicro.moveTo(10, h/2); ctxMicro.lineTo(w-10, h/2);
+                ctxMicro.stroke();
+                ctxMicro.setLineDash([]);
+            }
+
+            microAnimId = requestAnimationFrame(updateMicroSim);
+        }
+
+        // ==========================================
+        // 4. المحاكاة الثانية (تجربة المزج)
+        // ==========================================
+        let beakerSubstance = 'salt';
+        let mixFactor = 0;
+        const mixSlider = document.getElementById('mixSlider');
+        const mixVal = document.getElementById('mixVal');
+        const beakerFeedback = document.getElementById('beakerFeedback');
+
+        function setBeakerSubstance(sub, btn) {
+            beakerSubstance = sub;
+            const btns = btn.parentElement.querySelectorAll('.sim-action-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            mixSlider.value = 0;
+            mixFactor = 0;
+            updateBeakerDescription();
+            drawBeakerSim();
+        }
+
+        mixSlider.addEventListener('input', () => {
+            mixFactor = parseInt(mixSlider.value);
+            mixVal.innerText = mixFactor + "%";
+            updateBeakerDescription();
+            drawBeakerSim();
+        });
+
+        function updateBeakerDescription() {
+            if (beakerSubstance === 'salt') {
+                if (mixFactor < 30) beakerFeedback.innerText = "تترسب حبيبات الملح في القاع. الخليط غير متجانس عيانياً قبل الخلط.";
+                else if (mixFactor < 80) beakerFeedback.innerText = "جاري التحريك.. الملح يذوب تدريجياً ويختفي في الماء.";
+                else beakerFeedback.innerText = "ذوبان كلي! حصلنا على خليط متجانس (محلول مائي) لا يمكن تمييز الملح فيه.";
+            } else if (beakerSubstance === 'oil') {
+                if (mixFactor < 30) beakerFeedback.innerText = "الزيت يطفو فوق الماء. لا يوجد أي امتزاج (خليط غير متجانس قطرياً).";
+                else if (mixFactor < 90) beakerFeedback.innerText = "أثناء التحريك القوي، تتشكل فقاعات زيتية صغيرة معلقة (مستحلب).";
+                else beakerFeedback.innerText = "عند التوقف، ينفصل الزيت فوراً ويعود كطبقة علوية. الخليط يبقى غير متجانس!";
+            } else if (beakerSubstance === 'sand') {
+                if (mixFactor < 50) beakerFeedback.innerText = "الرمل مستقر في القاع نظراً لكثافته وثقله. الخليط غير متجانس.";
+                else beakerFeedback.innerText = "مهما حركنا، يتعكر الماء مؤقتاً لكن الرمل لا يذوب أبداً ويفصل مجدداً. الخليط غير متجانس.";
+            }
+        }
+
+        function drawBeakerSim() {
+            const w = containerBeaker.clientWidth || canvasBeaker.width;
+            const h = containerBeaker.clientHeight || canvasBeaker.height;
+            // البند الإلزامي 0.5: clearRect
+            ctxBeaker.clearRect(0, 0, canvasBeaker.width, canvasBeaker.height);
+
+            const bw = 140, bh = 180;
+            const bx = w/2 - bw/2, by = h/2 - bh/2 + 20;
+            
+            // 1. رسم الماء الأساسي
+            ctxBeaker.fillStyle = 'rgba(56, 189, 248, 0.4)';
+            ctxBeaker.fillRect(bx+5, by+40, bw-10, bh-45);
+            
+            // 2. رسم المواد المضافة حسب الخلط
+            if (beakerSubstance === 'salt') {
+                // الملح المترسب يتناقص مع الخلط
+                if (mixFactor < 90) {
+                    let saltHeight = 15 * (1 - mixFactor/100);
+                    ctxBeaker.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                    ctxBeaker.fillRect(bx+10, by+bh - saltHeight - 5, bw-20, saltHeight);
+                }
+                // لون الماء يتغير قليلاً ليعكس الذوبان
+                if (mixFactor > 10) {
+                    let alpha = (mixFactor/100) * 0.3;
+                    ctxBeaker.fillStyle = `rgba(20, 184, 166, ${alpha})`;
+                    ctxBeaker.fillRect(bx+5, by+40, bw-10, bh-45);
+                }
+            } else if (beakerSubstance === 'oil') {
+                // الزيت كطبقة علوية
+                let oilY = by + 40;
+                let oilH = 20;
+                
+                if (mixFactor < 20 || mixFactor > 85) {
+                    // منفصل تماماً
+                    const oGrad = ctxBeaker.createLinearGradient(0, oilY, 0, oilY+oilH);
+                    oGrad.addColorStop(0, "rgba(253, 224, 71, 0.8)");
+                    oGrad.addColorStop(1, "rgba(202, 138, 4, 0.9)");
+                    ctxBeaker.fillStyle = oGrad;
+                    ctxBeaker.fillRect(bx+5, oilY, bw-10, oilH);
+                } else {
+                    // مستحلب (فقاعات)
+                    ctxBeaker.fillStyle = 'rgba(253, 224, 71, 0.4)';
+                    ctxBeaker.fillRect(bx+5, oilY, bw-10, oilH+10); // طبقة رقيقة
+                    ctxBeaker.fillStyle = 'rgba(202, 138, 4, 0.8)';
+                    for(let i=0; i<15; i++) {
+                        ctxBeaker.beginPath();
+                        ctxBeaker.arc(bx + 15 + Math.random()*(bw-30), oilY + 10 + Math.random()*80, Math.random()*4+2, 0, Math.PI*2);
+                        ctxBeaker.fill();
+                    }
+                }
+            } else if (beakerSubstance === 'sand') {
+                // رمل مترسب دائماً
+                ctxBeaker.fillStyle = '#b45309';
+                ctxBeaker.fillRect(bx+5, by+bh-25, bw-10, 20);
+                
+                if (mixFactor > 30) {
+                    // تعكر الماء وحبيبات عالقة
+                    ctxBeaker.fillStyle = 'rgba(180, 83, 9, 0.2)';
+                    ctxBeaker.fillRect(bx+5, by+40, bw-10, bh-65);
+                    ctxBeaker.fillStyle = '#92400e';
+                    let floatCount = (mixFactor/100) * 30;
+                    for(let i=0; i<floatCount; i++) {
+                        ctxBeaker.beginPath();
+                        ctxBeaker.arc(bx + 10 + Math.random()*(bw-20), by + 50 + Math.random()*(bh-80), 2, 0, Math.PI*2);
+                        ctxBeaker.fill();
+                    }
+                }
+            }
+            
+            // 3. رسم الكأس الزجاجي
+            const gGrad = ctxBeaker.createLinearGradient(bx, 0, bx+bw, 0);
+            gGrad.addColorStop(0, "rgba(255,255,255,0.4)");
+            gGrad.addColorStop(0.2, "rgba(255,255,255,0.1)");
+            gGrad.addColorStop(0.8, "rgba(255,255,255,0.1)");
+            gGrad.addColorStop(1, "rgba(255,255,255,0.4)");
+
+            ctxBeaker.strokeStyle = gGrad;
+            ctxBeaker.lineWidth = 4;
+            ctxBeaker.beginPath();
+            ctxBeaker.moveTo(bx, by);
+            ctxBeaker.lineTo(bx, by+bh);
+            ctxBeaker.lineTo(bx+bw, by+bh);
+            ctxBeaker.lineTo(bx+bw, by);
+            ctxBeaker.stroke();
+            
+            ctxBeaker.beginPath();
+            ctxBeaker.ellipse(bx+bw/2, by, bw/2, 10, 0, 0, Math.PI*2);
+            ctxBeaker.stroke();
+        }
+
+        // دالة موحدة للبدء
+        function updateSim() {
+            cancelAnimationFrame(microAnimId);
+            initMicroParticles();
+            updateMicroSim();
+            drawBeakerSim();
+        }
+
+        // ==========================================
+        // 5. التحقق من التمارين
+        // ==========================================
+        function checkAnswers() {
+            const cards = document.querySelectorAll('.q-card');
+            cards.forEach(card => {
+                const correctVal = card.querySelector('.q-options').dataset.correct;
+                const options = card.querySelectorAll('input[type="radio"]');
+                const feedback = card.querySelector('.q-feedback');
+                let answered = false;
+
+                options.forEach(opt => {
+                    const optLabel = opt.parentElement;
+                    optLabel.classList.remove('correct', 'wrong');
+                    
+                    if(opt.checked) {
+                        answered = true;
+                        if(opt.value === correctVal) {
+                            optLabel.classList.add('correct');
+                            feedback.className = 'q-feedback show-correct';
+                            feedback.innerHTML = 'إجابة صحيحة! أحسنت صنعاً.';
+                        } else {
+                            optLabel.classList.add('wrong');
+                            feedback.className = 'q-feedback show-wrong';
+                            feedback.innerHTML = 'إجابة غير موفقة. تذكر الفروق الجوهرية (الخيار الصحيح مضلل بالأخضر).';
+                        }
+                    }
+                    if(opt.value === correctVal) {
+                        optLabel.classList.add('correct'); // إظهار الصحيح دائما للتعلم
+                    }
+                });
+
+                if(!answered) {
+                    feedback.className = 'q-feedback show-wrong';
+                    feedback.innerHTML = 'يرجى اختيار إجابة لمعرفة التقييم.';
+                }
+            });
+        }
+    </script>
+    
+    <script src="credit.js"></script>
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 4 | عدد رسوم SVG في الدرس النظري = 4 | عدد المحاكيات = 2 -->
+</body>
+</html>

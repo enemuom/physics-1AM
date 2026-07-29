@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس: قياس الكتلة | العلوم الفيزيائية والتكنولوجيا</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']] },
+      svg: { fontCache: 'global' },
+      options: {
+        renderActions: {
+          addMenu: []
+        }
+      }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #14b8a6; /* لون مقطع المادة وتحولاتها */
+            --accent2:#2dd4bf;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+		
+		/* شريط التنقل العلوي الثابت */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+
+        .lesson-header {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        .lesson-header::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; width: 4px; height: 100%;
+            background: var(--accent);
+        }
+        .lesson-header a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .breadcrumb {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        .lesson-badge {
+            background: var(--accent);
+            color: var(--dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .lesson-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+        .lesson-header h1 em {
+            color: var(--accent);
+            font-style: normal;
+        }
+        .lesson-meta {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--dark3);
+            padding-bottom: 10px;
+    flex-wrap: wrap;
+}
+        .tab-btn {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+    flex: 1;
+    min-width: 150px;
+    text-align: center;
+}
+        .tab-btn:hover { background: var(--dark3); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: var(--dark);
+            border-color: var(--accent);
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .objectives-box {
+            background: var(--card);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .objectives-box h3 { color: var(--accent); margin-bottom: 10px; }
+        .objectives-box ul { margin-right: 25px; }
+
+        .sec-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 40px 0 20px;
+        }
+        .sec-icon {
+            background: var(--dark3);
+            color: var(--accent);
+            width: 40px; height: 40px;
+            display: flex; justify-content: center; align-items: center;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            border: 1px solid var(--border);
+        }
+        .sec-title h2 { font-size: 1.6rem; color: var(--text); }
+        .sec-line { flex-grow: 1; height: 1px; background: var(--border); border: none; }
+
+        .def-box {
+            background: rgba(245, 158, 11, 0.05);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .def-box strong { color: var(--gold); font-size: 1.1rem; }
+        .def-box p { font-family: 'Amiri', serif; font-size: 1.2rem; margin-top: 10px; line-height: 1.8; }
+        .fr-term { color: var(--muted); font-family: 'Cairo', sans-serif; font-size: 1rem; }
+
+        .highlight-box {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .highlight-box.warn { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; }
+        .highlight-box.info { background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); color: #bae6fd; }
+        .highlight-box.tip { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #a7f3d0; }
+
+        .formula-box {
+            background: var(--dark3);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px auto;
+            text-align: center;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .formula-title {
+            color: var(--muted);
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .formula-display mjx-container {
+            font-size: 2rem !important; /* ضمان حجم كبير للقراءة */
+            color: var(--text);
+        }
+        
+        .symbol-table {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            border-collapse: collapse;
+            background: var(--dark2);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .symbol-table th, .symbol-table td {
+            padding: 12px 15px;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+        }
+        .symbol-table th { background: var(--dark3); color: var(--accent); font-weight: 600; }
+        .sym-cell { font-family: 'Amiri', serif; font-size: 1.4rem; color: var(--text); font-style: italic; }
+        .unit-cell { color: var(--gold); font-family: sans-serif; font-weight: bold; direction: ltr; text-align: left;}
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--dark2);
+            border-radius: 8px;
+            overflow-x: auto; /* يسمح بالتمرير الأفقي محلياً داخل الجدول فقط */
+			-webkit-overflow-scrolling: touch; /* تمرير سلس على الآيفون والأندرويد */
+        }
+        .info-table { width: 100%; border-collapse: collapse; min-width: 500px; text-align: center; background: var(--dark2); }
+        .info-table th, .info-table td { padding: 12px; border: 1px solid var(--border); }
+        .info-table th { background: var(--dark3); color: var(--accent2); white-space: nowrap; } /* تمنع تكسر العناوين */                                                  
+
+
+        .diagram-figure {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .lesson-diagram { width: 100%; max-width: 500px; height: auto; }
+        .fig-title { margin-top: 15px; color: var(--accent2); font-size: 0.95rem; }
+
+        .sim-wrap {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .sim-title { font-size: 1.4rem; color: var(--text); margin: 0;}
+        .sim-badge { background: var(--gold); color: var(--dark); padding: 3px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
+        
+        .canvas-container {
+            width: 100%;
+            background: var(--dark);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+        }
+        canvas { display: block; width: 100%; outline: none; }
+        
+        .sim-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--dark3);
+            border-radius: 8px;
+        }
+        .btn-sim {
+            background: var(--dark4);
+            border: 1px solid var(--accent);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-sim:hover { background: var(--accent); color: var(--dark); }
+        .btn-sim:disabled { opacity: 0.5; cursor: not-allowed; border-color: var(--muted); }
+        
+        .val-badge { background: var(--accent); color: var(--dark); padding: 2px 8px; border-radius: 4px; font-family: monospace; }
+
+        .q-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .q-num { color: var(--accent); font-weight: bold; margin-bottom: 10px; }
+        .q-text { font-size: 1.2rem; margin-bottom: 20px; }
+        .q-options { display: grid; gap: 12px; }
+        .q-option {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .q-option:hover { background: var(--dark4); border-color: var(--accent2); }
+        .q-option.selected { background: rgba(20,184,166,0.1); border-color: var(--accent); }
+        .q-option.correct { background: rgba(16,185,129,0.15); border-color: var(--green); color: var(--green); }
+        .q-option.wrong { background: rgba(239,68,68,0.15); border-color: var(--red); color: var(--red); }
+        
+        .q-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            background: var(--dark3);
+            font-size: 0.95rem;
+        }
+        .quiz-submit {
+            display: block; width: 100%; max-width: 300px;
+            margin: 30px auto; padding: 15px;
+            background: var(--accent); color: var(--dark);
+            border: none; border-radius: 8px;
+            font-size: 1.2rem; font-weight: bold; cursor: pointer;
+        }
+
+        .summary-card {
+            background: #fff; /* خلفية بيضاء للطباعة وللعرض لتكون واضحة */
+            color: #111;
+            border-radius: 12px;
+            padding: 40px;
+        }
+        .summary-header { text-align: center; border-bottom: 2px solid #ccc; padding-bottom: 20px; margin-bottom: 30px; }
+        .summary-meta { color: #555; font-size: 0.9rem; }
+        .summary-title { font-size: 2.2rem; color: #000; margin: 10px 0; }
+        .summary-subtitle { font-size: 1.1rem; color: #444; }
+        
+        .summary-section { margin-bottom: 30px; }
+        .summary-section-title { font-size: 1.4rem; color: #0056b3; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;}
+        
+        .s-def-item { margin-bottom: 15px; }
+        .s-def-term { font-weight: bold; color: #d97706; font-size: 1.1rem; }
+        .s-def-term::after { content: " : "; color: #333; }
+        .s-def-text { font-family: 'Amiri', serif; font-size: 1.2rem; line-height: 1.6; }
+        
+        .s-formula-item { text-align: center; margin: 20px 0; border: 1px dashed #ccc; padding: 15px; border-radius: 8px; background: #fafafa;}
+        
+        .summary-list li { margin-bottom: 10px; position: relative; padding-right: 25px; }
+        .summary-list li::before { content: "■"; position: absolute; right: 0; color: #0056b3; }
+        
+        .print-btn {
+            display: block; margin: 30px auto 0; padding: 12px 30px;
+            background: var(--dark2); color: white; border: none; border-radius: 8px;
+            font-size: 1.1rem; cursor: pointer;
+        }
+		.concept-map-wrap {
+          text-align: center;
+          margin-bottom: 30px;
+          width: 100%;
+          overflow-x: auto; /* السماح بالتمرير */
+          -webkit-overflow-scrolling: touch;
+        }
+        .concept-map {
+          min-width: 500px; /* إجبار الرسم على الاحتفاظ بحجم مقروء */
+          max-width: 100%;
+          height: auto;
+          display: block;
+          margin: 0 auto;
+        }
+
+
+        @media print {
+            body { background: #fff !important; }
+            .tabs-nav, .lesson-header, .print-btn { display: none !important; }
+            .tab-content:not(#tab-summary) { display: none !important; }
+            #tab-summary { display: block !important; }
+            .summary-card { padding: 0; box-shadow: none; border: none; }
+            @page { margin: 1.5cm; }
+        }
+        @media (max-width: 768px) {
+            .summary-card { padding: 15px; }
+            .sim-controls { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="../index.html#matter">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <header class="lesson-header">
+        <div class="breadcrumb">السنة الأولى متوسط › المادة وتحولاتها › بعض القياسات</div>
+        <span class="lesson-badge">الدرس 03</span>
+        <h1>قياس <em>الكتلة</em> (La Masse)</h1>
+        <p class="lesson-meta">منهاج الجيل الثاني | المقطع الأول | حصة نظرية وتجريبية</p>
+    </header>
+
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+        <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+        <button class="tab-btn" onclick="openTab('tab-quiz', this)">✏️ التمارين</button>
+        <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+    </nav>
+
+    <main id="tab-lesson" class="tab-content active">
+        <div class="objectives-box">
+            <h3>🎯 الأهداف التعلمية</h3>
+            <ul>
+                <li>معرفة مفهوم الكتلة والتمييز بينها وبين الحجم.</li>
+                <li>استخدام وحدات القياس المناسبة (أجزاء ومضاعفات الغرام).</li>
+                <li>استعمال أجهزة القياس (ميزان روبيرفال والميزان الإلكتروني) بشكل صحيح.</li>
+                <li>تطبيق طريقة الفروق لقياس كتلة جسم سائل.</li>
+            </ul>
+        </div>
+
+        <div class="sec-title"><span class="sec-icon">1</span><h2>مفهوم الكتلة</h2><hr class="sec-line"></div>
+        
+        <div class="def-box">
+            <strong>تعريف الكتلة <span class="fr-term">(La Masse)</span></strong>
+            <p>الكتلة هي مقدار فيزيائي يعبر عن <strong>كمية المادة</strong> الموجودة في الجسم. وهي مقدار محفوظ لا يتغير بتغير شكل الجسم أو حالته الفيزيائية.</p>
+        </div>
+
+        <div class="highlight-box tip">
+            📌 يرمز للكتلة بالرمز الرياضي <strong>$m$</strong> أُخِذَ من الحرف الأول للكلمة الفرنسية Masse.
+        </div>
+
+        <div class="sec-title"><span class="sec-icon">2</span><h2>وحدات قياس الكتلة</h2><hr class="sec-line"></div>
+        <p>الوحدة الدولية لقياس الكتلة هي <strong>الكيلوغرام (kg)</strong>، والوحدة الأكثر استعمالاً في المخابر المدرسية هي <strong>الغرام (g)</strong>. وللغرام أجزاء ومضاعفات نلخصها في الجدول التالي:</p>
+
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th colspan="3">المضاعفات</th>
+                    <th>الوحدة الأساسية</th>
+                    <th colspan="3">الأجزاء</th>
+                </tr>
+                <tr>
+                    <td>الكيلوغرام<br><em>kg</em></td>
+                    <td>الهكتوغرام<br><em>hg</em></td>
+                    <td>الديكاغرام<br><em>dag</em></td>
+                    <td style="background: var(--dark3);">الغرام<br><em>g</em></td>
+                    <td>الديسيغرام<br><em>dg</em></td>
+                    <td>السنتيغرام<br><em>cg</em></td>
+                    <td>الميليغرام<br><em>mg</em></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>10</td>
+                    <td>100</td>
+                    <td style="font-weight:bold;">1000</td>
+                    <td>10000</td>
+                    <td>100000</td>
+                    <td>1000000</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="sec-title"><span class="sec-icon">3</span><h2>أجهزة قياس الكتلة</h2><hr class="sec-line"></div>
+        <p>لقياس كتلة الأجسام نستعمل <strong>الميزان (La balance)</strong>. ويوجد منه أنواع عديدة تختلف حسب دقتها واستعمالاتها، من أشهرها:</p>
+
+        <!-- SVG Diagram: Types of Balances -->
+        <figure class="diagram-figure">
+            <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+                <!-- Roberval SVG -->
+                <svg viewBox="0 0 200 150" style="width:200px; height:150px; background:var(--dark2); border-radius:8px;">
+                    <rect x="70" y="120" width="60" height="15" fill="#475569"/>
+                    <rect x="95" y="40" width="10" height="80" fill="#64748b"/>
+                    <!-- Beam -->
+                    <line x1="30" y1="40" x2="170" y2="40" stroke="#94a3b8" stroke-width="6"/>
+                    <!-- Pans -->
+                    <line x1="40" y1="40" x2="40" y2="70" stroke="#cbd5e1" stroke-width="2"/>
+                    <path d="M 15,70 Q 40,90 65,70 Z" fill="var(--accent)"/>
+                    <line x1="160" y1="40" x2="160" y2="70" stroke="#cbd5e1" stroke-width="2"/>
+                    <path d="M 135,70 Q 160,90 185,70 Z" fill="var(--accent)"/>
+                    <!-- Pointer -->
+                    <line x1="100" y1="40" x2="100" y2="10" stroke="var(--gold)" stroke-width="3"/>
+                    <text x="100" y="145" text-anchor="middle" fill="white" font-size="12">ميزان روبيرفال</text>
+                </svg>
+                <!-- Digital Scale SVG -->
+                <svg viewBox="0 0 200 150" style="width:200px; height:150px; background:var(--dark2); border-radius:8px;">
+                    <rect x="30" y="60" width="140" height="40" rx="8" fill="#334155"/>
+                    <rect x="60" y="45" width="80" height="15" fill="#94a3b8"/>
+                    <rect x="70" y="70" width="60" height="20" fill="#020617"/>
+                    <text x="100" y="85" text-anchor="middle" fill="var(--accent)" font-family="monospace" font-size="14">120.5 g</text>
+                    <circle cx="150" cy="80" r="5" fill="var(--red)"/>
+                    <text x="100" y="145" text-anchor="middle" fill="white" font-size="12">ميزان إلكتروني</text>
+                </svg>
+            </div>
+            <figcaption class="fig-title">الشكل (1) — أنواع الموازين الأكثر استعمالاً في المخبر</figcaption>
+        </figure>
+
+        <div class="sec-title"><span class="sec-icon">4</span><h2>قياس كتلة جسم سائل</h2><hr class="sec-line"></div>
+        <p>بما أن السائل ليس له شكل خاص به، لا يمكننا وضعه مباشرة على كفة الميزان، بل يجب وضعه داخل إناء. ونتبع <strong>طريقة الفروق</strong> كالتالي:</p>
+        
+        <div style="display:flex; justify-content:space-around; align-items:center; background:var(--card); padding:20px; border-radius:8px; flex-wrap:wrap; gap:10px;">
+            <div style="text-align:center;">
+                <p>1. كتلة الإناء فارغاً ($m_1$)</p>
+            </div>
+            <div style="color:var(--muted); font-size:1.5rem;">+</div>
+            <div style="text-align:center;">
+                <p>2. كتلة الإناء + السائل ($m_2$)</p>
+            </div>
+            <div style="color:var(--muted); font-size:1.5rem;">=</div>
+            <div style="text-align:center; color:var(--accent);">
+                <p>3. استنتاج كتلة السائل ($m$)</p>
+            </div>
+        </div>
+
+        <div class="formula-box">
+            <div class="formula-title">علاقة حساب كتلة السائل (طريقة الفروق)</div>
+            <div class="formula-display">
+                $$ m = m_2 - m_1 $$
+            </div>
+        </div>
+        
+        <table class="symbol-table">
+            <thead>
+                <tr><th>الرمز</th><th>التسمية</th><th>الوحدة</th><th>الملاحظة</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="sym-cell">$m$</td>
+                    <td>كتلة السائل الصافية</td>
+                    <td class="unit-cell">g / kg</td>
+                    <td>وهي الكتلة المراد البحث عنها</td>
+                </tr>
+                <tr>
+                    <td class="sym-cell">$m_2$</td>
+                    <td>الكتلة الإجمالية</td>
+                    <td class="unit-cell">g / kg</td>
+                    <td>كتلة الإناء وبداخله السائل معاً</td>
+                </tr>
+                <tr>
+                    <td class="sym-cell">$m_1$</td>
+                    <td>كتلة الإناء الفارغ</td>
+                    <td class="unit-cell">g / kg</td>
+                    <td>يجب أن يكون الإناء جافاً</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box info">
+            💡 <strong>هل تعلم؟</strong> في الميزان الإلكتروني، يوجد زر خاص يسمى <strong>(TARE)</strong>. يقوم هذا الزر بإرجاع الشاشة إلى الصفر (0g) بعد وضع الإناء الفارغ، مما يسمح بقراءة كتلة السائل مباشرة عند سكبه، دون الحاجة للقيام بعملية الطرح!
+        </div>
+    </main>
+
+    <main id="tab-sim" class="tab-content">
+        <!-- المحاكاة الأولى: ميزان روبيرفال -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <span class="sim-badge">تفاعلي 1</span>
+                <h3 class="sim-title">محاكاة ميزان روبيرفال (جسم صلب)</h3>
+            </div>
+            <p style="color:var(--muted); margin-bottom:15px;">أضف الكتل العيارية (بالغرام) إلى الكفة اليمنى حتى يتحقق التوازن ويشير المؤشر للصفر.</p>
+            
+            <div class="canvas-container">
+                <canvas id="sim1Canvas"></canvas>
+            </div>
+            
+            <div class="sim-controls">
+                <button class="btn-sim" onclick="roberval.addWeight(100)">+ 100g</button>
+                <button class="btn-sim" onclick="roberval.addWeight(50)">+ 50g</button>
+                <button class="btn-sim" onclick="roberval.addWeight(20)">+ 20g</button>
+                <button class="btn-sim" onclick="roberval.addWeight(10)">+ 10g</button>
+                <button class="btn-sim" onclick="roberval.addWeight(5)">+ 5g</button>
+                <button class="btn-sim" onclick="roberval.reset()" style="background:var(--red); border-color:var(--red);">إفراغ الكفة</button>
+            </div>
+            <div id="rob-msg" style="text-align:center; margin-top:15px; font-weight:bold; font-size:1.2rem;"></div>
+        </div>
+
+        <!-- المحاكاة الثانية: الميزان الإلكتروني وزر TARE -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <span class="sim-badge">تفاعلي 2</span>
+                <h3 class="sim-title">قياس كتلة سائل (استخدام زر TARE)</h3>
+            </div>
+            
+            <div class="canvas-container">
+                <canvas id="sim2Canvas"></canvas>
+            </div>
+
+            <div class="sim-controls">
+                <button id="btn-s1" class="btn-sim" onclick="digiScale.placeBeaker()">1. ضع الإناء</button>
+                <button id="btn-s2" class="btn-sim" onclick="digiScale.pressTare()" disabled>2. اضغط TARE</button>
+                <button id="btn-s3" class="btn-sim" onclick="digiScale.pourLiquid()" disabled>3. اسكب السائل</button>
+                <button class="btn-sim" onclick="digiScale.reset()" style="background:transparent;">إعادة التجربة</button>
+            </div>
+            <div id="digi-msg" style="text-align:center; margin-top:15px; color:var(--gold);">الميزان قيد التشغيل... جاهز للعمل.</div>
+        </div>
+    </main>
+
+    <main id="tab-quiz" class="tab-content">
+        <div class="objectives-box">
+            <h3>اختبر معلوماتك</h3>
+            <p>أجب عن الأسئلة التالية لاختبار مدى استيعابك لمفاهيم قياس الكتلة.</p>
+        </div>
+        
+        <div id="quiz-wrapper"></div>
+        <button class="quiz-submit" onclick="submitQuiz()">تحقق من الإجابات</button>
+        <div id="quiz-final-score" style="text-align:center; font-size:1.5rem; font-weight:bold; color:var(--accent); margin-top:20px; display:none;"></div>
+    </main>
+
+    <main id="tab-summary" class="tab-content">
+        <div class="summary-card">
+            <div class="summary-header">
+                <div class="summary-meta">الجمهورية الجزائرية الديمقراطية الشعبية | وزارة التربية الوطنية</div>
+                <h2 class="summary-title">ملخص: قياس الكتلة</h2>
+                <div class="summary-subtitle">السنة الأولى متوسط — ميدان المادة وتحولاتها</div>
+            </div>
+
+            <!-- Concept Map SVG -->
+            <div class="concept-map-wrap">
+                <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                <svg viewBox="0 0 600 200" style="width:100%; height:auto;">
+                    <!-- Lines -->
+                    <line x1="300" y1="40" x2="150" y2="100" stroke="#0056b3" stroke-width="2"/>
+                    <line x1="300" y1="40" x2="300" y2="100" stroke="#0056b3" stroke-width="2"/>
+                    <line x1="300" y1="40" x2="450" y2="100" stroke="#0056b3" stroke-width="2"/>
+                    <!-- Nodes -->
+                    <rect x="230" y="10" width="140" height="40" rx="20" fill="#0056b3"/>
+                    <text x="300" y="35" text-anchor="middle" fill="#fff" font-size="16" font-weight="bold">الكتلة (m)</text>
+                    
+                    <rect x="80" y="100" width="140" height="40" rx="8" fill="#e2e8f0" stroke="#0056b3"/>
+                    <text x="150" y="125" text-anchor="middle" fill="#000" font-size="14">الوحدة: kg , g</text>
+                    
+                    <rect x="230" y="100" width="140" height="40" rx="8" fill="#e2e8f0" stroke="#0056b3"/>
+                    <text x="300" y="125" text-anchor="middle" fill="#000" font-size="14">الجهاز: الميزان</text>
+                    
+                    <rect x="380" y="100" width="140" height="40" rx="8" fill="#e2e8f0" stroke="#0056b3"/>
+                    <text x="450" y="125" text-anchor="middle" fill="#000" font-size="14">المفهوم: كمية المادة</text>
+                </svg>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+                <div class="s-def-item">
+                    <span class="s-def-term">الكتلة (La Masse)</span>
+                    <span class="s-def-text">هي مقدار فيزيائي يعبر عن كمية المادة الموجودة في الجسم، نرمز لها بالرمز <strong>$m$</strong> ووحدتها الدولية هي الكيلوغرام <strong>($kg$)</strong>.</span>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">⚡ القوانين والعلاقات الرياضية</h3>
+                <div class="s-formula-item">
+                    <div style="color:#666; margin-bottom:10px;">قياس كتلة سائل (طريقة الفروق)</div>
+                    <div style="font-size:1.5rem;">$m = m_2 - m_1$</div>
+                    <div style="font-size:0.9rem; color:#555; margin-top:10px;">حيث: $m$ (كتلة السائل)، $m_2$ (كتلة الإناء+السائل)، $m_1$ (كتلة الإناء فارغاً)</div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">📊 المقارنة: قياس كتلة الصلب والسائل</h3>
+                <table style="width:100%; border-collapse:collapse; margin-top:15px; border:1px solid #ccc;">
+                    <tr style="background:#f0f0f0;">
+                        <th style="padding:10px; border:1px solid #ccc;">الحالة الفيزيائية</th>
+                        <th style="padding:10px; border:1px solid #ccc;">الأداة المستعملة</th>
+                        <th style="padding:10px; border:1px solid #ccc;">طريقة القياس</th>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px; border:1px solid #ccc; text-align:center;"><strong>جسم صلب</strong></td>
+                        <td style="padding:10px; border:1px solid #ccc; text-align:center;">الميزان مباشرة</td>
+                        <td style="padding:10px; border:1px solid #ccc;">يوضع مباشرة على كفة الميزان وتقرأ القيمة.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px; border:1px solid #ccc; text-align:center;"><strong>جسم سائل</strong></td>
+                        <td style="padding:10px; border:1px solid #ccc; text-align:center;">الميزان + إناء</td>
+                        <td style="padding:10px; border:1px solid #ccc;">باستعمال طريقة الفروق، أو زر (TARE) في الميزان الإلكتروني.</td>
+                    </tr>
+                </table>
+            </div>
+
+            <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+        </div>
+    </main>
+</div>
+
+<script>
+    // --- 1. Tab Management System (Strictly as requested) ---
+    function openTab(tabId, btnElement) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        if (btnElement) btnElement.classList.add('active');
+
+        // Mandatory canvas resize fix
+        if (tabId === 'tab-sim') {
+            setTimeout(() => {
+                if (typeof resizeCanvas === 'function') resizeCanvas();
+                if (typeof updateSims === 'function') updateSims();
+            }, 50);
+        }
+    }
+
+    // Ensure rendering on load if sim tab is active
+    window.addEventListener('DOMContentLoaded', () => {
+        if(document.getElementById('tab-sim').classList.contains('active')) {
+            setTimeout(() => {
+                if (typeof resizeCanvas === 'function') resizeCanvas();
+                if (typeof updateSims === 'function') updateSims();
+            }, 50);
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if(document.getElementById('tab-sim').classList.contains('active')) {
+            resizeCanvas();
+            updateSims();
+        }
+    });
+
+    // --- 2. Canvas & Simulations Logic ---
+    const canvas1 = document.getElementById('sim1Canvas');
+    const ctx1 = canvas1.getContext('2d');
+    const canvas2 = document.getElementById('sim2Canvas');
+    const ctx2 = canvas2.getContext('2d');
+
+    function resizeCanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        
+        [canvas1, canvas2].forEach(c => {
+            const wrap = c.parentElement;
+            if (wrap.clientWidth > 0) {
+                const rect = wrap.getBoundingClientRect();
+                c.width = rect.width * dpr;
+                c.height = 300 * dpr;
+                c.style.width = `${rect.width}px`;
+                c.style.height = `300px`;
+                const ctx = c.getContext('2d');
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+        });
+    }
+
+    function updateSims() {
+        roberval.draw();
+        digiScale.draw();
+    }
+
+    // --- Simulation 1: Roberval Balance ---
+    const roberval = {
+        targetMass: 185, // الجسم المجهول كتلته 185
+        currentMass: 0,
+        weights: [],
+        
+        addWeight(w) {
+            this.currentMass += w;
+            this.weights.push(w);
+            this.draw();
+            this.checkBalance();
+        },
+        reset() {
+            this.currentMass = 0;
+            this.weights = [];
+            this.draw();
+            this.checkBalance();
+        },
+        checkBalance() {
+            const msg = document.getElementById('rob-msg');
+            if (this.currentMass === this.targetMass) {
+                msg.textContent = `✅ ممتاز! الميزان في حالة توازن. كتلة الجسم m = ${this.targetMass}g`;
+                msg.style.color = 'var(--green)';
+            } else if (this.currentMass > this.targetMass) {
+                msg.textContent = `⚠️ الكفة اليمنى أثقل (${this.currentMass}g). قم بإفراغ الكفة والمحاولة مجدداً.`;
+                msg.style.color = 'var(--red)';
+            } else {
+                msg.textContent = `مجموع الكتل: ${this.currentMass}g. الكفة اليسرى لا تزال أثقل.`;
+                msg.style.color = 'var(--accent)';
+            }
+        },
+        draw() {
+            if(canvas1.width === 0) return;
+            const w = canvas1.clientWidth;
+            const h = canvas1.clientHeight;
+            ctx1.clearRect(0, 0, w, h);
+
+            const cx = w / 2;
+            const cy = h / 2 + 50;
+
+            // حساب زاوية الميل (بين -15 و 15 درجة)
+            let diff = this.targetMass - this.currentMass;
+            let maxDiff = this.targetMass;
+            let angle = (diff / maxDiff) * (-15); // الكفة اليسرى أثقل = زاوية سالبة
+            if(angle > 15) angle = 15;
+            if(angle < -15) angle = -15;
+            let rad = angle * Math.PI / 180;
+
+            // رسم القاعدة
+            ctx1.fillStyle = '#334155';
+            ctx1.fillRect(cx - 40, cy + 50, 80, 20);
+            ctx1.fillStyle = '#475569';
+            ctx1.fillRect(cx - 10, cy - 80, 20, 130);
+            
+            // رسم القوس التدريجي للمؤشر
+            ctx1.beginPath();
+            ctx1.arc(cx, cy - 60, 40, Math.PI, 0);
+            ctx1.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx1.lineWidth = 2;
+            ctx1.stroke();
+            
+            // علامة الصفر
+            ctx1.fillStyle = '#10b981';
+            ctx1.fillRect(cx - 2, cy - 105, 4, 10);
+
+            // تدوير السياق لرسم العارضة والكفتين
+            ctx1.save();
+            ctx1.translate(cx, cy - 60);
+            ctx1.rotate(rad);
+
+            // المؤشر
+            ctx1.beginPath();
+            ctx1.moveTo(0, 0);
+            ctx1.lineTo(0, -40);
+            ctx1.strokeStyle = '#f59e0b';
+            ctx1.lineWidth = 4;
+            ctx1.stroke();
+
+            // العارضة الأفقية
+            ctx1.beginPath();
+            ctx1.moveTo(-150, 0);
+            ctx1.lineTo(150, 0);
+            ctx1.strokeStyle = '#94a3b8';
+            ctx1.lineWidth = 8;
+            ctx1.stroke();
+
+            // محور الارتكاز
+            ctx1.beginPath();
+            ctx1.arc(0, 0, 8, 0, Math.PI*2);
+            ctx1.fillStyle = '#f8fafc';
+            ctx1.fill();
+
+            // الكفة اليسرى (الجسم)
+            this.drawPan(-150, 0);
+            // رسم الجسم المجهول
+            ctx1.fillStyle = '#ef4444';
+            ctx1.fillRect(-170, 70, 40, 30);
+            ctx1.fillStyle = 'white';
+            ctx1.font = '14px Cairo';
+            ctx1.fillText('?', -155, 90);
+
+            // الكفة اليمنى (الكتل)
+            this.drawPan(150, 0);
+            // رسم الكتل العيارية
+            let kw = 0;
+            for(let i=0; i<this.weights.length; i++){
+                ctx1.fillStyle = '#f59e0b';
+                ctx1.fillRect(130 + (i%4)*10, 90 - Math.floor(i/4)*15, 8, 10);
+            }
+
+            ctx1.restore();
+        },
+        drawPan(px, py) {
+            ctx1.beginPath();
+            ctx1.moveTo(px, py);
+            ctx1.lineTo(px, py + 70); // vertical rod
+            ctx1.strokeStyle = '#cbd5e1';
+            ctx1.lineWidth = 3;
+            ctx1.stroke();
+            
+            ctx1.beginPath();
+            ctx1.moveTo(px - 40, py + 100);
+            ctx1.quadraticCurveTo(px, py + 120, px + 40, py + 100);
+            ctx1.fillStyle = '#14b8a6';
+            ctx1.fill();
+        }
+    };
+
+    // --- Simulation 2: Digital Scale (TARE) ---
+    const digiScale = {
+        state: 0, // 0: empty, 1: beaker, 2: tare, 3: liquid
+        beakerMass: 42.5,
+        liquidMass: 65.0,
+        displayedMass: 0.0,
+        liquidLevel: 0, // 0 to 1
+
+        placeBeaker() {
+            this.state = 1;
+            this.displayedMass = this.beakerMass;
+            document.getElementById('btn-s1').disabled = true;
+            document.getElementById('btn-s2').disabled = false;
+            document.getElementById('digi-msg').textContent = `تم وضع الإناء. الميزان يقرأ m1 = ${this.beakerMass}g`;
+            this.draw();
+        },
+        pressTare() {
+            this.state = 2;
+            this.displayedMass = 0.0;
+            document.getElementById('btn-s2').disabled = true;
+            document.getElementById('btn-s3').disabled = false;
+            document.getElementById('digi-msg').textContent = `تم الضغط على TARE. الميزان عاد للصفر (0g). تم حذف كتلة الإناء.`;
+            this.draw();
+        },
+        pourLiquid() {
+            this.state = 3;
+            document.getElementById('btn-s3').disabled = true;
+            // أنيميشن سكب السائل
+            let step = 0;
+            let interval = setInterval(() => {
+                step += 0.05;
+                this.liquidLevel = step;
+                this.displayedMass = this.liquidMass * step;
+                this.draw();
+                if(step >= 1) {
+                    clearInterval(interval);
+                    this.liquidLevel = 1;
+                    this.displayedMass = this.liquidMass;
+                    document.getElementById('digi-msg').innerHTML = `تم إضافة السائل. الميزان يقرأ كتلة السائل <strong>m = ${this.liquidMass}g</strong> مباشرة.`;
+                    this.draw();
+                }
+            }, 50);
+        },
+        reset() {
+            this.state = 0;
+            this.displayedMass = 0.0;
+            this.liquidLevel = 0;
+            document.getElementById('btn-s1').disabled = false;
+            document.getElementById('btn-s2').disabled = true;
+            document.getElementById('btn-s3').disabled = true;
+            document.getElementById('digi-msg').textContent = "الميزان قيد التشغيل... جاهز للعمل.";
+            this.draw();
+        },
+        draw() {
+            if(canvas2.width === 0) return;
+            const w = canvas2.clientWidth;
+            const h = canvas2.clientHeight;
+            ctx2.clearRect(0, 0, w, h);
+
+            const cx = w / 2;
+            const cy = h / 2 + 50;
+
+            // Base of scale
+            ctx2.fillStyle = '#334155';
+            ctx2.beginPath(); ctx2.roundRect(cx - 80, cy, 160, 40, 10); ctx2.fill();
+            
+            // Screen
+            ctx2.fillStyle = '#020617';
+            ctx2.fillRect(cx - 40, cy + 10, 80, 20);
+            
+            // Text on screen
+            ctx2.fillStyle = '#14b8a6';
+            ctx2.font = '16px monospace';
+            ctx2.textAlign = 'center';
+            ctx2.fillText(this.displayedMass.toFixed(1) + ' g', cx, cy + 25);
+
+            // TARE button
+            ctx2.fillStyle = '#ef4444';
+            ctx2.beginPath(); ctx2.arc(cx + 60, cy + 20, 6, 0, Math.PI*2); ctx2.fill();
+            ctx2.fillStyle = 'white'; ctx2.font = '10px Cairo'; ctx2.fillText('TARE', cx + 60, cy + 10);
+
+            // Plate
+            ctx2.fillStyle = '#94a3b8';
+            ctx2.fillRect(cx - 60, cy - 10, 120, 10);
+
+            // Draw Beaker and Liquid
+            if(this.state >= 1) {
+                // Beaker back
+                ctx2.strokeStyle = 'rgba(255,255,255,0.4)';
+                ctx2.lineWidth = 4;
+                ctx2.beginPath();
+                ctx2.moveTo(cx - 30, cy - 90);
+                ctx2.lineTo(cx - 30, cy - 10);
+                ctx2.lineTo(cx + 30, cy - 10);
+                ctx2.lineTo(cx + 30, cy - 90);
+                ctx2.stroke();
+
+                // Liquid
+                if(this.liquidLevel > 0) {
+                    let liqHeight = 70 * this.liquidLevel;
+                    ctx2.fillStyle = 'rgba(20, 184, 166, 0.7)';
+                    ctx2.fillRect(cx - 28, cy - 10 - liqHeight, 56, liqHeight);
+                }
+            }
+        }
+    };
+
+    // --- 3. Quiz System ---
+    const quizData = [
+        { q: "ما هو الرمز الرياضي الذي نرمز به للكتلة؟", options: ["$V$", "$m$", "$P$", "$L$"], ans: 1, fb: "صحيح. نرمز للكتلة بالرمز $m$ نسبة إلى Masse." },
+        { q: "الوحدة الدولية لقياس الكتلة هي:", options: ["الغرام (g)", "اللتر (L)", "الكيلوغرام (kg)", "المتر (m)"], ans: 2, fb: "الوحدة الدولية هي الكيلوغرام، بينما الغرام هو جزء منها." },
+        { q: "لقياس كتلة كمية من الماء، نستخدم:", options: ["الميزان الإلكتروني وطريقة الفروق", "المخبار المدرج فقط", "الشريط المتري", "المحرار"], ans: 0, fb: "السائل يحتاج لإناء، لذلك نستعمل الميزان مع طريقة الفروق." },
+        { q: "زر (TARE) في الميزان الإلكتروني وظيفته:", options: ["إطفاء الميزان", "تغيير وحدة القياس", "إرجاع القراءة للصفر لحذف كتلة الإناء", "إضاءة الشاشة"], ans: 2, fb: "ممتاز! زر TARE يحذف كتلة الإناء ليقيس محتواه مباشرة." },
+        { q: "جسم كتلته $1.5 kg$ ، ما هي كتلته بالغرام؟", options: ["$15 g$", "$150 g$", "$1500 g$", "$15000 g$"], ans: 2, fb: "صحيح، للتحويل من kg إلى g نضرب في 1000." },
+        { q: "في طريقة الفروق: كتلة الإناء فارغاً ($m_1=50g$)، وكتلته به سائل ($m_2=120g$). كتلة السائل هي:", options: ["$170 g$", "$70 g$", "$50 g$", "$120 g$"], ans: 1, fb: "نطبق العلاقة: $m = m_2 - m_1 = 120 - 50 = 70g$." }
+    ];
+
+    let userAns = new Array(quizData.length).fill(null);
+
+    function buildQuiz() {
+        const wrap = document.getElementById('quiz-wrapper');
+        quizData.forEach((item, i) => {
+            let card = document.createElement('div');
+            card.className = 'q-card';
+            card.innerHTML = `<div class="q-num">السؤال ${i+1}</div><div class="q-text">${item.q}</div>`;
+            
+            let opts = document.createElement('div');
+            opts.className = 'q-options';
+            item.options.forEach((opt, j) => {
+                let btn = document.createElement('div');
+                btn.className = 'q-option';
+                btn.innerHTML = `<div style="width:20px;height:20px;border-radius:50%;border:2px solid var(--muted);display:flex;align-items:center;justify-content:center;"></div> ${opt}`;
+                btn.onclick = () => selectAns(i, j, btn, opts);
+                opts.appendChild(btn);
+            });
+            card.appendChild(opts);
+
+            let fb = document.createElement('div');
+            fb.className = 'q-feedback';
+            fb.id = `fb-${i}`;
+            card.appendChild(fb);
+            wrap.appendChild(card);
+        });
+        
+        // Re-render mathjax for dynamically created elements
+        if(window.MathJax) MathJax.typesetPromise();
+    }
+
+    function selectAns(qIdx, optIdx, btn, container) {
+        userAns[qIdx] = optIdx;
+        Array.from(container.children).forEach(c => {
+            c.classList.remove('selected');
+            c.querySelector('div').style.background = 'transparent';
+            c.querySelector('div').style.borderColor = 'var(--muted)';
+        });
+        btn.classList.add('selected');
+        btn.querySelector('div').style.background = 'var(--accent)';
+        btn.querySelector('div').style.borderColor = 'var(--accent)';
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        let incomplete = false;
+        
+        quizData.forEach((item, i) => {
+            const fb = document.getElementById(`fb-${i}`);
+            const opts = document.querySelectorAll('.q-card')[i].querySelectorAll('.q-option');
+            
+            if (userAns[i] === null) { incomplete = true; return; }
+
+            opts.forEach(opt => opt.style.pointerEvents = 'none'); // disable changes
+
+            if (userAns[i] === item.ans) {
+                score++;
+                opts[item.ans].classList.add('correct');
+                fb.innerHTML = `✅ ${item.fb}`;
+                fb.style.color = 'var(--green)';
+            } else {
+                opts[userAns[i]].classList.add('wrong');
+                opts[item.ans].classList.add('correct');
+                fb.innerHTML = `❌ إجابة خاطئة. الصحيح هو: ${item.options[item.ans]}. <br>${item.fb}`;
+                fb.style.color = 'var(--red)';
+            }
+            fb.style.display = 'block';
+        });
+
+        if (incomplete) {
+            alert('الرجاء الإجابة على جميع الأسئلة أولاً.');
+            return;
+        }
+
+        const scoreDiv = document.getElementById('quiz-final-score');
+        scoreDiv.style.display = 'block';
+        scoreDiv.innerHTML = `نتيجتك: ${score} من ${quizData.length}`;
+        document.querySelector('.quiz-submit').style.display = 'none';
+        if(window.MathJax) MathJax.typesetPromise();
+    }
+
+    // Initialize logic
+    buildQuiz();
+    // Simulate initial click on active tab to draw if page loaded directly on sim
+    if(document.getElementById('tab-sim').classList.contains('active')) {
+        setTimeout(resizeCanvas, 100);
+    }
+</script>
+<script src="credit.js"></script>
+</body>
+</html>

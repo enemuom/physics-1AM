@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درجة الحرارة - الفيزياء السهلة</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <script>
+        MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #14b8a6; /* Teal - المادة وتحولاتها */
+            --accent2:#2dd4bf;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.7;
+            padding-bottom: 50px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .amiri { font-family: 'Amiri', serif; }
+        .app-container { max-width: 1000px; margin: 0 auto; padding: 20px; width: 100%; flex: 1; }
+
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .lesson-header {
+            background: var(--dark2);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lesson-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+        }
+
+        .lesson-badge {
+            display: inline-block;
+            background: rgba(20, 184, 166, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .lesson-header h1 { font-size: 2.2rem; margin-bottom: 10px; color: #fff;}
+        .lesson-header h1 em { color: var(--accent); font-style: normal; }
+        .lesson-meta { color: var(--muted); font-size: 0.9rem; }
+
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .objectives-box {
+            background: var(--card);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .objectives-box h3 { color: var(--accent); margin-bottom: 10px; font-size: 1.2rem;}
+        .objectives-box ul { padding-right: 20px; list-style: none; }
+        .objectives-box li { margin-bottom: 8px; position: relative; }
+        .objectives-box li::before { content: '•'; position: absolute; right: -15px; color: var(--accent); font-size: 1.5rem; line-height: 1; }
+
+        .sec-title { display: flex; align-items: center; gap: 10px; margin: 40px 0 20px; }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); background: var(--dark3); width: 40px; height: 40px; display:flex; align-items:center; justify-content:center; border-radius: 8px;}
+        .sec-title h2 { color: #fff; font-size: 1.4rem;}
+        .sec-line { flex-grow: 1; height: 1px; background: var(--border); border: none; }
+
+        .def-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .highlight-box {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-right: 4px solid;
+            background: rgba(255,255,255,0.03);
+            display: flex; gap: 15px; align-items: flex-start;
+        }
+        .highlight-box.tip { border-color: var(--gold); color: #fef08a; background: rgba(245, 158, 11, 0.1);}
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--dark2);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: right;
+        }
+        .info-table th, .info-table td { padding: 15px; border: 1px solid var(--border); }
+        .info-table th { background: var(--dark3); color: var(--accent2); font-weight: bold;}
+        .info-table tr:nth-child(even) td { background: var(--dark3); }
+
+        .formula-box {
+            background: rgba(20, 184, 166, 0.05);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .formula-title {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .formula-display { margin-bottom: 20px; display: flex; justify-content: center;}
+        
+        .symbol-table { width: 100%; margin-top: 15px; border-collapse: collapse; font-size: 0.95rem; }
+        .symbol-table th { background: var(--dark3); color: var(--muted); padding: 10px; border-bottom: 1px solid var(--border); }
+        .symbol-table td { padding: 10px; border-bottom: 1px solid var(--border); text-align: center; }
+
+        .diagram-figure {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .diagram-wrap { max-width: 100%; overflow: hidden; display: flex; justify-content: center; }
+        .lesson-diagram { width: 100%; max-width: 500px; height: auto; }
+        .fig-title { margin-top: 15px; color: var(--accent2); font-size: 1rem; font-weight: 600;}
+
+        .sim-wrap {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+            flex-wrap: wrap; gap: 10px;
+        }
+        .sim-title { font-size: 1.3rem; color: #fff; }
+        .sim-badge { background: rgba(245, 158, 11, 0.2); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; }
+        .sim-description {
+            background: var(--dark3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--text);
+            border-right: 3px solid var(--accent);
+        }
+        .canvas-container {
+            width: 100%;
+            height: 350px;
+            background: var(--dark);
+            border-radius: 8px;
+            border: 1px solid var(--dark4);
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+        
+        .sim-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            background: var(--dark3);
+            padding: 15px;
+            border-radius: 8px;
+            justify-content: center;
+        }
+        .control-group { flex: 1; min-width: 250px; text-align: center; }
+        .control-group label { display: block; margin-bottom: 12px; font-size: 1rem; color: #fff;}
+        .val-badge { color: var(--gold); font-weight: bold; font-family: 'Cairo', sans-serif; font-size: 1.2rem; }
+        input[type="range"] { width: 100%; max-width: 300px; accent-color: var(--accent); height: 6px; border-radius: 3px; outline: none; }
+        
+        .btn-group-toggle { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;}
+        .toggle-btn {
+            background: var(--dark4); color: var(--text); border: 1px solid var(--border);
+            padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-family: inherit; transition: 0.3s;
+        }
+        .toggle-btn:hover { background: var(--dark3); border-color: var(--accent2); }
+        .toggle-btn.active { background: var(--accent); color: var(--dark2); border-color: var(--accent); font-weight: bold;}
+
+        .q-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 25px; margin-bottom: 20px; }
+        .q-num { display: inline-block; background: var(--accent); color: var(--dark2); font-weight: bold; padding: 4px 15px; border-radius: 20px; font-size: 0.9rem; margin-bottom: 15px; }
+        .q-text { font-size: 1.2rem; margin-bottom: 20px; font-weight: 600;}
+        .q-options { display: grid; gap: 10px; }
+        .q-option {
+            background: var(--dark3); border: 1px solid var(--border); padding: 15px; border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 1rem;
+        }
+        .q-option:hover { border-color: var(--accent); background: var(--dark4); }
+        .q-option.selected { background: rgba(20, 184, 166, 0.1); border-color: var(--accent); }
+        .q-option.correct { background: rgba(16, 185, 129, 0.1); border-color: var(--green); color: var(--green); }
+        .q-option.wrong { background: rgba(239, 68, 68, 0.1); border-color: var(--red); color: var(--red); }
+        .q-feedback { margin-top: 15px; padding: 15px; border-radius: 8px; font-size: 1rem; display: none; background: rgba(255,255,255,0.02); }
+        .q-feedback.show { display: block; animation: fadeIn 0.3s ease;}
+        .action-btn { background: var(--accent); color: var(--dark2); border: none; padding: 12px 30px; border-radius: 8px; font-family: inherit; font-weight: 800; cursor: pointer; transition: background 0.3s; font-size: 1.1rem;}
+        .action-btn:hover { background: var(--accent2); }
+        
+        .summary-card { background: var(--dark2); border-radius: 12px; padding: 40px; margin-top: 20px;}
+        .summary-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--accent); padding-bottom: 20px; }
+        .summary-meta { color: var(--muted); font-size: 1rem; }
+        .summary-title { color: #fff; font-size: 2.2rem; margin: 10px 0; }
+        .summary-subtitle { color: var(--gold); font-size: 1.1rem;}
+        .summary-section { margin-bottom: 40px; }
+        .summary-section-title { color: var(--accent2); border-bottom: 1px dashed var(--border); padding-bottom: 10px; margin: 30px 0 20px; font-size: 1.4rem; display:flex; gap:10px; align-items:center;}
+        .s-def-item { margin-bottom: 15px; font-size: 1.1rem;}
+        .s-def-term { font-weight: bold; color: var(--gold); margin-left: 10px; font-size: 1.15rem; }
+        .summary-list { list-style: none; padding-right: 15px; }
+        .summary-list li { position: relative; padding-right: 20px; margin-bottom: 12px; font-size: 1.1rem;}
+        .summary-list li::before { content: '▪'; position: absolute; right: 0; color: var(--accent); font-size: 1.5rem; top: -5px; }
+        .concept-map-wrap { background: var(--dark3); border-radius: 8px; padding: 20px; overflow-x: auto; text-align: center; border: 1px solid var(--border); }
+        .print-btn { background: var(--dark3); border: 1px solid var(--accent); color: var(--accent); padding: 15px 30px; border-radius: 8px; cursor: pointer; margin: 40px auto 0; font-size: 1.2rem; transition: 0.3s; display: block; font-family: var(--font-main); font-weight:bold;}
+        .print-btn:hover { background: var(--accent); color: var(--dark2); }
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar, .print-btn, .lesson-header { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #000 !important; font-size: 12pt; }
+            .summary-card { box-shadow: none; border: 1px solid #ccc; padding: 20px; background: #fff;}
+            .summary-title { color: #000 !important; }
+            .summary-header, .summary-section-title { border-color: #000; color: #000 !important; }
+            .s-def-term, .sym-cell, .unit-cell { color: #000 !important; }
+            svg { max-width: 100%; height: auto; }
+            svg text { fill: #000 !important; }
+            canvas { display: none; }
+            .info-table th { background: #eee !important; color: #000 !important; border: 1px solid #000; }
+            .info-table td, .concept-map-wrap { background: #fff !important; border: 1px solid #ccc !important; color: #000; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- شريط التنقل العلوي الثابت -->
+        <div class="top-nav-bar">
+            <a href="../index.html#matter">← العودة إلى فهرس الميدان</a>
+        </div>
+
+        <div class="lesson-header">
+            <div class="lesson-meta" style="margin-bottom: 10px;">السنة الأولى متوسط › المقطع 2 › الدرس 04</div>
+            <span class="lesson-badge">الدرس 04</span>
+            <h1><em>درجة الحرارة</em></h1>
+            <p class="lesson-meta">المادة وتحولاتها | حصة واحدة</p>
+        </div>
+
+        <nav class="tabs-nav">
+            <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+            <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+            <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+            <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+        </nav>
+
+        <div id="tab-lesson" class="tab-content active">
+            <div class="objectives-box">
+                <h3>🎯 الأهداف التعلمية</h3>
+                <ul>
+                    <li>أن يتعرف التلميذ على مفهوم درجة الحرارة كحالة فيزيائية (سخونة / برودة).</li>
+                    <li>أن يكتشف المحرار بأنواعه كأداة لقياس درجة الحرارة.</li>
+                    <li>أن يعرف الوحدة المستعملة (الدرجة المئوية).</li>
+                    <li>أن يتدرب على قراءة درجة الحرارة من المحرار السائلي بطريقة صحيحة (دون أخطاء اختلاف المنظر) وحساب قيمة التدريجة.</li>
+                </ul>
+            </div>
+
+            <!-- Concept 1: Definition -->
+            <div class="sec-title">
+                <span class="sec-icon">🌡️</span>
+                <h2>1. مفهوم درجة الحرارة</h2>
+                <hr class="sec-line">
+            </div>
+            
+            <div class="def-box">
+                <strong>درجة الحرارة (Température):</strong> هي مقدار فيزيائي قابل للقياس، يعبر عن حالة الجسم من حيث <strong>السخونة</strong> أو <strong>البرودة</strong>.
+                <br><br>
+                <ul style="list-style-type: disc; padding-right: 20px;">
+                    <li>نرمز لدرجة الحرارة بالرمز اللاتيني <span class="amiri" style="color:var(--accent2); font-size:1.2rem;">T</span> (من Température) أو الحرف اليوناني <span class="amiri" style="color:var(--accent2); font-size:1.2rem;">$\theta$</span> (ثيتا).</li>
+                    <li>الوحدة الدولية والمستعملة يومياً هي: <strong>الدرجة المئوية (السيليزية)</strong> ونرمز لها بـ <span class="amiri" style="color:var(--gold); font-size:1.2rem;">°C</span>.</li>
+                </ul>
+            </div>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (1) — تمثيل الحرارة كسخونة وبرودة</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <linearGradient id="coldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#3b82f6" />
+                                <stop offset="100%" stop-color="#1d4ed8" />
+                            </linearGradient>
+                            <linearGradient id="hotGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#ef4444" />
+                                <stop offset="100%" stop-color="#b91c1c" />
+                            </linearGradient>
+                            <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+                                <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3" />
+                            </filter>
+                        </defs>
+                        
+                        <!-- Cold Object -->
+                        <g transform="translate(100, 75)">
+                            <circle cx="0" cy="0" r="40" fill="url(#coldGrad)" filter="url(#dropShadow)" />
+                            <!-- Ice crystals simple -->
+                            <path d="M0,-20 L0,20 M-20,0 L20,0 M-14,-14 L14,14 M-14,14 L14,-14" stroke="#fff" stroke-width="2" opacity="0.6"/>
+                            <text x="0" y="65" font-family="Cairo" font-size="14" fill="#60a5fa" text-anchor="middle" dominant-baseline="middle">جسم بارد (T منخفضة)</text>
+                        </g>
+                        
+                        <!-- Thermometer scale representation -->
+                        <line x1="160" y1="75" x2="240" y2="75" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4,4"/>
+                        <polygon points="230,70 245,75 230,80" fill="var(--muted)"/>
+                        
+                        <!-- Hot Object -->
+                        <g transform="translate(300, 75)">
+                            <circle cx="0" cy="0" r="40" fill="url(#hotGrad)" filter="url(#dropShadow)" />
+                            <!-- Heat waves -->
+                            <path d="M-10,-10 Q-5,-20 0,-10 T10,-10 M-10,10 Q-5,0 0,10 T10,10" fill="none" stroke="#fca5a5" stroke-width="2" opacity="0.8"/>
+                            <text x="0" y="65" font-family="Cairo" font-size="14" fill="#fca5a5" text-anchor="middle" dominant-baseline="middle">جسم ساخن (T مرتفعة)</text>
+                        </g>
+                    </svg>
+                </div>
+            </figure>
+
+
+            <!-- Concept 2: Tools -->
+            <div class="sec-title">
+                <span class="sec-icon">🔬</span>
+                <h2>2. أداة القياس (المحرار)</h2>
+                <hr class="sec-line">
+            </div>
+            <p>لقياس درجة الحرارة بدقة لا نعتمد على حاسة اللمس، بل نستخدم جهازاً يسمى <strong>المحرار (Thermomètre)</strong>.</p>
+            
+            <div style="overflow-x: auto;">
+                <table class="info-table">
+                    <tr>
+                        <th>المحرار الطبي (Médical)</th>
+                        <th>المحرار السائلي المخبري</th>
+                        <th>المحرار الرقمي (Numérique)</th>
+                    </tr>
+                    <tr>
+                        <td>قياس درجة حرارة جسم الإنسان (مدرج من 35°C إلى 42°C).</td>
+                        <td>يستعمل في المخابر، يحتوي على سائل يتمدد بالحرارة (كحول ملون أو زئبق).</td>
+                        <td>يعطي القراءة مباشرة بالأرقام على شاشة، وهو دقيق جداً وسهل.</td>
+                    </tr>
+                </table>
+            </div>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (2) — أجزاء المحرار السائلي الأساسية</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <linearGradient id="glassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="rgba(255,255,255,0.4)" />
+                                <stop offset="20%" stop-color="rgba(255,255,255,0.1)" />
+                                <stop offset="80%" stop-color="rgba(255,255,255,0.1)" />
+                                <stop offset="100%" stop-color="rgba(255,255,255,0.3)" />
+                            </linearGradient>
+                            <linearGradient id="redLiq" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#ef4444" />
+                                <stop offset="50%" stop-color="#dc2626" />
+                                <stop offset="100%" stop-color="#991b1b" />
+                            </linearGradient>
+                            <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--accent)"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Thermometer Glass -->
+                        <rect x="100" y="65" width="300" height="20" rx="10" fill="rgba(255,255,255,0.05)" stroke="url(#glassGrad)" stroke-width="2"/>
+                        <circle cx="90" cy="75" r="18" fill="rgba(255,255,255,0.05)" stroke="url(#glassGrad)" stroke-width="2"/>
+                        
+                        <!-- Liquid (Reservoir + Tube) -->
+                        <circle cx="90" cy="75" r="12" fill="url(#redLiq)"/>
+                        <rect x="100" y="71" width="150" height="8" fill="url(#redLiq)"/>
+                        
+                        <!-- Scale -->
+                        <g stroke="#fff" stroke-width="1.5">
+                            <!-- 0 -->
+                            <line x1="150" y1="65" x2="150" y2="55" /> <text x="150" y="45" font-family="Amiri" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="middle">0</text>
+                            <!-- 10 -->
+                            <line x1="200" y1="65" x2="200" y2="55" /> <text x="200" y="45" font-family="Amiri" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="middle">10</text>
+                            <!-- 20 -->
+                            <line x1="250" y1="65" x2="250" y2="55" /> <text x="250" y="45" font-family="Amiri" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="middle">20</text>
+                            <!-- 30 -->
+                            <line x1="300" y1="65" x2="300" y2="55" /> <text x="300" y="45" font-family="Amiri" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="middle">30</text>
+                        </g>
+                        <!-- Small ticks between 0 and 10 -->
+                        <g stroke="rgba(255,255,255,0.5)" stroke-width="1">
+                            <line x1="160" y1="65" x2="160" y2="60" />
+                            <line x1="170" y1="65" x2="170" y2="60" />
+                            <line x1="180" y1="65" x2="180" y2="60" />
+                            <line x1="190" y1="65" x2="190" y2="60" />
+                        </g>
+                        
+                        <!-- Labels with leader lines -->
+                        <text x="50" y="125" font-family="Cairo" font-size="12" fill="var(--accent)" text-anchor="middle" dominant-baseline="middle">خزان (Réservoir)</text>
+                        <line x1="50" y1="110" x2="80" y2="90" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrowhead2)"/>
+                        
+                        <text x="175" y="125" font-family="Cairo" font-size="12" fill="var(--accent)" text-anchor="middle" dominant-baseline="middle">سائل محراري</text>
+                        <line x1="175" y1="110" x2="175" y2="85" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrowhead2)"/>
+                        
+                        <text x="350" y="125" font-family="Cairo" font-size="12" fill="var(--accent)" text-anchor="middle" dominant-baseline="middle">ساق زجاجية مدرجة</text>
+                        <line x1="350" y1="110" x2="350" y2="90" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrowhead2)"/>
+                    </svg>
+                </div>
+            </figure>
+
+            <!-- Concept 3: How to read -->
+            <div class="sec-title">
+                <span class="sec-icon">👀</span>
+                <h2>3. قراءة المحرار وقيمة التدريجة</h2>
+                <hr class="sec-line">
+            </div>
+            
+            <div class="highlight-box tip">
+                📌 <div><strong>طريقة القراءة الصحيحة:</strong> لتجنب أخطاء القياس، يجب أن تكون العين في <strong>نفس المستوى الأفقي</strong> لسطح السائل المحراري داخل الساق الزجاجية.</div>
+            </div>
+
+            <p>قبل أخذ القراءة، يجب أولاً حساب <strong>قيمة التدريجة الواحدة</strong> للمحرار لمعرفة ماذا يمثل كل خط صغير (كل فراغ).</p>
+            
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (3) — حساب قيمة التدريجة الواحدة</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <marker id="arrowhead3" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--gold)"/>
+                            </marker>
+                        </defs>
+                        <!-- Scale Line -->
+                        <line x1="50" y1="60" x2="250" y2="60" stroke="#fff" stroke-width="2"/>
+                        <!-- Major Ticks -->
+                        <line x1="50" y1="60" x2="50" y2="40" stroke="#fff" stroke-width="2"/>
+                        <text x="50" y="30" font-family="Amiri" font-size="14" fill="#fff" text-anchor="middle" dominant-baseline="middle">20</text>
+                        
+                        <line x1="250" y1="60" x2="250" y2="40" stroke="#fff" stroke-width="2"/>
+                        <text x="250" y="30" font-family="Amiri" font-size="14" fill="#fff" text-anchor="middle" dominant-baseline="middle">30</text>
+                        
+                        <!-- Minor Ticks (10 spaces -> 9 ticks) -->
+                        <line x1="70" y1="60" x2="70" y2="50" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="90" y1="60" x2="90" y2="50" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="110" y1="60" x2="110" y2="50" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="130" y1="60" x2="130" y2="50" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="150" y1="60" x2="150" y2="45" stroke="#fff" stroke-width="1.5"/> <!-- Middle tick -->
+                        <line x1="170" y1="60" x2="170" y2="50" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="190" y1="60" x2="190" y2="50" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="210" y1="60" x2="210" y2="50" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="230" y1="60" x2="230" y2="50" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        
+                        <!-- Annotations -->
+                        <path d="M50 80 Q 150 110 250 80" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="4,4"/>
+                        <text x="150" y="105" font-family="Cairo" font-size="12" fill="var(--gold)" text-anchor="middle" dominant-baseline="middle">10 فراغات (تدريجات)</text>
+                    </svg>
+                </div>
+            </figure>
+            
+            <div class="formula-box">
+                <div class="formula-title">قانون حساب قيمة التدريجة الواحدة</div>
+                <div class="formula-display">
+                    <!-- تم استبدال الكود المكتظ بـ SVG واضح ورسمي للمعادلة -->
+                    <svg viewBox="0 0 350 80" style="width: 100%; max-width: 400px; height: auto;">
+                        <text x="220" y="40" font-family="Cairo" font-size="18" fill="#fff" text-anchor="end" dominant-baseline="middle" font-weight="bold">قيمة التدريجة =</text>
+                        <!-- Fraction line -->
+                        <line x1="20" y1="40" x2="220" y2="40" stroke="var(--accent)" stroke-width="2"/>
+                        <!-- Numerator -->
+                        <text x="120" y="22" font-family="Cairo" font-size="14" fill="#fff" text-anchor="middle" dominant-baseline="middle">الدرجة الكبرى - الدرجة الصغرى</text>
+                        <!-- Denominator -->
+                        <text x="120" y="60" font-family="Cairo" font-size="14" fill="#fff" text-anchor="middle" dominant-baseline="middle">عدد الفراغات (التدريجات) بينهما</text>
+                    </svg>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="symbol-table" style="max-width: 500px; margin: 15px auto;">
+                        <tr><th colspan="2">مثال توضيحي بناءً على الشكل (3)</th></tr>
+                        <tr>
+                            <td style="text-align: right; color:var(--muted);">المعطيات:</td>
+                            <td style="text-align: right;">الدرجة الكبرى = 30، الدرجة الصغرى = 20. الفراغات = 10</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right; color:var(--muted);">التطبيق:</td>
+                            <td style="text-align: left; font-family: 'Amiri'; color: var(--accent2); direction:ltr;">$ (30 - 20) / 10 = 10 / 10 = 1 ^\circ C $</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right; color:var(--muted);">النتيجة:</td>
+                            <td style="text-align: right; color: var(--gold); font-weight:bold;">كل تدريجة صغيرة (خط صغير) تمثل $1^\circ C$.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="tab-sim" class="tab-content">
+            
+            <!-- Simulation 1: Thermometer Expansion -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 1: تمدد السائل المحراري</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي <strong>تأثير الحرارة على حجم السائل المحراري</strong>. حرّك <strong>شريط الحرارة</strong> لترى كيف يتمدد السائل بالحرارة ويتقلص بالبرودة داخل الساق.</p>
+                </div>
+                
+                <div class="canvas-container">
+                    <canvas id="simCanvas1"></canvas>
+                </div>
+                
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>درجة الحرارة المطبقة: <span id="val1-display" class="val-badge" dir="ltr">20 °C</span></label>
+                        <input type="range" id="slider-temp" min="-10" max="60" value="20">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Eye Level -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 2: زاوية النظر الصحيحة</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي ظاهرة اختلاف المنظر وأهمية <strong>النظر الأفقي</strong> عند القراءة. اضغط على <strong>أزرار زاوية الرؤية</strong> لترى كيف تسبب الزاوية المائلة أخطاء في تحديد التدريجة الصحيحة.</p>
+                </div>
+                
+                <div class="canvas-container" style="height: 300px;">
+                    <canvas id="simCanvas2"></canvas>
+                </div>
+                
+                <div class="sim-controls" style="flex-direction: column;">
+                    <div class="btn-group-toggle" id="view-btns">
+                        <button class="toggle-btn" data-view="above">رؤية من الأعلى</button>
+                        <button class="toggle-btn active" data-view="center" style="border-color: var(--green); color: var(--dark2); background: var(--green);">أفقياً (الصحيح)</button>
+                        <button class="toggle-btn" data-view="below">رؤية من الأسفل</button>
+                    </div>
+                    <div id="view-feedback" style="margin-top: 10px; font-weight: bold; color: var(--green); font-size: 1.1rem;">القراءة المسجلة: 25 °C (قراءة دقيقة وصحيحة)</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="tab-exercises" class="tab-content">
+            <div class="objectives-box">
+                <h3>📝 اختبر معلوماتك:</h3>
+                <p>أجب عن الأسئلة التالية لتقييم فهمك. انتبه جيداً للصورة في السؤال الأخير المخصص للقراءة.</p>
+            </div>
+
+            <div id="quiz-container">
+                <!-- MCQ 1 -->
+                <div class="q-card" data-correct="1">
+                    <div class="q-num">السؤال 1</div>
+                    <div class="q-text">ما هي الأداة التي نستخدمها لقياس درجة الحرارة في المخبر بدقة؟</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">المخبار المدرج</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">المحرار السائلي</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">الميزان الإلكتروني</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> المحرار هو الأداة المخصصة لقياس درجة الحرارة. أما المخبار فهو لقياس الحجم.</div>
+                </div>
+
+                <!-- MCQ 2 -->
+                <div class="q-card" data-correct="2">
+                    <div class="q-num">السؤال 2</div>
+                    <div class="q-text">الوحدة الدولية المستعملة في الحياة اليومية للتعبير عن درجة الحرارة هي:</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">المتر المكعب (m³)</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">الكيلوغرام (kg)</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">الدرجة المئوية (°C)</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> الوحدة هي الدرجة المئوية أو السيليزية (Celsius) ورمزها °C.</div>
+                </div>
+
+                <!-- MCQ 3 -->
+                <div class="q-card" data-correct="1">
+                    <div class="q-num">السؤال 3</div>
+                    <div class="q-text">لأخذ قراءة دقيقة من المحرار السائلي، يجب أن يكون مستوى النظر:</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">أعلى من سطح السائل بقليل.</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">في نفس المستوى الأفقي لسطح السائل.</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">أسفل من سطح السائل.</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> النظر الأفقي المباشر يمنع حدوث "خطأ اختلاف المنظر".</div>
+                </div>
+
+                <!-- MCQ 4 -->
+                <div class="q-card" data-correct="0">
+                    <div class="q-num">السؤال 4</div>
+                    <div class="q-text">في محرار معين، التدرجات المرقمة هي 30°C و 40°C. يوجد بينهما 5 فراغات. ما هي قيمة التدريجة الواحدة؟</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">2 °C</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">1 °C</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">0.5 °C</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> بتطبيق القانون: (40 - 30) / 5 = 10 / 5 = 2 °C.</div>
+                </div>
+
+                <!-- Diagram Question -->
+                <div class="q-card q-diagram-type" data-correct="2">
+                    <div class="q-num">السؤال 5 (تطبيق عملي)</div>
+                    <div class="q-text">تأمل الرسم أدناه للمحرار. ما هي درجة الحرارة الدقيقة التي يشير إليها؟</div>
+                    <svg viewBox="0 0 200 150" style="width:100%; max-width:200px; display:block; margin: 0 auto 15px; background:var(--dark); border-radius:8px; border:1px solid var(--border);">
+                        <!-- Tube -->
+                        <rect x="80" y="10" width="20" height="130" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                        <!-- Liquid -->
+                        <rect x="84" y="60" width="12" height="80" fill="#ef4444"/>
+                        <!-- Scale -->
+                        <line x1="75" y1="20" x2="80" y2="20" stroke="#fff" stroke-width="2"/> <text x="50" y="20" fill="#fff" font-size="14" dominant-baseline="middle">40</text>
+                        
+                        <line x1="75" y1="40" x2="80" y2="40" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+                        <line x1="75" y1="60" x2="80" y2="60" stroke="#fff" stroke-width="2"/> <text x="50" y="60" fill="#fff" font-size="14" dominant-baseline="middle">30</text>
+                        
+                        <line x1="75" y1="80" x2="80" y2="80" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+                        <line x1="75" y1="100" x2="80" y2="100" stroke="#fff" stroke-width="2"/> <text x="50" y="100" fill="#fff" font-size="14" dominant-baseline="middle">20</text>
+                        <!-- Notice liquid is exactly at 60px (which is the 30 degree mark) -->
+                        <line x1="105" y1="60" x2="150" y2="60" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="4,4"/>
+                    </svg>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">35 °C</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">25 °C</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">30 °C</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> مستوى السائل متطابق تماماً مع التدريجة الكبيرة المكتوب أمامها 30.</div>
+                </div>
+
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="action-btn" onclick="checkAnswers()">إظهار النتيجة النهائية</button>
+            </div>
+            <div id="quiz-score" style="text-align: center; margin-top: 20px; font-size: 1.5rem; font-weight: bold; color: var(--accent); display: none; background: var(--dark3); padding: 20px; border-radius: 8px;"></div>
+        </div>
+
+        <div id="tab-summary" class="tab-content">
+            <div class="summary-card">
+                
+                <div class="summary-header">
+                    <div class="summary-meta">السنة الأولى متوسط | المادة وتحولاتها | الدرس 04</div>
+                    <h2 class="summary-title">ملخص: درجة الحرارة</h2>
+                    <div class="summary-subtitle">الفيزياء السهلة — منهاج الجيل الثاني</div>
+                </div>
+
+                <div class="concept-map-wrap">
+                    <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                    <svg viewBox="0 0 650 300" style="width: 100%; max-width: 600px; display: block; margin: auto;">
+                        <rect x="220" y="10" width="160" height="40" rx="8" fill="var(--accent)" />
+                        <text x="300" y="35" fill="#fff" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">درجة الحرارة (T)</text>
+                        
+                        <path d="M300 50 L300 80 M300 80 L150 80 L150 110 M300 80 L450 80 L450 110" stroke="var(--border)" stroke-width="2" fill="none"/>
+                        
+                        <!-- Unit -->
+                        <rect x="70" y="110" width="160" height="40" rx="8" fill="var(--dark3)" stroke="var(--accent)" stroke-width="1"/>
+                        <text x="150" y="130" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle">الوحدة: الدرجة المئوية °C</text>
+                        
+                        <!-- Tool -->
+                        <rect x="370" y="110" width="160" height="40" rx="8" fill="var(--dark3)" stroke="var(--accent)" stroke-width="1"/>
+                        <text x="450" y="130" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle">أداة القياس: المحرار</text>
+                        
+                        <path d="M450 150 L450 170 M450 170 L350 170 L350 190 M450 170 L550 170 L550 190" stroke="var(--border)" stroke-width="2" fill="none"/>
+                        
+                        <rect x="290" y="190" width="120" height="30" rx="6" fill="rgba(245, 158, 11, 0.1)" stroke="var(--gold)" stroke-width="1"/>
+                        <text x="350" y="205" fill="var(--gold)" font-family="Cairo" font-size="12" text-anchor="middle" dominant-baseline="middle">الطبي</text>
+                        
+                        <rect x="490" y="190" width="120" height="30" rx="6" fill="rgba(245, 158, 11, 0.1)" stroke="var(--gold)" stroke-width="1"/>
+                        <text x="550" y="205" fill="var(--gold)" font-family="Cairo" font-size="12" text-anchor="middle" dominant-baseline="middle">السائلي المخبري</text>
+                    </svg>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+                    <div class="s-def-item">
+                        <span class="s-def-term">درجة الحرارة:</span> مقدار فيزيائي يعبر عن حالة الجسم من حيث السخونة أو البرودة. نرمز لها بـ $T$ أو $\theta$.
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">المحرار:</span> الأداة المستعملة لقياس درجة الحرارة بدقة، يعمل السائلي منه على مبدأ تمدد السائل بالحرارة وتقلصه بالبرودة.
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">⚡ القوانين والعلاقات الرياضية</h3>
+                    <table class="info-table" style="background: transparent; border: none;">
+                        <tr>
+                            <td style="text-align: right; border:none; padding:10px; font-weight: bold;">قانون حساب قيمة التدريجة:</td>
+                            <td style="border:none; text-align: left; font-size:1.4rem; font-family: 'Amiri'; color: var(--accent2);" dir="ltr">$$ v = \frac{Val_{max} - Val_{min}}{N_{div}} $$</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+                    <ul class="summary-list">
+                        <li>الوحدة المتداولة هي <strong>الدرجة المئوية (°C)</strong>.</li>
+                        <li>للقراءة الصحيحة، يجب أن تكون العين في <strong>نفس المستوى الأفقي</strong> لسطح السائل لتفادي خطأ الرؤية اختلاف المنظر (Parallaxe).</li>
+                        <li>قبل القراءة، احسب دائماً قيمة التدريجة الواحدة.</li>
+                    </ul>
+                </div>
+
+                <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. Mandatory Tab Switcher Logic
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim1 === 'function') updateSim1();
+                    if (typeof drawSim2 === 'function') drawSim2(); 
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim1 === 'function') updateSim1();
+                    if (typeof drawSim2 === 'function') drawSim2(); 
+                }, 50);
+            }
+        });
+
+        // 2. Mandatory Canvas Setup with devicePixelRatio
+        const canvas1 = document.getElementById('simCanvas1');
+        const ctx1 = canvas1.getContext('2d');
+        const canvas2 = document.getElementById('simCanvas2');
+        const ctx2 = canvas2.getContext('2d');
+
+        function resizeCanvas() {
+            [canvas1, canvas2].forEach(cvs => {
+                if(!cvs) return;
+                const container = cvs.parentElement;
+                if (container.clientWidth === 0) return;
+                
+                const dpr = window.devicePixelRatio || 1;
+                cvs.width  = container.clientWidth  * dpr;
+                cvs.height = container.clientHeight * dpr;
+                cvs.style.width  = container.clientWidth  + 'px';
+                cvs.style.height = container.clientHeight + 'px';
+                
+                const ctx = cvs.getContext('2d');
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            });
+        }
+        
+        window.addEventListener('resize', () => {
+            if(document.getElementById('tab-sim').classList.contains('active')) {
+                resizeCanvas();
+                updateSim1();
+                drawSim2();
+            }
+        });
+
+        const sliderTemp = document.getElementById('slider-temp');
+        const val1Display = document.getElementById('val1-display');
+        let currentTemp = parseInt(sliderTemp.value);
+
+        sliderTemp.addEventListener('input', (e) => {
+            currentTemp = parseInt(e.target.value);
+            val1Display.textContent = currentTemp + " °C";
+            updateSim1();
+        });
+
+        function updateSim1() {
+            if (canvas1.width === 0) return;
+            const w = canvas1.parentElement.clientWidth;
+            const h = canvas1.parentElement.clientHeight;
+            
+            // Mandatory ClearRect
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+
+            const cx = w / 2;
+            const cy = h / 2;
+            
+            const tubeW = 20;
+            const tubeH = 250;
+            const resR = 25;
+            const baseY = cy + tubeH/2 - 20; // Bottom of tube
+            const topY = cy - tubeH/2;
+            
+            const minT = -10;
+            const maxT = 60;
+            const range = maxT - minT;
+            const pxPerDeg = tubeH / range;
+            
+            const liqH = (currentTemp - minT) * pxPerDeg;
+            const liqTopY = baseY - liqH;
+
+            // Draw Glass Tube (Back)
+            ctx1.fillStyle = 'rgba(255,255,255,0.05)';
+            ctx1.beginPath();
+            ctx1.roundRect(cx - tubeW/2, topY, tubeW, tubeH, 10);
+            ctx1.fill();
+
+            // Draw Reservoir Glass
+            ctx1.beginPath();
+            ctx1.arc(cx, baseY + 15, resR, 0, Math.PI*2);
+            ctx1.fill();
+
+            // Draw Liquid Reservoir
+            const redGrad = ctx1.createLinearGradient(cx - resR, 0, cx + resR, 0);
+            redGrad.addColorStop(0, '#ef4444');
+            redGrad.addColorStop(1, '#991b1b');
+            
+            ctx1.fillStyle = redGrad;
+            ctx1.beginPath();
+            ctx1.arc(cx, baseY + 15, resR - 4, 0, Math.PI*2);
+            ctx1.fill();
+
+            // Draw Liquid Tube
+            ctx1.beginPath();
+            ctx1.roundRect(cx - tubeW/2 + 4, liqTopY, tubeW - 8, baseY - liqTopY, 4);
+            ctx1.fill();
+
+            // Draw Glass Outline
+            ctx1.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx1.lineWidth = 2;
+            
+            // Reservoir outline
+            ctx1.beginPath();
+            ctx1.arc(cx, baseY + 15, resR, 0, Math.PI*2);
+            ctx1.stroke();
+            
+            // Tube outline
+            ctx1.beginPath();
+            ctx1.roundRect(cx - tubeW/2, topY, tubeW, tubeH, 10);
+            ctx1.stroke();
+
+            // Draw Scale
+            ctx1.fillStyle = '#fff';
+            ctx1.strokeStyle = '#fff';
+            ctx1.font = '14px Amiri';
+            ctx1.textAlign = 'right';
+            ctx1.textBaseline = 'middle';
+            
+            for(let t = minT; t <= maxT; t+=10) {
+                let ty = baseY - (t - minT) * pxPerDeg;
+                ctx1.lineWidth = (t === 0) ? 2 : 1; 
+                ctx1.beginPath(); 
+                ctx1.moveTo(cx - tubeW/2, ty); 
+                ctx1.lineTo(cx - tubeW/2 - 10, ty); 
+                ctx1.stroke();
+                ctx1.fillText(t, cx - tubeW/2 - 15, ty);
+            }
+        }
+
+        let currentView = 'center'; // above, center, below
+        const actualTemp = 25; 
+
+        document.querySelectorAll('#view-btns .toggle-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('#view-btns .toggle-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.style.borderColor = 'var(--border)';
+                    b.style.background = 'var(--dark4)';
+                    b.style.color = 'var(--text)';
+                });
+                
+                const target = e.target;
+                target.classList.add('active');
+                currentView = target.getAttribute('data-view');
+                
+                const feedback = document.getElementById('view-feedback');
+                if(currentView === 'center') {
+                    target.style.borderColor = 'var(--green)';
+                    target.style.background = 'var(--green)';
+                    target.style.color = 'var(--dark2)';
+                    feedback.textContent = `القراءة المسجلة: ${actualTemp} °C (قراءة دقيقة وصحيحة)`;
+                    feedback.style.color = 'var(--green)';
+                } else if(currentView === 'above') {
+                    target.style.borderColor = 'var(--red)';
+                    target.style.background = 'var(--red)';
+                    target.style.color = '#fff';
+                    feedback.textContent = `القراءة المسجلة: ${actualTemp + 2} °C (خاطئة - أكبر من الحقيقة)`;
+                    feedback.style.color = 'var(--red)';
+                } else {
+                    target.style.borderColor = 'var(--red)';
+                    target.style.background = 'var(--red)';
+                    target.style.color = '#fff';
+                    feedback.textContent = `القراءة المسجلة: ${actualTemp - 2} °C (خاطئة - أقل من الحقيقة)`;
+                    feedback.style.color = 'var(--red)';
+                }
+                drawSim2();
+            });
+        });
+
+        function drawSim2() {
+            if (canvas2.width === 0) return;
+            const w = canvas2.parentElement.clientWidth;
+            const h = canvas2.parentElement.clientHeight;
+            
+            // Mandatory ClearRect
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+            const cx = w / 3;
+            const cy = h / 2;
+            
+            const tubeW = 40;
+            const tubeH = 180;
+            const pxPerDeg = tubeH / 40; // represents 10 to 50
+            const baseY = cy + tubeH/2;
+            
+            const liqY = baseY - (actualTemp - 10) * pxPerDeg;
+
+            // Tube Back
+            ctx2.fillStyle = 'rgba(255,255,255,0.05)';
+            ctx2.beginPath();
+            ctx2.roundRect(cx - tubeW/2, cy - tubeH/2, tubeW, tubeH, 10);
+            ctx2.fill();
+
+            // Liquid
+            ctx2.fillStyle = '#ef4444';
+            ctx2.beginPath();
+            ctx2.roundRect(cx - tubeW/2 + 4, liqY, tubeW - 8, baseY - liqY - 4, 4);
+            ctx2.fill();
+            
+            // Tube Outline
+            ctx2.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx2.lineWidth = 2;
+            ctx2.beginPath();
+            ctx2.roundRect(cx - tubeW/2, cy - tubeH/2, tubeW, tubeH, 10);
+            ctx2.stroke();
+
+            // Scale
+            ctx2.fillStyle = '#fff';
+            ctx2.strokeStyle = '#fff';
+            ctx2.font = '14px Amiri';
+            ctx2.textAlign = 'right';
+            ctx2.textBaseline = 'middle';
+            
+            for(let t = 10; t <= 50; t+=5) {
+                let ty = baseY - (t - 10) * pxPerDeg;
+                ctx2.beginPath(); 
+                ctx2.moveTo(cx - tubeW/2, ty); 
+                ctx2.lineTo(cx - tubeW/2 - (t%10===0?15:8), ty); 
+                ctx2.stroke();
+                if(t%10===0) ctx2.fillText(t, cx - tubeW/2 - 20, ty);
+            }
+
+            // Draw Eye and Sight Line
+            const eyeX = cx + 150;
+            let eyeY = liqY;
+            let sightColor = 'var(--green)';
+            
+            if(currentView === 'above') { eyeY = liqY - 60; sightColor = 'var(--red)'; }
+            if(currentView === 'below') { eyeY = liqY + 60; sightColor = 'var(--red)'; }
+
+            // Sight Line
+            ctx2.strokeStyle = sightColor;
+            ctx2.lineWidth = 2;
+            ctx2.setLineDash([5, 5]);
+            ctx2.beginPath();
+            ctx2.moveTo(cx, liqY);
+            ctx2.lineTo(eyeX, eyeY);
+            ctx2.stroke();
+            ctx2.setLineDash([]); // reset
+
+            // Eye Icon Hand-drawn representation
+            ctx2.fillStyle = sightColor;
+            ctx2.strokeStyle = sightColor;
+            ctx2.lineWidth = 2;
+            ctx2.beginPath();
+            ctx2.ellipse(eyeX + 15, eyeY, 18, 10, 0, 0, Math.PI*2);
+            ctx2.stroke();
+            
+            ctx2.beginPath();
+            ctx2.arc(eyeX + 10, eyeY, 5, 0, Math.PI*2); // pupil looking left
+            ctx2.fill();
+            
+            // Draw eyelashes for extra touch
+            ctx2.beginPath();
+            ctx2.moveTo(eyeX + 15, eyeY - 10); ctx2.lineTo(eyeX + 15, eyeY - 15);
+            ctx2.moveTo(eyeX + 5, eyeY - 8); ctx2.lineTo(eyeX, eyeY - 12);
+            ctx2.moveTo(eyeX + 25, eyeY - 8); ctx2.lineTo(eyeX + 30, eyeY - 12);
+            ctx2.stroke();
+        }
+
+        let userAnswers = {};
+
+        function selectOption(elem, index) {
+            const card = elem.closest('.q-card');
+            const qIndex = Array.from(document.querySelectorAll('.q-card')).indexOf(card);
+            
+            card.querySelectorAll('.q-option').forEach(opt => opt.classList.remove('selected'));
+            elem.classList.add('selected');
+            userAnswers[qIndex] = index;
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            const cards = document.querySelectorAll('.q-card');
+            
+            cards.forEach((card, index) => {
+                const correctIndex = parseInt(card.getAttribute('data-correct'));
+                const options = card.querySelectorAll('.q-option');
+                const feedback = card.querySelector('.q-feedback');
+                
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'wrong');
+                    opt.style.pointerEvents = 'none'; 
+                });
+
+                if (userAnswers[index] === correctIndex) {
+                    score++;
+                    options[correctIndex].classList.add('correct');
+                    feedback.style.borderRight = "4px solid var(--green)";
+                    feedback.innerHTML = '✅ <strong>إجابة صحيحة:</strong> ' + feedback.innerHTML.replace('<strong>شرح:</strong> ', '');
+                } else {
+                    if(userAnswers[index] !== undefined) {
+                        options[userAnswers[index]].classList.add('wrong');
+                    }
+                    options[correctIndex].classList.add('correct');
+                    feedback.style.borderRight = "4px solid var(--red)";
+                    feedback.innerHTML = '❌ <strong>إجابة خاطئة:</strong> ' + feedback.innerHTML.replace('<strong>شرح:</strong> ', '');
+                }
+                
+                feedback.classList.add('show');
+            });
+
+            const scoreDiv = document.getElementById('quiz-score');
+            scoreDiv.style.display = 'block';
+            scoreDiv.innerHTML = `النتيجة النهائية: ${score} من ${cards.length}`;
+            
+            scoreDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+    
+    <script src="credit.js"></script>
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 3 | عدد رسوم SVG في الدرس النظري = 3 | عدد المحاكيات = 2 -->
+</body>
+</html>

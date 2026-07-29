@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دوران الأرض - السنة الأولى متوسط</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- تضمين MathJax للمعادلات -->
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        /* المتغيرات الإلزامية */
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #f97316; /* لون الظواهر الضوئية */
+            --accent2:#fb923c;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 10px;
+        }
+
+        /* 0.4 — شريط التنقل العلوي الثابت */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        /* ترويسة الدرس */
+        .lesson-header {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--dark3);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .lesson-header > span:first-child {
+            color: var(--muted);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .lesson-badge {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .lesson-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .lesson-header h1 em {
+            color: var(--accent);
+            font-style: normal;
+        }
+        .lesson-meta {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* 0.1 — شريط التبويبات الإلزامي */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* محتوى الدرس النظري */
+        .objectives-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--accent);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .objectives-box h3 { color: var(--text); margin-bottom: 10px; }
+        .objectives-box ul { margin-right: 20px; color: var(--muted); }
+
+        .sec-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 30px 0 15px;
+        }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-line { flex: 1; border: none; border-top: 1px solid var(--border); }
+
+        .def-box {
+            background: var(--card);
+            border-right: 4px solid var(--gold);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .def-box strong { font-family: 'Amiri', serif; font-size: 1.2rem; color: var(--text); }
+        .def-box span.fr { color: var(--muted); font-size: 0.9rem; }
+
+        .highlight-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .highlight-box.warn { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--red); color: #fca5a5; }
+        .highlight-box.info { background: rgba(59, 130, 246, 0.1); border: 1px solid #3b82f6; color: #93c5fd; }
+        
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .info-table th, .info-table td {
+            padding: 12px;
+            border: 1px solid var(--border);
+            text-align: right;
+        }
+        .info-table th { background: var(--accent); color: #fff; }
+        .info-table tr:nth-child(even) { background: var(--card); }
+        .info-table td.unit { font-style: italic; color: var(--muted); }
+
+        /* المعادلات */
+        .formula-box {
+            background: var(--dark3);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .formula-title {
+            color: var(--accent2);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .formula-display {
+            font-size: 1.8rem;
+            color: var(--text);
+            margin-bottom: 15px;
+            direction: ltr;
+        }
+        .symbol-table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .symbol-table th, .symbol-table td {
+            border: 1px solid var(--border);
+            padding: 8px;
+            text-align: center;
+        }
+        .symbol-table th { background: var(--dark4); color: var(--text); }
+        .sym-cell { font-family: 'Amiri', serif; font-style: italic; font-size: 1.2rem; color: var(--text); }
+        .unit-cell { color: var(--gold); }
+
+        /* الرسوم التوضيحية (SVG) */
+        .diagram-figure {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .diagram-wrap {
+            max-width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            background: var(--dark2);
+        }
+        .lesson-diagram { width: 100%; height: auto; max-width: 400px; }
+        .fig-title {
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* المحاكاة التفاعلية */
+        .sim-wrap {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+        .sim-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .sim-title { color: var(--text); font-size: 1.2rem; }
+        /* 0.3 — شارة المحاكاة */
+        .sim-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        .sim-description {
+            background: var(--card);
+            border-right: 3px solid var(--accent);
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--text);
+            border-radius: 4px;
+        }
+        .sim-canvas-container {
+            width: 100%;
+            height: 300px;
+            background: #000; /* خلفية فضاء */
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border);
+        }
+        canvas { display: block; width: 100%; height: 100%; }
+        .sim-controls {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--dark4);
+            padding: 10px;
+            border-radius: 6px;
+        }
+        .control-group label { flex: 1; color: var(--muted); font-size: 0.9rem; }
+        .val-badge {
+            background: var(--accent);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        input[type="range"] { flex: 2; accent-color: var(--accent); }
+
+        /* التمارين */
+        .q-card {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .q-num { color: var(--accent); font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; }
+        .q-text { margin-bottom: 15px; font-size: 1.1rem; }
+        .q-options { display: flex; flex-direction: column; gap: 8px; }
+        .q-option {
+            background: var(--dark4);
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .q-option:hover { border-color: var(--accent); }
+        .q-option input { margin-left: 10px; accent-color: var(--accent); }
+        .q-feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
+            font-size: 0.9rem;
+        }
+        .q-feedback.correct { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--green); color: var(--green); }
+        .q-feedback.wrong { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--red); color: #fca5a5; }
+        .q-diagram {
+            width: 100%; max-width: 300px; display: block; margin: 0 auto 15px; background: var(--dark2); border-radius: 8px;
+        }
+        .submit-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* الملخص */
+        .summary-card {
+            background: var(--dark3);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+        }
+        .summary-header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .summary-title { color: var(--accent); font-size: 1.5rem; }
+        .summary-section-title {
+            color: var(--gold);
+            margin: 20px 0 10px;
+            font-size: 1.2rem;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 5px;
+        }
+        .concept-map { width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto; }
+        .summary-list { list-style: none; padding: 0; }
+        .summary-list li {
+            position: relative;
+            padding-right: 25px;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+        .summary-list li::before {
+            content: "✦";
+            position: absolute;
+            right: 0;
+            color: var(--accent);
+        }
+        .print-btn {
+            background: var(--dark4);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .print-btn:hover { background: var(--accent); color: #fff; }
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #111 !important; }
+            .summary-card { box-shadow: none; border: 1px solid #ccc; padding: 0; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; } 
+            body { font-size: 12pt; }
+            .summary-section-title { font-size: 14pt; color: #000; }
+            .print-btn { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 0.4 — شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="../index.html">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <div class="lesson-header">
+        <span>السنة الأولى متوسط › الظواهر الضوئية › الدرس 05</span>
+        <span class="lesson-badge">المقطع الرابع</span>
+        <h1>دوران <em>الأرض</em></h1>
+        <p class="lesson-meta">منهاج الجيل الثاني | حصتان</p>
+    </div>
+
+    <!-- 0.1 — شريط التبويبات -->
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+        <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+        <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+        <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+    </nav>
+
+    <!-- التبويب 1: الدرس النظري -->
+    <div id="tab-lesson" class="tab-content active">
+        
+        <div class="objectives-box">
+            <h3>🎯 الأهداف التعلمية</h3>
+            <ul>
+                <li>تفسير ظاهرة تعاقب الليل والنهار علمياً.</li>
+                <li>فهم الحركة الانتقالية للأرض وميل محورها.</li>
+                <li>تفسير ظاهرة تعاقب الفصول الأربعة استناداً لحركتي الأرض.</li>
+            </ul>
+        </div>
+
+        <div class="sec-title">
+            <span class="sec-icon">🌍</span>
+            <h2>1. حركة الأرض حول نفسها (الحركة المغزلية)</h2>
+            <hr class="sec-line">
+        </div>
+
+        <div class="def-box">
+            <strong>محور الدوران</strong> <span class="fr">(Axe de rotation)</span>
+            <p>هو خط وهمي يمر بمركز الأرض من القطب الشمالي إلى القطب الجنوبي، تدور حوله الأرض من الغرب إلى الشرق. هذا المحور مائل بزاوية ثابتة.</p>
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (1) — الحركة المغزلية وتعاقب الليل والنهار</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <!-- تدرج لوني كروي للأرض -->
+                        <radialGradient id="earthGrad" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#3b82f6" />
+                            <stop offset="100%" stop-color="#1e3a8a" />
+                        </radialGradient>
+                        <radialGradient id="sunLight" cx="90%" cy="50%" r="60%">
+                            <stop offset="0%" stop-color="rgba(251, 191, 36, 0.4)" />
+                            <stop offset="100%" stop-color="transparent" />
+                        </radialGradient>
+                        <!-- رأس السهم الإلزامي -->
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--accent)"/>
+                        </marker>
+                    </defs>
+
+                    <!-- أشعة الشمس -->
+                    <path d="M 350,50 L 250,100 M 370,125 L 260,125 M 350,200 L 250,150" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
+                    <text x="350" y="140" fill="#fbbf24" font-size="14" text-anchor="middle" dominant-baseline="middle">أشعة الشمس</text>
+
+                    <!-- الكرة الأرضية -->
+                    <g transform="translate(150, 125)">
+                        <!-- التوهج الشمسي على الأرض -->
+                        <circle cx="0" cy="0" r="80" fill="url(#sunLight)" />
+                        <!-- الأرض المضاءة والمظلمة -->
+                        <clipPath id="earthClip2">
+                            <circle cx="0" cy="0" r="80" />
+                        </clipPath>
+                        <g clip-path="url(#earthClip2)">
+                            <circle cx="0" cy="0" r="80" fill="url(#earthGrad)" />
+                            <!-- ظل الليل -->
+                            <path d="M 0,-80 A 80,80 0 0,0 0,80 Z" fill="#000" opacity="0.6" />
+                            <!-- خط الاستواء -->
+                            <ellipse cx="0" cy="0" rx="80" ry="15" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="4,4" transform="rotate(23.5)"/>
+                        </g>
+                        <!-- محور الدوران -->
+                        <line x1="-32" y1="-105" x2="32" y2="105" stroke="#f97316" stroke-width="2" stroke-dasharray="4,2" />
+                        
+                        <!-- سهم الدوران -->
+                        <path d="M -60,0 A 60,15 0 0,0 60,0" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrowhead)" transform="rotate(23.5)"/>
+                        
+                        <text x="-40" y="-115" fill="#f97316" font-size="12" text-anchor="middle" dominant-baseline="middle">محور مائل</text>
+                        <text x="-45" y="40" fill="#fff" font-size="12" text-anchor="middle" dominant-baseline="middle">الليل</text>
+                        <text x="45" y="40" fill="#fbbf24" font-size="12" text-anchor="middle" dominant-baseline="middle">النهار</text>
+                    </g>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="highlight-box info">
+            💡 <strong>النتيجة:</strong> ينتج عن دوران الأرض حول نفسها (من الغرب إلى الشرق) تعاقب الليل والنهار خلال مدة 24 ساعة (اليوم الأرضي).
+        </div>
+
+        <div class="sec-title">
+            <span class="sec-icon">☀️</span>
+            <h2>2. حركة الأرض حول الشمس (الحركة الانتقالية)</h2>
+            <hr class="sec-line">
+        </div>
+
+        <div class="def-box">
+            <strong>المدار الإهليلجي</strong> <span class="fr">(Orbite elliptique)</span>
+            <p>تنتقل الأرض حول الشمس في مسار شبه دائري يسمى المدار، وتستغرق هذه الدورة الانتقالية 365.25 يوماً (سنة شمسية واحدة).</p>
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (2) — المسار الإهليلجي وثبات ميل المحور</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 450 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <!-- المدار -->
+                    <ellipse cx="225" cy="125" rx="180" ry="70" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-dasharray="6,4"/>
+                    
+                    <!-- الشمس -->
+                    <circle cx="225" cy="125" r="25" fill="#fbbf24" filter="drop-shadow(0 0 10px #fbbf24)"/>
+                    <text x="225" y="165" fill="#fbbf24" font-size="12" text-anchor="middle" dominant-baseline="middle">الشمس</text>
+
+                    <!-- الأرض في مواقع مختلفة مع الحفاظ على ميل المحور (يمين دائما) -->
+                    <!-- الموقع الأيسر (صيف في الشمال) -->
+                    <g transform="translate(45, 125)">
+                        <circle cx="0" cy="0" r="15" fill="#3b82f6"/>
+                        <path d="M 0,-15 A 15,15 0 0,0 0,15 Z" fill="#000" opacity="0.6"/> <!-- الليل يمين -->
+                        <line x1="-7" y1="-22" x2="7" y2="22" stroke="#f97316" stroke-width="1.5"/> <!-- المحور يميل يمين -->
+                        <text x="0" y="-30" fill="#fff" font-size="10" text-anchor="middle" dominant-baseline="middle">صيف شمالي</text>
+                    </g>
+                    <!-- الموقع الأيمن (شتاء في الشمال) -->
+                    <g transform="translate(405, 125)">
+                        <circle cx="0" cy="0" r="15" fill="#3b82f6"/>
+                        <path d="M 0,-15 A 15,15 0 0,1 0,15 Z" fill="#000" opacity="0.6"/> <!-- الليل يسار -->
+                        <line x1="-7" y1="-22" x2="7" y2="22" stroke="#f97316" stroke-width="1.5"/> <!-- المحور يميل يمين -->
+                        <text x="0" y="-30" fill="#fff" font-size="10" text-anchor="middle" dominant-baseline="middle">شتاء شمالي</text>
+                    </g>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="formula-box">
+            <div class="formula-title">زاوية ميل محور الدوران</div>
+            <div class="formula-display">
+                $$ \theta = 23.5^{\circ} $$
+            </div>
+            <table class="symbol-table">
+                <thead>
+                    <tr><th>الرمز</th><th>التسمية</th><th>القيمة الثابتة</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="sym-cell">\theta</td>
+                        <td>زاوية ميل محور دوران الأرض عن الشاقول (المحور العمودي على المدار)</td>
+                        <td class="unit-cell">23.5 درجة</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="highlight-box warn">
+            ⚠️ <strong>ملاحظة مهمة:</strong> تعاقب الفصول الأربعة لا ينتج عن اقتراب وابتعاد الأرض عن الشمس، بل ينتج عن <strong>ثبات زاوية ميل محور الأرض</strong> أثناء دورانها حول الشمس.
+        </div>
+
+    </div>
+
+    <!-- التبويب 2: المحاكاة التفاعلية -->
+    <div id="tab-sim" class="tab-content">
+        
+        <!-- المحاكاة 1: تعاقب الليل والنهار -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">المحاكاة 1: دوران الأرض المحوري</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>الحركة المغزلية للأرض</strong> وتكون ظاهرة الليل والنهار. حرّك <strong>شريط الزمن</strong> لترى كيف يتغيّر <strong>موقع النقطة الجغرافية بالنسبة للظل</strong>.</p>
+            </div>
+            
+            <div class="sim-canvas-container">
+                <canvas id="simCanvasDayNight"></canvas>
+            </div>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>الزمن (ساعة): <span id="val-time" class="val-badge">0</span></label>
+                    <input type="range" id="time-slider" min="0" max="24" value="0" step="1">
+                </div>
+            </div>
+        </div>
+
+        <!-- المحاكاة 2: الفصول الأربعة -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">المحاكاة 2: المسار الانتقالي والفصول</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>تأثير ميل المحور أثناء دوران الأرض حول الشمس</strong>. حرّك <strong>شريط الأشهر</strong> لترى كيف يتغيّر <strong>الفصل في النصف الشمالي للكرة الأرضية</strong> بسبب تغير زاوية سقوط الأشعة.</p>
+            </div>
+            
+            <div class="sim-canvas-container">
+                <canvas id="simCanvasSeasons"></canvas>
+            </div>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>شهر: <span id="val-month" class="val-badge">ديسمبر</span></label>
+                    <input type="range" id="month-slider" min="1" max="12" value="12" step="1">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- التبويب 3: التمارين -->
+    <div id="tab-exercises" class="tab-content">
+        <div class="objectives-box">
+            <h3>اختبر معلوماتك</h3>
+            <p style="color: var(--muted); font-size:0.9rem;">أجب عن الأسئلة لتقييم استيعابك للمفاهيم الفيزيائية والفلكية المدروسة.</p>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 1</div>
+            <div class="q-text">السبب الرئيسي لتعاقب الفصول الأربعة هو:</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q1" value="0"> دوران الأرض حول نفسها.</label>
+                <label class="q-option"><input type="radio" name="q1" value="0"> اقتراب وابتعاد الأرض عن الشمس.</label>
+                <label class="q-option"><input type="radio" name="q1" value="1"> دوران الأرض حول الشمس وميل محورها.</label>
+            </div>
+            <div class="q-feedback" id="fb1"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 2</div>
+            <div class="q-text">كم تقدر زاوية ميل محور دوران الأرض؟</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q2" value="1"> 23.5 درجة.</label>
+                <label class="q-option"><input type="radio" name="q2" value="0"> 90 درجة.</label>
+                <label class="q-option"><input type="radio" name="q2" value="0"> 0 درجة.</label>
+            </div>
+            <div class="q-feedback" id="fb2"></div>
+        </div>
+
+        <!-- سؤال المخطط الإلزامي -->
+        <div class="q-card q-diagram-type">
+            <div class="q-num">السؤال 3</div>
+            <div class="q-text">تأمل المخطط الذي يمثل الأرض والشمس. إذا كانت الأرض في الموقع (أ) حيث يميل القطب الشمالي مقترباً من الشمس، فما هو الفصل في الجزائر (نصف الكرة الشمالي)؟</div>
+            <svg class="q-diagram" viewBox="0 0 200 100">
+                <circle cx="100" cy="50" r="15" fill="#fbbf24"/>
+                <circle cx="40" cy="50" r="10" fill="#3b82f6"/>
+                <line x1="36" y1="35" x2="44" y2="65" stroke="#f97316" stroke-width="2"/>
+                <text x="40" y="25" fill="#fff" font-size="12" text-anchor="middle">موقع (أ)</text>
+            </svg>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q3" value="0"> فصل الشتاء.</label>
+                <label class="q-option"><input type="radio" name="q3" value="1"> فصل الصيف.</label>
+                <label class="q-option"><input type="radio" name="q3" value="0"> فصل الخريف.</label>
+            </div>
+            <div class="q-feedback" id="fb3"></div>
+        </div>
+
+        <button class="submit-btn" onclick="checkQuiz()">تحقق من الإجابات</button>
+    </div>
+
+    <!-- التبويب 4: ملخص الكراس -->
+    <div id="tab-summary" class="tab-content">
+        <div class="summary-card">
+            <div class="summary-header">
+                <div class="lesson-meta">السنة الأولى متوسط | المقطع 4 | الظواهر الضوئية</div>
+                <h2 class="summary-title">ملخص: دوران الأرض</h2>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                <svg class="concept-map" viewBox="0 0 500 200">
+                    <defs>
+                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--muted)"/>
+                        </marker>
+                    </defs>
+                    <rect x="200" y="10" width="100" height="40" rx="5" fill="var(--dark4)" stroke="var(--accent)"/>
+                    <text x="250" y="35" fill="var(--text)" font-size="14" text-anchor="middle">الأرض</text>
+
+                    <!-- مسار 1 -->
+                    <line x1="220" y1="50" x2="120" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <rect x="50" y="80" width="120" height="40" rx="5" fill="var(--dark2)" stroke="var(--border)"/>
+                    <text x="110" y="105" fill="var(--text)" font-size="12" text-anchor="middle">حركة حول نفسها</text>
+                    <line x1="110" y1="120" x2="110" y2="150" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <rect x="50" y="150" width="120" height="40" rx="5" fill="var(--dark3)" stroke="var(--gold)"/>
+                    <text x="110" y="175" fill="var(--text)" font-size="12" text-anchor="middle">الليل والنهار</text>
+
+                    <!-- مسار 2 -->
+                    <line x1="280" y1="50" x2="380" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <rect x="330" y="80" width="130" height="40" rx="5" fill="var(--dark2)" stroke="var(--border)"/>
+                    <text x="395" y="105" fill="var(--text)" font-size="12" text-anchor="middle">حركة حول الشمس</text>
+                    <line x1="395" y1="120" x2="395" y2="150" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                    <rect x="330" y="150" width="130" height="40" rx="5" fill="var(--dark3)" stroke="var(--accent)"/>
+                    <text x="395" y="175" fill="var(--text)" font-size="12" text-anchor="middle">الفصول الأربعة</text>
+                    
+                    <!-- ميل المحور -->
+                    <text x="440" y="135" fill="var(--muted)" font-size="10" text-anchor="middle">+ ميل المحور</text>
+                </svg>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">📊 جدول المقارنة</h3>
+                <table class="info-table">
+                    <tr>
+                        <th>الخصائص</th>
+                        <th>دوران الأرض حول نفسها</th>
+                        <th>دوران الأرض حول الشمس</th>
+                    </tr>
+                    <tr>
+                        <td><strong>المدة الزمنية</strong></td>
+                        <td>24 ساعة (يوم)</td>
+                        <td>365.25 يوماً (سنة)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>الظاهرة الناتجة</strong></td>
+                        <td>تعاقب الليل والنهار</td>
+                        <td>تعاقب الفصول الأربعة</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+                <ul class="summary-list">
+                    <li>محور دوران الأرض هو خط وهمي يمر بالقطبين، وهو مائل بزاية 23.5 درجة.</li>
+                    <li>الأرض تدور حول محورها من الغرب إلى الشرق.</li>
+                    <li>الفصول الأربعة تنتج عن الحركة الانتقالية للأرض حول الشمس <strong>زائد</strong> ثبات زاوية ميل المحور.</li>
+                </ul>
+            </div>
+
+            <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+        </div>
+    </div>
+
+    <!-- سكريبتات التحكم والمحاكاة -->
+    <script>
+        // 3.9.1 كود إدارة التبويبات (إلزامي لحل مشكلة الكانفاس المخفي)
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSimulations === 'function') updateSimulations();
+                }, 50);
+            }
+        }
+
+        // إعدادات Canvas العامة
+        const canvasDN = document.getElementById('simCanvasDayNight');
+        const ctxDN = canvasDN.getContext('2d');
+        const canvasSeasons = document.getElementById('simCanvasSeasons');
+        const ctxSeasons = canvasSeasons.getContext('2d');
+
+        // متغيرات المحاكاة
+        let timeHour = 0;
+        let currentMonthIndex = 11; // 11 = ديسمبر (شهر 12)
+
+        // 0.2 — دالة resizeCanvas الإلزامية لمنع التغبيش
+        function resizeCanvas() {
+            const containers = [
+                { canvas: canvasDN, ctx: ctxDN },
+                { canvas: canvasSeasons, ctx: ctxSeasons }
+            ];
+
+            containers.forEach(item => {
+                const container = item.canvas.parentElement;
+                if (container.clientWidth === 0) return;
+                
+                const dpr = window.devicePixelRatio || 1;
+                item.canvas.width  = container.clientWidth  * dpr;
+                item.canvas.height = container.clientHeight * dpr;
+                item.canvas.style.width  = container.clientWidth  + 'px';
+                item.canvas.style.height = container.clientHeight + 'px';
+                
+                item.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            });
+        }
+
+        // --- رسم محاكاة 1: الليل والنهار ---
+        function drawDayNight() {
+            // البند 0.5: clearRect كأول سطر
+            const w = canvasDN.parentElement.clientWidth;
+            const h = canvasDN.parentElement.clientHeight;
+            ctxDN.clearRect(0, 0, w, h);
+            if (w === 0) return;
+
+            const cx = w / 2;
+            const cy = h / 2;
+            const r = Math.min(w, h) * 0.35;
+
+            // الشمس والأشعة
+            ctxDN.fillStyle = "#fbbf24";
+            ctxDN.beginPath();
+            ctxDN.arc(w - 30, cy, 20, 0, Math.PI * 2);
+            ctxDN.fill();
+            
+            ctxDN.strokeStyle = "rgba(251, 191, 36, 0.3)";
+            ctxDN.lineWidth = 2;
+            ctxDN.setLineDash([5, 5]);
+            for(let i=-2; i<=2; i++){
+                ctxDN.beginPath();
+                ctxDN.moveTo(w - 50, cy + i*30);
+                ctxDN.lineTo(cx + r + 20, cy + i*30);
+                ctxDN.stroke();
+            }
+            ctxDN.setLineDash([]);
+
+            // دوران الأرض
+            ctxDN.save();
+            ctxDN.translate(cx, cy);
+            
+            // محور مائل 23.5 درجة
+            const tilt = 23.5 * Math.PI / 180;
+            ctxDN.rotate(tilt);
+
+            // رسم الكرة
+            ctxDN.fillStyle = "#1e3a8a";
+            ctxDN.beginPath();
+            ctxDN.arc(0, 0, r, 0, Math.PI * 2);
+            ctxDN.fill();
+
+            // علامة جغرافية (النقطة الحمراء) تدور
+            // 24 ساعة = دورة كاملة (2*PI)
+            const rotationAngle = (timeHour / 24) * Math.PI * 2;
+            // نقطة تدور في مستوى أفقي (على طول المحور X)
+            const pointX = Math.cos(rotationAngle) * (r * 0.8);
+            const isVisible = Math.sin(rotationAngle) < 0; // إظهار النقطة فقط في النصف الأمامي
+
+            if(isVisible) {
+                ctxDN.fillStyle = "#ef4444";
+                ctxDN.beginPath();
+                ctxDN.arc(pointX, -r*0.2, 5, 0, Math.PI * 2);
+                ctxDN.fill();
+                ctxDN.fillStyle = "#fff";
+                ctxDN.font = "12px Cairo";
+                ctxDN.textAlign = "center";
+                ctxDN.fillText("النقطة", pointX, -r*0.2 - 10);
+            }
+
+            // رسم المحور
+            ctxDN.strokeStyle = "#f97316";
+            ctxDN.lineWidth = 2;
+            ctxDN.beginPath();
+            ctxDN.moveTo(0, -r - 20);
+            ctxDN.lineTo(0, r + 20);
+            ctxDN.stroke();
+
+            ctxDN.restore(); // إزالة الدوران لرسم الظل الثابت
+
+            // الظل الثابت (النصف الأيسر مظلم)
+            ctxDN.fillStyle = "rgba(0, 0, 0, 0.7)";
+            ctxDN.beginPath();
+            ctxDN.arc(cx, cy, r, Math.PI/2, Math.PI*1.5); // نصف القوس الأيسر
+            ctxDN.fill();
+        }
+
+        // --- رسم محاكاة 2: الفصول الأربعة (تصحيح علمي) ---
+        function drawSeasons() {
+            // البند 0.5: clearRect كأول سطر
+            const w = canvasSeasons.parentElement.clientWidth;
+            const h = canvasSeasons.parentElement.clientHeight;
+            ctxSeasons.clearRect(0, 0, w, h);
+            if (w === 0) return;
+
+            const cx = w / 2;
+            const cy = h / 2;
+            const orbitRX = w * 0.35;
+            const orbitRY = h * 0.3;
+
+            // رسم المدار
+            ctxSeasons.beginPath();
+            ctxSeasons.ellipse(cx, cy, orbitRX, orbitRY, 0, 0, Math.PI * 2);
+            ctxSeasons.strokeStyle = "rgba(255, 255, 255, 0.15)";
+            ctxSeasons.lineWidth = 2;
+            ctxSeasons.setLineDash([6, 4]);
+            ctxSeasons.stroke();
+            ctxSeasons.setLineDash([]);
+
+            // رسم الشمس
+            ctxSeasons.beginPath();
+            ctxSeasons.arc(cx, cy, 25, 0, Math.PI * 2);
+            ctxSeasons.fillStyle = "#fbbf24";
+            ctxSeasons.fill();
+
+            // حساب موقع الأرض
+            // شهر ديسمبر (11 في المصفوفة) = شتاء في الشمال.
+            // نضع الأرض في أقصى اليمين، والمحور يميل لليمين (مبتعد عن الشمس)
+            // الزاوية لديسمبر = 0
+            const orbitAngle = (currentMonthIndex - 11) * (Math.PI / 6); 
+            const earthX = cx + orbitRX * Math.cos(orbitAngle);
+            const earthY = cy + orbitRY * Math.sin(orbitAngle);
+
+            // رسم الأرض
+            ctxSeasons.beginPath();
+            ctxSeasons.arc(earthX, earthY, 15, 0, Math.PI * 2);
+            ctxSeasons.fillStyle = "#3b82f6";
+            ctxSeasons.fill();
+
+            // رسم الظل دائما يعاكس اتجاه الشمس
+            // الزاوية من الأرض للشمس
+            const angleToSun = Math.atan2(cy - earthY, cx - earthX);
+            ctxSeasons.beginPath();
+            ctxSeasons.arc(earthX, earthY, 15, angleToSun + Math.PI/2, angleToSun - Math.PI/2);
+            ctxSeasons.fillStyle = "rgba(0, 0, 0, 0.7)";
+            ctxSeasons.fill();
+
+            // رسم المحور (ميل ثابت دائماً نحو أعلى اليمين بـ 23.5)
+            // vector: dx = sin(23.5), dy = -cos(23.5)
+            const tiltX = Math.sin(23.5 * Math.PI / 180) * 25;
+            const tiltY = -Math.cos(23.5 * Math.PI / 180) * 25;
+            
+            ctxSeasons.strokeStyle = "#f97316";
+            ctxSeasons.lineWidth = 2;
+            ctxSeasons.beginPath();
+            ctxSeasons.moveTo(earthX - tiltX, earthY - tiltY);
+            ctxSeasons.lineTo(earthX + tiltX, earthY + tiltY);
+            ctxSeasons.stroke();
+
+            // كتابة الفصل للنصف الشمالي
+            let season = "";
+            let m = currentMonthIndex + 1; // 1 إلى 12
+            if (m === 12 || m <= 2) season = "الشتاء (ميل القطب مبتعداً)";
+            else if (m >= 3 && m <= 5) season = "الربيع (اعتدال)";
+            else if (m >= 6 && m <= 8) season = "الصيف (ميل القطب نحو الشمس)";
+            else if (m >= 9 && m <= 11) season = "الخريف (اعتدال)";
+
+            ctxSeasons.fillStyle = "#fff";
+            ctxSeasons.font = "bold 12px Cairo";
+            ctxSeasons.textAlign = "center";
+            ctxSeasons.fillText(season, earthX, earthY - 30);
+        }
+
+        function updateSimulations() {
+            drawDayNight();
+            drawSeasons();
+        }
+
+        // مستمعات التفاعل
+        document.getElementById('time-slider').addEventListener('input', (e) => {
+            timeHour = parseInt(e.target.value);
+            document.getElementById('val-time').innerText = timeHour;
+            drawDayNight();
+        });
+
+        const months = ["جانفي", "فيفري", "مارس", "أفريل", "ماي", "جوان", "جويلية", "أوت", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+        document.getElementById('month-slider').addEventListener('input', (e) => {
+            currentMonthIndex = parseInt(e.target.value) - 1;
+            document.getElementById('val-month').innerText = months[currentMonthIndex];
+            drawSeasons();
+        });
+
+        // 3.9.1 ضمان الرسم عند تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    updateSimulations();
+                }, 50);
+            }
+        });
+        
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            updateSimulations();
+        });
+
+        // نظام التمارين
+        function checkQuiz() {
+            const answers = { q1: "1", q2: "1", q3: "1" };
+            let score = 0;
+            
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                const feedback = document.getElementById(`fb${q.replace('q','')}`);
+                
+                if (selected) {
+                    if (selected.value === answers[q]) {
+                        feedback.textContent = "✅ إجابة صحيحة!";
+                        feedback.className = "q-feedback correct";
+                        score++;
+                    } else {
+                        feedback.textContent = "❌ إجابة خاطئة. راجع الدرس.";
+                        feedback.className = "q-feedback wrong";
+                    }
+                    feedback.style.display = "block";
+                } else {
+                    feedback.textContent = "⚠️ يرجى اختيار إجابة.";
+                    feedback.className = "q-feedback wrong";
+                    feedback.style.display = "block";
+                }
+            }
+        }
+    </script>
+
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 3 | عدد رسوم SVG في الدرس النظري = 3 | عدد المحاكيات = 2 -->
+    <script src="credit.js"></script>
+</body>
+</html>

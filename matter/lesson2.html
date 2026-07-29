@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قياس الحجم - الفيزياء السهلة</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <script>
+        MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #14b8a6; /* لون مقطع المادة وتحولاتها (Teal) */
+            --accent2:#2dd4bf;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.7;
+            padding-bottom: 50px;
+        }
+
+        .amiri { font-family: 'Amiri', serif; }
+        
+        main { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .lesson-header {
+            background: var(--dark2);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lesson-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+        }
+
+        .lesson-badge {
+            display: inline-block;
+            background: rgba(20, 184, 166, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        h1 em { color: var(--accent); font-style: normal; }
+        .lesson-meta { color: var(--muted); font-size: 0.9rem; }
+
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .objectives-box {
+            background: var(--card);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .objectives-box h3 { color: var(--accent); margin-bottom: 10px; }
+        .objectives-box ul { padding-right: 20px; }
+        .objectives-box li { margin-bottom: 8px; }
+
+        .sec-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0 20px;
+        }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-line { flex-grow: 1; height: 1px; background: var(--border); border: none; }
+
+        .def-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-right: 4px solid;
+            background: rgba(255,255,255,0.03);
+        }
+        .highlight-box.tip { border-color: var(--gold); color: #fef08a; }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--dark2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .info-table th, .info-table td {
+            padding: 12px; text-align: center; border: 1px solid var(--border);
+        }
+        .info-table th { background: var(--dark3); color: var(--accent2); }
+        .info-table td.amiri { color: var(--gold); font-size: 1.2rem; }
+
+        .formula-box {
+            background: rgba(20, 184, 166, 0.05);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .formula-title {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .formula-display {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #fff;
+            direction: ltr; /* إجبار الحاوية بالكامل على قراءة المحتوى من اليسار لليمين */
+            text-align: center; /* توسيط المعادلة رياضياً */
+        }
+
+        /* تنسيق الكلمة العربية كدليل سفلي معزول */
+        .arabic-sub {
+            font-family: 'Amiri', serif;
+            font-size: 0.5em; /* تصغير الحجم ليبدو كدليل سفلي حقيقي */
+            color: var(--accent2);
+            direction: rtl; /* الكلمة فقط تُقرأ من اليمين لليسار */
+            unicode-bidi: isolate; /* 🌟 السر هنا: عزل الكلمة العربية تماماً حتى لا تسحب علامة التساوي أو الرموز اللاتينية معها */
+            margin-left: 2px;
+            margin-right: 5px;
+            vertical-align: sub; /* محاذاة الكلمة للأسفل رياضياً */
+        }
+        
+        .symbol-table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .symbol-table th { background: var(--dark3); color: var(--muted); padding: 8px; border-bottom: 1px solid var(--border); }
+        .symbol-table td { padding: 10px 8px; border-bottom: 1px solid var(--border); text-align: center; }
+        .sym-cell { font-family: 'Amiri', serif; font-size: 1.2rem; font-style: italic; color: #fff; }
+        .unit-cell { color: var(--gold); }
+
+        .diagram-figure {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .diagram-wrap {
+            max-width: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+        .lesson-diagram { width: 100%; max-width: 450px; height: auto; }
+        .fig-title {
+            margin-top: 15px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .sim-wrap {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+        .sim-title { font-size: 1.2rem; color: #fff; }
+        .sim-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        .sim-description {
+            background: rgba(255,255,255,0.02);
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--muted);
+            border-right: 3px solid var(--accent);
+        }
+        .canvas-container {
+            width: 100%;
+            height: 350px;
+            background: var(--dark);
+            border-radius: 8px;
+            border: 1px inset var(--border);
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .sim-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            background: var(--dark3);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .control-group { flex: 1; min-width: 200px; }
+        .control-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; }
+        .val-badge { color: var(--gold); font-weight: bold; font-family: monospace; font-size: 1.1rem; }
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent);
+            height: 6px;
+            border-radius: 3px;
+            outline: none;
+        }
+        .action-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .action-btn:hover { background: var(--accent2); }
+
+        .q-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .q-num {
+            display: inline-block;
+            background: var(--dark3);
+            color: var(--muted);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+        .q-text { font-size: 1.1rem; margin-bottom: 15px; }
+        .q-options { display: grid; gap: 10px; }
+        .q-option {
+            background: var(--dark);
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .q-option:hover { border-color: var(--accent); }
+        .q-option.selected { background: rgba(20, 184, 166, 0.1); border-color: var(--accent); }
+        .q-option.correct { background: rgba(16, 185, 129, 0.1); border-color: var(--green); color: var(--green); }
+        .q-option.wrong { background: rgba(239, 68, 68, 0.1); border-color: var(--red); color: var(--red); }
+        .q-feedback {
+            margin-top: 15px; padding: 10px; border-radius: 6px; font-size: 0.9rem; display: none;
+            background: rgba(255,255,255,0.05);
+        }
+        .q-feedback.show { display: block; }
+        
+        .summary-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .summary-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+        .summary-meta { color: var(--muted); font-size: 0.9rem; }
+        .summary-title { color: var(--accent); font-size: 1.8rem; margin: 10px 0; }
+        .summary-subtitle { color: var(--gold); }
+        .summary-section-title {
+            color: #fff; border-right: 4px solid var(--accent); padding-right: 10px; margin: 30px 0 15px; font-size: 1.3rem;
+        }
+        .s-def-item { margin-bottom: 15px; }
+        .s-def-term { font-weight: bold; color: var(--accent2); margin-left: 10px; font-size: 1.1rem; }
+        .summary-list { list-style: none; padding: 0; }
+        .summary-list li { position: relative; padding-right: 25px; margin-bottom: 12px; }
+        .summary-list li::before { content: '▪'; position: absolute; right: 5px; color: var(--accent); font-size: 1.5rem; top: -5px; }
+        .print-btn {
+            background: var(--dark3); border: 1px solid var(--border); color: #fff;
+            padding: 12px 25px; border-radius: 6px; cursor: pointer; margin-top: 30px;
+            width: 100%; font-size: 1.1rem; transition: background 0.3s;
+        }
+		.concept-map-wrap {
+          text-align: center;
+          margin-bottom: 30px;
+          width: 100%;
+          overflow-x: auto; /* السماح بالتمرير */
+          -webkit-overflow-scrolling: touch;
+        }
+        .concept-map {
+          min-width: 500px; /* إجبار الرسم على الاحتفاظ بحجم مقروء */
+          max-width: 100%;
+          height: auto;
+          display: block;
+          margin: 0 auto;
+        }
+
+        .print-btn:hover { background: var(--dark4); }
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar, .print-btn { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #000 !important; font-size: 12pt; }
+            .summary-card { box-shadow: none; border: 1px solid #000; padding: 20px; }
+            .summary-title { color: #000 !important; }
+            .summary-section-title { color: #000 !important; border-right-color: #000 !important; }
+            .s-def-term, .sym-cell, .unit-cell, .highlight-box { color: #000 !important; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav-bar">
+        <a href="../index.html#matter">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <main>
+        <div class="lesson-header">
+            <span>السنة الأولى متوسط › المقطع 2 › الدرس 02</span><br><br>
+            <span class="lesson-badge">الدرس 02</span>
+            <h1>قياس <em>الحجم</em></h1>
+            <p class="lesson-meta">المادة وتحولاتها | حصتان</p>
+        </div>
+
+        <nav class="tabs-nav">
+            <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+            <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+            <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+            <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+        </nav>
+
+        <div id="tab-lesson" class="tab-content active">
+            <div class="objectives-box">
+                <h3>🎯 الأهداف التعلمية</h3>
+                <ul>
+                    <li>أن يتعرف التلميذ على مفهوم الحجم ووحداته الدولية والعملية.</li>
+                    <li>أن يتدرب على القراءة الصحيحة لحجم سائل باستخدام المخبار المدرج.</li>
+                    <li>أن يحسب رياضياً حجم جسم صلب منتظم (مكعب، متوازي مستطيلات).</li>
+                    <li>أن يقيس حجم جسم صلب غير منتظم باستخدام طريقة الغمر.</li>
+                </ul>
+            </div>
+
+            <!-- Concept 1: Volume Definition -->
+            <div class="sec-title">
+                <span class="sec-icon">📦</span>
+                <h2>1. مفهوم الحجم ووحداته</h2>
+                <hr class="sec-line">
+            </div>
+            
+            <div class="def-box">
+                <strong>الحجم (Volume):</strong> هو الحيز أو المكان الذي يشغله الجسم (صلب، سائل، أو غاز) في الفراغ. نرمز له بالحرف اللاتيني <span class="amiri" style="color:var(--accent2); font-size:1.2rem;">V</span>.
+            </div>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (1) — تمثيل فراغي للحجم</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <linearGradient id="cubeGradFront" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="rgba(20, 184, 166, 0.6)" />
+                                <stop offset="100%" stop-color="rgba(20, 184, 166, 0.2)" />
+                            </linearGradient>
+                            <linearGradient id="cubeGradTop" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="rgba(20, 184, 166, 0.8)" />
+                                <stop offset="100%" stop-color="rgba(20, 184, 166, 0.5)" />
+                            </linearGradient>
+                            <linearGradient id="cubeGradSide" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="rgba(20, 184, 166, 0.4)" />
+                                <stop offset="100%" stop-color="rgba(20, 184, 166, 0.1)" />
+                            </linearGradient>
+                            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="5" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+                        <!-- Space grid -->
+                        <path d="M 50 150 L 350 150 M 100 100 L 400 100 M 50 150 L 100 100 M 350 150 L 400 100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                        
+                        <!-- 3D Cube -->
+                        <g transform="translate(150, 40)">
+                            <!-- Top -->
+                            <polygon points="40,10 100,10 60,40 0,40" fill="url(#cubeGradTop)" stroke="var(--accent)" stroke-width="1" stroke-linejoin="round"/>
+                            <!-- Side -->
+                            <polygon points="100,10 100,70 60,100 60,40" fill="url(#cubeGradSide)" stroke="var(--accent)" stroke-width="1" stroke-linejoin="round"/>
+                            <!-- Front -->
+                            <polygon points="0,40 60,40 60,100 0,100" fill="url(#cubeGradFront)" stroke="var(--accent)" stroke-width="1" stroke-linejoin="round"/>
+                            
+                            <text x="50" y="65" font-family="Amiri" font-size="28" fill="#fff" text-anchor="middle" dominant-baseline="middle" filter="url(#glow)">V</text>
+                        </g>
+                        <!-- Labels -->
+                        <text x="250" y="160" font-family="Cairo" font-size="14" fill="var(--muted)" text-anchor="start">الحيز المشغول (الحجم)</text>
+                        <path d="M 230 155 Q 200 130 180 120" fill="none" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrowhead)"/>
+                    </svg>
+                </div>
+            </figure>
+
+            <table class="info-table">
+                <tr>
+                    <th>الوحدة الدولية</th>
+                    <th>الوحدة العملية للسوائل</th>
+                    <th>التحويل الأساسي</th>
+                </tr>
+                <tr>
+                    <td>المتر المكعب <span class="amiri">(m³)</span></td>
+                    <td>اللتر <span class="amiri">(L)</span></td>
+                    <td class="amiri">1 L = 1 dm³<br>1 mL = 1 cm³</td>
+                </tr>
+            </table>
+
+            <!-- Concept 2: Liquid Volume -->
+            <div class="sec-title">
+                <span class="sec-icon">💧</span>
+                <h2>2. قياس حجم سائل</h2>
+                <hr class="sec-line">
+            </div>
+            <p>لقياس حجم سائل نستخدم أواني زجاجية مدرجة، وأكثرها دقة هو <strong>المخبار المدرج (Éprouvette graduée)</strong>.</p>
+            
+            <div class="highlight-box tip">
+                📌 <strong>طريقة القراءة الصحيحة:</strong> نضع المخبار على سطح مستوٍ، ونجعل العين في خط أفقي مع <strong>أسفل السطح الهلالي</strong> (المقعر) للسائل.
+            </div>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (2) — القراءة الصحيحة للسطح الهلالي للسائل</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="rgba(255,255,255,0.3)" />
+                                <stop offset="20%" stop-color="rgba(255,255,255,0.05)" />
+                                <stop offset="80%" stop-color="rgba(255,255,255,0.05)" />
+                                <stop offset="100%" stop-color="rgba(255,255,255,0.4)" />
+                            </linearGradient>
+                            <linearGradient id="liquidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="rgba(20, 184, 166, 0.4)" />
+                                <stop offset="100%" stop-color="rgba(20, 184, 166, 0.8)" />
+                            </linearGradient>
+                            <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                                <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--muted)"/>
+                            </marker>
+                            <marker id="arrowEye" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                                <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--gold)"/>
+                            </marker>
+                        </defs>
+                        
+                        <!-- Cylinder -->
+                        <rect x="160" y="30" width="80" height="200" rx="10" fill="rgba(255,255,255,0.02)" stroke="url(#glassGrad)" stroke-width="3" />
+                        
+                        <!-- Liquid with Meniscus -->
+                        <path d="M 161.5 120 Q 200 140 238.5 120 L 238.5 220 A 8 8 0 0 1 230.5 228 L 169.5 228 A 8 8 0 0 1 161.5 220 Z" fill="url(#liquidGrad)" />
+                        <!-- Liquid top edge (back) -->
+                        <path d="M 161.5 120 Q 200 100 238.5 120" fill="none" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1.5" />
+                        
+                        <!-- Graduations -->
+                        <g stroke="rgba(255,255,255,0.6)" stroke-width="1.5">
+                            <line x1="160" y1="80" x2="175" y2="80" /> <text x="150" y="84" fill="#fff" font-size="12" font-family="Amiri" text-anchor="end">40</text>
+                            <line x1="160" y1="100" x2="168" y2="100" />
+                            <line x1="160" y1="120" x2="175" y2="120" /> <text x="150" y="124" fill="#fff" font-size="12" font-family="Amiri" text-anchor="end">30</text>
+                            <line x1="160" y1="140" x2="168" y2="140" />
+                            <line x1="160" y1="160" x2="175" y2="160" /> <text x="150" y="164" fill="#fff" font-size="12" font-family="Amiri" text-anchor="end">20</text>
+                        </g>
+
+                        <!-- Correct Eye Position -->
+                        <g transform="translate(40, 130)">
+                            <path d="M 0 0 Q 15 -10 30 0 Q 15 10 0 0 Z" fill="none" stroke="var(--gold)" stroke-width="2" />
+                            <circle cx="15" cy="0" r="4" fill="var(--gold)" />
+                            <line x1="35" y1="0" x2="155" y2="0" stroke="var(--gold)" stroke-dasharray="4,4" stroke-width="1.5" marker-end="url(#arrowEye)"/>
+                            <text x="15" y="-15" font-family="Cairo" font-size="12" fill="var(--gold)" text-anchor="middle">مستوى النظر الصحيح</text>
+                        </g>
+                        
+                        <!-- Wrong Eye Positions -->
+                        <g transform="translate(60, 60)" opacity="0.4">
+                            <path d="M 0 0 Q 15 -10 30 0 Q 15 10 0 0 Z" fill="none" stroke="var(--red)" stroke-width="2" />
+                            <circle cx="15" cy="0" r="4" fill="var(--red)" />
+                            <line x1="32" y1="5" x2="135" y2="60" stroke="var(--red)" stroke-dasharray="3,3" stroke-width="1"/>
+                        </g>
+                        <g transform="translate(60, 200)" opacity="0.4">
+                            <path d="M 0 0 Q 15 -10 30 0 Q 15 10 0 0 Z" fill="none" stroke="var(--red)" stroke-width="2" />
+                            <circle cx="15" cy="0" r="4" fill="var(--red)" />
+                            <line x1="32" y1="-5" x2="135" y2="-60" stroke="var(--red)" stroke-dasharray="3,3" stroke-width="1"/>
+                        </g>
+                    </svg>
+                </div>
+            </figure>
+
+            <!-- Concept 3: Regular Solid Volume -->
+            <div class="sec-title">
+                <span class="sec-icon">🧊</span>
+                <h2>3. قياس حجم جسم صلب منتظم</h2>
+                <hr class="sec-line">
+            </div>
+            <p>لحساب حجم جسم صلب ذو شكل هندسي منتظم (مثل المكعب أو متوازي المستطيلات)، نستخدم علاقات رياضية بعد قياس أبعاده بالمسطرة أو القدم القنوية.</p>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (3) — الأبعاد الهندسية للمجسمات المنتظمة</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <!-- Cube -->
+                        <g transform="translate(50, 40)">
+                            <!-- Top -->
+                            <polygon points="40,10 90,10 50,40 0,40" fill="rgba(245, 158, 11, 0.6)" stroke="var(--gold)" stroke-width="1.5" stroke-linejoin="round"/>
+                            <!-- Side -->
+                            <polygon points="90,10 90,60 50,90 50,40" fill="rgba(245, 158, 11, 0.4)" stroke="var(--gold)" stroke-width="1.5" stroke-linejoin="round"/>
+                            <!-- Front -->
+                            <polygon points="0,40 50,40 50,90 0,90" fill="rgba(245, 158, 11, 0.8)" stroke="var(--gold)" stroke-width="1.5" stroke-linejoin="round"/>
+                            <!-- Labels -->
+                            <text x="-10" y="70" font-family="Amiri" font-style="italic" font-size="18" fill="#fff" text-anchor="end">a</text>
+                            <text x="25" y="110" font-family="Amiri" font-style="italic" font-size="18" fill="#fff" text-anchor="middle">a</text>
+                            <text x="80" y="90" font-family="Amiri" font-style="italic" font-size="18" fill="#fff" text-anchor="start">a</text>
+                            <text x="45" y="-10" font-family="Cairo" font-size="14" fill="var(--gold)" text-anchor="middle">مكعب</text>
+                        </g>
+                        
+                        <!-- Cuboid -->
+                        <g transform="translate(250, 40)">
+                            <!-- Top -->
+                            <polygon points="50,10 160,10 110,40 0,40" fill="rgba(16, 185, 129, 0.6)" stroke="var(--green)" stroke-width="1.5" stroke-linejoin="round"/>
+                            <!-- Side -->
+                            <polygon points="160,10 160,50 110,80 110,40" fill="rgba(16, 185, 129, 0.4)" stroke="var(--green)" stroke-width="1.5" stroke-linejoin="round"/>
+                            <!-- Front -->
+                            <polygon points="0,40 110,40 110,80 0,80" fill="rgba(16, 185, 129, 0.8)" stroke="var(--green)" stroke-width="1.5" stroke-linejoin="round"/>
+                            <!-- Labels -->
+                            <text x="-10" y="65" font-family="Amiri" font-style="italic" font-size="18" fill="#fff" text-anchor="end">h</text>
+                            <text x="55" y="100" font-family="Amiri" font-style="italic" font-size="18" fill="#fff" text-anchor="middle">L</text>
+                            <text x="145" y="80" font-family="Amiri" font-style="italic" font-size="18" fill="#fff" text-anchor="start">l</text>
+                            <text x="80" y="-10" font-family="Cairo" font-size="14" fill="var(--green)" text-anchor="middle">متوازي مستطيلات</text>
+                        </g>
+                    </svg>
+                </div>
+            </figure>
+
+            <div class="formula-box">
+                <div class="formula-title">علاقات حساب الحجم للمجسمات المنتظمة</div>
+                
+                <!-- معادلة المكعب -->
+                <div class="formula-display">
+                    <span dir="ltr">$V$<sub class="arabic-sub">مكعب</sub> $= a \times a \times a$</span>
+                </div>
+                
+                <!-- معادلة متوازي المستطيلات -->
+                <div class="formula-display">
+                    <span dir="ltr">$V$<sub class="arabic-sub">متوازي المستطيلات</sub> $= L \times l \times h$</span>
+                </div>
+                <table class="symbol-table">
+                    <tr><th>الرمز</th><th>الدلالة</th><th>الوحدة</th></tr>
+                    <tr><td class="sym-cell">a</td><td>طول حرف المكعب</td><td class="unit-cell">m , cm</td></tr>
+                    <tr><td class="sym-cell">L</td><td>الطول (Longueur)</td><td class="unit-cell">m , cm</td></tr>
+                    <tr><td class="sym-cell">l</td><td>العرض (largeur)</td><td class="unit-cell">m , cm</td></tr>
+                    <tr><td class="sym-cell">h</td><td>الارتفاع (hauteur)</td><td class="unit-cell">m , cm</td></tr>
+                </table>
+            </div>
+
+            <!-- Concept 4: Irregular Solid Volume -->
+            <div class="sec-title">
+                <span class="sec-icon">🪨</span>
+                <h2>4. قياس حجم جسم صلب غير منتظم</h2>
+                <hr class="sec-line">
+            </div>
+            <p>لقياس حجم جسم صلب لا شكل هندسي له (مثل حجر، مفتاح) ولا يذوب في الماء، نستخدم <strong>طريقة الغمر</strong>.</p>
+            
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (4) — طريقة الغمر خطوة بخطوة</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <!-- Step 1: Water only -->
+                        <g transform="translate(80, 20)">
+                            <rect x="0" y="0" width="60" height="180" rx="8" fill="rgba(255,255,255,0.02)" stroke="url(#glassGrad)" stroke-width="2"/>
+                            <!-- Water V1 -->
+                            <path d="M 2 100 Q 30 110 58 100 L 58 178 A 6 6 0 0 1 52 184 L 8 184 A 6 6 0 0 1 2 178 Z" fill="url(#liquidGrad)"/>
+                            <text x="-15" y="105" font-family="Amiri" font-size="16" fill="#fff">V₁</text>
+                            <line x1="-5" y1="100" x2="10" y2="100" stroke="#fff" stroke-width="1.5"/>
+                            <text x="30" y="210" font-family="Cairo" font-size="14" fill="var(--muted)" text-anchor="middle">1. نضع حجماً من الماء</text>
+                        </g>
+                        
+                        <!-- Arrow -->
+                        <text x="250" y="120" font-size="30" fill="var(--accent)" text-anchor="middle">→</text>
+                        
+                        <!-- Step 2: Water + Stone -->
+                        <g transform="translate(320, 20)">
+                            <rect x="0" y="0" width="60" height="180" rx="8" fill="rgba(255,255,255,0.02)" stroke="url(#glassGrad)" stroke-width="2"/>
+                            <!-- Water V2 (Higher) -->
+                            <path d="M 2 50 Q 30 60 58 50 L 58 178 A 6 6 0 0 1 52 184 L 8 184 A 6 6 0 0 1 2 178 Z" fill="url(#liquidGrad)"/>
+                            <!-- Stone -->
+                            <path d="M 20 160 Q 40 140 50 160 Q 45 175 30 180 Q 15 175 10 165 Z" fill="#64748b" stroke="#475569" stroke-width="1"/>
+                            
+                            <text x="-15" y="55" font-family="Amiri" font-size="16" fill="#fff">V₂</text>
+                            <line x1="-5" y1="50" x2="10" y2="50" stroke="#fff" stroke-width="1.5"/>
+                            <text x="30" y="210" font-family="Cairo" font-size="14" fill="var(--muted)" text-anchor="middle">2. نغمر الجسم الصلب</text>
+                        </g>
+                    </svg>
+                </div>
+            </figure>
+
+            <div class="formula-box">
+                <div class="formula-title">قانون طريقة الغمر</div>
+                <div class="formula-display">
+                    $$ V = V_2 - V_1 $$
+                </div>
+                <table class="symbol-table">
+                    <tr><th>الرمز</th><th>الدلالة</th></tr>
+                    <tr><td class="sym-cell">V</td><td>حجم الجسم الصلب المغمور</td></tr>
+                    <tr><td class="sym-cell">V₁</td><td>حجم السائل لوحده (قبل الغمر)</td></tr>
+                    <tr><td class="sym-cell">V₂</td><td>حجم (السائل + الجسم الصلب) معاً</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab-sim" class="tab-content">
+            
+            <!-- Simulation 1 -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 1: القراءة الصحيحة لحجم السائل</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي <strong>تغير مستوى السطح الهلالي</strong> للسائل في المخبار المدرج. حرّك <strong>شريط الحجم</strong> لترى كيف يتغيّر <strong>مستوى السائل وموقع العين الصحيح للقراءة</strong>.</p>
+                </div>
+                
+                <div class="canvas-container">
+                    <canvas id="simCanvas1"></canvas>
+                </div>
+                
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>حجم السائل (mL): <span id="val1-display" class="val-badge">50</span></label>
+                        <input type="range" id="slider-vol" min="10" max="100" value="50">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 2 -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 2: قياس حجم حجر بطريقة الغمر</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي <strong>طريقة الغمر</strong> لحساب حجم جسم صلب. اضغط على <strong>اغمر الحجر</strong> لترى كيف يتغيّر <strong>مستوى الماء</strong> ويُحسب حجم الحجر آلياً.</p>
+                </div>
+                
+                <div class="canvas-container">
+                    <canvas id="simCanvas2"></canvas>
+                </div>
+                
+                <div class="sim-controls" style="justify-content: center;">
+                    <button class="action-btn" id="btn-drop">اغمر الحجر في الماء</button>
+                    <button class="action-btn" id="btn-reset" style="background:var(--dark4); border:1px solid var(--border);">إعادة التجربة</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="tab-exercises" class="tab-content">
+            
+            <div id="quiz-container">
+                <!-- MCQ 1 -->
+                <div class="q-card" data-correct="1">
+                    <div class="q-num">السؤال 1</div>
+                    <div class="q-text">ما هي الوحدة الدولية (الأساسية) لقياس الحجم في النظام الدولي للوحدات؟</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">اللتر (L)</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">المتر المكعب (m³)</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">الكيلوغرام (kg)</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> المتر المكعب (m³) هو الوحدة الدولية للحجم، بينما اللتر يستخدم غالباً كسعة للسوائل.</div>
+                </div>
+
+                <!-- MCQ 2 -->
+                <div class="q-card" data-correct="2">
+                    <div class="q-num">السؤال 2</div>
+                    <div class="q-text">لتحويل 1 لتر (1 L) إلى وحدات المكعب، فإنها تساوي بالضبط:</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">1 m³</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">1 cm³</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">1 dm³</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> حسب جدول التحويلات، 1 لتر يكافئ 1 ديسيمتر مكعب (dm³).</div>
+                </div>
+
+                <!-- MCQ 3 -->
+                <div class="q-card" data-correct="1">
+                    <div class="q-num">السؤال 3</div>
+                    <div class="q-text">كيف نقرأ حجم السائل في مخبار مدرج بشكل صحيح؟</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">النظر من أعلى إلى أسفل السطح الهلالي.</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">جعل العين في خط أفقي مع أسفل السطح المقعر (الهلالي) للسائل.</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">النظر من أسفل إلى أعلى السطح.</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> لتفادي خطأ اختلاف الرؤية، يجب أن تكون العين أفقية تماماً مع أسفل تقعر السائل.</div>
+                </div>
+
+                <!-- MCQ 4 -->
+                <div class="q-card" data-correct="0">
+                    <div class="q-num">السؤال 4</div>
+                    <div class="q-text">صندوق على شكل متوازي مستطيلات، أبعاده: L = 5cm, l = 2cm, h = 3cm. ما هو حجمه؟</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">30 cm³</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">10 cm³</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">15 cm³</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> بتطبيق القانون $V = L \times l \times h = 5 \times 2 \times 3 = 30 \text{ cm}^3$.</div>
+                </div>
+
+                <!-- MCQ 5 -->
+                <div class="q-card" data-correct="1">
+                    <div class="q-num">السؤال 5</div>
+                    <div class="q-text">في طريقة الغمر، كان حجم الماء V₁ = 40mL. بعد غمر قطعة معدنية أصبح الحجم V₂ = 55mL. حجم القطعة هو:</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">95 mL</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">15 mL (أو 15 cm³)</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">40 mL</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> حسب العلاقة $V = V_2 - V_1 = 55 - 40 = 15 \text{ mL}$. وبما أن $1\text{mL} = 1\text{cm}^3$ فإن الحجم هو $15\text{cm}^3$.</div>
+                </div>
+
+                <!-- Diagram Question -->
+                <div class="q-card q-diagram-type" data-correct="1">
+                    <div class="q-num">السؤال 6 (تفاعلي)</div>
+                    <div class="q-text">تأمل الرسم أدناه الذي يمثل قراءة لحجم سائل. القيمة الصحيحة للحجم هي:</div>
+                    <svg viewBox="0 0 300 200" style="width:100%; max-width:250px; display:block; margin: 0 auto 15px; background:var(--dark); border-radius:8px; border:1px solid var(--border);">
+                        <rect x="120" y="20" width="60" height="160" rx="4" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+                        <path d="M121 100 Q150 115 179 100 L179 178 L121 178 Z" fill="rgba(20, 184, 166, 0.5)"/>
+                        <!-- Ticks -->
+                        <line x1="120" y1="60" x2="130" y2="60" stroke="#fff" stroke-width="2"/> <text x="100" y="65" fill="#fff" font-size="14">30</text>
+                        <line x1="120" y1="80" x2="125" y2="80" stroke="#fff" stroke-width="1"/>
+                        <line x1="120" y1="100" x2="130" y2="100" stroke="#fff" stroke-width="2"/> <text x="100" y="105" fill="#fff" font-size="14">20</text>
+                        <line x1="120" y1="120" x2="125" y2="120" stroke="#fff" stroke-width="1"/>
+                        <line x1="120" y1="140" x2="130" y2="140" stroke="#fff" stroke-width="2"/> <text x="100" y="145" fill="#fff" font-size="14">10</text>
+                        <!-- Meniscus bottom is exactly at 107.5 roughly, corresponding to 18 mL if 100 is 20mL and 80 is 25mL.. wait let's make it exact. 
+                             y=100 is 20mL. Meniscus curve bottom is at Q control point y=115. But visually let's say it's slightly below 20. -->
+                        <line x1="140" y1="107.5" x2="190" y2="107.5" stroke="var(--gold)" stroke-dasharray="2,2"/>
+                        <circle cx="190" cy="107.5" r="3" fill="var(--gold)"/>
+                    </svg>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">20 mL (قراءة أعلى السطح)</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">18 mL (قراءة أسفل السطح الهلالي)</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">22 mL</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> يجب القراءة دائماً عند أدنى نقطة من تقعر السائل (أسفل السطح الهلالي)، وهي هنا تحت خط الـ 20mL بشرطتين (كل شرطة بـ 1mL) أي 18mL.</div>
+                </div>
+
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="action-btn" onclick="checkAnswers()" style="font-size: 1.2rem; padding: 12px 30px;">إظهار النتيجة النهائية</button>
+            </div>
+            <div id="quiz-score" style="text-align: center; margin-top: 20px; font-size: 1.5rem; font-weight: bold; color: var(--accent); display: none;"></div>
+        </div>
+
+        <div id="tab-summary" class="tab-content">
+            <div class="summary-card">
+                
+                <div class="summary-header">
+                    <div class="summary-meta">السنة الأولى متوسط | المادة وتحولاتها | الدرس 02</div>
+                    <h2 class="summary-title">ملخص: قياس الحجم</h2>
+                    <div class="summary-subtitle">الأستاذ(ة) — منهاج الجيل الثاني</div>
+                </div>
+
+                <div class="concept-map-wrap">
+                    <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                    <svg viewBox="0 0 600 250" style="width: 100%; max-width: 600px; display: block; margin: auto;">
+                        <rect x="220" y="10" width="160" height="40" rx="8" fill="var(--accent)" />
+                        <text x="300" y="35" fill="#fff" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle">قياس الحجم (V)</text>
+                        
+                        <path d="M300 50 L300 80 M300 80 L150 80 L150 110 M300 80 L450 80 L450 110" stroke="var(--border)" stroke-width="2" fill="none"/>
+                        
+                        <!-- Liquids -->
+                        <rect x="70" y="110" width="160" height="40" rx="8" fill="var(--dark3)" stroke="var(--accent)" stroke-width="1"/>
+                        <text x="150" y="135" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle">السوائل</text>
+                        <path d="M150 150 L150 180" stroke="var(--border)" stroke-width="2" />
+                        <rect x="50" y="180" width="200" height="40" rx="8" fill="rgba(20, 184, 166, 0.1)" stroke="var(--accent2)" stroke-width="1"/>
+                        <text x="150" y="205" fill="var(--accent2)" font-family="Cairo" font-size="14" text-anchor="middle">المخبار المدرج (قراءة الهلال)</text>
+
+                        <!-- Solids -->
+                        <rect x="370" y="110" width="160" height="40" rx="8" fill="var(--dark3)" stroke="var(--accent)" stroke-width="1"/>
+                        <text x="450" y="135" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle">الأجسام الصلبة</text>
+                        <path d="M450 150 L450 170 M450 170 L350 170 L350 190 M450 170 L550 170 L550 190" stroke="var(--border)" stroke-width="2" fill="none"/>
+                        
+                        <!-- Reg/Irreg -->
+                        <rect x="290" y="190" width="120" height="40" rx="8" fill="rgba(245, 158, 11, 0.1)" stroke="var(--gold)" stroke-width="1"/>
+                        <text x="350" y="215" fill="var(--gold)" font-family="Cairo" font-size="12" text-anchor="middle">منتظمة (قانون رياضي)</text>
+                        
+                        <rect x="490" y="190" width="120" height="40" rx="8" fill="rgba(245, 158, 11, 0.1)" stroke="var(--gold)" stroke-width="1"/>
+                        <text x="550" y="215" fill="var(--gold)" font-family="Cairo" font-size="12" text-anchor="middle">غير منتظمة (غمر)</text>
+                    </svg>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+                    <div class="s-def-item">
+                        <span class="s-def-term">الحجم (Volume):</span> الحيز الذي يشغله الجسم في الفراغ، يرمز له بـ V.
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">طريقة الغمر:</span> طريقة تجريبية لقياس حجم جسم صلب غير منتظم لا يذوب في الماء بطرح حجم الماء من الحجم الكلي.
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">⚡ القوانين والعلاقات الرياضية</h3>
+                    <table class="info-table" style="background: transparent;">
+                        <tr>
+                            <td style="text-align: right; border:none; padding:10px;">حجم المكعب:</td>
+                            <td style="border:none; text-align: left; font-size:1.2rem; font-family: 'Amiri'; color: var(--accent2);">$V = a \times a \times a$</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right; border:none; padding:10px;">حجم متوازي المستطيلات:</td>
+                            <td style="border:none; text-align: left; font-size:1.2rem; font-family: 'Amiri'; color: var(--accent2);">$V = L \times l \times h$</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right; border:none; padding:10px;">قانون طريقة الغمر:</td>
+                            <td style="border:none; text-align: left; font-size:1.2rem; font-family: 'Amiri'; color: var(--accent2);">$V = V_2 - V_1$</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+                    <ul class="summary-list">
+                        <li>الوحدة الدولية للحجم هي <strong>المتر المكعب (m³)</strong>.</li>
+                        <li>للتحويل: <strong>1 لتر = 1 ديسيمتر مكعب ($1L = 1dm^3$)</strong> و <strong>1 ميليلتر = 1 سنتيمتر مكعب ($1mL = 1cm^3$)</strong>.</li>
+                        <li>لقراءة حجم السائل، يجب أن تكون العين في خط أفقي مع <strong>أسفل السطح الهلالي</strong>.</li>
+                    </ul>
+                </div>
+
+                <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // دالة التبويبات الإلزامية لضمان عمل الكانفاس
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim1 === 'function') updateSim1();
+                    if (typeof drawSim2 === 'function') drawSim2(); 
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim1 === 'function') updateSim1();
+                    if (typeof drawSim2 === 'function') drawSim2(); 
+                }, 50);
+            }
+        });
+
+        // إعداد Canvas (Strict Rule 0.2 & 0.5)
+        const canvas1 = document.getElementById('simCanvas1');
+        const ctx1 = canvas1.getContext('2d');
+        const canvas2 = document.getElementById('simCanvas2');
+        const ctx2 = canvas2.getContext('2d');
+
+        function resizeCanvas() {
+            [canvas1, canvas2].forEach(cvs => {
+                if(!cvs) return;
+                const container = cvs.parentElement;
+                if (container.clientWidth === 0) return;
+                
+                const dpr = window.devicePixelRatio || 1;
+                cvs.width  = container.clientWidth  * dpr;
+                cvs.height = container.clientHeight * dpr;
+                cvs.style.width  = container.clientWidth  + 'px';
+                cvs.style.height = container.clientHeight + 'px';
+                
+                const ctx = cvs.getContext('2d');
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            });
+        }
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            updateSim1();
+            drawSim2();
+        });
+
+        const sliderVol = document.getElementById('slider-vol');
+        const val1Display = document.getElementById('val1-display');
+        let currentVol = parseInt(sliderVol.value);
+
+        sliderVol.addEventListener('input', (e) => {
+            currentVol = parseInt(e.target.value);
+            val1Display.textContent = currentVol;
+            updateSim1();
+        });
+
+        function updateSim1() {
+            if (canvas1.width === 0) return;
+            const w = canvas1.clientWidth;
+            const h = canvas1.clientHeight;
+            
+            // Mandatory clear (Rule 0.5)
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+
+            const cylW = 100;
+            const cylH = 260;
+            const cx = w / 2;
+            const cy = h / 2 + 20; // Center Y of base
+            
+            // Dimensions mapping: Vol 0 -> 100 mL corresponds to heights
+            const maxVol = 120; // capacity
+            const pxPerVol = (cylH - 40) / maxVol;
+            const liqH = currentVol * pxPerVol;
+            const liqTopY = cy - liqH;
+
+            // Draw Glass Back
+            ctx1.fillStyle = 'rgba(255,255,255,0.03)';
+            ctx1.beginPath();
+            ctx1.roundRect(cx - cylW/2, cy - cylH, cylW, cylH, 10);
+            ctx1.fill();
+
+            // Draw Liquid
+            const grad = ctx1.createLinearGradient(0, liqTopY, 0, cy);
+            grad.addColorStop(0, 'rgba(20, 184, 166, 0.4)');
+            grad.addColorStop(1, 'rgba(20, 184, 166, 0.8)');
+            
+            ctx1.fillStyle = grad;
+            ctx1.beginPath();
+            ctx1.moveTo(cx - cylW/2 + 2, liqTopY);
+            // Meniscus curve
+            ctx1.quadraticCurveTo(cx, liqTopY + 15, cx + cylW/2 - 2, liqTopY);
+            ctx1.lineTo(cx + cylW/2 - 2, cy - 5);
+            ctx1.arcTo(cx + cylW/2 - 2, cy, cx, cy, 5);
+            ctx1.arcTo(cx - cylW/2 + 2, cy, cx - cylW/2 + 2, cy - 5, 5);
+            ctx1.closePath();
+            ctx1.fill();
+
+            // Top rim of liquid
+            ctx1.strokeStyle = 'rgba(20, 184, 166, 0.5)';
+            ctx1.lineWidth = 2;
+            ctx1.beginPath();
+            ctx1.moveTo(cx - cylW/2 + 2, liqTopY);
+            ctx1.quadraticCurveTo(cx, liqTopY - 10, cx + cylW/2 - 2, liqTopY);
+            ctx1.stroke();
+
+            // Draw Glass Front Outline
+            ctx1.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx1.lineWidth = 3;
+            ctx1.beginPath();
+            ctx1.roundRect(cx - cylW/2, cy - cylH, cylW, cylH, 10);
+            ctx1.stroke();
+
+            // Draw Ticks
+            ctx1.fillStyle = '#fff';
+            ctx1.strokeStyle = '#fff';
+            ctx1.font = '14px Amiri';
+            ctx1.textAlign = 'right';
+            ctx1.textBaseline = 'middle';
+            
+            for(let v = 20; v <= 100; v+=20) {
+                let ty = cy - (v * pxPerVol);
+                ctx1.lineWidth = 2;
+                ctx1.beginPath(); ctx1.moveTo(cx - cylW/2, ty); ctx1.lineTo(cx - cylW/2 + 15, ty); ctx1.stroke();
+                ctx1.fillText(v, cx - cylW/2 - 5, ty);
+                
+                // Sub ticks
+                let tyMid = cy - ((v-10) * pxPerVol);
+                ctx1.lineWidth = 1;
+                ctx1.beginPath(); ctx1.moveTo(cx - cylW/2, tyMid); ctx1.lineTo(cx - cylW/2 + 8, tyMid); ctx1.stroke();
+            }
+
+            // Draw Eye Indicator
+            const eyeY = liqTopY + 7.5; // align with meniscus bottom
+            ctx1.strokeStyle = '#f59e0b';
+            ctx1.setLineDash([5, 5]);
+            ctx1.beginPath();
+            ctx1.moveTo(cx - cylW/2 - 50, eyeY);
+            ctx1.lineTo(cx + cylW/2, eyeY);
+            ctx1.stroke();
+            ctx1.setLineDash([]);
+            
+            // Eye shape
+            ctx1.fillStyle = '#f59e0b';
+            ctx1.beginPath();
+            ctx1.ellipse(cx - cylW/2 - 65, eyeY, 15, 8, 0, 0, Math.PI*2);
+            ctx1.stroke();
+            ctx1.beginPath();
+            ctx1.arc(cx - cylW/2 - 65, eyeY, 4, 0, Math.PI*2);
+            ctx1.fill();
+        }
+
+        let sim2State = {
+            stoneDropped: false,
+            animProgress: 0, // 0 to 1
+            v1: 40,
+            vStone: 20
+        };
+
+        document.getElementById('btn-drop').addEventListener('click', () => {
+            if(!sim2State.stoneDropped) {
+                sim2State.stoneDropped = true;
+                animateDrop();
+            }
+        });
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            sim2State.stoneDropped = false;
+            sim2State.animProgress = 0;
+            drawSim2();
+        });
+
+        function animateDrop() {
+            sim2State.animProgress += 0.03;
+            if(sim2State.animProgress > 1) {
+                sim2State.animProgress = 1;
+                drawSim2();
+                return;
+            }
+            drawSim2();
+            requestAnimationFrame(animateDrop);
+        }
+
+        function drawSim2() {
+            if (canvas2.width === 0) return;
+            const w = canvas2.clientWidth;
+            const h = canvas2.clientHeight;
+            
+            // Mandatory clear
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+            const cylW = 80;
+            const cylH = 220;
+            const cx = w / 2;
+            const cy = h - 40;
+            const pxPerVol = (cylH - 30) / 100;
+            
+            const currentVol = sim2State.v1 + (sim2State.vStone * sim2State.animProgress);
+            const liqTopY = cy - (currentVol * pxPerVol);
+
+            // Draw Cylinder Back
+            ctx2.fillStyle = 'rgba(255,255,255,0.03)';
+            ctx2.beginPath();
+            ctx2.roundRect(cx - cylW/2, cy - cylH, cylW, cylH, 8);
+            ctx2.fill();
+
+            // Draw Liquid
+            ctx2.fillStyle = 'rgba(20, 184, 166, 0.5)';
+            ctx2.beginPath();
+            ctx2.roundRect(cx - cylW/2 + 2, liqTopY, cylW - 4, cy - liqTopY, 5);
+            ctx2.fill();
+
+            // Draw Stone
+            if(sim2State.stoneDropped || sim2State.animProgress > 0) {
+                const stoneStartY = cy - cylH - 30;
+                const stoneEndY = cy - 20;
+                const stoneY = stoneStartY + (stoneEndY - stoneStartY) * sim2State.animProgress;
+                
+                ctx2.fillStyle = '#64748b';
+                ctx2.beginPath();
+                ctx2.moveTo(cx, stoneY - 15);
+                ctx2.quadraticCurveTo(cx+20, stoneY-20, cx+25, stoneY);
+                ctx2.quadraticCurveTo(cx+20, stoneY+15, cx, stoneY+20);
+                ctx2.quadraticCurveTo(cx-25, stoneY+10, cx-20, stoneY-5);
+                ctx2.closePath();
+                ctx2.fill();
+            }
+
+            // Draw Cylinder Outline
+            ctx2.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx2.lineWidth = 3;
+            ctx2.beginPath();
+            ctx2.roundRect(cx - cylW/2, cy - cylH, cylW, cylH, 8);
+            ctx2.stroke();
+
+            // Texts & Labels
+            ctx2.fillStyle = '#fff';
+            ctx2.font = '16px Amiri';
+            ctx2.textAlign = 'center';
+            
+            if(sim2State.animProgress === 0) {
+                ctx2.fillText(`V₁ = ${sim2State.v1} mL`, cx, cy + 25);
+            } else if(sim2State.animProgress === 1) {
+                ctx2.fillText(`V₂ = ${sim2State.v1 + sim2State.vStone} mL`, cx, cy + 25);
+                
+                // Result formula
+                ctx2.fillStyle = '#f59e0b';
+                ctx2.font = '18px Cairo';
+                ctx2.fillText(`حجم الحجر: V = V₂ - V₁ = ${sim2State.vStone} mL`, cx, 30);
+            }
+        }
+
+        let userAnswers = {};
+
+        function selectOption(elem, index) {
+            const card = elem.closest('.q-card');
+            const qIndex = Array.from(document.querySelectorAll('.q-card')).indexOf(card);
+            
+            card.querySelectorAll('.q-option').forEach(opt => opt.classList.remove('selected'));
+            elem.classList.add('selected');
+            userAnswers[qIndex] = index;
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            const cards = document.querySelectorAll('.q-card');
+            
+            cards.forEach((card, index) => {
+                const correctIndex = parseInt(card.getAttribute('data-correct'));
+                const options = card.querySelectorAll('.q-option');
+                const feedback = card.querySelector('.q-feedback');
+                
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'wrong');
+                    opt.style.pointerEvents = 'none'; 
+                });
+
+                if (userAnswers[index] === correctIndex) {
+                    score++;
+                    options[correctIndex].classList.add('correct');
+                    feedback.style.borderRight = "4px solid var(--green)";
+                } else {
+                    if(userAnswers[index] !== undefined) {
+                        options[userAnswers[index]].classList.add('wrong');
+                    }
+                    options[correctIndex].classList.add('correct');
+                    feedback.style.borderRight = "4px solid var(--red)";
+                }
+                
+                feedback.classList.add('show');
+            });
+
+            const scoreDiv = document.getElementById('quiz-score');
+            scoreDiv.style.display = 'block';
+            scoreDiv.innerHTML = `النتيجة: ${score} من ${cards.length}`;
+            
+            // Scroll to bottom
+            scoreDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+    
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 4 | عدد رسوم SVG في الدرس النظري = 4 | عدد المحاكيات = 2 -->
+    <script src="credit.js"></script>
+</body>
+</html>

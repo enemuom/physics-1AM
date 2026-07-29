@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الظواهر الضوئية: المنابع والأوساط الضوئية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #f97316; /* لون برتقالي للمقاطع الضوئية */
+            --accent2:#fb923c;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* شريط التنقل العلوي الثابت (قاعدة 0.4 الإلزامية) */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .lesson-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+        .lesson-header span {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        .lesson-badge {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--accent) !important;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+        .lesson-header h1 {
+            font-size: 2.2rem;
+            margin: 10px 0;
+            color: #fff;
+        }
+        .lesson-header h1 em {
+            color: var(--accent);
+            font-style: normal;
+        }
+        .lesson-meta {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* كود التبويبات الإلزامي (بدون تعديل) */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .objectives-box {
+            background: var(--dark2);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px 0 0 8px;
+            margin-bottom: 30px;
+        }
+        .objectives-box h3 { color: var(--accent); margin-bottom: 15px; }
+        .objectives-box ul { padding-right: 20px; }
+        .objectives-box li { margin-bottom: 8px; }
+
+        .sec-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 40px 0 20px;
+        }
+        .sec-icon { font-size: 1.8rem; color: var(--accent); }
+        .sec-title h2 { color: #fff; }
+        .sec-line { flex-grow: 1; height: 1px; background: var(--border); border: none; }
+
+        .def-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .def-box strong { font-family: 'Amiri', serif; font-size: 1.2rem; color: var(--gold); }
+        .french-term { font-family: sans-serif; color: var(--muted); font-size: 0.9em; direction: ltr; display: inline-block; }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--dark2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .info-table th, .info-table td {
+            padding: 15px;
+            border: 1px solid var(--border);
+            text-align: right;
+        }
+        .info-table th { background: var(--dark3); color: var(--accent); }
+		/* حاوية الجداول المتجاوبة (إلزامي للهواتف) */
+        .table-responsive { width: 100%; overflow-x: auto; border-radius: 8px; margin: 20px 0; }
+
+        .diagram-figure {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .fig-title {
+            color: var(--muted);
+            margin-top: 15px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .diagram-wrap {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .lesson-diagram {
+            width: 100%;
+            height: auto;
+        }
+
+        .sim-wrap {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+        .sim-title { color: #fff; font-size: 1.3rem; }
+        .sim-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        .sim-description {
+            background: var(--card);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-right: 3px solid var(--accent2);
+            color: var(--text);
+        }
+        .sim-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            background: var(--dark3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .control-group { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 200px; }
+        .val-badge { color: var(--gold); font-weight: bold; }
+        
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 0 10px var(--accent);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: var(--dark4);
+            border-radius: 3px;
+        }
+        
+        .sim-canvas-container {
+            width: 100%;
+            height: 350px;
+            background: #000;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+        }
+        .sim-canvas-container canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .q-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .q-num {
+            display: inline-block;
+            background: var(--dark3);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; color: #fff; }
+        .q-options { display: flex; flex-direction: column; gap: 10px; }
+        .q-option {
+            background: var(--dark3);
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .q-option:hover { background: var(--dark4); border-color: var(--muted); }
+        .q-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        .q-feedback.correct { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--green); color: var(--green); }
+        .q-feedback.wrong { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--red); color: var(--red); }
+        .btn-check {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            transition: 0.3s;
+        }
+        .btn-check:hover { opacity: 0.9; }
+
+        .summary-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .summary-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+        .summary-title { color: var(--accent); font-size: 2rem; margin: 10px 0; }
+        .summary-subtitle { color: var(--muted); }
+        .summary-section { margin-bottom: 30px; }
+        .summary-section-title {
+            color: var(--gold);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .s-def-item {
+            background: var(--card);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-right: 3px solid var(--accent);
+        }
+        .s-def-term { font-weight: bold; color: #fff; display: block; margin-bottom: 5px; font-size: 1.1rem; }
+        .summary-list { list-style: none; padding: 0; }
+        .summary-list li {
+            position: relative;
+            padding-right: 25px;
+            margin-bottom: 10px;
+        }
+        .summary-list li::before {
+            content: '▪';
+            color: var(--accent);
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        .print-btn {
+            background: var(--muted);
+            color: var(--dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar, .lesson-header { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #111 !important; padding: 0; }
+            .summary-card { border: none; box-shadow: none; padding: 0; }
+            .summary-title { color: #000; }
+            .s-def-item { border-right-color: #555; background: #f9f9f9; }
+            .summary-section-title { color: #000; border-bottom-color: #ccc; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- شريط التنقل العلوي الثابت -->
+<div class="top-nav-bar">
+    <a href="../index.html#optics">← العودة إلى فهرس الميدان</a>
+</div>
+
+<div class="lesson-header">
+    <span>السنة الأولى متوسط › المقطع الرابع: الظواهر الضوئية › الدرس الأول</span>
+    <h1>المنابع و <em>الأوساط الضوئية</em></h1>
+    <p class="lesson-meta">السنة الأولى متوسط | المقطع 04 | حصة واحدة</p>
+</div>
+
+<nav class="tabs-nav">
+    <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+    <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+    <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+    <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+</nav>
+
+<div id="tab-lesson" class="tab-content active">
+    
+    <div class="objectives-box">
+        <h3>🎯 الأهداف التعلمية</h3>
+        <ul>
+            <li>التمييز بين المنابع الضوئية المضيئة والمضاءة.</li>
+            <li>تصنيف المنابع إلى طبيعية واصطناعية.</li>
+            <li>معرفة أنواع الأوساط الضوئية (الشفاف، الشاف، العاتم) وتأثيرها على الرؤية.</li>
+        </ul>
+    </div>
+
+    <div class="sec-title">
+        <span class="sec-icon">💡</span>
+        <h2>المنابع الضوئية <span class="french-term">(Sources lumineuses)</span></h2>
+        <hr class="sec-line">
+    </div>
+    
+    <p style="margin-bottom: 20px;">لكي نتمكن من رؤية الأجسام المحيطة بنا، لا بد من وجود الضوء. نسمي كل جسم يصدر ضوءاً لعيننا بـ <strong>المنبع الضوئي</strong>. وتنقسم إلى نوعين أساسيين:</p>
+
+    <div class="def-box">
+        <strong>1. الأجسام المضيئة <span class="french-term">(Corps lumineux)</span>:</strong>
+        <p>هي الأجسام التي <strong>تُنتج</strong> الضوء بنفسها وتصدره.</p>
+        <ul style="margin-right: 20px; margin-top: 10px;">
+            <li><strong>طبيعية (من صنع الخالق):</strong> الشمس، النجوم، الحشرات المضيئة.</li>
+            <li><strong>اصطناعية (من صنع الإنسان):</strong> مصباح متوهج، شمعة مشتعلة، شاشة هاتف.</li>
+        </ul>
+    </div>
+
+    <div class="def-box">
+        <strong>2. الأجسام المضاءة <span class="french-term">(Corps éclairés)</span>:</strong>
+        <p>هي الأجسام التي <strong>تستمد</strong> الضوء من غيرها ثم تقوم بعكسه (تشتيته) في كل الاتجاهات لتُرى.</p>
+        <ul style="margin-right: 20px; margin-top: 10px;">
+            <li><strong>طبيعية:</strong> القمر (يعكس ضوء الشمس)، الكواكب، الجبال.</li>
+            <li><strong>اصطناعية:</strong> السبورة، الكتاب، الطاولة، الجدار.</li>
+        </ul>
+    </div>
+
+    <figure class="diagram-figure">
+        <figcaption class="fig-title">شكل (1) — الفرق بين الجسم المضيء (المصباح) والجسم المضاء (الكتاب)</figcaption>
+        <div class="diagram-wrap">
+            <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                <defs>
+                    <!-- Marker for arrows -->
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                        <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--accent)"/>
+                    </marker>
+                    <!-- Glowing Bulb Effect -->
+                    <radialGradient id="bulbGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#fde047" stop-opacity="1" />
+                        <stop offset="50%" stop-color="#f59e0b" stop-opacity="0.6" />
+                        <stop offset="100%" stop-color="var(--dark2)" stop-opacity="0" />
+                    </radialGradient>
+                    <!-- Book Gradient -->
+                    <linearGradient id="bookGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#1d4ed8" />
+                    </linearGradient>
+                    <!-- Drop Shadow -->
+                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/>
+                    </filter>
+                </defs>
+
+                <!-- Background Table Line -->
+                <line x1="50" y1="250" x2="450" y2="250" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5,5"/>
+
+                <!-- Lamp (Luminous) -->
+                <circle cx="150" cy="120" r="50" fill="url(#bulbGlow)" />
+                <path d="M140 120 L140 170 L160 170 L160 120 Z" fill="#64748b" filter="url(#shadow)"/>
+                <path d="M130 170 Q150 190 170 170 Z" fill="#475569"/>
+                
+                <!-- Rays from Lamp to Book -->
+                <line x1="180" y1="140" x2="330" y2="210" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrowhead)"/>
+                <line x1="190" y1="120" x2="350" y2="150" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+                <!-- Book (Illuminated) -->
+                <rect x="330" y="200" width="80" height="20" rx="4" fill="#fff" transform="rotate(-15 330 200)"/>
+                <rect x="330" y="220" width="80" height="6" rx="2" fill="url(#bookGrad)" transform="rotate(-15 330 200)" filter="url(#shadow)"/>
+
+                <!-- Ray bouncing to Eye -->
+                <line x1="370" y1="190" x2="430" y2="100" stroke="var(--accent2)" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowhead)"/>
+
+                <!-- Eye -->
+                <path d="M420 80 Q450 60 480 80 Q450 100 420 80" fill="none" stroke="#fff" stroke-width="2"/>
+                <circle cx="450" cy="80" r="8" fill="#38bdf8"/>
+                <circle cx="450" cy="80" r="3" fill="#000"/>
+
+                <!-- Labels -->
+                <text x="150" y="230" fill="#fff" font-size="14" font-family="Cairo" font-weight="bold" text-anchor="middle">جسم مضيء (يُنتج الضوء)</text>
+                <text x="370" y="270" fill="#fff" font-size="14" font-family="Cairo" font-weight="bold" text-anchor="middle">جسم مضاء (يعكس الضوء)</text>
+                <text x="450" y="120" fill="var(--muted)" font-size="12" font-family="Cairo" text-anchor="middle">عين الملاحظ</text>
+            </svg>
+        </div>
+    </figure>
+
+    <div class="sec-title">
+        <span class="sec-icon">🔍</span>
+        <h2>الأوساط الضوئية <span class="french-term">(Milieux optiques)</span></h2>
+        <hr class="sec-line">
+    </div>
+
+    <p>عندما يصادف الضوء المنتشر في الفضاء جسماً ما، فإن هذا الجسم قد يسمح بمروره أو يمنعه. وبناءً على ذلك تصنف الأوساط إلى ثلاثة أنواع:</p>
+    <div class="table-responsive">
+    <table class="info-table">
+        <thead>
+            <tr>
+                <th>نوع الوسط</th>
+                <th>هل يسمح بمرور الضوء؟</th>
+                <th>رؤية الأجسام خلفه</th>
+                <th>أمثلة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>الوسط الشفاف</strong><br><span class="french-term">Transparent</span></td>
+                <td style="color: var(--green);">يسمح كلياً</td>
+                <td>واضحة جداً</td>
+                <td>الهواء، الفراغ، الزجاج الأملس، الماء النقي.</td>
+            </tr>
+            <tr>
+                <td><strong>الوسط الشاف</strong><br><span class="french-term">Translucide</span></td>
+                <td style="color: var(--gold);">يسمح جزئياً (ويشتت الباقي)</td>
+                <td>ضبابية (غير واضحة)</td>
+                <td>ورق الأنسوخ (المزيت)، الزجاج الخشن، الضباب.</td>
+            </tr>
+            <tr>
+                <td><strong>الوسط العاتم</strong><br><span class="french-term">Opaque</span></td>
+                <td style="color: var(--red);">لا يسمح إطلاقاً</td>
+                <td>لا تُرى إطلاقاً</td>
+                <td>الجدار، الخشب، المعادن، جسم الإنسان.</td>
+            </tr>
+        </tbody>
+    </table>
+	</div>
+
+    <figure class="diagram-figure">
+        <figcaption class="fig-title">شكل (2) — سلوك الضوء عند اصطدامه بأوساط ضوئية مختلفة</figcaption>
+        <div class="diagram-wrap">
+            <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                <defs>
+                    <marker id="arrow2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                        <path d="M 0 0 L 8 4 L 0 8 Z" fill="#fde047"/>
+                    </marker>
+                    <!-- Glass Gradients -->
+                    <linearGradient id="clearGlass" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="rgba(56, 189, 248, 0.1)" />
+                        <stop offset="100%" stop-color="rgba(56, 189, 248, 0.4)" />
+                    </linearGradient>
+                    <linearGradient id="frostedGlass" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="rgba(148, 163, 184, 0.4)" />
+                        <stop offset="100%" stop-color="rgba(148, 163, 184, 0.8)" />
+                    </linearGradient>
+                    <linearGradient id="woodMat" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#78350f" />
+                        <stop offset="100%" stop-color="#451a03" />
+                    </linearGradient>
+                </defs>
+
+                <!-- Section 1: Transparent -->
+                <g transform="translate(30, 0)">
+                    <rect x="0" y="50" width="20" height="100" fill="url(#clearGlass)" stroke="#38bdf8"/>
+                    <!-- Rays -->
+                    <line x1="-30" y1="80" x2="60" y2="80" stroke="#fde047" stroke-width="2" marker-end="url(#arrow2)"/>
+                    <line x1="-30" y1="100" x2="60" y2="100" stroke="#fde047" stroke-width="2" marker-end="url(#arrow2)"/>
+                    <line x1="-30" y1="120" x2="60" y2="120" stroke="#fde047" stroke-width="2" marker-end="url(#arrow2)"/>
+                    <text x="10" y="180" fill="#fff" font-size="14" font-family="Cairo" text-anchor="middle">وسط شفاف</text>
+                    <text x="10" y="200" fill="var(--green)" font-size="12" font-family="Cairo" text-anchor="middle">يمر كلياً</text>
+                </g>
+
+                <!-- Section 2: Translucent -->
+                <g transform="translate(260, 0)">
+                    <rect x="0" y="50" width="20" height="100" fill="url(#frostedGlass)" stroke="#94a3b8"/>
+                    <!-- Entering Rays -->
+                    <line x1="-30" y1="80" x2="0" y2="80" stroke="#fde047" stroke-width="2"/>
+                    <line x1="-30" y1="100" x2="0" y2="100" stroke="#fde047" stroke-width="2"/>
+                    <line x1="-30" y1="120" x2="0" y2="120" stroke="#fde047" stroke-width="2"/>
+                    <!-- Scattered Rays -->
+                    <line x1="20" y1="80" x2="50" y2="70" stroke="#fde047" stroke-width="1" stroke-dasharray="2,2" marker-end="url(#arrow2)"/>
+                    <line x1="20" y1="100" x2="60" y2="100" stroke="#fde047" stroke-width="1" stroke-dasharray="2,2" marker-end="url(#arrow2)"/>
+                    <line x1="20" y1="120" x2="50" y2="135" stroke="#fde047" stroke-width="1" stroke-dasharray="2,2" marker-end="url(#arrow2)"/>
+                    <text x="10" y="180" fill="#fff" font-size="14" font-family="Cairo" text-anchor="middle">وسط شاف</text>
+                    <text x="10" y="200" fill="var(--gold)" font-size="12" font-family="Cairo" text-anchor="middle">يمر جزئياً ويتشتت</text>
+                </g>
+
+                <!-- Section 3: Opaque -->
+                <g transform="translate(490, 0)">
+                    <rect x="0" y="50" width="20" height="100" fill="url(#woodMat)" stroke="#000"/>
+                    <!-- Blocked Rays -->
+                    <line x1="-30" y1="80" x2="0" y2="80" stroke="#fde047" stroke-width="2"/>
+                    <line x1="-30" y1="100" x2="0" y2="100" stroke="#fde047" stroke-width="2"/>
+                    <line x1="-30" y1="120" x2="0" y2="120" stroke="#fde047" stroke-width="2"/>
+                    <text x="10" y="180" fill="#fff" font-size="14" font-family="Cairo" text-anchor="middle">وسط عاتم</text>
+                    <text x="10" y="200" fill="var(--red)" font-size="12" font-family="Cairo" text-anchor="middle">لا يمر</text>
+                </g>
+            </svg>
+        </div>
+    </figure>
+</div>
+
+<div id="tab-sim" class="tab-content">
+    
+    <!-- المحاكاة 1: الأوساط الضوئية -->
+    <div class="sim-wrap">
+        <div class="sim-head">
+            <h3 class="sim-title">محاكاة 1: نفاذية الضوء عبر الأوساط</h3>
+            <span class="sim-badge">تفاعلي</span>
+        </div>
+        
+        <div class="sim-description">
+            <p>يوضّح هذا المحاكي <strong>تأثير الوسط الضوئي على مسار حزمة ضوئية</strong>. حرّك <strong>شريط نوع الوسط</strong> لترى كيف يتغيّر <strong>نفاذ أشعة الليزر وتشتتها</strong>.</p>
+        </div>
+
+        <div class="sim-controls">
+            <div class="control-group">
+                <label>نوع الوسط: <span id="val-medium" class="val-badge">شفاف (زجاج)</span></label>
+                <input type="range" id="slider-medium" min="0" max="2" value="0" step="1">
+            </div>
+        </div>
+
+        <div class="sim-canvas-container">
+            <canvas id="simCanvas1"></canvas>
+        </div>
+    </div>
+
+    <!-- المحاكاة 2: المنبع المضيء والمضاء -->
+    <div class="sim-wrap">
+        <div class="sim-head">
+            <h3 class="sim-title">محاكاة 2: شرط الرؤية والجسم المضاء</h3>
+            <span class="sim-badge">تفاعلي</span>
+        </div>
+        
+        <div class="sim-description">
+            <p>يوضّح هذا المحاكي <strong>آلية رؤية الأجسام المضاءة</strong>. حرّك <strong>شريط سطوع المصباح</strong> لترى كيف يتغيّر <strong>كمية الضوء المنعكسة من التفاحة نحو عين الملاحظ</strong> لتصبح مرئية.</p>
+        </div>
+
+        <div class="sim-controls">
+            <div class="control-group">
+                <label>سطوع المصباح (المنبع المضيء): <span id="val-brightness" class="val-badge">0%</span></label>
+                <input type="range" id="slider-brightness" min="0" max="100" value="0">
+            </div>
+        </div>
+
+        <div class="sim-canvas-container">
+            <canvas id="simCanvas2"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<div id="tab-exercises" class="tab-content">
+    
+    <div class="q-card q-diagram-type">
+        <div class="q-num">السؤال 1 (تفاعلي)</div>
+        <div class="q-text">تأمل المخطط الذي يمثل غوص غواصة في أعماق البحر. ما هو نوع الوسط (الماء) في الأعماق السحيقة حيث ينعدم الضوء كلياً؟</div>
+        <div class="q-options">
+            <label class="q-option">
+                <input type="radio" name="q1" value="wrong"> وسط شفاف
+            </label>
+            <label class="q-option">
+                <input type="radio" name="q1" value="wrong"> وسط شاف
+            </label>
+            <label class="q-option">
+                <input type="radio" name="q1" value="correct"> وسط عاتم
+            </label>
+        </div>
+        <div class="q-feedback" id="fb-q1">
+            الشرح: في الأعماق السحيقة، طبقات الماء الكثيفة تمنع مرور الضوء تماماً، فتتصرف كوسط عاتم.
+        </div>
+    </div>
+
+    <div class="q-card">
+        <div class="q-num">السؤال 2</div>
+        <div class="q-text">شاشة التلفاز وهي في حالة تشغيل تعتبر:</div>
+        <div class="q-options">
+            <label class="q-option"><input type="radio" name="q2" value="wrong"> جسماً مضاءً اصطناعياً</label>
+            <label class="q-option"><input type="radio" name="q2" value="correct"> منبعاً ضوئياً مضيئاً اصطناعياً</label>
+            <label class="q-option"><input type="radio" name="q2" value="wrong"> منبعاً ضوئياً مضيئاً طبيعياً</label>
+        </div>
+        <div class="q-feedback" id="fb-q2">الشرح: التلفاز المشتغل يُنتج الضوء بنفسه، وبما أنه من صنع الإنسان فهو منبع مضيء اصطناعي.</div>
+    </div>
+
+    <div class="q-card">
+        <div class="q-num">السؤال 3</div>
+        <div class="q-text">عند استخدامنا للورق الشفاف (الأنسوخ) في نقل الرسومات، فإننا نرى الرسم الأصلي تحته بصفة:</div>
+        <div class="q-options">
+            <label class="q-option"><input type="radio" name="q3" value="wrong"> واضحة جداً لأنه وسط شفاف</label>
+            <label class="q-option"><input type="radio" name="q3" value="correct"> ضبابية وغير واضحة تماماً لأنه وسط شاف</label>
+            <label class="q-option"><input type="radio" name="q3" value="wrong"> لا نراه إطلاقاً لأنه وسط عاتم</label>
+        </div>
+        <div class="q-feedback" id="fb-q3">الشرح: الأنسوخ وسط شاف (Translucide) يسمح بمرور جزء من الضوء ويشتت الباقي، فتكون الرؤية من خلاله غير واضحة تماماً.</div>
+    </div>
+
+    <div class="q-card">
+        <div class="q-num">السؤال 4</div>
+        <div class="q-text">القمر نراه مضيئاً في السماء ليلاً، فهو يعتبر:</div>
+        <div class="q-options">
+            <label class="q-option"><input type="radio" name="q4" value="correct"> جسماً مضاءً طبيعياً لأنه يعكس ضوء الشمس</label>
+            <label class="q-option"><input type="radio" name="q4" value="wrong"> جسماً مضيئاً طبيعياً لأنه يولد ضوءه بنفسه</label>
+            <label class="q-option"><input type="radio" name="q4" value="wrong"> جسماً مضيئاً اصطناعياً</label>
+        </div>
+        <div class="q-feedback" id="fb-q4">الشرح: القمر لا يُنتج الضوء بل هو جسم معتم يعكس ضوء الشمس الساقط عليه، فهو جسم مضاء طبيعي.</div>
+    </div>
+
+    <div class="q-card">
+        <div class="q-num">السؤال 5</div>
+        <div class="q-text">الترتيب الصحيح للأوساط (هواء - ضباب - جدار) هو:</div>
+        <div class="q-options">
+            <label class="q-option"><input type="radio" name="q5" value="wrong"> شفاف - عاتم - شاف</label>
+            <label class="q-option"><input type="radio" name="q5" value="correct"> شفاف - شاف - عاتم</label>
+            <label class="q-option"><input type="radio" name="q5" value="wrong"> شاف - شفاف - عاتم</label>
+        </div>
+        <div class="q-feedback" id="fb-q5">الشرح: الهواء شفاف (يسمح بالرؤية)، الضباب شاف (رؤية ضبابية)، الجدار عاتم (لا رؤية).</div>
+    </div>
+
+    <button class="btn-check" onclick="checkQuiz()">تحقق من الإجابات</button>
+</div>
+
+<div id="tab-summary" class="tab-content">
+    <div class="summary-card">
+        
+        <div class="summary-header">
+            <div class="summary-subtitle">السنة الأولى متوسط | المقطع: الظواهر الضوئية | الدرس 01</div>
+            <h2 class="summary-title">ملخص: المنابع والأوساط الضوئية</h2>
+            <div class="summary-subtitle">إعداد الأستاذ — منهاج الجيل الثاني</div>
+        </div>
+
+        <div class="concept-map-wrap">
+            <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+            <svg viewBox="0 0 600 250" style="width: 100%; max-width: 600px; margin: 0 auto; display: block;">
+                <defs>
+                    <linearGradient id="boxGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="var(--dark3)"/>
+                        <stop offset="100%" stop-color="var(--dark4)"/>
+                    </linearGradient>
+                    <marker id="mapArrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                        <path d="M 0 0 L 6 3 L 0 6 Z" fill="var(--accent)"/>
+                    </marker>
+                </defs>
+                <!-- Central Node -->
+                <rect x="230" y="10" width="140" height="40" rx="8" fill="url(#boxGrad)" stroke="var(--accent)"/>
+                <text x="300" y="35" fill="#fff" font-family="Cairo" font-weight="bold" text-anchor="middle">الظواهر الضوئية</text>
+
+                <!-- Branches -->
+                <line x1="300" y1="50" x2="150" y2="90" stroke="var(--accent)" stroke-width="2" marker-end="url(#mapArrow)"/>
+                <line x1="300" y1="50" x2="450" y2="90" stroke="var(--accent)" stroke-width="2" marker-end="url(#mapArrow)"/>
+
+                <!-- Nodes Level 2 -->
+                <rect x="80" y="90" width="140" height="40" rx="8" fill="url(#boxGrad)" stroke="var(--gold)"/>
+                <text x="150" y="115" fill="#fff" font-family="Cairo" font-weight="bold" text-anchor="middle">المنابع الضوئية</text>
+
+                <rect x="380" y="90" width="140" height="40" rx="8" fill="url(#boxGrad)" stroke="var(--green)"/>
+                <text x="450" y="115" fill="#fff" font-family="Cairo" font-weight="bold" text-anchor="middle">الأوساط الضوئية</text>
+
+                <!-- Leaves 1 -->
+                <line x1="150" y1="130" x2="100" y2="170" stroke="var(--gold)" stroke-width="2" marker-end="url(#mapArrow)"/>
+                <line x1="150" y1="130" x2="200" y2="170" stroke="var(--gold)" stroke-width="2" marker-end="url(#mapArrow)"/>
+                
+                <rect x="50" y="170" width="100" height="35" rx="5" fill="var(--card)" stroke="var(--gold)"/>
+                <text x="100" y="192" fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="middle">أجسام مضيئة</text>
+                
+                <rect x="160" y="170" width="100" height="35" rx="5" fill="var(--card)" stroke="var(--gold)"/>
+                <text x="210" y="192" fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="middle">أجسام مضاءة</text>
+
+                <!-- Leaves 2 -->
+                <line x1="450" y1="130" x2="350" y2="170" stroke="var(--green)" stroke-width="2" marker-end="url(#mapArrow)"/>
+                <line x1="450" y1="130" x2="450" y2="170" stroke="var(--green)" stroke-width="2" marker-end="url(#mapArrow)"/>
+                <line x1="450" y1="130" x2="550" y2="170" stroke="var(--green)" stroke-width="2" marker-end="url(#mapArrow)"/>
+
+                <rect x="300" y="170" width="80" height="35" rx="5" fill="var(--card)" stroke="var(--green)"/>
+                <text x="340" y="192" fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="middle">شفاف</text>
+                
+                <rect x="410" y="170" width="80" height="35" rx="5" fill="var(--card)" stroke="var(--green)"/>
+                <text x="450" y="192" fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="middle">شاف</text>
+
+                <rect x="510" y="170" width="80" height="35" rx="5" fill="var(--card)" stroke="var(--green)"/>
+                <text x="550" y="192" fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="middle">عاتم</text>
+            </svg>
+        </div>
+
+        <div class="summary-section">
+            <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+            <div class="s-def-item">
+                <span class="s-def-term">المنبع الضوئي المضيء (Source Lumineuse):</span>
+                <span>كل جسم ينتج الضوء بنفسه ويصدره (طبيعي: الشمس / اصطناعي: المصباح).</span>
+            </div>
+            <div class="s-def-item">
+                <span class="s-def-term">الجسم المضاء (Corps Éclairé):</span>
+                <span>جسم لا ينتج الضوء، بل يتلقاه من منبع مضيء ثم يعكسه أو يشتته ليصبح مرئياً (القمر، الكتاب).</span>
+            </div>
+            <div class="s-def-item">
+                <span class="s-def-term">الوسط الشفاف (Milieu Transparent):</span>
+                <span>يسمح بمرور الضوء الكلي ونرى من خلاله الأشياء بوضوح تام (الهواء، الفراغ، الزجاج).</span>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+            <ul class="summary-list">
+                <li>لا يمكن رؤية الأجسام في الظلام التام (انعدام الضوء).</li>
+                <li>تُصنف المنابع إلى طبيعية (من خلق الله) واصطناعية (من صنع الإنسان).</li>
+                <li>الوسط الشاف يسمح بمرور جزء من الضوء وتكون الرؤية من خلاله غير واضحة (ضبابية).</li>
+                <li>الوسط العاتم لا يسمح بمرور الضوء إطلاقاً ولا نرى الأجسام الموجودة خلفه (الخشب، الحديد).</li>
+            </ul>
+        </div>
+
+        <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+    </div>
+</div>
+
+<script>
+    // ----------------------------------------------------
+    // 1. نظام التبويبات (إلزامي - 3.9.1)
+    // ----------------------------------------------------
+    function openTab(tabId, btnElement) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        if (btnElement) btnElement.classList.add('active');
+
+        // تحديث أبعاد الكانفاس عند فتح التبويب
+        if (tabId === 'tab-sim') {
+            setTimeout(() => {
+                resizeCanvasSim1();
+                resizeCanvasSim2();
+                updateSim1();
+                updateSim2();
+            }, 50);
+        }
+    }
+
+    // ----------------------------------------------------
+    // 2. المحاكاة 1: نفاذية الأوساط
+    // ----------------------------------------------------
+    const canvas1 = document.getElementById('simCanvas1');
+    const ctx1 = canvas1.getContext('2d');
+    const slider1 = document.getElementById('slider-medium');
+    const valText1 = document.getElementById('val-medium');
+
+    const mediaTypes = [
+        { name: "شفاف (زجاج أملس)", color: "rgba(56, 189, 248, 0.2)", blockRay: false, scatter: false },
+        { name: "شاف (زجاج خشن)", color: "rgba(148, 163, 184, 0.7)", blockRay: false, scatter: true },
+        { name: "عاتم (خشب)", color: "#78350f", blockRay: true, scatter: false }
+    ];
+
+    function resizeCanvasSim1() {
+        const container = canvas1.parentElement;
+        if (container.clientWidth === 0) return;
+        const dpr = window.devicePixelRatio || 1;
+        canvas1.width = container.clientWidth * dpr;
+        canvas1.height = container.clientHeight * dpr;
+        canvas1.style.width = container.clientWidth + 'px';
+        canvas1.style.height = container.clientHeight + 'px';
+        ctx1.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function updateSim1() {
+        if (canvas1.width === 0) return;
+        ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+        
+        const w = canvas1.parentElement.clientWidth;
+        const h = canvas1.parentElement.clientHeight;
+        const val = parseInt(slider1.value);
+        const medium = mediaTypes[val];
+        
+        valText1.innerText = medium.name;
+
+        // رسم مصدر الليزر
+        const laserY = h / 2;
+        ctx1.fillStyle = '#334155';
+        ctx1.fillRect(20, laserY - 15, 60, 30);
+        ctx1.fillStyle = '#ef4444'; // زر أحمر
+        ctx1.fillRect(30, laserY - 18, 15, 3);
+        ctx1.fillStyle = '#1e293b';
+        ctx1.fillRect(80, laserY - 8, 10, 16);
+
+        // رسم الوسط المادي (Block)
+        const blockX = w / 2 - 40;
+        const blockW = 80;
+        ctx1.fillStyle = medium.color;
+        ctx1.fillRect(blockX, 40, blockW, h - 80);
+        ctx1.strokeStyle = '#fff';
+        ctx1.lineWidth = 1;
+        ctx1.strokeRect(blockX, 40, blockW, h - 80);
+
+        // رسم الأشعة
+        ctx1.strokeStyle = '#ef4444'; // لون الليزر
+        ctx1.lineWidth = 4;
+        
+        // شعاع قبل الوسط
+        ctx1.beginPath();
+        ctx1.moveTo(90, laserY);
+        ctx1.lineTo(blockX, laserY);
+        ctx1.stroke();
+
+        // سلوك الشعاع بعد الوسط
+        if (!medium.blockRay) {
+            if (medium.scatter) {
+                // تشتت (شاف)
+                ctx1.lineWidth = 2;
+                ctx1.strokeStyle = 'rgba(239, 68, 68, 0.5)';
+                for(let i= -3; i <= 3; i++) {
+                    ctx1.beginPath();
+                    ctx1.moveTo(blockX + blockW, laserY);
+                    ctx1.lineTo(w - 20, laserY + (i * 20) + (Math.random()*10 - 5));
+                    ctx1.stroke();
+                }
+            } else {
+                // مرور كلي (شفاف)
+                ctx1.lineWidth = 4;
+                ctx1.beginPath();
+                ctx1.moveTo(blockX + blockW, laserY);
+                ctx1.lineTo(w - 20, laserY);
+                ctx1.stroke();
+            }
+        }
+    }
+
+    slider1.addEventListener('input', updateSim1);
+
+
+    // ----------------------------------------------------
+    // 3. المحاكاة 2: المنبع المضاء
+    // ----------------------------------------------------
+    const canvas2 = document.getElementById('simCanvas2');
+    const ctx2 = canvas2.getContext('2d');
+    const slider2 = document.getElementById('slider-brightness');
+    const valText2 = document.getElementById('val-brightness');
+
+    function resizeCanvasSim2() {
+        const container = canvas2.parentElement;
+        if (container.clientWidth === 0) return;
+        const dpr = window.devicePixelRatio || 1;
+        canvas2.width = container.clientWidth * dpr;
+        canvas2.height = container.clientHeight * dpr;
+        canvas2.style.width = container.clientWidth + 'px';
+        canvas2.style.height = container.clientHeight + 'px';
+        ctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function updateSim2() {
+        if (canvas2.width === 0) return;
+        ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+        
+        const w = canvas2.parentElement.clientWidth;
+        const h = canvas2.parentElement.clientHeight;
+        const brightness = parseInt(slider2.value);
+        valText2.innerText = brightness + "%";
+
+        // إحداثيات
+        const lampX = 100;
+        const lampY = 80;
+        const appleX = w / 2;
+        const appleY = h - 60;
+        const eyeX = w - 80;
+        const eyeY = 100;
+
+        // رسم تأثير إضاءة الغرفة (Background opacity)
+        ctx2.fillStyle = `rgba(255, 255, 255, ${brightness * 0.0015})`;
+        ctx2.fillRect(0, 0, w, h);
+
+        // رسم المصباح (المنبع المضيء)
+        ctx2.fillStyle = '#64748b';
+        ctx2.fillRect(lampX - 10, 0, 20, lampY - 20); // سلك
+        
+        // توهج المصباح
+        if (brightness > 0) {
+            const gradient = ctx2.createRadialGradient(lampX, lampY, 10, lampX, lampY, 80);
+            gradient.addColorStop(0, `rgba(253, 224, 71, ${brightness/100})`);
+            gradient.addColorStop(1, 'rgba(253, 224, 71, 0)');
+            ctx2.fillStyle = gradient;
+            ctx2.beginPath();
+            ctx2.arc(lampX, lampY, 80, 0, Math.PI*2);
+            ctx2.fill();
+        }
+        
+        ctx2.fillStyle = brightness > 0 ? '#fef08a' : '#94a3b8';
+        ctx2.beginPath();
+        ctx2.arc(lampX, lampY, 20, 0, Math.PI*2);
+        ctx2.fill();
+
+        // رسم الجسم المضاء (تفاحة حمراء)
+        ctx2.fillStyle = brightness > 10 ? '#ef4444' : '#450a0a';
+        ctx2.beginPath();
+        ctx2.arc(appleX, appleY, 30, 0, Math.PI*2);
+        ctx2.fill();
+        ctx2.fillStyle = '#166534'; // ورقة خضراء
+        ctx2.beginPath();
+        ctx2.ellipse(appleX + 15, appleY - 30, 10, 5, Math.PI/4, 0, Math.PI*2);
+        ctx2.fill();
+
+        // رسم العين
+        ctx2.strokeStyle = brightness > 30 ? '#fff' : '#64748b';
+        ctx2.lineWidth = 2;
+        ctx2.beginPath();
+        ctx2.ellipse(eyeX, eyeY, 20, 12, 0, 0, Math.PI*2);
+        ctx2.stroke();
+        ctx2.fillStyle = '#0284c7';
+        ctx2.beginPath();
+        ctx2.arc(eyeX, eyeY, 8, 0, Math.PI*2);
+        ctx2.fill();
+
+        // رسم الأشعة إذا كان المصباح مشتعلاً
+        if (brightness > 0) {
+            ctx2.strokeStyle = `rgba(253, 224, 71, ${brightness/100})`;
+            ctx2.lineWidth = 2;
+            
+            // شعاع من المصباح للتفاحة
+            ctx2.beginPath();
+            ctx2.moveTo(lampX + 15, lampY + 15);
+            ctx2.lineTo(appleX - 15, appleY - 20);
+            ctx2.stroke();
+
+            // شعاع من التفاحة للعين (انعكاس)
+            if (brightness > 20) {
+                ctx2.strokeStyle = `rgba(239, 68, 68, ${(brightness-20)/80})`; // شعاع أحمر منعكس
+                ctx2.beginPath();
+                ctx2.moveTo(appleX + 15, appleY - 20);
+                ctx2.lineTo(eyeX - 15, eyeY + 5);
+                ctx2.stroke();
+            }
+        }
+    }
+
+    slider2.addEventListener('input', updateSim2);
+
+    // معالجة تغيير حجم النافذة
+    window.addEventListener('resize', () => {
+        if(document.getElementById('tab-sim').classList.contains('active')) {
+            resizeCanvasSim1();
+            resizeCanvasSim2();
+            updateSim1();
+            updateSim2();
+        }
+    });
+
+    // ----------------------------------------------------
+    // 4. نظام التمارين (التصحيح)
+    // ----------------------------------------------------
+    function checkQuiz() {
+        const total = 5;
+        let score = 0;
+        
+        for(let i=1; i<=total; i++) {
+            const options = document.getElementsByName('q'+i);
+            let selected = null;
+            for(let opt of options) {
+                if(opt.checked) selected = opt.value;
+            }
+            
+            const feedback = document.getElementById('fb-q'+i);
+            feedback.style.display = 'block';
+            
+            if(selected === 'correct') {
+                feedback.className = 'q-feedback correct';
+                feedback.innerHTML = '✅ إجابة صحيحة. ' + feedback.innerText.replace('الشرح: ', '').replace('✅ إجابة صحيحة.', '').replace('❌ إجابة خاطئة.', '');
+                score++;
+            } else {
+                feedback.className = 'q-feedback wrong';
+                feedback.innerHTML = '❌ إجابة خاطئة. ' + feedback.innerText.replace('الشرح: ', '').replace('✅ إجابة صحيحة.', '').replace('❌ إجابة خاطئة.', '');
+            }
+        }
+    }
+
+    // التهيئة البدائية عند تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', () => {
+        if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+            setTimeout(() => {
+                resizeCanvasSim1();
+                resizeCanvasSim2();
+                updateSim1();
+                updateSim2();
+            }, 50);
+        }
+    });
+</script>
+
+<script src="credit.js"></script>
+<!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 2 | عدد رسوم SVG في الدرس النظري = 2 | عدد المحاكيات = 2 -->
+</body>
+</html>

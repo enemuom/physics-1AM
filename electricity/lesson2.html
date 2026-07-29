@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مخطط الدارة الكهربائية - العلوم الفيزيائية</title>
+    
+    <!-- الخطوط -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- MathJax -->
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        /* البند 2: نظام الألوان الإلزامي (الظواهر الكهربائية) */
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #6366f1; /* Indigo - الظواهر الكهربائية */
+            --accent2:#818cf8;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--dark); color: var(--text); font-family: 'Cairo', sans-serif; line-height: 1.6; padding: 20px; }
+
+        /* البند 0.4: شريط التنقل العلوي */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        /* الترويسة */
+        .lesson-header {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            background: linear-gradient(180deg, var(--dark3) 0%, transparent 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .lesson-badge { background: rgba(99, 102, 241, 0.2); color: var(--accent2); padding: 5px 15px; border-radius: 20px; font-weight: 700; border: 1px solid rgba(99, 102, 241, 0.4); }
+        .lesson-header h1 { font-size: 2.2rem; margin: 15px 0 10px; }
+        .lesson-header h1 em { color: var(--accent); font-style: normal; }
+        .lesson-meta { color: var(--muted); }
+
+        /* البند 0.1: شريط التبويبات (حرفياً) */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
+        
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
+
+        /* الدرس النظري */
+        .objectives-box { background: var(--dark3); border-right: 4px solid var(--accent); padding: 1.5rem; border-radius: 8px; margin-bottom: 20px; }
+        .objectives-box h3 { color: var(--accent); margin-bottom: 10px; }
+        .objectives-box ul { padding-right: 25px; }
+
+        .sec-title { display: flex; align-items: center; gap: 10px; margin: 2.5rem 0 1.5rem; }
+        .sec-title h2 { color: var(--accent2); }
+        .sec-line { flex-grow: 1; height: 1px; background: linear-gradient(to left, var(--accent), transparent); border: none; }
+
+        .def-box { background: var(--card); border-right: 4px solid var(--gold); padding: 1.5rem; border-radius: 8px; margin-bottom: 20px; }
+        .def-term { font-family: 'Amiri', serif; font-size: 1.4rem; color: var(--gold); font-weight: bold; display: block; margin-bottom: 8px;}
+        
+        .highlight-box { padding: 1.2rem; border-radius: 8px; margin: 20px 0; font-weight: 600; line-height: 1.8; }
+        .highlight-box.tip { background: rgba(245, 158, 11, 0.1); border: 1px solid var(--gold); color: #fde68a; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--dark3); border-radius: 8px; overflow: hidden; }
+        .info-table th, .info-table td { border: 1px solid var(--border); padding: 12px; text-align: center; }
+        .info-table th { background: var(--accent); color: #fff; }
+        .info-table td svg { width: 60px; height: 40px; }
+
+        /* الرسوم SVG */
+        .diagram-figure { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center; }
+        .diagram-wrap { width: 100%; max-width: 450px; margin: 0 auto; }
+        .lesson-diagram { width: 100%; height: auto; }
+        .fig-title { margin-top: 15px; color: var(--muted); font-size: 0.95rem; }
+
+        /* المحاكاة (البند 0.3 و 3.5) */
+        .sim-wrap { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 30px; }
+        .sim-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .sim-title { color: var(--accent2); }
+        /* البند 0.3: شارة تفاعلي */
+        .sim-badge { background: rgba(245, 158, 11, 0.2); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight:bold; }
+        .sim-description { background: var(--dark3); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid var(--accent); }
+        .sim-canvas-container { width: 100%; height: 300px; border: 1px solid var(--border); border-radius: 8px; background: #0f172a; margin-bottom: 20px; }
+        canvas { display: block; width: 100%; height: 100%; }
+        
+        .sim-controls { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; background: var(--dark3); padding: 15px; border-radius: 8px; }
+        button { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-family: 'Cairo'; font-weight: 600; font-size: 1rem; }
+        button:hover { background: var(--accent2); }
+
+        /* التمارين */
+        .q-card { background: var(--dark3); border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .q-num { background: var(--dark4); color: var(--gold); padding: 4px 12px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; display: inline-block; }
+        .q-text { font-size: 1.15rem; font-weight: bold; margin-bottom: 15px; }
+        .q-options { display: grid; gap: 10px; }
+        .q-option { background: var(--dark2); border: 1px solid var(--border); padding: 12px; border-radius: 6px; cursor: pointer; }
+        .q-option.selected { border-color: var(--accent); background: rgba(99, 102, 241, 0.15); }
+        .q-option.correct { border-color: var(--green); background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .q-option.wrong { border-color: var(--red); background: rgba(239, 68, 68, 0.15); color: #f87171; }
+        .q-feedback { margin-top: 15px; padding: 12px; background: var(--dark2); border-radius: 6px; display: none; border-right: 4px solid; }
+        .q-diagram { width: 100%; max-width: 300px; margin: 15px auto; display: block; border-radius: 8px; background: var(--dark2); padding: 10px; border: 1px solid var(--border); }
+
+        /* الملخص */
+        .summary-card { background: #fff; color: #111; padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
+        .summary-header { text-align: center; border-bottom: 3px solid var(--accent); padding-bottom: 15px; margin-bottom: 25px; }
+        .summary-title { font-family: 'Amiri', serif; font-size: 2.2rem; font-weight: bold; }
+        .summary-section-title { color: var(--accent); font-size: 1.4rem; font-weight: bold; border-bottom: 2px solid #eee; padding-bottom: 8px; margin: 25px 0 15px; }
+        .concept-map-wrap { text-align: center; margin: 20px 0; }
+        .summary-defs .s-def-item { margin-bottom: 15px; padding-right: 15px; border-right: 4px solid var(--accent); }
+        .s-def-term { font-weight: bold; font-size: 1.1rem; display: block; }
+        .summary-list { list-style: none; padding: 0; }
+        .summary-list li { position: relative; padding-right: 25px; margin-bottom: 10px; }
+        .summary-list li::before { content: '▪'; color: var(--accent); font-size: 1.5rem; position: absolute; right: 0; top: -5px; }
+        .print-btn { display: block; width: 100%; margin-top: 30px; }
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar, .print-btn { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; padding: 0; }
+            .summary-card { border: none; }
+            canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- البند 0.4: شريط التنقل العلوي -->
+    <div class="top-nav-bar">
+        <a href="../index.html#electricity">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <!-- الترويسة -->
+    <div class="lesson-header">
+        <span class="lesson-badge">الظواهر الكهربائية | الدرس 02</span>
+        <h1>مخطط <em>دارة كهربائية</em></h1>
+        <p class="lesson-meta">السنة الأولى متوسط — منهاج الجيل الثاني</p>
+    </div>
+
+    <!-- البند 0.1: شريط التبويبات -->
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+        <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+        <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+        <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+    </nav>
+
+    <!-- التبويب 1: الدرس النظري -->
+    <div id="tab-lesson" class="tab-content active">
+        
+        <div class="objectives-box">
+            <h3>🎯 الأهداف التعلمية</h3>
+            <ul>
+                <li>التعرف على الرموز النظامية العالمية للعناصر الكهربائية.</li>
+                <li>رسم مخطط دارة كهربائية بسيطة باحترام القواعد الهندسية.</li>
+                <li>تحديد اتجاه التيار الكهربائي على المخطط النظامي.</li>
+            </ul>
+        </div>
+
+        <!-- المفهوم الأول -->
+        <div class="sec-title">
+            <span class="sec-icon">✏️</span>
+            <h2>1. الرموز النظامية للعناصر الكهربائية</h2>
+            <hr class="sec-line">
+        </div>
+        
+        <div class="def-box">
+            <span class="def-term">الرمز النظامي (Le symbole normalisé):</span>
+            <p>هو رسم متفق عليه عالمياً لتمثيل عنصر كهربائي محدد. الهدف منه تسهيل قراءة ورسم الدارات الكهربائية بين كل لغات العالم.</p>
+        </div>
+
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th>العنصر الكهربائي</th>
+                    <th>الرمز النظامي</th>
+                    <th>الدور في الدارة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>مولد (بطارية)</td>
+                    <td>
+                        <svg viewBox="0 0 100 60">
+                            <line x1="10" y1="30" x2="40" y2="30" stroke="#fff" stroke-width="2"/>
+                            <line x1="40" y1="15" x2="40" y2="45" stroke="#fff" stroke-width="1.5"/> 
+                            <line x1="60" y1="22" x2="60" y2="38" stroke="#fff" stroke-width="4"/> 
+                            <line x1="60" y1="30" x2="90" y2="30" stroke="#fff" stroke-width="2"/>
+                            <text x="30" y="12" fill="#ef4444" font-size="14" font-weight="bold">+</text>
+                            <text x="65" y="12" fill="#fff" font-size="16" font-weight="bold">-</text>
+                        </svg>
+                    </td>
+                    <td>إنتاج الكهرباء (يملك قطبين مختلفين)</td>
+                </tr>
+                <tr>
+                    <td>مصباح التوهج</td>
+                    <td>
+                        <svg viewBox="0 0 100 60">
+                            <line x1="10" y1="30" x2="35" y2="30" stroke="#fff" stroke-width="2"/>
+                            <circle cx="50" cy="30" r="15" fill="none" stroke="#f59e0b" stroke-width="2"/>
+                            <path d="M40 20 L60 40 M60 20 L40 40" stroke="#f59e0b" stroke-width="2"/>
+                            <line x1="65" y1="30" x2="90" y2="30" stroke="#fff" stroke-width="2"/>
+                        </svg>
+                    </td>
+                    <td>التوهج (الإنارة)</td>
+                </tr>
+                <tr>
+                    <td>قاطعة (مفتوحة)</td>
+                    <td>
+                        <svg viewBox="0 0 100 60">
+                            <line x1="10" y1="30" x2="35" y2="30" stroke="#fff" stroke-width="2"/>
+                            <circle cx="37" cy="30" r="3" fill="#6366f1"/>
+                            <line x1="37" y1="30" x2="60" y2="15" stroke="#fff" stroke-width="2"/>
+                            <circle cx="63" cy="30" r="3" fill="#6366f1"/>
+                            <line x1="65" y1="30" x2="90" y2="30" stroke="#fff" stroke-width="2"/>
+                        </svg>
+                    </td>
+                    <td>التحكم في غلق وفتح الدارة</td>
+                </tr>
+                <tr>
+                    <td>محرك كهربائي</td>
+                    <td>
+                        <svg viewBox="0 0 100 60">
+                            <line x1="10" y1="30" x2="35" y2="30" stroke="#fff" stroke-width="2"/>
+                            <circle cx="50" cy="30" r="15" fill="none" stroke="#fff" stroke-width="2"/>
+                            <text x="50" y="35" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">M</text>
+                            <line x1="65" y1="30" x2="90" y2="30" stroke="#fff" stroke-width="2"/>
+                        </svg>
+                    </td>
+                    <td>تحويل الكهرباء إلى حركة</td>
+                </tr>
+                <tr>
+                    <td>سلك توصيل</td>
+                    <td>
+                        <svg viewBox="0 0 100 60">
+                            <line x1="10" y1="30" x2="90" y2="30" stroke="#94a3b8" stroke-width="2"/>
+                        </svg>
+                    </td>
+                    <td>الربط بين العناصر الكهربائية</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- المفهوم الثاني -->
+        <div class="sec-title">
+            <span class="sec-icon">📐</span>
+            <h2>2. رسم مخطط الدارة الكهربائية</h2>
+            <hr class="sec-line">
+        </div>
+        
+        <div class="highlight-box tip">
+            📌 <strong>القاعدة الذهبية:</strong> نرسم المخطط دائماً على شكل <strong>مستطيل</strong> (أو مربع) باستخدام المسطرة. نضع الرموز النظامية في منتصف الأضلاع وليس في الزوايا.
+        </div>
+
+        <!-- البند 3.4 & 0.5: رسم SVG تفصيلي يعبر عن القاعدة -->
+        <figure class="diagram-figure">
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--red)"/>
+                        </marker>
+                    </defs>
+
+                    <!-- إطار الدارة (مستطيل بمسطرة) -->
+                    <rect x="50" y="40" width="300" height="120" fill="none" stroke="var(--muted)" stroke-width="2"/>
+                    
+                    <!-- المولد في الضلع العلوي -->
+                    <rect x="180" y="30" width="40" height="20" fill="var(--dark2)"/>
+                    <line x1="190" y1="20" x2="190" y2="60" stroke="var(--text)" stroke-width="2"/>
+                    <line x1="210" y1="30" x2="210" y2="50" stroke="var(--text)" stroke-width="6"/>
+                    <text x="175" y="40" fill="var(--red)" font-size="16" font-weight="bold" text-anchor="end" dominant-baseline="middle">+</text>
+                    <text x="225" y="40" fill="var(--text)" font-size="20" font-weight="bold" text-anchor="start" dominant-baseline="middle">-</text>
+
+                    <!-- القاطعة في الضلع الأيمن -->
+                    <rect x="340" y="80" width="20" height="40" fill="var(--dark2)"/>
+                    <circle cx="350" cy="85" r="3" fill="var(--accent)"/>
+                    <circle cx="350" cy="115" r="3" fill="var(--accent)"/>
+                    <line x1="350" y1="85" x2="350" y2="115" stroke="var(--text)" stroke-width="2"/> <!-- قاطعة مغلقة -->
+
+                    <!-- المصباح في الضلع السفلي -->
+                    <circle cx="200" cy="160" r="15" fill="var(--dark2)" stroke="var(--gold)" stroke-width="2"/>
+                    <path d="M 189 149 L 211 171 M 189 171 L 211 149" stroke="var(--gold)" stroke-width="2"/>
+                    
+                    <!-- اتجاه التيار (أسهم) -->
+                    <line x1="150" y1="40" x2="120" y2="40" stroke="var(--red)" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <line x1="50" y1="80" x2="50" y2="110" stroke="var(--red)" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <line x1="120" y1="160" x2="150" y2="160" stroke="var(--red)" stroke-width="2" marker-end="url(#arrowhead)"/>
+                </svg>
+            </div>
+            <figcaption class="fig-title">شكل (1) — مخطط نظامي لدارة بسيطة (تُستخدم المسطرة لجعله مستطيلاً، وتوضع العناصر بعيداً عن الزوايا)</figcaption>
+        </figure>
+    </div>
+
+    <!-- التبويب 2: المحاكاة -->
+    <div id="tab-sim" class="tab-content">
+        
+        <!-- المحاكي 1 -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">المحاكي (1): الرسام الآلي للمخططات</h3>
+                <span class="sim-badge">لوحة رسم تفاعلية</span>
+            </div>
+            <!-- البند 3.6: وصف المحاكاة -->
+            <div class="sim-description">
+                <p>يوضح هذا المحاكي <strong>كيفية رسم الرموز النظامية بدقة</strong>. اضغط على أزرار <strong>العناصر الكهربائية</strong> أسفله لتلاحظ كيف يتم رسم رمزها النظامي على اللوحة الهندسية.</p>
+            </div>
+            
+            <div class="sim-canvas-container">
+                <canvas id="canvasSim1"></canvas>
+            </div>
+            
+            <div class="sim-controls">
+                <button onclick="drawSim1Symbol('battery')">رسم مولد (+ -)</button>
+                <button onclick="drawSim1Symbol('lamp')">رسم مصباح</button>
+                <button onclick="drawSim1Symbol('switch')">رسم قاطعة</button>
+                <button onclick="drawSim1Symbol('motor')">رسم محرك</button>
+            </div>
+        </div>
+
+        <!-- المحاكي 2 -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">المحاكي (2): المخطط التفاعلي والتيار</h3>
+                <span class="sim-badge">مخبر افتراضي</span>
+            </div>
+            <!-- البند 3.6: وصف المحاكاة -->
+            <div class="sim-description">
+                <p>يوضح هذا المخبر العلاقة بين <strong>المخطط النظامي ومرور التيار</strong>. اضغط زر <strong>غلق/فتح القاطعة</strong> لتلاحظ كيف يكتمل مسار المستطيل (الدارة)، مما يسمح <strong>بمرور التيار (الأسهم الحمراء) وتوهج المصباح</strong>.</p>
+            </div>
+            
+            <div class="sim-canvas-container">
+                <canvas id="canvasSim2"></canvas>
+            </div>
+            
+            <div class="sim-controls">
+                <button id="btnSim2" style="background:var(--red);" onclick="toggleSim2()">الدارة مفتوحة (اضغط للغلق)</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- التبويب 3: التمارين -->
+    <div id="tab-exercises" class="tab-content">
+        
+        <div class="q-card">
+            <div class="q-num">السؤال 1</div>
+            <div class="q-text">ما هي الفائدة الرئيسية من استخدام "الرموز النظامية"؟</div>
+            <div class="q-options" data-correct="1">
+                <div class="q-option" onclick="selectAnswer(this, 0)">لأنها تجعل الدارة أجمل وألوانها زاهية.</div>
+                <div class="q-option" onclick="selectAnswer(this, 1)">لغة عالمية موحدة تسهل رسم وقراءة المخططات على الجميع.</div>
+                <div class="q-option" onclick="selectAnswer(this, 2)">لتوفير الحبر عند رسم الدارة الكهربائية.</div>
+            </div>
+            <div class="q-feedback">صحيح! الرموز النظامية متفق عليها عالمياً ليفهمها أي شخص بغض النظر عن لغته.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 2</div>
+            <div class="q-text">ما هو الرمز النظامي للمولد (البطارية)؟</div>
+            <div class="q-options" data-correct="2">
+                <div class="q-option" onclick="selectAnswer(this, 0)">دائرة بداخلها حرف M.</div>
+                <div class="q-option" onclick="selectAnswer(this, 1)">دائرة بداخلها علامة X.</div>
+                <div class="q-option" onclick="selectAnswer(this, 2)">خط طويل (موجب) وخط قصير سميك (سالب).</div>
+            </div>
+            <div class="q-feedback">صحيح. الخط الطويل الرفيع يمثل القطب الموجب (+)، والقصير السميك يمثل السالب (-).</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 3</div>
+            <div class="q-text">عند رسم مخطط دارة كهربائية، ما هو الشكل الهندسي الذي نستخدمه لتمثيل أسلاك التوصيل؟</div>
+            <div class="q-options" data-correct="0">
+                <div class="q-option" onclick="selectAnswer(this, 0)">خطوط مستقيمة تشكل مستطيلاً أو مربعاً.</div>
+                <div class="q-option" onclick="selectAnswer(this, 1)">خطوط متعرجة ومنحنية بحرية.</div>
+                <div class="q-option" onclick="selectAnswer(this, 2)">شكل دائري يربط كل العناصر.</div>
+            </div>
+            <div class="q-feedback">ممتاز! نستخدم المسطرة لرسم أسلاك التوصيل كخطوط مستقيمة لتشكيل مستطيل.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 4</div>
+            <div class="q-text">أين يجب وضع الرموز النظامية (مثل المصباح أو القاطعة) في المخطط المستطيلي؟</div>
+            <div class="q-options" data-correct="1">
+                <div class="q-option" onclick="selectAnswer(this, 0)">في زوايا المستطيل الأربعة.</div>
+                <div class="q-option" onclick="selectAnswer(this, 1)">في منتصف أضلاع المستطيل (بعيداً عن الزوايا).</div>
+                <div class="q-option" onclick="selectAnswer(this, 2)">خارج إطار المستطيل كلياً.</div>
+            </div>
+            <div class="q-feedback">صحيح! من قواعد الرسم النظامي تجنب وضع الرموز في الزوايا لتسهيل القراءة.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 5</div>
+            <div class="q-text">إذا كان لدينا مخطط لقاطعة ممثلة بنقطتين بينهما خط مائل (غير متصل بالنقطة الثانية)، ماذا يعني ذلك؟</div>
+            <div class="q-options" data-correct="2">
+                <div class="q-option" onclick="selectAnswer(this, 0)">الدارة مغلقة والمصباح يتوهج.</div>
+                <div class="q-option" onclick="selectAnswer(this, 1)">يوجد خطأ في الرسم.</div>
+                <div class="q-option" onclick="selectAnswer(this, 2)">القاطعة مفتوحة والتيار لا يمر (المصباح منطفئ).</div>
+            </div>
+            <div class="q-feedback">صحيح. الخط المائل يعني أن التلامس مقطوع، فالقاطعة مفتوحة والدارة لا تعمل.</div>
+        </div>
+
+        <!-- البند 3.7: سؤال المخطط -->
+        <div class="q-card q-diagram-type">
+            <div class="q-num">السؤال 6 (تطبيقي)</div>
+            <div class="q-text">تأمل المخطط التالي بعناية. ما هو الخطأ الموجود في طريقة رسمه؟</div>
+            <svg class="q-diagram" viewBox="0 0 200 150">
+                <rect x="30" y="30" width="140" height="90" fill="none" stroke="var(--muted)" stroke-width="2"/>
+                <line x1="90" y1="20" x2="90" y2="40" stroke="var(--text)" stroke-width="2"/>
+                <line x1="110" y1="25" x2="110" y2="35" stroke="var(--text)" stroke-width="4"/>
+                
+                <!-- المصباح في الزاوية (الخطأ) -->
+                <circle cx="30" cy="120" r="10" fill="var(--dark)" stroke="var(--gold)" stroke-width="2"/>
+                <path d="M 23 113 L 37 127 M 23 127 L 37 113" stroke="var(--gold)" stroke-width="2"/>
+            </svg>
+            <div class="q-options" data-correct="1">
+                <div class="q-option" onclick="selectAnswer(this, 0)">نسي رسم القاطعة، المخطط لا يعمل بدونها.</div>
+                <div class="q-option" onclick="selectAnswer(this, 1)">وضع رمز المصباح في الزاوية، وهذا مخالف لقواعد الرسم.</div>
+                <div class="q-option" onclick="selectAnswer(this, 2)">رسم المولد بشكل خاطئ.</div>
+            </div>
+            <div class="q-feedback">أحسنت الملاحظة! يجب دائماً وضع العناصر في منتصف الأضلاع وتفريغ الزوايا.</div>
+        </div>
+
+        <button onclick="evaluateQuiz()" style="width: 100%; padding: 15px; font-size: 1.2rem;">تأكيد الإجابات وعرض النتيجة</button>
+        <div id="quiz-result" style="text-align: center; margin-top: 20px; font-size: 1.5rem; font-weight: bold; display: none;"></div>
+    </div>
+
+    <!-- التبويب 4: الملخص -->
+    <div id="tab-summary" class="tab-content">
+        <div class="summary-card">
+            
+            <div class="summary-header">
+                <div class="lesson-meta">العلوم الفيزيائية | الأولى متوسط</div>
+                <h2 class="summary-title">ملخص: مخطط الدارة الكهربائية</h2>
+            </div>
+
+            <!-- البند 3.8: خريطة المفاهيم -->
+            <div class="concept-map-wrap">
+                <svg viewBox="0 0 500 250" style="width:100%; max-width:500px;">
+                    <rect x="150" y="20" width="200" height="45" rx="8" fill="var(--accent)"/>
+                    <text x="250" y="45" fill="#fff" font-size="18" font-weight="bold" text-anchor="middle" dominant-baseline="middle">مخطط الدارة الكهربائية</text>
+                    
+                    <path d="M 250 65 L 250 90 M 150 90 L 350 90 M 150 90 L 150 120 M 350 90 L 350 120" fill="none" stroke="#666" stroke-width="2"/>
+                    
+                    <rect x="50" y="120" width="200" height="40" rx="6" fill="#f8fafc" stroke="#f59e0b" stroke-width="2"/>
+                    <text x="150" y="142" fill="#111" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">الرموز النظامية</text>
+                    <text x="150" y="180" fill="#555" font-size="14" text-anchor="middle" dominant-baseline="middle">رسوم متفق عليها عالمياً</text>
+                    <text x="150" y="200" fill="#555" font-size="14" text-anchor="middle" dominant-baseline="middle">لتسهيل الفهم والقراءة</text>
+
+                    <rect x="270" y="120" width="200" height="40" rx="6" fill="#f8fafc" stroke="#10b981" stroke-width="2"/>
+                    <text x="370" y="142" fill="#111" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">قواعد الرسم</text>
+                    <text x="370" y="180" fill="#555" font-size="14" text-anchor="middle" dominant-baseline="middle">شكل مستطيل بالمسطرة</text>
+                    <text x="370" y="200" fill="#555" font-size="14" text-anchor="middle" dominant-baseline="middle">العناصر في منتصف الأضلاع</text>
+                </svg>
+            </div>
+
+            <h3 class="summary-section-title">📚 التعاريف وقواعد الرسم</h3>
+            <div class="summary-defs">
+                <div class="s-def-item">
+                    <span class="s-def-term">الرمز النظامي:</span>
+                    هو تمثيل تخطيطي مبسط وموحد عالمياً لكل عنصر من عناصر الدارة الكهربائية.
+                </div>
+            </div>
+
+            <h3 class="summary-section-title">✅ أهم ما يجب حفظه (الرموز)</h3>
+            <ul class="summary-list">
+                <li><strong>المولد:</strong> خط طويل (+) وخط قصير وسميك (-).</li>
+                <li><strong>المصباح:</strong> دائرة بداخلها علامة تقاطع (X).</li>
+                <li><strong>المحرك:</strong> دائرة بداخلها حرف (M).</li>
+                <li><strong>القاطعة:</strong> نقطتان بينهما خط (موصول إذا كانت مغلقة، ومفصول إذا كانت مفتوحة).</li>
+                <li><strong>الأسلاك:</strong> تُرسم بخطوط مستقيمة لتشكل مع باقي العناصر إطاراً <strong>مستطيلاً</strong>، ولا توضع الرموز أبداً في الزوايا.</li>
+            </ul>
+
+            <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+        </div>
+    </div>
+
+    <!-- 스크립트 الجافاسكريبت -->
+    <script>
+        // البند 3.9: دالة إدارة التبويبات الإلزامية حرفياً
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim1 === 'function') updateSim1();
+                    if (typeof updateSim2 === 'function') updateSim2();
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim1 === 'function') updateSim1();
+                    if (typeof updateSim2 === 'function') updateSim2();
+                }, 50);
+            }
+        });
+
+        // البند 0.2: دالة Canvas متجاوبة
+        const canvas1 = document.getElementById('canvasSim1');
+        const ctx1 = canvas1.getContext('2d');
+        const canvas2 = document.getElementById('canvasSim2');
+        const ctx2 = canvas2.getContext('2d');
+
+        function resizeCanvas() {
+            [ {cvs: canvas1, ctx: ctx1}, {cvs: canvas2, ctx: ctx2} ].forEach(item => {
+                const container = item.cvs.parentElement;
+                if (container.clientWidth > 0) {
+                    const dpr = window.devicePixelRatio || 1;
+                    item.cvs.width  = container.clientWidth  * dpr;
+                    item.cvs.height = container.clientHeight * dpr;
+                    item.cvs.style.width  = container.clientWidth  + 'px';
+                    item.cvs.style.height = container.clientHeight + 'px';
+                    item.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                }
+            });
+        }
+
+        window.addEventListener('resize', () => {
+            if(document.getElementById('tab-sim').classList.contains('active')) {
+                resizeCanvas(); updateSim1(); updateSim2();
+            }
+        });
+
+        // ================= محاكاة 1 =================
+        let sim1CurrentSymbol = 'battery';
+        
+        function drawSim1Symbol(type) {
+            sim1CurrentSymbol = type;
+            updateSim1();
+        }
+
+        function updateSim1() {
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height); // البند 0.5 الإلزامي
+            
+            let cw = canvas1.clientWidth;
+            let ch = canvas1.clientHeight;
+            
+            // رسم شبكة هندسية خفيفة
+            ctx1.strokeStyle = 'rgba(255,255,255,0.05)';
+            ctx1.lineWidth = 1;
+            for(let x=0; x<cw; x+=20) { ctx1.beginPath(); ctx1.moveTo(x,0); ctx1.lineTo(x,ch); ctx1.stroke(); }
+            for(let y=0; y<ch; y+=20) { ctx1.beginPath(); ctx1.moveTo(0,y); ctx1.lineTo(cw,y); ctx1.stroke(); }
+
+            let cx = cw / 2;
+            let cy = ch / 2;
+
+            ctx1.strokeStyle = '#e2e8f0';
+            ctx1.fillStyle = '#e2e8f0';
+            ctx1.lineWidth = 4;
+            ctx1.lineCap = 'round';
+            ctx1.beginPath();
+
+            if(sim1CurrentSymbol === 'battery') {
+                ctx1.moveTo(cx - 100, cy); ctx1.lineTo(cx - 20, cy);
+                ctx1.moveTo(cx - 20, cy - 30); ctx1.lineTo(cx - 20, cy + 30);
+                ctx1.lineWidth = 8;
+                ctx1.moveTo(cx + 20, cy - 15); ctx1.lineTo(cx + 20, cy + 15);
+                ctx1.lineWidth = 4;
+                ctx1.moveTo(cx + 20, cy); ctx1.lineTo(cx + 100, cy);
+                ctx1.stroke();
+                
+                ctx1.fillStyle = '#ef4444'; ctx1.font = 'bold 24px Cairo'; ctx1.fillText('+', cx - 45, cy - 15);
+                ctx1.fillStyle = '#e2e8f0'; ctx1.fillText('-', cx + 30, cy - 15);
+            } 
+            else if (sim1CurrentSymbol === 'lamp') {
+                ctx1.moveTo(cx - 100, cy); ctx1.lineTo(cx - 30, cy);
+                ctx1.moveTo(cx + 30, cy); ctx1.lineTo(cx + 100, cy);
+                ctx1.stroke();
+                
+                ctx1.beginPath(); ctx1.arc(cx, cy, 30, 0, Math.PI*2); ctx1.stroke();
+                ctx1.strokeStyle = '#f59e0b';
+                ctx1.beginPath(); ctx1.moveTo(cx - 20, cy - 20); ctx1.lineTo(cx + 20, cy + 20); ctx1.stroke();
+                ctx1.beginPath(); ctx1.moveTo(cx - 20, cy + 20); ctx1.lineTo(cx + 20, cy - 20); ctx1.stroke();
+            }
+            else if (sim1CurrentSymbol === 'switch') {
+                ctx1.moveTo(cx - 100, cy); ctx1.lineTo(cx - 40, cy);
+                ctx1.moveTo(cx + 40, cy); ctx1.lineTo(cx + 100, cy);
+                ctx1.stroke();
+                
+                ctx1.fillStyle = '#6366f1';
+                ctx1.beginPath(); ctx1.arc(cx - 40, cy, 5, 0, Math.PI*2); ctx1.fill();
+                ctx1.beginPath(); ctx1.arc(cx + 40, cy, 5, 0, Math.PI*2); ctx1.fill();
+                
+                ctx1.beginPath(); ctx1.moveTo(cx - 40, cy); ctx1.lineTo(cx + 30, cy - 30); ctx1.stroke(); // مفتوحة
+            }
+            else if (sim1CurrentSymbol === 'motor') {
+                ctx1.moveTo(cx - 100, cy); ctx1.lineTo(cx - 30, cy);
+                ctx1.moveTo(cx + 30, cy); ctx1.lineTo(cx + 100, cy);
+                ctx1.stroke();
+                
+                ctx1.beginPath(); ctx1.arc(cx, cy, 30, 0, Math.PI*2); ctx1.stroke();
+                ctx1.font = 'bold 24px Arial'; ctx1.textAlign = 'center'; ctx1.textBaseline = 'middle';
+                ctx1.fillText('M', cx, cy);
+            }
+        }
+
+        // ================= محاكاة 2 =================
+        let sim2State = { closed: false };
+
+        function toggleSim2() {
+            sim2State.closed = !sim2State.closed;
+            let btn = document.getElementById('btnSim2');
+            if(sim2State.closed) {
+                btn.style.background = 'var(--green)';
+                btn.innerText = 'الدارة مغلقة (اضغط للفتح)';
+            } else {
+                btn.style.background = 'var(--red)';
+                btn.innerText = 'الدارة مفتوحة (اضغط للغلق)';
+            }
+            updateSim2();
+        }
+
+        function drawArrow(ctx, x, y, angle) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.moveTo(0, 0); ctx.lineTo(-10, -5); ctx.lineTo(-10, 5); ctx.fill();
+            ctx.restore();
+        }
+
+        function updateSim2() {
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height); // البند 0.5 الإلزامي
+            let cw = canvas2.clientWidth; let ch = canvas2.clientHeight;
+
+            let rectW = 200; let rectH = 120;
+            let rx = (cw - rectW)/2; let ry = (ch - rectH)/2;
+
+            // أسلاك المستطيل
+            ctx2.strokeStyle = '#94a3b8'; ctx2.lineWidth = 2;
+            ctx2.beginPath();
+            ctx2.moveTo(rx, ry + 20); ctx2.lineTo(rx, ry); ctx2.lineTo(rx + rectW/2 - 20, ry);
+            ctx2.moveTo(rx + rectW/2 + 20, ry); ctx2.lineTo(rx + rectW, ry); ctx2.lineTo(rx + rectW, ry + rectH/2 - 20);
+            ctx2.moveTo(rx + rectW, ry + rectH/2 + 20); ctx2.lineTo(rx + rectW, ry + rectH); ctx2.lineTo(rx, ry + rectH); ctx2.lineTo(rx, ry + rectH/2 + 20);
+            ctx2.stroke();
+
+            // المولد (فوق)
+            let gx = rx + rectW/2; let gy = ry;
+            ctx2.strokeStyle = '#e2e8f0'; ctx2.lineWidth = 2; ctx2.beginPath(); ctx2.moveTo(gx-20, gy-15); ctx2.lineTo(gx-20, gy+15); ctx2.stroke(); // موجي
+            ctx2.lineWidth = 6; ctx2.beginPath(); ctx2.moveTo(gx+20, gy-8); ctx2.lineTo(gx+20, gy+8); ctx2.stroke(); // سالب
+            ctx2.fillStyle = '#ef4444'; ctx2.font="bold 16px Arial"; ctx2.fillText('+', gx-35, gy+5); ctx2.fillStyle = '#e2e8f0'; ctx2.fillText('-', gx+30, gy+5);
+
+            // القاطعة (يمين)
+            let sx = rx + rectW; let sy = ry + rectH/2;
+            ctx2.fillStyle = '#6366f1'; ctx2.beginPath(); ctx2.arc(sx, sy-20, 4, 0, Math.PI*2); ctx2.fill(); ctx2.beginPath(); ctx2.arc(sx, sy+20, 4, 0, Math.PI*2); ctx2.fill();
+            ctx2.strokeStyle = sim2State.closed ? '#10b981' : '#e2e8f0'; ctx2.lineWidth=3;
+            ctx2.beginPath(); ctx2.moveTo(sx, sy-20);
+            if(sim2State.closed) ctx2.lineTo(sx, sy+20); else ctx2.lineTo(sx+15, sy+10);
+            ctx2.stroke();
+
+            // المصباح (يسار)
+            let lx = rx; let ly = ry + rectH/2;
+            if(sim2State.closed) {
+                ctx2.beginPath(); ctx2.arc(lx, ly, 30, 0, Math.PI*2);
+                let grd = ctx2.createRadialGradient(lx,ly,10, lx,ly,30);
+                grd.addColorStop(0, 'rgba(245, 158, 11, 0.8)'); grd.addColorStop(1, 'rgba(245, 158, 11, 0)');
+                ctx2.fillStyle = grd; ctx2.fill();
+            }
+            ctx2.beginPath(); ctx2.arc(lx, ly, 20, 0, Math.PI*2); ctx2.fillStyle='#0a0f1e'; ctx2.fill();
+            ctx2.strokeStyle = sim2State.closed ? '#f59e0b' : '#94a3b8'; ctx2.lineWidth=2; ctx2.stroke();
+            ctx2.beginPath(); ctx2.moveTo(lx-14, ly-14); ctx2.lineTo(lx+14, ly+14); ctx2.stroke(); ctx2.beginPath(); ctx2.moveTo(lx-14, ly+14); ctx2.lineTo(lx+14, ly-14); ctx2.stroke();
+
+            // أسهم التيار (حمراء) عند الغلق
+            if(sim2State.closed) {
+                drawArrow(ctx2, rx + rectW/4, ry, Math.PI); // فوق (نحو اليسار)
+                drawArrow(ctx2, rx, ry + rectH/4, Math.PI/2); // يسار (نزول)
+                drawArrow(ctx2, rx + rectW/2, ry + rectH, 0); // تحت (يمين)
+                drawArrow(ctx2, rx + rectW, ry + rectH*0.8, -Math.PI/2); // يمين (صعود)
+            }
+        }
+
+        // ================= نظام التمارين =================
+        let quizAnswers = {};
+
+        function selectAnswer(el, idx) {
+            const card = el.closest('.q-card');
+            const qnum = card.querySelector('.q-num').innerText;
+            card.querySelectorAll('.q-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+            quizAnswers[qnum] = idx;
+        }
+
+        function evaluateQuiz() {
+            const cards = document.querySelectorAll('.q-card');
+            let score = 0;
+            let answeredAll = true;
+
+            cards.forEach(card => {
+                const qnum = card.querySelector('.q-num').innerText;
+                if (quizAnswers[qnum] === undefined) answeredAll = false;
+            });
+
+            if (!answeredAll) { alert("أجب على جميع الأسئلة أولاً!"); return; }
+
+            cards.forEach(card => {
+                const qnum = card.querySelector('.q-num').innerText;
+                const correctIdx = parseInt(card.querySelector('.q-options').getAttribute('data-correct'));
+                const selectedIdx = quizAnswers[qnum];
+                const opts = card.querySelectorAll('.q-option');
+                const feedback = card.querySelector('.q-feedback');
+
+                opts.forEach(o => o.classList.remove('correct', 'wrong', 'selected'));
+                if (selectedIdx === correctIdx) {
+                    score++;
+                    opts[selectedIdx].classList.add('correct');
+                    feedback.style.color = "var(--green)";
+                    feedback.style.borderColor = "var(--green)";
+                } else {
+                    opts[selectedIdx].classList.add('wrong');
+                    opts[correctIdx].classList.add('correct');
+                    feedback.style.color = "var(--red)";
+                    feedback.style.borderColor = "var(--red)";
+                }
+                feedback.style.display = 'block';
+            });
+
+            const resDiv = document.getElementById('quiz-result');
+            resDiv.innerText = `نتيجتك: ${score} من ${cards.length}`;
+            resDiv.style.color = score === cards.length ? 'var(--green)' : 'var(--gold)';
+            resDiv.style.display = 'block';
+        }
+    </script>
+    
+    <!-- السكريبت المركزي -->
+    <script src="credit.js"></script>
+    
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 2 | عدد رسوم SVG في الدرس النظري = 2 | عدد المحاكيات = 2 -->
+</body>
+</html>

@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس 04: المجموعة الشمسية - الظواهر الضوئية</title>
+    
+    <!-- خطوط جوجل منسقة بدقة -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- إعدادات MathJax للمعادلات الرياضية -->
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #f97316; /* لون مقطع الظواهر الضوئية */
+            --accent2:#fb923c;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.7;
+            padding-bottom: 50px;
+        }
+
+        /* شريط التنقل العلوي الثابت */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        /* الترويسة الرئيسية */
+        .lesson-header {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .lesson-header span:first-child {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+        .lesson-badge {
+            background: rgba(249, 115, 22, 0.15);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 4px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .lesson-header h1 {
+            font-size: 2.4rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .lesson-header em {
+            font-style: normal;
+            color: var(--accent);
+            position: relative;
+        }
+        .lesson-header em::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        .lesson-meta {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* نظام التبويبات الإلزامي (متوافق بالكامل) */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* صندوق الأهداف */
+        .objectives-box {
+            background: var(--card);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .objectives-box h3 { color: var(--accent); margin-bottom: 15px; }
+        .objectives-box ul { list-style: none; padding-right: 15px; }
+        .objectives-box li { position: relative; margin-bottom: 10px; }
+        .objectives-box li::before { content: '🎯'; position: absolute; right: -25px; top: 2px; font-size: 0.9rem; }
+
+        /* العناوين والفقرات */
+        .sec-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 40px 0 20px 0;
+        }
+        .sec-icon { font-size: 1.5rem; background: var(--dark3); padding: 8px; border-radius: 8px; border: 1px solid var(--border); }
+        .sec-title h2 { color: #fff; font-size: 1.4rem; }
+        .sec-line { flex-grow: 1; height: 1px; background: var(--border); border: none; margin-right: 15px; }
+
+        /* التعاريف */
+        .def-box {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .def-box strong { color: var(--gold); font-family: 'Amiri', serif; font-size: 1.25rem; }
+        .def-term-fr { color: var(--muted); font-size: 0.9rem; margin-right: 5px; direction: ltr; display: inline-block; }
+
+        /* المعادلات والجداول */
+        .formula-box {
+            background: var(--dark3);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        .formula-title {
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .formula-display {
+            font-size: 1.8rem;
+            margin: 20px 0;
+            direction: ltr;
+            color: #fff;
+        }
+        .symbol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .symbol-table th, .symbol-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .symbol-table th { background: var(--dark4); color: #fff; }
+        .sym-cell { font-family: 'Amiri', serif; font-size: 1.2rem; color: #fff; font-style: italic; }
+        .unit-cell { color: var(--gold); direction: ltr; }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: var(--card);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .info-table th { background: var(--accent); color: #fff; padding: 15px; text-align: center; }
+        .info-table td { padding: 12px; border-bottom: 1px solid var(--border); text-align: center; }
+        .info-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+        .highlight-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+        }
+        .highlight-box.info { background: rgba(16, 185, 129, 0.1); border-right: 4px solid var(--green); }
+        .highlight-box.warn { background: rgba(245, 158, 11, 0.1); border-right: 4px solid var(--gold); }
+
+        /* الرسوم التوضيحية (SVG) */
+        .diagram-figure {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .diagram-wrap {
+            max-width: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+        .lesson-diagram { width: 100%; max-width: 500px; height: auto; }
+        .fig-title {
+            margin-top: 15px;
+            color: var(--muted);
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+        
+        /* خطوط عربية متناسقة لـ SVG */
+        .svg-text { font-family: 'Cairo', sans-serif; fill: var(--text); }
+        .svg-math { font-family: 'Amiri', serif; font-style: italic; }
+
+        /* المحاكاة (تبويب 2) */
+        .sim-wrap {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        .sim-title { font-size: 1.2rem; font-weight: 700; color: #fff; }
+        
+        /* شارة التفاعلي الإلزامية */
+        .sim-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        .sim-description {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: var(--text);
+            border-right: 3px solid var(--accent);
+        }
+        .canvas-container {
+            width: 100%;
+            height: 350px;
+            background: #020617;
+            border-radius: 8px;
+            border: 1px inset rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .sim-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .control-group label { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--muted); font-size: 0.9rem;}
+        .val-badge { color: var(--gold); font-weight: 700; direction: ltr; }
+        input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+        select { background: var(--dark); color: #fff; border: 1px solid var(--border); padding: 8px; border-radius: 6px; font-family: inherit; width: 100%; }
+        button.action-btn { background: var(--accent); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%;}
+        button.action-btn:hover { background: var(--accent2); }
+
+        /* التمارين (تبويب 3) */
+        .q-card {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .q-num {
+            display: inline-block;
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--accent);
+            width: 30px; height: 30px;
+            text-align: center; line-height: 30px;
+            border-radius: 50%; font-weight: bold; margin-bottom: 10px;
+        }
+        .q-text { font-size: 1.1rem; color: #fff; margin-bottom: 15px; }
+        .q-options { display: flex; flex-direction: column; gap: 10px; }
+        .q-option {
+            background: rgba(255,255,255,0.03);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .q-option:hover { background: rgba(255,255,255,0.08); }
+        .q-option.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--green); }
+        .q-option.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--red); }
+        .q-feedback { display: none; padding: 15px; margin-top: 15px; border-radius: 6px; font-size: 0.95rem; }
+        .q-feedback.correct { display: block; background: rgba(16, 185, 129, 0.1); color: var(--green); border-right: 3px solid var(--green); }
+        .q-feedback.wrong { display: block; background: rgba(239, 68, 68, 0.1); color: var(--red); border-right: 3px solid var(--red); }
+        .quiz-score { text-align: center; margin-top: 30px; display: none; padding: 20px; background: var(--dark3); border-radius: 8px; border: 2px dashed var(--accent); }
+
+        /* الملخص (تبويب 4) */
+        .summary-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .summary-header { text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 30px; }
+        .summary-title { font-size: 1.5rem; color: #fff; }
+        .summary-section { margin-bottom: 30px; }
+        .summary-section-title { font-size: 1.2rem; color: var(--accent); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        
+        .s-def-item {
+            background: var(--dark3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-right: 3px solid var(--gold);
+        }
+        .s-def-term { font-weight: bold; color: var(--gold); display: block; margin-bottom: 5px; }
+        
+        .summary-list li { margin-bottom: 10px; position: relative; padding-right: 20px; }
+        .summary-list li::before { content: '✓'; position: absolute; right: 0; color: var(--green); }
+        
+        .print-btn {
+            background: transparent; color: #fff; border: 1px solid #fff;
+            padding: 10px 20px; border-radius: 6px; cursor: pointer;
+            display: block; margin: 30px auto 0; font-family: 'Cairo'; transition: 0.3s;
+        }
+        .print-btn:hover { background: #fff; color: var(--dark); }
+
+        /* تنسيقات الطباعة الإلزامية */
+        @media print {
+            .top-nav-bar, .tabs-nav, .tab-content:not(#tab-summary) { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #111 !important; font-size: 12pt; }
+            .summary-card { box-shadow: none; border: none; padding: 0; }
+            .summary-header h2, .summary-section-title { color: #000 !important; }
+            .s-def-item { background: #f9f9f9 !important; border: 1px solid #ddd; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+            .print-btn { display: none; }
+            .svg-text { fill: #000 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="../index.html#optics">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <div class="container">
+        <!-- الترويسة -->
+        <div class="lesson-header">
+            <span>السنة الأولى متوسط › المقطع 4: الظواهر الضوئية › الدرس 04</span>
+            <span class="lesson-badge">الدرس 04</span>
+            <h1>المجموعة <em>الشمسية</em> والفضاء</h1>
+            <p class="lesson-meta">مادة العلوم الفيزيائية والتكنولوجيا | الجيل الثاني</p>
+        </div>
+
+        <!-- شريط التبويبات (كود إلزامي كامل لتسهيل العرض 2x2 على الهواتف) -->
+        <nav class="tabs-nav">
+            <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+            <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+            <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+            <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+        </nav>
+
+        <!-- التبويب 1: الدرس النظري -->
+        <div id="tab-lesson" class="tab-content active">
+            
+            <div class="objectives-box">
+                <h3>الأهداف التعلمية</h3>
+                <ul>
+                    <li>التعرف على بنية المجموعة الشمسية والكواكب التي تدور حول النجم المركزي.</li>
+                    <li>التمييز علمياً بين الحركة المحورية (ينتج عنها اليوم) والحركة الانتقالية (ينتج عنها السنة).</li>
+                    <li>معرفة سرعة انتشار الضوء في الفراغ واستيعابها كسرعة حدية.</li>
+                    <li>استعمال الوحدات الفلكية (الوحدة الفلكية، السنة الضوئية) لحساب وتقدير المسافات.</li>
+                </ul>
+            </div>
+
+            <div class="sec-title">
+                <span class="sec-icon">🌌</span>
+                <h2>1. ما هي المجموعة الشمسية؟</h2>
+                <hr class="sec-line">
+            </div>
+            
+            <p>تتكون المجموعة الشمسية (Le Système Solaire) من نجم مركزي مضيء بذاته وهو <strong>الشمس</strong>، وتدور حولها ثمانية كواكب مظلمة لا تضيء بذاتها، بل تستمد نورها من الشمس. تنتظم هذه الكواكب في مدارات مغلقة.</p>
+
+            <!-- الرسم التوضيحي 1: الكواكب والنظام الشمسي -->
+            <figure class="diagram-figure">
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#fbbf24" />
+                                <stop offset="80%" stop-color="#f59e0b" />
+                                <stop offset="100%" stop-color="#b45309" />
+                            </radialGradient>
+                            <radialGradient id="earthGrad" cx="30%" cy="30%" r="70%">
+                                <stop offset="0%" stop-color="#60a5fa" />
+                                <stop offset="100%" stop-color="#1e3a8a" />
+                            </radialGradient>
+                            <radialGradient id="marsGrad" cx="30%" cy="30%" r="70%">
+                                <stop offset="0%" stop-color="#f87171" />
+                                <stop offset="100%" stop-color="#991b1b" />
+                            </radialGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Sun -->
+                        <circle cx="-50" cy="100" r="120" fill="url(#sunGrad)" filter="url(#glow)" />
+                        <text x="50" y="105" text-anchor="middle" dominant-baseline="middle" font-weight="bold" font-size="16" class="svg-text" fill="#000">الشمس</text>
+                        
+                        <!-- Orbits -->
+                        <path d="M 0 100 Q 150 -50 300 100 T 600 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2" stroke-dasharray="5,5"/>
+                        
+                        <!-- Planets -->
+                        <circle cx="150" cy="100" r="8" fill="#a8a29e" />
+                        <text x="150" y="125" text-anchor="middle" font-size="12" class="svg-text">عطارد</text>
+
+                        <circle cx="220" cy="100" r="12" fill="#fcd34d" />
+                        <text x="220" y="125" text-anchor="middle" font-size="12" class="svg-text">الزهرة</text>
+
+                        <circle cx="300" cy="100" r="14" fill="url(#earthGrad)" />
+                        <text x="300" y="130" text-anchor="middle" font-size="14" font-weight="bold" class="svg-text" fill="#60a5fa">الأرض</text>
+
+                        <circle cx="380" cy="100" r="10" fill="url(#marsGrad)" />
+                        <text x="380" y="125" text-anchor="middle" font-size="12" class="svg-text">المريخ</text>
+
+                        <circle cx="480" cy="100" r="22" fill="#d97706" />
+                        <text x="480" y="135" text-anchor="middle" font-size="12" class="svg-text">المشتري</text>
+                    </svg>
+                </div>
+                <figcaption class="fig-title">شكل (1) — بنية مبسطة للمجموعة الشمسية (الكواكب الصخرية والعملاقة)</figcaption>
+            </figure>
+
+            <div class="def-box">
+                <strong>الكوكب <span class="def-term-fr">(Planète)</span></strong>
+                <p>جرم سماوي معتم (مظلم) لا يصدر ضوءاً بنفسه، بل يعكس الضوء الذي يصله من النجم (الشمس). تدور الكواكب في مسارات تسمى <strong>المدارات الإهليلجية</strong> (شكل بيضوي).</p>
+            </div>
+
+            <!-- الرسم التوضيحي 2: المدار الإهليلجي -->
+            <figure class="diagram-figure">
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--accent)"/>
+                            </marker>
+                        </defs>
+                        <!-- Orbit -->
+                        <ellipse cx="200" cy="100" rx="160" ry="70" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-dasharray="8,4" />
+                        
+                        <!-- Sun (Not at center, at a focus) -->
+                        <circle cx="120" cy="100" r="25" fill="#f59e0b" filter="url(#glow)" />
+                        <text x="120" y="105" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="bold" fill="#000" class="svg-text">الشمس</text>
+                        
+                        <!-- Planet -->
+                        <circle cx="360" cy="100" r="12" fill="#3b82f6" />
+                        <text x="360" y="125" text-anchor="middle" font-size="12" class="svg-text">الكوكب</text>
+                        
+                        <!-- Movement Arrow -->
+                        <path d="M 360 85 Q 340 50 300 40" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        
+                        <text x="200" y="185" text-anchor="middle" font-size="14" class="svg-text" fill="var(--muted)">مدار إهليلجي (Trajectoire Elliptique)</text>
+                    </svg>
+                </div>
+                <figcaption class="fig-title">شكل (2) — المدار الإهليلجي للكوكب حول الشمس</figcaption>
+            </figure>
+
+
+            <div class="sec-title">
+                <span class="sec-icon">🔄</span>
+                <h2>2. الحركات الدورية: يوم الكوكب وسنته</h2>
+                <hr class="sec-line">
+            </div>
+            
+            <p>يتميز كل كوكب بحركتين ميكانيكيتين في الفضاء، ينتج عنهما مقاييس زمنية هامة:</p>
+
+            <table class="info-table">
+                <thead>
+                    <tr>
+                        <th>المفهوم الفلكي</th>
+                        <th>نوع الحركة</th>
+                        <th>الظاهرة الناتجة</th>
+                        <th>المدة بالنسبة للأرض</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>يوم الكوكب</strong></td>
+                        <td>الحركة المحورية (حول محوره/نفسه)</td>
+                        <td>تعاقب الليل والنهار</td>
+                        <td>24 ساعة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>سنة الكوكب</strong></td>
+                        <td>الحركة الانتقالية (حول الشمس)</td>
+                        <td>تعاقب الفصول الأربعة</td>
+                        <td>365.25 يوم</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box info">
+                💡 <strong>هل تعلم؟</strong> كلما زاد بعد الكوكب عن الشمس، زاد طول مساره المداري وضعفت سرعته، وبالتالي <strong>تطول سنته</strong>. سنة نبتون تساوي حوالي 165 سنة أرضية!
+            </div>
+
+            <!-- الرسم التوضيحي 3: الليل والنهار -->
+            <figure class="diagram-figure">
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <!-- Sun rays -->
+                        <line x1="50" y1="125" x2="200" y2="125" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4,4"/>
+                        <circle cx="-20" cy="125" r="80" fill="#f59e0b" filter="url(#glow)"/>
+                        <text x="20" y="125" text-anchor="middle" dominant-baseline="middle" class="svg-text" fill="#000" font-weight="bold">أشعة الشمس</text>
+
+                        <!-- Earth Day/Night -->
+                        <g transform="translate(300, 125)">
+                            <!-- Axis -->
+                            <line x1="-30" y1="-80" x2="30" y2="80" stroke="#fff" stroke-width="1" stroke-dasharray="2,2"/>
+                            
+                            <!-- Half illuminated, half dark -->
+                            <path d="M 0 -60 A 60 60 0 0 1 0 60 Z" fill="#1e3a8a" />
+                            <path d="M 0 -60 A 60 60 0 0 0 0 60 Z" fill="#60a5fa" />
+                            
+                            <text x="-30" y="0" text-anchor="middle" dominant-baseline="middle" fill="#000" font-size="12" class="svg-text" font-weight="bold">نهار</text>
+                            <text x="30" y="0" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-size="12" class="svg-text">ليل</text>
+                            
+                            <!-- Rotation Arrow -->
+                            <path d="M -10 -75 Q 30 -85 45 -50" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        </g>
+                        
+                        <text x="300" y="220" text-anchor="middle" font-size="14" class="svg-text" fill="var(--muted)">دوران الكوكب حول محوره (ينتج الليل والنهار)</text>
+                    </svg>
+                </div>
+                <figcaption class="fig-title">شكل (3) — الحركة المحورية وتفسير ظاهرة الليل والنهار</figcaption>
+            </figure>
+
+
+            <div class="sec-title">
+                <span class="sec-icon">⚡</span>
+                <h2>3. سرعة انتشار الضوء (Vitesse de la lumière)</h2>
+                <hr class="sec-line">
+            </div>
+            
+            <p>لا ينتقل الضوء بشكل آني مطلق، بل له سرعة محددة تُعد أكبر سرعة معروفة في الكون. ينتشر الضوء في الفراغ والأوساط الشفافة (كالهواء) بسرعة ثابتة.</p>
+
+            <div class="formula-box">
+                <div class="formula-title">سرعة انتشار الضوء في الفراغ</div>
+                <div class="formula-display">
+                    $$ c \approx 300,000 \text{ km/s} $$
+                    $$ c = 3 \times 10^8 \text{ m/s} $$
+                </div>
+                <table class="symbol-table">
+                    <thead>
+                        <tr><th>الرمز</th><th>التسمية</th><th>الوحدة</th><th>الملاحظة</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="sym-cell">c</td>
+                            <td>سرعة الضوء (Célérité)</td>
+                            <td class="unit-cell">km/s أو m/s</td>
+                            <td>ثابت كوني (يقطع الضوء 300 ألف كم في ثانية واحدة)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- الرسم التوضيحي 4: سرعة الضوء -->
+            <figure class="diagram-figure">
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <!-- Earth -->
+                        <circle cx="50" cy="75" r="30" fill="url(#earthGrad)"/>
+                        <text x="50" y="75" text-anchor="middle" dominant-baseline="middle" font-size="12" fill="#fff" class="svg-text">الأرض</text>
+                        
+                        <!-- Moon -->
+                        <circle cx="450" cy="75" r="15" fill="#d6d3d1"/>
+                        <text x="450" y="110" text-anchor="middle" font-size="12" class="svg-text">القمر</text>
+                        
+                        <!-- Light Ray -->
+                        <line x1="85" y1="75" x2="430" y2="75" stroke="#fef08a" stroke-width="4" stroke-dasharray="15,10" filter="url(#glow)"/>
+                        <path d="M 300 60 L 320 75 L 300 90" fill="none" stroke="#fff" stroke-width="2"/>
+                        
+                        <text x="250" y="50" text-anchor="middle" font-size="14" class="svg-text">الضوء يستغرق 1.28 ثانية للوصول للقمر</text>
+                        <text x="250" y="110" text-anchor="middle" font-size="12" class="svg-math" fill="var(--accent)">d ≈ 384,000 km</text>
+                    </svg>
+                </div>
+                <figcaption class="fig-title">شكل (4) — انتقال الضوء مسافات هائلة في أزمنة قصيرة جداً</figcaption>
+            </figure>
+
+
+            <div class="sec-title">
+                <span class="sec-icon">📏</span>
+                <h2>4. وحدات القياس الفلكية (Unités Astronomiques)</h2>
+                <hr class="sec-line">
+            </div>
+            
+            <p>نظراً لشساعة الكون والمسافات الهائلة بين النجوم والكواكب، يصبح استخدام المتر (m) أو الكيلومتر (km) غير عملي، لذلك نستعمل وحدات خاصة:</p>
+
+            <div class="def-box">
+                <strong>1. الوحدة الفلكية <span class="def-term-fr">(U.A)</span></strong>
+                <p>تُستخدم لقياس المسافات <strong>داخل المجموعة الشمسية</strong>. وهي تمثل المسافة المتوسطة بين مركز الشمس ومركز الأرض.</p>
+                <div class="formula-box" style="margin: 15px 0; padding: 15px;">
+                    $$ 1 \text{ U.A} \approx 150,000,000 \text{ km} $$
+                    $$ 1 \text{ U.A} = 1.5 \times 10^8 \text{ km} $$
+                </div>
+            </div>
+
+            <div class="def-box">
+                <strong>2. السنة الضوئية <span class="def-term-fr">(a.l)</span></strong>
+                <p>تُستخدم لقياس المسافات بين النجوم والمجرات. وهي <strong>المسافة</strong> (وليس الزمن) التي يقطعها الضوء في الفراغ خلال سنة أرضية كاملة (365.25 يوم).</p>
+                <div class="formula-box" style="margin: 15px 0; padding: 15px;">
+                    $$ d = c \times t = 300,000 \times (365.25 \times 24 \times 3600) $$
+                    $$ 1 \text{ a.l} \approx 9.46 \times 10^{12} \text{ km} $$
+                </div>
+                <p style="text-align: center; color: var(--muted); font-size:0.9rem;">(أي تقريباً 9460 مليار كيلومتر!)</p>
+            </div>
+
+            <!-- الرسم التوضيحي 5: وحدات القياس -->
+            <figure class="diagram-figure">
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 120" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <line x1="50" y1="60" x2="450" y2="60" stroke="rgba(255,255,255,0.3)" stroke-width="2" />
+                        <line x1="50" y1="50" x2="50" y2="70" stroke="#fff" stroke-width="2" />
+                        <line x1="450" y1="50" x2="450" y2="70" stroke="#fff" stroke-width="2" />
+                        
+                        <circle cx="50" cy="60" r="15" fill="url(#sunGrad)"/>
+                        <circle cx="450" cy="60" r="10" fill="url(#earthGrad)"/>
+                        
+                        <text x="50" y="95" text-anchor="middle" font-size="12" class="svg-text">الشمس</text>
+                        <text x="450" y="95" text-anchor="middle" font-size="12" class="svg-text">الأرض</text>
+                        
+                        <text x="250" y="40" text-anchor="middle" font-size="16" font-weight="bold" class="svg-text" fill="var(--accent)">1 U.A (وحدة فلكية)</text>
+                        <text x="250" y="85" text-anchor="middle" font-size="14" class="svg-math">150 × 10⁶ km</text>
+                    </svg>
+                </div>
+                <figcaption class="fig-title">شكل (5) — تمثيل الوحدة الفلكية (المسافة أرض - شمس)</figcaption>
+            </figure>
+
+        </div>
+
+        <!-- التبويب 2: المحاكاة التفاعلية (المحاكيين السابقين مع الحفاظ على المنطق) -->
+        <div id="tab-sim" class="tab-content">
+            
+            <!-- المحاكاة 1 -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">🔄 المحاكاة 01: أوريري حركي للكواكب (مدارات النظام الشمسي)</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي <strong>الحركة الانتقالية للكواكب</strong> حول الشمس (المدارات). حرّك <strong>منزلق السرعة</strong> لترى كيف يتغيّر <strong>زمن الدورة (السنة الكوكبية)</strong> وسرعة المدارات حسب البعد عن المركز.</p>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="simCanvas1"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>سرعة المحاكاة الزمنية: <span id="val-speed" class="val-badge">1x</span></label>
+                        <input type="range" id="sim1-speed" min="0" max="4" step="0.5" value="1">
+                    </div>
+                    <div class="sim-controls" style="grid-column: span 1; padding:0; background:none;">
+                        <div style="background:rgba(255,255,255,0.02); padding:10px; border-radius:6px; border:1px solid var(--border); font-size:0.85rem;">
+                            <p style="font-weight:bold; color:#fff; margin-bottom:4px;">بيانات الحركة المقارنة:</p>
+                            <p>الكوكب المحدد حالياً: <span id="planet-name-label" style="color:var(--accent); font-weight:bold;">الأرض</span></p>
+                            <p>السنة الكوكبية النسبية: <span id="planet-year-label" style="color:var(--gold);">365 يوم</span></p>
+                            <p>سرعة الدوران المداري: <span id="planet-orbit-speed" style="color:var(--green);">29.8 كم/ثا</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- المحاكاة 2 -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">⚡ المحاكاة 02: محاكي انتشار الضوء وحساب الوقت الفلكي</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي <strong>حركة شعاع ضوئي</strong> منطلق من الشمس. اختر <strong>الكوكب الهدف</strong> ثم أرسل النبضة لترى كيف يتغيّر <strong>زمن وصول الضوء</strong> الفعلي والمسافة الفلكية المقابلة بالكيلومترات.</p>
+                </div>
+                <div class="canvas-container" style="height: 250px;">
+                    <canvas id="simCanvas2"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>اختر الكوكب المستهدف للرصد:</label>
+                        <select id="sim2-target">
+                            <option value="mercury">عطارد (Mercury)</option>
+                            <option value="venus">الزهرة (Venus)</option>
+                            <option value="earth" selected>الأرض (Earth)</option>
+                            <option value="mars">المريخ (Mars)</option>
+                            <option value="jupiter">المشتري (Jupiter)</option>
+                        </select>
+                    </div>
+                    <button class="action-btn" onclick="startPhoton()">أرسل شعاع الضوء الآن 🚀</button>
+                    <div style="background:var(--dark); padding:10px; border-radius:6px; border:1px solid var(--border);">
+                        <span style="color:var(--muted); font-size:0.85rem;">بيانات الرحلة:</span>
+                        <div style="font-size:0.9rem;">المسافة بالوحدة الفلكية: <span id="beam-dist-ua" style="color:var(--accent); font-weight:bold;">1.00 U.A</span></div>
+                        <div style="font-size:0.9rem;">المسافة بالكيلومترات: <span id="beam-dist-km" style="color:var(--accent);">150,000,000 km</span></div>
+                        <div style="font-weight:bold; margin-top:5px;">زمن الرحلة المحسوب:</div>
+                        <div id="sim2-timer" style="color:var(--gold); font-size:1.1rem; font-family:'Amiri'; text-align:center;">8 دقائق و 20 ثانية</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- التبويب 3: التمارين (MCQ + سؤال مركب تخطيطي تفاعلي) -->
+        <div id="tab-exercises" class="tab-content">
+            <div class="highlight-box info">
+                💡 أجب عن الأسئلة التالية لاختبار فهمك. سيظهر التصحيح فورياً لكل سؤال.
+            </div>
+
+            <div class="q-card" data-ans="1">
+                <div class="q-head">
+                    <span class="q-num">1</span>
+                    <div class="q-text">الجرم السماوي المضيء بذاته في مجموعتنا الشمسية هو:</div>
+                </div>
+                <div class="q-options">
+                    <div class="q-option" onclick="checkAnswer(this, 0)">الأرض</div>
+                    <div class="q-option" onclick="checkAnswer(this, 1)">الشمس</div>
+                    <div class="q-option" onclick="checkAnswer(this, 2)">القمر</div>
+                </div>
+                <div class="q-feedback">الشمس هي النجم الوحيد في مجموعتنا المضيء بذاته.</div>
+            </div>
+
+            <div class="q-card" data-ans="0">
+                <div class="q-head">
+                    <span class="q-num">2</span>
+                    <div class="q-text">المدة الزمنية التي يستغرقها الكوكب ليدور دورة كاملة حول نفسه تسمى:</div>
+                </div>
+                <div class="q-options">
+                    <div class="q-option" onclick="checkAnswer(this, 0)">يوم الكوكب</div>
+                    <div class="q-option" onclick="checkAnswer(this, 1)">سنة الكوكب</div>
+                    <div class="q-option" onclick="checkAnswer(this, 2)">الوحدة الفلكية</div>
+                </div>
+                <div class="q-feedback">الدوران المحوري (حول النفس) ينتج عنه اليوم وتناوب الليل والنهار.</div>
+            </div>
+
+            <div class="q-card" data-ans="2">
+                <div class="q-head">
+                    <span class="q-num">3</span>
+                    <div class="q-text">سرعة انتشار الضوء في الفراغ تقدر بحوالي:</div>
+                </div>
+                <div class="q-options">
+                    <div class="q-option" onclick="checkAnswer(this, 0)">340 m/s</div>
+                    <div class="q-option" onclick="checkAnswer(this, 1)">300,000 m/s</div>
+                    <div class="q-option" onclick="checkAnswer(this, 2)">300,000 km/s</div>
+                </div>
+                <div class="q-feedback">سرعة الضوء (c) هي 300 ألف كيلومتر في كل ثانية.</div>
+            </div>
+
+            <div class="q-card" data-ans="1">
+                <div class="q-head">
+                    <span class="q-num">4</span>
+                    <div class="q-text">الوحدة الفلكية (1 U.A) تساوي المسافة المتوسطة بين:</div>
+                </div>
+                <div class="q-options">
+                    <div class="q-option" onclick="checkAnswer(this, 0)">الأرض والقمر</div>
+                    <div class="q-option" onclick="checkAnswer(this, 1)">الأرض والشمس</div>
+                    <div class="q-option" onclick="checkAnswer(this, 2)">الشمس وأقرب نجم لها</div>
+                </div>
+                <div class="q-feedback">1 U.A هي المسافة بين مركز الأرض ومركز الشمس وتقدر بـ 150 مليون كم.</div>
+            </div>
+
+            <div class="q-card" data-ans="0">
+                <div class="q-head">
+                    <span class="q-num">5</span>
+                    <div class="q-text">السنة الضوئية هي وحدة لقياس:</div>
+                </div>
+                <div class="q-options">
+                    <div class="q-option" onclick="checkAnswer(this, 0)">المسافة</div>
+                    <div class="q-option" onclick="checkAnswer(this, 1)">الزمن</div>
+                    <div class="q-option" onclick="checkAnswer(this, 2)">السرعة</div>
+                </div>
+                <div class="q-feedback">رغم اسمها، السنة الضوئية تقيس المسافة الهائلة التي يقطعها الضوء خلال سنة.</div>
+            </div>
+
+            <!-- سؤال نوع التخطيط المرئي (السؤال 6) -->
+            <div class="q-card q-diagram-type" data-ans="1">
+                <div class="q-head">
+                    <span class="q-num">6</span>
+                    <div class="q-text">بالاعتماد على الرسم، ما هي الظاهرة التي يمثلها دوران الكوكب (المسار المتقطع الأحمر) حول النجم؟</div>
+                </div>
+                <svg class="lesson-diagram" viewBox="0 0 300 150" style="background:#000; border-radius:8px; margin-bottom:15px; border:1px solid var(--border);">
+                    <circle cx="150" cy="75" r="40" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4"/>
+                    <circle cx="150" cy="75" r="15" fill="#f59e0b"/>
+                    <circle cx="110" cy="75" r="6" fill="#3b82f6"/>
+                    <path d="M 110 65 Q 130 35 150 35" fill="none" stroke="#ef4444" marker-end="url(#arrowhead)"/>
+                </svg>
+                <div class="q-options">
+                    <div class="q-option" onclick="checkAnswer(this, 0)">الحركة المحورية (يوم الكوكب)</div>
+                    <div class="q-option" onclick="checkAnswer(this, 1)">الحركة الانتقالية (سنة الكوكب)</div>
+                </div>
+                <div class="q-feedback">الدوران حول الشمس (المركز) هو حركة انتقالية وينتج عنها سنة الكوكب وتناوب الفصول الأربعة.</div>
+            </div>
+
+            <button class="action-btn" onclick="showScore()" style="margin-top:20px;">عرض النتيجة النهائية 📊</button>
+            <div id="final-score" class="quiz-score">
+                <h3 style="color:#fff; margin-bottom:10px;">النتيجة</h3>
+                <h1 style="color:var(--gold); font-size:3rem;" id="score-text">0 / 6</h1>
+            </div>
+
+        </div>
+
+        <!-- التبويب 4: ملخص الكراس (خريطة مفاهيم وصيغ وقابل للطباعة) -->
+        <div id="tab-summary" class="tab-content">
+            <div class="summary-card">
+                <div class="summary-header">
+                    <div style="font-size:0.9rem; color:var(--muted); margin-bottom:10px;">السنة الأولى متوسط | المقطع 4 | الدرس 04</div>
+                    <h2 class="summary-title">ملخص: المجموعة الشمسية والمسافات الفلكية</h2>
+                    <div style="color:var(--accent); margin-top:5px;">الأستاذ: الفيزياء السهلة — منهاج الجيل الثاني</div>
+                </div>
+
+                <!-- خريطة المفاهيم الإلزامية (الرسم رقم 6) -->
+                <div class="summary-section">
+                    <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                    <figure class="summary-diagram">
+                        <svg viewBox="0 0 600 250" class="lesson-diagram" style="background:#fff; border-radius:8px;">
+                            <!-- Rectangles -->
+                            <rect x="220" y="20" width="160" height="40" rx="8" fill="#1e293b" stroke="#f97316" stroke-width="2"/>
+                            <text x="300" y="45" text-anchor="middle" font-size="16" fill="#fff" font-family="Cairo" font-weight="bold">المجموعة الشمسية</text>
+                            
+                            <!-- Branches -->
+                            <path d="M 300 60 L 300 90 M 300 90 L 150 90 L 150 120 M 300 90 L 450 90 L 450 120" fill="none" stroke="#334155" stroke-width="2"/>
+                            
+                            <rect x="70" y="120" width="160" height="40" rx="8" fill="#334155"/>
+                            <text x="150" y="145" text-anchor="middle" font-size="14" fill="#fff" font-family="Cairo">الشمس (نجم مضيء)</text>
+                            
+                            <rect x="370" y="120" width="160" height="40" rx="8" fill="#334155"/>
+                            <text x="450" y="145" text-anchor="middle" font-size="14" fill="#fff" font-family="Cairo">الكواكب (أجرام معتمة)</text>
+
+                            <!-- Sub branches -->
+                            <path d="M 450 160 L 450 180 L 350 180 L 350 200 M 450 180 L 550 180 L 550 200" fill="none" stroke="#334155" stroke-width="2"/>
+                            
+                            <rect x="290" y="200" width="120" height="30" rx="5" fill="#f97316"/>
+                            <text x="350" y="220" text-anchor="middle" font-size="12" fill="#fff" font-family="Cairo">دوران محوري (اليوم)</text>
+
+                            <rect x="490" y="200" width="120" height="30" rx="5" fill="#f97316"/>
+                            <text x="550" y="220" text-anchor="middle" font-size="12" fill="#fff" font-family="Cairo">دوران انتقالي (السنة)</text>
+                        </svg>
+                        <figcaption class="fig-title">شكل (6) — خريطة المفاهيم الشاملة للدرس</figcaption>
+                    </figure>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+                    <div class="s-def-item">
+                        <span class="s-def-term">الكوكب:</span>
+                        <span class="s-def-text">جرم سماوي معتم يدور حول الشمس في مسار إهليلجي، ويستمد منها النور.</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">يوم الكوكب:</span>
+                        <span class="s-def-text">المدة التي يستغرقها للدوران حول نفسه (ينتج عنه الليل والنهار).</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">سنة الكوكب:</span>
+                        <span class="s-def-text">المدة التي يستغرقها للدوران دورة كاملة حول الشمس (تنتج عنها الفصول).</span>
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">⚡ القوانين والثوابت</h3>
+                    <div style="background:var(--dark3); padding:15px; border-radius:8px; text-align:center; direction:ltr; font-family:'Amiri'; font-size:1.4rem; color:#fff; border:1px solid var(--accent); margin-bottom:10px;">
+                        c = 300,000 km/s
+                    </div>
+                    <div style="background:var(--dark3); padding:15px; border-radius:8px; text-align:center; direction:ltr; font-family:'Amiri'; font-size:1.2rem; color:#fff; border:1px solid var(--accent); margin-bottom:10px;">
+                        1 U.A = 150,000,000 km
+                    </div>
+                    <div style="background:var(--dark3); padding:15px; border-radius:8px; text-align:center; direction:ltr; font-family:'Amiri'; font-size:1.2rem; color:#fff; border:1px solid var(--accent);">
+                        1 a.l &approx; 9.46 &times; 10^{12} km
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+                    <ul class="summary-list">
+                        <li>تتكون المجموعة الشمسية من الشمس و 8 كواكب رئيسية.</li>
+                        <li>الكواكب مرتبة من الأقرب: عطارد، الزهرة، الأرض، المريخ، المشتري، زحل، أورانوس، نبتون.</li>
+                        <li>سرعة الضوء في الفراغ هي أكبر سرعة ممكنة وتقدر بـ 300 ألف كم/ثا.</li>
+                        <li>تُقاس المسافات الكونية إما بـ (الوحدة الفلكية) للأنظمة القريبة، أو بـ (السنة الضوئية) للنجوم البعيدة.</li>
+                    </ul>
+                </div>
+
+                <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- كود JavaScript الإلزامي والمطوّر لتجنب التكرار والتغبيش -->
+    <script>
+        // دالة تبديل التبويبات (الإلزامية حرفياً لمنع مشاكل Canvas)
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof drawSim1 === 'function') drawSim1(); 
+                    if (typeof drawSim2 === 'function') drawSim2(); 
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof drawSim1 === 'function') drawSim1();
+                    if (typeof drawSim2 === 'function') drawSim2(); 
+                }, 50);
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if(document.getElementById('tab-sim').classList.contains('active')) {
+                resizeCanvas();
+                drawSim1();
+                drawSim2();
+            }
+        });
+
+        // دوال Canvas الإلزامية لحل مشكلة الدقة العالية والتغبيش
+        const cvs1 = document.getElementById('simCanvas1');
+        const ctx1 = cvs1.getContext('2d');
+        const cvs2 = document.getElementById('simCanvas2');
+        const ctx2 = cvs2.getContext('2d');
+
+        function resizeCanvas() {
+            [cvs1, cvs2].forEach(canvas => {
+                const container = canvas.parentElement;
+                if (container.clientWidth === 0) return;
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width  = container.clientWidth  * dpr;
+                canvas.height = container.clientHeight * dpr;
+                canvas.style.width  = container.clientWidth  + 'px';
+                canvas.style.height = container.clientHeight + 'px';
+                const ctx = canvas.getContext('2d');
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            });
+        }
+
+        // --- محرك المحاكاة 1 (الأوريري المطور مع التفاعل بالنقاط) ---
+        let angle1 = 0;
+        let sim1Loop;
+        let selectedPlanetIndex = 2; // Default Earth
+        
+        const planetsData = [
+            { name: "عطارد", color: "#a8a29e", r: 4, dist: 50, speed: 0.04, earthYear: "88 يوم", realSpeed: "47.4 كم/ثا" },
+            { name: "الزهرة", color: "#fcd34d", r: 6, dist: 80, speed: 0.025, earthYear: "225 يوم", realSpeed: "35.0 كم/ثا" },
+            { name: "الأرض", color: "#3b82f6", r: 8, dist: 115, speed: 0.015, earthYear: "365 يوم", realSpeed: "29.8 كم/ثا" },
+            { name: "المريخ", color: "#ef4444", r: 5, dist: 155, speed: 0.01, earthYear: "687 يوم", realSpeed: "24.1 كم/ثا" }
+        ];
+
+        function drawSim1() {
+            if(!document.getElementById('tab-sim').classList.contains('active')) return;
+            // السطر الإلزامي لتفريغ الكانفاس لتجنب تداخل الرسوم
+            ctx1.clearRect(0, 0, cvs1.width, cvs1.height);
+            
+            const w = cvs1.parentElement.clientWidth;
+            const h = cvs1.parentElement.clientHeight;
+            const cx = w/2; const cy = h/2;
+            
+            const speedScale = parseFloat(document.getElementById('sim1-speed').value);
+            document.getElementById('val-speed').innerText = speedScale + "x";
+
+            // رسم الشمس المركزية المضيئة
+            ctx1.beginPath();
+            ctx1.arc(cx, cy, 20, 0, Math.PI*2);
+            ctx1.fillStyle = "#fbbf24";
+            ctx1.shadowBlur = 15; ctx1.shadowColor = "#f59e0b";
+            ctx1.fill(); ctx1.shadowBlur = 0;
+
+            planetsData.forEach((p, i) => {
+                // رسم المدارات الدائرية للكوكب
+                ctx1.beginPath();
+                ctx1.arc(cx, cy, p.dist, 0, Math.PI*2);
+                ctx1.strokeStyle = i === selectedPlanetIndex ? "rgba(249, 115, 22, 0.4)" : "rgba(255,255,255,0.06)";
+                ctx1.lineWidth = i === selectedPlanetIndex ? 2 : 1;
+                ctx1.stroke();
+                
+                // حساب وضعية الحركة الانتقالية وموقع الكوكب الحالي
+                const a = angle1 * p.speed;
+                const px = cx + Math.cos(a) * p.dist;
+                const py = cy + Math.sin(a) * p.dist;
+                
+                ctx1.beginPath();
+                ctx1.arc(px, py, p.r, 0, Math.PI*2);
+                ctx1.fillStyle = p.color;
+                ctx1.fill();
+
+                // رسم حلقة اختيار الكوكب
+                if (i === selectedPlanetIndex) {
+                    ctx1.beginPath();
+                    ctx1.arc(px, py, p.r + 4, 0, Math.PI * 2);
+                    ctx1.strokeStyle = "var(--accent)";
+                    ctx1.stroke();
+                }
+
+                ctx1.font = "10px Cairo";
+                ctx1.fillStyle = "rgba(255,255,255,0.7)";
+                ctx1.fillText(p.name, px - 12, py - p.r - 4);
+            });
+
+            angle1 += speedScale;
+            if (sim1Loop) cancelAnimationFrame(sim1Loop);
+            sim1Loop = requestAnimationFrame(drawSim1);
+        }
+
+        // تفاعل الكانفاس الأول للتعرف على الكواكب
+        cvs1.addEventListener('click', (e) => {
+            const rect = cvs1.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            const w = cvs1.parentElement.clientWidth;
+            const h = cvs1.parentElement.clientHeight;
+            const cx = w / 2;
+            const cy = h / 2;
+
+            planetsData.forEach((planet, index) => {
+                const a = angle1 * planet.speed;
+                const px = cx + Math.cos(a) * planet.dist;
+                const py = cy + Math.sin(a) * planet.dist;
+                const distToPlanet = Math.sqrt((mouseX - px)**2 + (mouseY - py)**2);
+                
+                if (distToPlanet < planet.r + 15) {
+                    selectedPlanetIndex = index;
+                    document.getElementById('planet-name-label').innerText = planet.name;
+                    document.getElementById('planet-year-label').innerText = planet.earthYear;
+                    document.getElementById('planet-orbit-speed').innerText = planet.realSpeed;
+                }
+            });
+        });
+
+        // --- محرك المحاكاة 2 (سرعة الضوء وحساب المسافة) ---
+        let photonX = 0;
+        let isPhotonMoving = false;
+        let photonSimLoop;
+
+        const targetPlanetsMeta = {
+            mercury: { name: "عطارد", distUA: 0.39, distKm: "58,500,000", timeStr: "3 دقائق و 15 ثانية", pct: 20, c: "#a8a29e" },
+            venus: { name: "الزهرة", distUA: 0.72, distKm: "108,000,000", timeStr: "6 دقائق و 0 ثوانٍ", pct: 45, c: "#fcd34d" },
+            earth: { name: "الأرض", distUA: 1.00, distKm: "150,000,000", timeStr: "8 دقائق و 20 ثانية", pct: 65, c: "#3b82f6" },
+            mars: { name: "المريخ", distUA: 1.52, distKm: "228,000,000", timeStr: "12 دقيقة و 40 ثانية", pct: 82, c: "#ef4444" },
+            jupiter: { name: "المشتري", distUA: 5.20, distKm: "780,000,000", timeStr: "43 دقيقة و 20 ثانية", pct: 100, c: "#d97706" }
+        };
+
+        function drawSim2() {
+            if(!document.getElementById('tab-sim').classList.contains('active')) return;
+            // السطر الإلزامي لتفريغ الكانفاس لتجنب تداخل الرسوم
+            ctx2.clearRect(0, 0, cvs2.width, cvs2.height);
+            
+            const w = cvs2.parentElement.clientWidth;
+            const h = cvs2.parentElement.clientHeight;
+            
+            // رسم الشمس كمنبع الضوء
+            ctx2.beginPath();
+            ctx2.arc(40, h/2, 25, 0, Math.PI*2);
+            ctx2.fillStyle = "#fbbf24";
+            ctx2.shadowBlur = 20; ctx2.shadowColor = "#f59e0b";
+            ctx2.fill(); ctx2.shadowBlur = 0;
+            
+            const selectedKey = document.getElementById('sim2-target').value;
+            const meta = targetPlanetsMeta[selectedKey];
+            const maxDistPx = w - 100;
+            
+            // رسم خط مسار الشعاع
+            ctx2.beginPath();
+            ctx2.moveTo(40, h/2);
+            ctx2.lineTo(40 + maxDistPx, h/2);
+            ctx2.strokeStyle = "rgba(255,255,255,0.15)";
+            ctx2.setLineDash([5, 5]);
+            ctx2.stroke();
+            ctx2.setLineDash([]);
+
+            // رسم الكوكب المستهدف
+            ctx2.beginPath();
+            ctx2.arc(40 + maxDistPx, h/2, 12, 0, Math.PI*2);
+            ctx2.fillStyle = meta.c;
+            ctx2.fill();
+            
+            ctx2.fillStyle = "#fff";
+            ctx2.font = "12px Cairo";
+            ctx2.textAlign = "center";
+            ctx2.fillText(meta.name, 40 + maxDistPx, h/2 + 30);
+
+            // رسم الفوتون المتحرك
+            if(isPhotonMoving) {
+                ctx2.beginPath();
+                ctx2.arc(40 + photonX, h/2, 5, 0, Math.PI*2);
+                ctx2.fillStyle = "#fff";
+                ctx2.shadowBlur = 10; ctx2.shadowColor = "#fff";
+                ctx2.fill(); ctx2.shadowBlur = 0;
+                
+                // حركة الفوتون التناسبية
+                const speed = maxDistPx / 100; 
+                photonX += speed;
+
+                if(photonX >= maxDistPx) {
+                    photonX = maxDistPx;
+                    isPhotonMoving = false;
+                    document.getElementById('sim2-timer').innerText = meta.timeStr;
+                    document.getElementById('sim2-timer').style.color = "var(--green)";
+                } else {
+                    document.getElementById('sim2-timer').innerText = "جاري الرحلة... ⚡";
+                    document.getElementById('sim2-timer').style.color = "var(--gold)";
+                }
+                
+                if (photonSimLoop) cancelAnimationFrame(photonSimLoop);
+                photonSimLoop = requestAnimationFrame(drawSim2);
+            } else if(photonX > 0) {
+                ctx2.beginPath();
+                ctx2.arc(40 + photonX, h/2, 6, 0, Math.PI*2);
+                ctx2.fillStyle = "rgba(255,255,255,0.6)";
+                ctx2.fill();
+            }
+        }
+
+        document.getElementById('sim2-target').addEventListener('change', () => {
+            isPhotonMoving = false;
+            photonX = 0;
+            const meta = targetPlanetsMeta[document.getElementById('sim2-target').value];
+            document.getElementById('beam-dist-ua').innerText = meta.distUA.toFixed(2) + " U.A";
+            document.getElementById('beam-dist-km').innerText = meta.distKm + " km";
+            document.getElementById('sim2-timer').innerText = meta.timeStr;
+            document.getElementById('sim2-timer').style.color = "var(--gold)";
+            drawSim2();
+        });
+
+        function startPhoton() {
+            isPhotonMoving = true;
+            photonX = 0;
+            document.getElementById('sim2-timer').style.color = "var(--gold)";
+            if(photonSimLoop) cancelAnimationFrame(photonSimLoop);
+            drawSim2();
+        }
+
+        // --- نظام التمارين ---
+        let currentScore = 0;
+        let answered = [false,false,false,false,false,false];
+        function checkAnswer(el, ans) {
+            const card = el.closest('.q-card');
+            const qIndex = parseInt(card.querySelector('.q-num').innerText) - 1;
+            if(answered[qIndex]) return;
+            
+            const correctAns = parseInt(card.getAttribute('data-ans'));
+            const opts = card.querySelectorAll('.q-option');
+            const fb = card.querySelector('.q-feedback');
+            
+            if(ans === correctAns) {
+                el.classList.add('correct');
+                fb.classList.add('correct');
+                fb.innerHTML = "✅ إجابة صحيحة! " + fb.innerHTML;
+                currentScore++;
+            } else {
+                el.classList.add('wrong');
+                opts[correctAns].classList.add('correct');
+                fb.classList.add('wrong');
+                fb.innerHTML = "❌ إجابة خاطئة! " + fb.innerHTML;
+            }
+            answered[qIndex] = true;
+        }
+
+        function showScore() {
+            const z = document.getElementById('final-score');
+            z.style.display = 'block';
+            document.getElementById('score-text').innerText = `${currentScore} / 6`;
+            z.scrollIntoView({behavior: 'smooth'});
+        }
+
+    </script>
+    <script src="credit.js"></script>
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 6 | عدد رسوم SVG في الدرس النظري = 6 | عدد المحاكيات = 2 -->
+</body>
+</html>

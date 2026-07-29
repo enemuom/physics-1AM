@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس 01: قياس الأطوال - الفيزياء السهلة</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- تضمين MathJax للمعادلات العلمية -->
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #14b8a6; /* لون المقطع: المادة وتحولاتها */
+            --accent2:#2dd4bf;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 15px;
+            overflow-x: hidden;
+        }
+
+        /* شريط التنقل العلوي الثابت */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(180deg, var(--dark3) 0%, var(--dark) 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .lesson-header span:first-child { color: var(--muted); font-size: 0.9rem; }
+        .lesson-badge {
+            display: inline-block;
+            background: rgba(20, 184, 166, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .lesson-header h1 { color: #fff; font-size: 2rem; margin-bottom: 5px; }
+        .lesson-header h1 em { color: var(--accent); font-family: 'Amiri', serif; font-style: italic; }
+        .lesson-meta { color: var(--muted); font-size: 0.9rem; }
+
+        /* شريط التبويبات (الكود الإلزامي) */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .objectives-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .objectives-box h3 { color: #fff; margin-bottom: 10px; }
+        .objectives-box ul { padding-right: 20px; color: var(--text); }
+        .objectives-box li { margin-bottom: 8px; }
+
+        .sec-title { display: flex; align-items: center; gap: 10px; margin: 30px 0 15px 0; }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-title h2 { color: #fff; font-size: 1.5rem; }
+        .sec-line { flex-grow: 1; height: 2px; background: var(--border); border: none; margin-right: 15px; }
+
+        .def-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .def-box strong { color: var(--gold); font-size: 1.1rem; }
+        .def-box span.fr { color: var(--muted); font-size: 0.9rem; font-family: sans-serif; }
+        .def-box p { font-family: 'Amiri', serif; font-size: 1.2rem; margin-top: 10px; line-height: 1.8; }
+
+        .highlight-box { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600; }
+        .highlight-box.warn { background: rgba(239, 68, 68, 0.1); border-right: 4px solid var(--red); color: #fff; }
+        .highlight-box.tip { background: rgba(16, 185, 129, 0.1); border-right: 4px solid var(--green); color: #fff; }
+
+        .formula-box { background: var(--dark3); border: 1px solid var(--accent); border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center; }
+        .formula-title { color: var(--gold); font-weight: 700; margin-bottom: 15px; font-size: 1.1rem; }
+        .formula-display { font-size: 1.6rem; color: #fff; margin-bottom: 20px; background: var(--dark4); padding: 15px; border-radius: 8px; overflow-x: auto; }
+        
+        .symbol-table { width: 100%; text-align: right; margin-top: 15px; border-collapse: collapse; }
+        .symbol-table th, .symbol-table td { padding: 10px; border-bottom: 1px solid var(--border); }
+        .sym-cell { font-family: 'Amiri', serif; font-style: italic; font-size: 1.2rem; color: #fff; }
+        .unit-cell { color: var(--gold); }
+
+        /* التعديل 1: إضافة خصائص التمرير الأفقي للجداول لمنع التجاوز على الهواتف */
+        .info-table, .summary-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-bottom: 20px; 
+            background: var(--dark3); 
+            border-radius: 8px; 
+            
+            /* حل مشكلة العرض على الموبايل */
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+            max-width: 100%;
+        }
+        .info-table th, .info-table td { padding: 15px; text-align: right; border-bottom: 1px solid var(--border); }
+        .info-table th { background: var(--dark4); color: var(--accent); font-weight: 700; }
+        .info-table td.unit { color: var(--muted); font-style: italic; }
+
+        .diagram-figure {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .fig-title { color: var(--muted); font-size: 0.9rem; margin-top: 10px; font-weight: 600; }
+        .diagram-wrap { display: flex; justify-content: center; align-items: center; width: 100%; overflow: hidden;}
+        .lesson-diagram { width: 100%; height: auto; max-width: 500px; display: block; }
+
+        .sim-wrap {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .sim-title { color: #fff; font-size: 1.2rem; }
+        
+        .sim-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        
+        .sim-description {
+            background: var(--dark4);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: var(--text);
+            font-size: 0.95rem;
+            border-right: 3px solid var(--accent);
+        }
+
+        .sim-container { display: flex; flex-direction: column; gap: 20px; }
+        @media (min-width: 768px) { .sim-container { flex-direction: row; } }
+        
+        .sim-canvas-wrap {
+            flex: 1;
+            background: var(--dark);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas { display: block; width: 100%; height: 100%; }
+        
+        .sim-controls { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+        .control-group label { display: block; color: var(--muted); margin-bottom: 8px; font-size: 0.9rem; }
+        .val-badge { color: var(--gold); font-weight: bold; background: var(--dark); padding: 2px 6px; border-radius: 4px; }
+        input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+        .q-card { background: var(--dark3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .q-num { display: inline-block; background: var(--accent); color: #fff; width: 30px; height: 30px; text-align: center; line-height: 30px; border-radius: 50%; font-weight: bold; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; color: #fff; margin-bottom: 15px; }
+        .q-options { display: flex; flex-direction: column; gap: 10px; }
+        .q-opt { background: var(--dark4); padding: 12px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
+        .q-opt:hover { border-color: var(--border); }
+        .q-opt.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--green); }
+        .q-opt.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--red); }
+        .q-feedback { margin-top: 15px; padding: 12px; border-radius: 6px; display: none; font-size: 0.9rem; }
+        .q-feedback.show-correct { display: block; background: rgba(16, 185, 129, 0.1); color: var(--green); border-right: 3px solid var(--green); }
+        .q-feedback.show-wrong { display: block; background: rgba(239, 68, 68, 0.1); color: var(--red); border-right: 3px solid var(--red); }
+        .q-diagram { width: 100%; max-width: 400px; margin: 10px auto; display: block; background: var(--dark4); border-radius: 8px; padding: 10px; border: 1px solid var(--border); }
+
+        .summary-card { background: #fff; color: #111; padding: 20px; border-radius: 12px; display: none; }
+        #tab-summary.active .summary-card { display: block; }
+        @media (min-width: 768px) { .summary-card { padding: 40px; } }
+        
+        .summary-header { text-align: center; border-bottom: 2px solid var(--accent); padding-bottom: 15px; margin-bottom: 30px; }
+        .summary-meta { color: #666; font-size: 0.9rem; }
+        .summary-title { color: #111; font-size: 2rem; margin: 10px 0; }
+        .summary-subtitle { color: var(--accent); font-weight: 700; }
+        .summary-section { margin-bottom: 30px; }
+        .summary-section-title { font-size: 1.4rem; color: var(--dark2); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        
+        .concept-map-wrap { text-align: center; margin-bottom: 30px; width: 100%; overflow: hidden;}
+        .concept-map { width: 100%; height: auto; display: block; margin: 0 auto; max-width: 400px; }
+        
+        .summary-defs { display: grid; gap: 15px; }
+        .s-def-item { background: #f8fafc; padding: 15px; border-right: 4px solid var(--accent); border-radius: 6px; }
+        .s-def-term { font-weight: 800; color: var(--dark2); display: block; margin-bottom: 5px; }
+        .s-def-text { font-family: 'Amiri', serif; font-size: 1.1rem; }
+        
+        .summary-table th, .summary-table td { border: 1px solid #cbd5e1; padding: 10px; text-align: right; }
+        .summary-table th { background: #f1f5f9; color: var(--dark2); }
+        .summary-list { padding-right: 20px; line-height: 1.8; }
+        
+        .print-btn { background: var(--accent); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; display: block; margin: 30px auto; font-family: 'Cairo', sans-serif; font-weight: bold; }
+
+        @media print {
+            .tabs-nav, .top-nav-bar, .print-btn { display: none !important; }
+            .tab-content:not(#tab-summary) { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #111 !important; padding: 0; font-size: 12pt; }
+            .summary-card { box-shadow: none; border: 1px solid #ccc; padding: 20px; }
+            .summary-section-title { font-size: 14pt; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="../index.html">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <div class="lesson-header">
+        <span>السنة الأولى متوسط › المادة وتحولاتها › الدرس 01</span>
+        <br>
+        <span class="lesson-badge">الدرس 01</span>
+        <h1>مفهوم <em>قياس الأطوال</em> وأدواته</h1>
+        <p class="lesson-meta">العلوم الفيزيائية والتكنولوجيا | 2 حصص</p>
+    </div>
+
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+        <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+        <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+        <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- التبويب 1: الدرس النظري -->
+    <!-- ========================================== -->
+    <div id="tab-lesson" class="tab-content active">
+        
+        <div class="objectives-box">
+            <h3>🎯 الأهداف التعلمية</h3>
+            <ul>
+                <li>تحديد مفهوم الطول والمسافة كـ مقدار فيزيائي قابل للقياس.</li>
+                <li>التعرف على أدوات القياس المختلفة واختيار الأداة المناسبة حسب أبعاد الجسم.</li>
+                <li>التعرف على أجزاء ومضاعفات المتر وتطبيق جدول التحويلات.</li>
+                <li>تجنب أخطاء القياس الشائعة (خطأ اختلاف المنظر).</li>
+            </ul>
+        </div>
+
+        <div class="sec-title">
+            <span class="sec-icon">📏</span>
+            <h2>1. مفهوم الطول (La Longueur)</h2>
+            <hr class="sec-line">
+        </div>
+        
+        <div class="def-box">
+            <strong>الطول</strong> <span class="fr">(La Longueur)</span>
+            <p>هو المسافة الفاصلة بين نقطتين. يُعتبر الطول <strong>مقداراً فيزيائياً</strong> قابلاً للقياس والمقارنة. نرمز للطول بالرمز المأخوذ من الحرف الأول من الكلمة الفرنسية: <strong>L</strong> (أو <em>l</em>).</p>
+        </div>
+
+        <!-- المفهوم الأساسي 1: الأبعاد -->
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (1) — الأبعاد الثلاثة للمجسمات (الطول، العرض، الارتفاع)</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 350 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <linearGradient id="boxFront" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="var(--accent2)" />
+                            <stop offset="100%" stop-color="var(--accent)" />
+                        </linearGradient>
+                        <linearGradient id="boxTop" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#ccfbf1" />
+                            <stop offset="100%" stop-color="var(--accent2)" />
+                        </linearGradient>
+                        <linearGradient id="boxSide" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#0f766e" />
+                            <stop offset="100%" stop-color="#042f2e" />
+                        </linearGradient>
+                        <filter id="boxShadow" x="-10%" y="-10%" width="130%" height="130%">
+                            <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
+                        </filter>
+                        <!-- سهم ذكي إلزامي من البند 0.5 -->
+                        <marker id="smartArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--gold)"/>
+                        </marker>
+                    </defs>
+                    
+                    <g filter="url(#boxShadow)">
+                        <!-- الوجه العلوي -->
+                        <path d="M 110,80 L 250,80 L 190,130 L 50,130 Z" fill="url(#boxTop)" stroke="#fff" stroke-width="1" stroke-linejoin="round"/>
+                        <!-- الوجه الجانبي الأيمن -->
+                        <path d="M 250,80 L 250,150 L 190,200 L 190,130 Z" fill="url(#boxSide)" stroke="#fff" stroke-width="1" stroke-linejoin="round"/>
+                        <!-- الوجه الأمامي -->
+                        <path d="M 50,130 L 190,130 L 190,200 L 50,200 Z" fill="url(#boxFront)" stroke="#fff" stroke-width="1" stroke-linejoin="round"/>
+                    </g>
+
+                    <!-- الطول -->
+                    <line x1="50" y1="220" x2="190" y2="220" stroke="var(--gold)" stroke-width="2" marker-end="url(#smartArrow)"/>
+                    <text x="120" y="240" fill="var(--gold)" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">الطول (L)</text>
+                    <line x1="50" y1="205" x2="50" y2="225" stroke="var(--text)" stroke-width="1"/>
+                    <line x1="190" y1="205" x2="190" y2="225" stroke="var(--text)" stroke-width="1"/>
+
+                    <!-- العرض -->
+                    <line x1="205" y1="200" x2="265" y2="150" stroke="var(--gold)" stroke-width="2" marker-end="url(#smartArrow)"/>
+                    <text x="250" y="185" fill="var(--gold)" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">العرض (l)</text>
+
+                    <!-- الارتفاع -->
+                    <line x1="30" y1="200" x2="30" y2="130" stroke="var(--gold)" stroke-width="2" marker-end="url(#smartArrow)"/>
+                    <text x="15" y="165" fill="var(--gold)" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 15 165)">الارتفاع (h)</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">🧰</span>
+            <h2>2. أدوات قياس الأطوال</h2>
+            <hr class="sec-line">
+        </div>
+        <p style="margin-bottom: 15px;">نختار أداة القياس المناسبة حسب طبيعة الجسم وأبعاده:</p>
+
+        <!-- جدول متجاوب بفضل الكود المعدل -->
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th>الأداة</th>
+                    <th>مجال الاستعمال</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>المسطرة المترية</strong> (Règle)</td>
+                    <td>الأطوال القصيرة المستقيمة (طول كراس، قلم).</td>
+                </tr>
+                <tr>
+                    <td><strong>الشريط المتري</strong> (Mètre ruban)</td>
+                    <td>الأطوال الكبيرة نسبياً (أبعاد غرفة، طول وعرض السبورة).</td>
+                </tr>
+                <tr>
+                    <td><strong>القدم القنوية</strong> (Pied à coulisse)</td>
+                    <td>لقياس الأعماق والأقطار الداخلية والخارجية للأجسام الدائرية أو الأسطوانية بدقة عالية.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- المفهوم الأساسي 2: القدم القنوية -->
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (2) — أداة القدم القنوية ذات الدقة العالية</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#cbd5e1" />
+                            <stop offset="50%" stop-color="#f8fafc" />
+                            <stop offset="100%" stop-color="#94a3b8" />
+                        </linearGradient>
+                        <filter id="dropMetal" x="-5%" y="-5%" width="110%" height="120%">
+                            <feDropShadow dx="2" dy="3" stdDeviation="2" flood-color="#000" flood-opacity="0.5"/>
+                        </filter>
+                    </defs>
+                    
+                    <g filter="url(#dropMetal)">
+                        <!-- المسطرة الثابتة الرئيسية -->
+                        <rect x="50" y="70" width="300" height="20" fill="url(#metalGrad)" stroke="#475569" stroke-width="1" rx="2"/>
+                        <!-- الفك الثابت -->
+                        <path d="M 50,70 L 50,40 L 65,40 L 65,70 Z" fill="url(#metalGrad)" stroke="#475569" stroke-width="1" stroke-linejoin="round"/>
+                        <path d="M 50,90 L 50,140 L 65,140 L 65,90 Z" fill="url(#metalGrad)" stroke="#475569" stroke-width="1" stroke-linejoin="round"/>
+                        
+                        <!-- المسطرة المتحركة (الفرنية) -->
+                        <rect x="130" y="65" width="80" height="30" fill="url(#metalGrad)" stroke="#475569" stroke-width="1" rx="3"/>
+                        <!-- الفك المتحرك -->
+                        <path d="M 130,65 L 130,40 L 145,40 L 145,65 Z" fill="url(#metalGrad)" stroke="#475569" stroke-width="1" stroke-linejoin="round"/>
+                        <path d="M 130,95 L 130,140 L 145,140 L 145,95 Z" fill="url(#metalGrad)" stroke="#475569" stroke-width="1" stroke-linejoin="round"/>
+                        
+                        <!-- برغي التثبيت -->
+                        <circle cx="170" cy="60" r="6" fill="#475569" stroke="#1e293b" stroke-width="1"/>
+                    </g>
+                    
+                    <!-- جسم مقاس -->
+                    <circle cx="97" cy="115" r="32" fill="url(#boxFront)" opacity="0.9"/>
+                    
+                    <!-- تدريجات المسطرة الرئيسية -->
+                    <g stroke="#000" stroke-width="1">
+                        <line x1="70" y1="70" x2="70" y2="75"/>
+                        <line x1="80" y1="70" x2="80" y2="75"/>
+                        <line x1="90" y1="70" x2="90" y2="78"/> <text x="90" y="88" fill="#000" font-size="10" text-anchor="middle" dominant-baseline="middle">1</text>
+                        <line x1="100" y1="70" x2="100" y2="75"/>
+                        <line x1="110" y1="70" x2="110" y2="75"/>
+                        <line x1="120" y1="70" x2="120" y2="78"/> <text x="120" y="88" fill="#000" font-size="10" text-anchor="middle" dominant-baseline="middle">2</text>
+                    </g>
+                    
+                    <!-- تسميات عربية مع أسهم لا تتقاطع -->
+                    <line x1="140" y1="140" x2="180" y2="155" stroke="var(--text)" stroke-width="1"/>
+                    <text x="185" y="155" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="start" dominant-baseline="middle">فك متحرك</text>
+                    
+                    <line x1="55" y1="140" x2="30" y2="155" stroke="var(--text)" stroke-width="1"/>
+                    <text x="25" y="155" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="end" dominant-baseline="middle">فك ثابت</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">🔢</span>
+            <h2>3. الوحدة الدولية وجدول التحويلات</h2>
+            <hr class="sec-line">
+        </div>
+        <p>الوحدة الأساسية (الدولية) لقياس الطول هي <strong>المتر (Mètre)</strong> ورمزها <strong>m</strong>. للقياسات الدقيقة أو الكبيرة جداً نستخدم الأجزاء والمضاعفات.</p>
+
+        <!-- المفهوم الأساسي 3: التحويلات -->
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (3) — درج وحدات الطول (من الأكبر للأصغر)</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <linearGradient id="stairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="var(--accent)" />
+                            <stop offset="100%" stop-color="var(--accent2)" />
+                        </linearGradient>
+                        <marker id="arrowDown" markerWidth="8" markerHeight="8" refX="4" refY="8" orient="auto">
+                            <path d="M 0 0 L 8 0 L 4 8 Z" fill="var(--gold)"/>
+                        </marker>
+                    </defs>
+                    
+                    <!-- السلالم -->
+                    <path d="M 20,40 L 70,40 L 70,70 L 120,70 L 120,100 L 170,100 L 170,130 L 220,130 L 220,160 L 270,160 L 270,190 L 320,190 L 320,220 L 20,220 Z" fill="url(#stairGrad)" stroke="#fff" stroke-width="2"/>
+                    
+                    <!-- الوحدات (متمركزة بدقة) -->
+                    <text x="45" y="30" fill="var(--text)" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">km</text>
+                    <text x="95" y="60" fill="var(--text)" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">hm</text>
+                    <text x="145" y="90" fill="var(--text)" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">dam</text>
+                    <text x="195" y="120" fill="var(--dark)" font-family="Cairo" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="middle">m</text>
+                    <text x="245" y="150" fill="var(--text)" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">dm</text>
+                    <text x="295" y="180" fill="var(--text)" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">cm</text>
+                    <text x="345" y="205" fill="var(--text)" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">mm</text>
+
+                    <!-- سهم الضرب -->
+                    <path d="M 80,20 Q 200,10 300,110" fill="none" stroke="var(--gold)" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrowDown)"/>
+                    <text x="220" y="35" fill="var(--gold)" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">نضرب في 10 لكل درجة نزول</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="formula-box">
+            <div class="formula-title">مثال رياضي للتحويل (MathJax)</div>
+            <div class="formula-display">
+                $$ 1 \text{ km} = 1 \times 1000 = 1000 \text{ m} $$
+            </div>
+            <!-- جدول رموز المعادلة الإلزامي -->
+            <div class="symbol-table">
+                <table>
+                    <thead>
+                        <tr><th>الرمز</th><th>التسمية</th><th>الوحدة</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="sym-cell">km</td>
+                            <td>الكيلومتر (مضاعف)</td>
+                            <td class="unit-cell">$10^3 \text{ m}$</td>
+                        </tr>
+                        <tr>
+                            <td class="sym-cell">m</td>
+                            <td>المتر</td>
+                            <td class="unit-cell">الوحدة الأساسية</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- جدول تحويلات متجاوب -->
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th colspan="3" style="background:var(--dark4);">مضاعفات المتر</th>
+                    <th style="background:rgba(20, 184, 166, 0.2); color:var(--accent);">الوحدة الأساسية</th>
+                    <th colspan="3" style="background:var(--dark4);">أجزاء المتر</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="font-family: Arial, sans-serif; font-size: 1.2rem; font-weight: bold; text-align: center;">
+                    <td>km</td>
+                    <td>hm</td>
+                    <td>dam</td>
+                    <td style="color:var(--accent);">m</td>
+                    <td>dm</td>
+                    <td>cm</td>
+                    <td>mm</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="sec-title">
+            <span class="sec-icon">👁️</span>
+            <h2>4. طريقة القياس الصحيحة بالمسطرة</h2>
+            <hr class="sec-line">
+        </div>
+        <p>لتفادي الوقوع في <strong>خطأ اختلاف المنظر (Erreur de parallaxe)</strong> أثناء القياس، يجب اتباع قاعدتين:</p>
+        <ol style="margin-right: 30px; margin-bottom: 20px; color: var(--text);">
+            <li>وضع التدريجة صفر (0) من المسطرة منطبقة تماماً مع بداية الجسم.</li>
+            <li>النظر <strong>بشكل عمودي</strong> تماماً على التدريجة التي تقابل نهاية الجسم.</li>
+        </ol>
+
+        <!-- المفهوم الأساسي 4: خطأ اختلاف المنظر -->
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (4) — خطأ اختلاف المنظر عند قراءة المسطرة</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <!-- المسطرة -->
+                    <rect x="50" y="150" width="300" height="30" fill="#fde047" stroke="#b45309" stroke-width="2"/>
+                    <g stroke="#000" stroke-width="2">
+                        <line x1="100" y1="150" x2="100" y2="160"/> <text x="100" y="175" fill="#000" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle" stroke="none">0</text>
+                        <line x1="150" y1="150" x2="150" y2="160"/> <text x="150" y="175" fill="#000" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle" stroke="none">1</text>
+                        <line x1="200" y1="150" x2="200" y2="160"/> <text x="200" y="175" fill="#000" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle" stroke="none">2</text>
+                        <line x1="250" y1="150" x2="250" y2="160"/> <text x="250" y="175" fill="#000" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle" stroke="none">3</text>
+                        <line x1="300" y1="150" x2="300" y2="160"/> <text x="300" y="175" fill="#000" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle" stroke="none">4</text>
+                    </g>
+
+                    <!-- الجسم (يبدأ من صفر المسطرة) -->
+                    <rect x="100" y="120" width="130" height="20" rx="5" fill="var(--accent)" stroke="#042f2e" stroke-width="2"/>
+                    <path d="M 230,120 L 250,130 L 230,140 Z" fill="var(--accent2)" stroke="#042f2e" stroke-width="2"/>
+
+                    <!-- العيون وخطوط النظر -->
+                    <g font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle">
+                        
+                        <!-- عين صحيحة (عمودية) -->
+                        <path d="M 240,50 Q 250,40 260,50 Q 250,60 240,50 Z" fill="#fff" stroke="#000" stroke-width="1"/>
+                        <circle cx="250" cy="50" r="4" fill="#000"/>
+                        <line x1="250" y1="60" x2="250" y2="145" stroke="var(--green)" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="250" y="30" fill="var(--green)" font-weight="bold">قراءة صحيحة</text>
+
+                        <!-- عين خاطئة يسرى -->
+                        <path d="M 170,50 Q 180,40 190,50 Q 180,60 170,50 Z" fill="#fff" stroke="#000" stroke-width="1"/>
+                        <circle cx="180" cy="50" r="4" fill="#000"/>
+                        <line x1="180" y1="60" x2="265" y2="145" stroke="var(--red)" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="180" y="30" fill="var(--red)">قراءة خاطئة</text>
+
+                        <!-- عين خاطئة يمنى -->
+                        <path d="M 310,50 Q 320,40 330,50 Q 320,60 310,50 Z" fill="#fff" stroke="#000" stroke-width="1"/>
+                        <circle cx="320" cy="50" r="4" fill="#000"/>
+                        <line x1="320" y1="60" x2="235" y2="145" stroke="var(--red)" stroke-width="2" stroke-dasharray="5,5"/>
+                        <text x="320" y="30" fill="var(--red)">قراءة خاطئة</text>
+                    </g>
+                </svg>
+            </div>
+        </figure>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 2: المحاكاة التفاعلية -->
+    <!-- ========================================== -->
+    <div id="tab-sim" class="tab-content">
+        
+        <!-- المحاكاة 1: خطأ اختلاف المنظر -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">1. محاكاة: تأثير زاوية النظر على القياس</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            
+            <!-- الوصف الإلزامي -->
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>ظاهرة خطأ اختلاف المنظر</strong>. حرّك <strong>شريط موضع العين</strong> يميناً ويساراً لترى كيف تتغيّر <strong>القراءة المسجلة على المسطرة</strong> رغم أن طول القلم ثابت فعلياً.</p>
+            </div>
+            
+            <div class="sim-container">
+                <div class="sim-canvas-wrap" id="canvasContainerParallax" style="background: var(--dark3);">
+                    <canvas id="canvasParallax"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>موضع عين المشاهد: <span id="eyePosVal" class="val-badge">عمودي (صحيح)</span></label>
+                        <input type="range" id="eyeSlider" min="-100" max="100" value="0" step="1">
+                    </div>
+                    <div class="highlight-box tip" style="margin-top: 15px;" id="parallaxFeedbackBox">
+                        <span id="parallaxFeedback">النظر عمودي تماماً. القراءة صحيحة ومطابقة لطول الجسم (5.0 cm).</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المحاكاة 2: القدم القنوية -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">2. محاكاة: القراءة الدقيقة بالقدم القنوية</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            
+            <!-- الوصف الإلزامي -->
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>طريقة قراءة المسطرة والفرنية</strong> معاً. حرّك <strong>شريط الفك المتحرك</strong> لتغيير مقاس الجسم، ولاحظ <strong>كيفية جمع القراءتين للحصول على الدقة بالمليمتر العشري</strong>.</p>
+            </div>
+
+            <div class="sim-container">
+                <div class="sim-canvas-wrap" id="canvasContainerCaliper" style="background: var(--dark3);">
+                    <canvas id="canvasCaliper"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>تحريك الفك (تغيير قطر الجسم):</label>
+                        <input type="range" id="caliperSlider" min="5" max="35" value="15.4" step="0.1">
+                    </div>
+                    
+                    <table class="info-table" style="margin-top: 15px; font-size: 1rem;">
+                        <tr>
+                            <th style="text-align: right;">1. قراءة المسطرة الرئيسية:</th>
+                            <td id="mainScaleVal" style="font-weight: bold;">15 mm</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: right;">2. قراءة الفرنية (خط التطابق):</th>
+                            <td id="vernierScaleVal" style="font-weight: bold; color: var(--gold);">0.4 mm</td>
+                        </tr>
+                        <tr style="background: rgba(20, 184, 166, 0.2);">
+                            <th style="text-align: right; color: #fff;">القياس النهائي (المجموع):</th>
+                            <td id="totalScaleVal" style="font-weight: bold; color: #fff; font-size: 1.2rem;">15.4 mm</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 3: التمارين -->
+    <!-- ========================================== -->
+    <div id="tab-exercises" class="tab-content">
+        
+        <div class="q-card">
+            <div class="q-num">1</div>
+            <div class="q-text">الوحدة الدولية (الأساسية) لقياس الأطوال في النظام الدولي للوحدات هي:</div>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q1" value="0"> الكيلومتر (km)</label>
+                <label class="q-opt"><input type="radio" name="q1" value="1"> المتر (m)</label>
+                <label class="q-opt"><input type="radio" name="q1" value="2"> السنتيمتر (cm)</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">2</div>
+            <div class="q-text">لقياس القطر الداخلي لأنبوب بلاستيكي صغير بدقة عالية، نختار أداة:</div>
+            <div class="q-options" data-correct="2">
+                <label class="q-opt"><input type="radio" name="q2" value="0"> المسطرة المترية.</label>
+                <label class="q-opt"><input type="radio" name="q2" value="1"> الشريط المتري.</label>
+                <label class="q-opt"><input type="radio" name="q2" value="2"> القدم القنوية.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">3</div>
+            <div class="q-text">عند تحويل 3.5 كيلومتر (km) إلى متر (m)، النتيجة الصحيحة هي:</div>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q3" value="0"> 350 m</label>
+                <label class="q-opt"><input type="radio" name="q3" value="1"> 3500 m</label>
+                <label class="q-opt"><input type="radio" name="q3" value="2"> 35 m</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <!-- السؤال الإلزامي من نوع الرسم (مخطط) -->
+        <div class="q-card q-diagram-type">
+            <div class="q-num">4</div>
+            <div class="q-text">تأمل الرسم التوضيحي الذي يمثل ثلاثة مواضع لعين المراقب (A, B, C) أثناء قراءة مسطرة. أي المواضع يمثل القراءة الصحيحة التي تتفادى خطأ اختلاف المنظر؟</div>
+            <svg class="q-diagram" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+                <rect x="50" y="100" width="200" height="20" fill="#fde047" stroke="#b45309" stroke-width="2"/>
+                <line x1="150" y1="100" x2="150" y2="110" stroke="#000" stroke-width="2"/>
+                <text x="150" y="125" fill="#000" font-size="14" font-family="Cairo" text-anchor="middle" dominant-baseline="middle">5</text>
+                
+                <rect x="50" y="80" width="100" height="20" fill="var(--accent)" stroke="#042f2e" stroke-width="2"/>
+                
+                <g fill="var(--text)" font-family="Cairo" font-size="14" text-anchor="middle" dominant-baseline="middle">
+                    <!-- Eye A (Left) -->
+                    <circle cx="90" cy="30" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <text x="90" y="10">A</text>
+                    <line x1="95" y1="40" x2="148" y2="98" stroke="currentColor" stroke-dasharray="4" stroke-width="1"/>
+                    
+                    <!-- Eye B (Middle - Correct) -->
+                    <circle cx="150" cy="30" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <text x="150" y="10">B</text>
+                    <line x1="150" y1="40" x2="150" y2="98" stroke="currentColor" stroke-dasharray="4" stroke-width="2"/>
+                    
+                    <!-- Eye C (Right) -->
+                    <circle cx="210" cy="30" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <text x="210" y="10">C</text>
+                    <line x1="205" y1="40" x2="152" y2="98" stroke="currentColor" stroke-dasharray="4" stroke-width="1"/>
+                </g>
+            </svg>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q4" value="0"> الموضع (A).</label>
+                <label class="q-opt"><input type="radio" name="q4" value="1"> الموضع (B) لأن النظر عمودي على تدريجة نهاية الجسم.</label>
+                <label class="q-opt"><input type="radio" name="q4" value="2"> الموضع (C).</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <button class="print-btn" onclick="checkAnswers()" style="margin-top: 20px; background:var(--accent); color:#000; font-weight:bold;">تحقق من إجاباتي ✅</button>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 4: ملخص الكراس -->
+    <!-- ========================================== -->
+    <div id="tab-summary" class="tab-content">
+        <div class="summary-card">
+            
+            <div class="summary-header">
+                <div class="summary-meta">العلوم الفيزيائية والتكنولوجيا | السنة الأولى متوسط | المادة وتحولاتها</div>
+                <h2 class="summary-title">ملخص شامل: قياس الأطوال</h2>
+                <div class="summary-subtitle">وفق منهاج الجيل الثاني</div>
+            </div>
+
+            <!-- التعديل 2: خريطة المفاهيم بتصميم عمودي مقروء على الهواتف -->
+            <div class="concept-map-wrap">
+                <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                <svg class="concept-map" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="s-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--dark2)"/>
+                        </marker>
+                    </defs>
+                    
+                    <!-- العقدة المركزية (الأعلى) -->
+                    <rect x="100" y="20" width="200" height="60" rx="10" fill="var(--accent)" />
+                    <text x="200" y="55" fill="#000" font-family="Cairo" font-weight="bold" font-size="24" text-anchor="middle" dominant-baseline="middle">قياس الطول (L)</text>
+                    
+                    <!-- السهم النازل الرئيسي -->
+                    <path d="M 200 80 L 200 110" stroke="var(--dark2)" stroke-width="3" marker-end="url(#s-arrow)"/>
+                    
+                    <!-- العقدة 1: الوحدات -->
+                    <rect x="80" y="120" width="240" height="80" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+                    <text x="200" y="150" fill="#0369a1" font-family="Cairo" font-weight="bold" font-size="22" text-anchor="middle" dominant-baseline="middle">الوحدة الدولية</text>
+                    <text x="200" y="180" fill="#64748b" font-family="Cairo" font-size="18" text-anchor="middle" dominant-baseline="middle">المتر (m) + مضاعفات وأجزاء</text>
+
+                    <!-- السهم النازل 2 -->
+                    <path d="M 200 200 L 200 230" stroke="var(--dark2)" stroke-width="3" marker-end="url(#s-arrow)"/>
+
+                    <!-- العقدة 2: الأدوات -->
+                    <rect x="80" y="240" width="240" height="80" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+                    <text x="200" y="270" fill="#b45309" font-family="Cairo" font-weight="bold" font-size="22" text-anchor="middle" dominant-baseline="middle">أدوات القياس</text>
+                    <text x="200" y="300" fill="#64748b" font-family="Cairo" font-size="18" text-anchor="middle" dominant-baseline="middle">المسطرة، الشريط، القدم القنوية</text>
+
+                    <!-- السهم النازل 3 -->
+                    <path d="M 200 320 L 200 350" stroke="var(--dark2)" stroke-width="3" marker-end="url(#s-arrow)"/>
+
+                    <!-- العقدة 3: الطريقة -->
+                    <rect x="80" y="360" width="240" height="80" rx="10" fill="#f1f5f9" stroke="var(--dark2)" stroke-width="3"/>
+                    <text x="200" y="390" fill="var(--dark2)" font-family="Cairo" font-weight="bold" font-size="22" text-anchor="middle" dominant-baseline="middle">طريقة القياس</text>
+                    <text x="200" y="420" fill="#64748b" font-family="Cairo" font-size="18" text-anchor="middle" dominant-baseline="middle">وضع الصفر + نظر عمودي</text>
+                </svg>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">📚 التعاريف والقواعد الجوهرية</h3>
+                <div class="summary-defs">
+                    <div class="s-def-item">
+                        <span class="s-def-term">الطول (L):</span>
+                        <span class="s-def-text">مقدار فيزيائي يعبر عن المسافة بين نقطتين. وحدته الدولية هي المتر (m).</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">القدم القنوية:</span>
+                        <span class="s-def-text">أداة قياس دقيقة جداً تستعمل لقياس الأبعاد الدقيقة (أقطار أنابيب، أعماق) وتتكون من مسطرة ثابتة وفرنية متحركة.</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">قاعدة القياس الصحيح:</span>
+                        <span class="s-def-text">لتفادي خطأ اختلاف المنظر، يجب أن يكون مستوى النظر <strong>عمودياً</strong> تماماً على التدريجة الموافقة لنهاية الجسم.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">📊 جدول التحويلات</h3>
+                <!-- جدول متجاوب -->
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>km</th><th>hm</th><th>dam</th>
+                            <th style="color:var(--accent); font-weight:bold;">m (الأساسية)</th>
+                            <th>dm</th><th>cm</th><th>mm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td><td>10</td><td>100</td>
+                            <td style="color:var(--accent); font-weight:bold;">1000</td>
+                            <td>10000</td><td>100000</td><td>1000000</td>
+                        </tr>
+                        <tr>
+                            <td>0.001</td><td>0.01</td><td>0.1</td>
+                            <td style="color:var(--accent); font-weight:bold;">1</td>
+                            <td>10</td><td>100</td><td>1000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="print-btn" onclick="window.print()" style="background:var(--accent); color:#000; font-weight:bold; border:none; padding:10px 20px;">🖨️ طباعة الملخص</button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. كود إدارة التبويبات الإلزامي (البند 3.9.1)
+        // ==========================================
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim === 'function') updateSim();
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim === 'function') updateSim();
+                }, 50);
+            }
+            resizeCanvas();
+            // Start simulation loop initially if needed, or call once
+            updateSim();
+        });
+
+        // ==========================================
+        // 2. إدارة الكانفاس (البند الإلزامي 0.2 و 0.5)
+        // ==========================================
+        const canvas1 = document.getElementById('canvasParallax');
+        const ctx1 = canvas1.getContext('2d');
+        const container1 = document.getElementById('canvasContainerParallax');
+
+        const canvas2 = document.getElementById('canvasCaliper');
+        const ctx2 = canvas2.getContext('2d');
+        const container2 = document.getElementById('canvasContainerCaliper');
+
+        function resizeCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            
+            if (container1 && container1.clientWidth > 0) {
+                canvas1.width = container1.clientWidth * dpr;
+                canvas1.height = container1.clientHeight * dpr;
+                canvas1.style.width = container1.clientWidth + 'px';
+                canvas1.style.height = container1.clientHeight + 'px';
+                ctx1.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            if (container2 && container2.clientWidth > 0) {
+                canvas2.width = container2.clientWidth * dpr;
+                canvas2.height = container2.clientHeight * dpr;
+                canvas2.style.width = container2.clientWidth + 'px';
+                canvas2.style.height = container2.clientHeight + 'px';
+                ctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+            // Force redraw after resize
+            drawSim1();
+            drawSim2();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        // ==========================================
+        // 3. المحاكاة الأولى (خطأ اختلاف المنظر)
+        // ==========================================
+        let eyeOffset = 0; // -100 to 100
+        const eyeSlider = document.getElementById('eyeSlider');
+        const eyePosVal = document.getElementById('eyePosVal');
+        const parallaxFeedbackBox = document.getElementById('parallaxFeedbackBox');
+        const parallaxFeedback = document.getElementById('parallaxFeedback');
+
+        eyeSlider.addEventListener('input', () => {
+            eyeOffset = parseInt(eyeSlider.value);
+            
+            if (eyeOffset === 0) {
+                eyePosVal.innerText = "عمودي (صحيح)";
+                parallaxFeedbackBox.className = "highlight-box tip";
+                parallaxFeedback.innerHTML = "النظر عمودي تماماً. القراءة صحيحة ومطابقة لطول الجسم (5.0 cm).";
+            } else if (eyeOffset < 0) {
+                eyePosVal.innerText = "مائل لليسار (خاطئ)";
+                parallaxFeedbackBox.className = "highlight-box warn";
+                parallaxFeedback.innerHTML = "النظر مائل. التقاطع يعطي قراءة <strong>أكبر</strong> من الطول الحقيقي (خطأ بالزيادة).";
+            } else {
+                eyePosVal.innerText = "مائل لليمين (خاطئ)";
+                parallaxFeedbackBox.className = "highlight-box warn";
+                parallaxFeedback.innerHTML = "النظر مائل. التقاطع يعطي قراءة <strong>أصغر</strong> من الطول الحقيقي (خطأ بالنقصان).";
+            }
+            drawSim1();
+        });
+
+        function drawSim1() {
+            if(!container1 || container1.clientWidth === 0) return;
+            const w = container1.clientWidth;
+            const h = container1.clientHeight;
+            
+            // البند الإلزامي 0.5: clearRect كأول سطر
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+
+            const objectLength = 150; 
+            const objectStartX = (w - objectLength) / 2 - 20; // تمركز تقريبي
+            const rulerY = h - 80;
+            const objY = rulerY - 20;
+            const eyeY = 40;
+            const targetX = objectStartX + objectLength; // نهاية الجسم (نقطة القياس)
+            const eyeX = targetX + eyeOffset;
+
+            // رسم المسطرة
+            ctx1.fillStyle = '#fde047';
+            ctx1.fillRect(objectStartX - 30, rulerY, 240, 30);
+            ctx1.strokeStyle = '#b45309';
+            ctx1.lineWidth = 2;
+            ctx1.strokeRect(objectStartX - 30, rulerY, 240, 30);
+
+            // تدريجات المسطرة (كل 30px = 1cm)
+            ctx1.fillStyle = '#000';
+            ctx1.font = '14px Cairo';
+            ctx1.textAlign = 'center';
+            ctx1.textBaseline = 'middle';
+            for(let i=0; i<=6; i++) {
+                let tx = objectStartX + (i * 30);
+                ctx1.beginPath();
+                ctx1.moveTo(tx, rulerY);
+                ctx1.lineTo(tx, rulerY + 10);
+                ctx1.stroke();
+                ctx1.fillText(i, tx, rulerY + 22);
+            }
+
+            // رسم الجسم
+            ctx1.fillStyle = '#14b8a6';
+            ctx1.fillRect(objectStartX, objY, objectLength, 20);
+            ctx1.strokeStyle = '#042f2e';
+            ctx1.strokeRect(objectStartX, objY, objectLength, 20);
+
+            // رسم العين
+            ctx1.beginPath();
+            ctx1.ellipse(eyeX, eyeY, 15, 8, 0, 0, Math.PI*2);
+            ctx1.fillStyle = '#fff';
+            ctx1.fill();
+            ctx1.stroke();
+            ctx1.beginPath();
+            ctx1.arc(eyeX, eyeY, 4, 0, Math.PI*2);
+            ctx1.fillStyle = '#000';
+            ctx1.fill();
+
+            // رسم خط الرؤية
+            let intersectX = targetX;
+            if (eyeOffset !== 0) {
+                let m = (objY - eyeY) / (targetX - eyeX);
+                intersectX = (rulerY - eyeY) / m + eyeX;
+            }
+
+            ctx1.beginPath();
+            ctx1.moveTo(eyeX, eyeY + 8);
+            ctx1.lineTo(intersectX, rulerY);
+            ctx1.strokeStyle = eyeOffset === 0 ? '#10b981' : '#ef4444';
+            ctx1.setLineDash([5, 5]);
+            ctx1.lineWidth = 2;
+            ctx1.stroke();
+            ctx1.setLineDash([]);
+
+            // إبراز نقطة القراءة
+            ctx1.beginPath();
+            ctx1.arc(intersectX, rulerY, 5, 0, Math.PI*2);
+            ctx1.fillStyle = eyeOffset === 0 ? '#10b981' : '#ef4444';
+            ctx1.fill();
+            
+            // كتابة القراءة
+            let reading = ((intersectX - objectStartX) / 30).toFixed(1);
+            ctx1.fillStyle = '#fff';
+            ctx1.font = '16px Cairo';
+            ctx1.fillText("القراءة: " + reading + " cm", w/2, h - 20);
+        }
+
+        // ==========================================
+        // 4. المحاكاة الثانية (القدم القنوية)
+        // ==========================================
+        let caliperDiameter = 15.4; // mm
+        const caliperSlider = document.getElementById('caliperSlider');
+        const mainScaleVal = document.getElementById('mainScaleVal');
+        const vernierScaleVal = document.getElementById('vernierScaleVal');
+        const totalScaleVal = document.getElementById('totalScaleVal');
+
+        caliperSlider.addEventListener('input', () => {
+            caliperDiameter = parseFloat(caliperSlider.value);
+            updateCaliperTexts();
+            drawSim2();
+        });
+
+        function updateCaliperTexts() {
+            let mainReading = Math.floor(caliperDiameter);
+            let vernierReading = Math.round((caliperDiameter - mainReading) * 10) / 10;
+            
+            mainScaleVal.innerText = mainReading + " mm";
+            vernierScaleVal.innerText = vernierReading.toFixed(1) + " mm";
+            totalScaleVal.innerText = caliperDiameter.toFixed(1) + " mm";
+        }
+
+        function drawSim2() {
+            if(!container2 || container2.clientWidth === 0) return;
+            const w = container2.clientWidth;
+            const h = container2.clientHeight;
+            
+            // البند الإلزامي 0.5: clearRect كأول سطر
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+            const scaleFactor = 8; // 1mm = 8px على الكانفاس (مناسب للموبايل)
+            const startX = 40; 
+            const startY = 80;
+            const jawOffset = caliperDiameter * scaleFactor;
+
+            // 1. رسم الجسم المقاس (دائرة)
+            ctx2.beginPath();
+            ctx2.arc(startX + jawOffset/2, startY + 40, jawOffset/2, 0, Math.PI*2);
+            ctx2.fillStyle = 'rgba(20, 184, 166, 0.8)';
+            ctx2.fill();
+
+            // 2. المسطرة الرئيسية
+            ctx2.fillStyle = '#cbd5e1';
+            ctx2.fillRect(startX - 20, startY, w - 40, 40);
+            ctx2.strokeStyle = '#475569';
+            ctx2.lineWidth = 2;
+            ctx2.strokeRect(startX - 20, startY, w - 40, 40);
+
+            // الفك الثابت
+            ctx2.beginPath();
+            ctx2.moveTo(startX, startY);
+            ctx2.lineTo(startX, startY + 80);
+            ctx2.lineTo(startX - 15, startY + 80);
+            ctx2.lineTo(startX - 15, startY);
+            ctx2.fill();
+            ctx2.stroke();
+
+            // تدريجات المسطرة الرئيسية
+            ctx2.fillStyle = '#000';
+            ctx2.font = '12px Cairo';
+            ctx2.textAlign = 'center';
+            ctx2.textBaseline = 'middle';
+            let maxMM = Math.floor((w - 60) / scaleFactor); // حساب عدد التدريجات التي تسعها الشاشة
+            
+            for (let i = 0; i <= maxMM; i++) {
+                let tx = startX + (i * scaleFactor);
+                let tickH = (i % 10 === 0) ? 15 : (i % 5 === 0) ? 10 : 5;
+                ctx2.beginPath();
+                ctx2.moveTo(tx, startY + 40);
+                ctx2.lineTo(tx, startY + 40 - tickH);
+                ctx2.stroke();
+                
+                if (i % 10 === 0) {
+                    ctx2.fillText(i/10, tx, startY + 15);
+                }
+            }
+
+            // 3. الفرنية (المتحركة)
+            const vernierX = startX + jawOffset;
+            ctx2.fillStyle = 'rgba(248, 250, 252, 0.95)';
+            ctx2.fillRect(vernierX, startY + 40, 90, 30); // عرض 90 يناسب تدريجات الفرنية
+            ctx2.strokeRect(vernierX, startY + 40, 90, 30);
+
+            // الفك المتحرك
+            ctx2.beginPath();
+            ctx2.moveTo(vernierX, startY + 40);
+            ctx2.lineTo(vernierX, startY + 80);
+            ctx2.lineTo(vernierX + 15, startY + 80);
+            ctx2.lineTo(vernierX + 15, startY + 40);
+            ctx2.fill();
+            ctx2.stroke();
+
+            // تدريجات الفرنية (10 تدريجات مساحتها 9mm)
+            // إذن كل تدريجة فرنية = 0.9mm * scaleFactor
+            let vernierMatchIndex = Math.round((caliperDiameter - Math.floor(caliperDiameter)) * 10);
+            let vernierTickSpacing = 0.9 * scaleFactor;
+
+            for (let i = 0; i <= 10; i++) {
+                let tx = vernierX + (i * vernierTickSpacing);
+                let tickH = (i === 0 || i === 5 || i === 10) ? 10 : 5;
+                
+                ctx2.beginPath();
+                ctx2.moveTo(tx, startY + 40);
+                ctx2.lineTo(tx, startY + 40 + tickH);
+                
+                if (i === vernierMatchIndex) {
+                    ctx2.strokeStyle = '#f59e0b';
+                    ctx2.lineWidth = 3;
+                } else {
+                    ctx2.strokeStyle = '#000';
+                    ctx2.lineWidth = 1;
+                }
+                ctx2.stroke();
+
+                if (i === 0 || i === 10) {
+                    ctx2.fillStyle = '#000';
+                    ctx2.fillText(i, tx, startY + 60);
+                }
+            }
+        }
+
+        function updateSim() {
+            drawSim1();
+            drawSim2();
+        }
+
+        // ==========================================
+        // 5. التحقق من التمارين
+        // ==========================================
+        function checkAnswers() {
+            const cards = document.querySelectorAll('.q-card');
+            cards.forEach(card => {
+                const correctVal = card.querySelector('.q-options').dataset.correct;
+                const options = card.querySelectorAll('input[type="radio"]');
+                const feedback = card.querySelector('.q-feedback');
+                let answered = false;
+
+                options.forEach(opt => {
+                    const optLabel = opt.parentElement;
+                    optLabel.classList.remove('correct', 'wrong');
+                    
+                    if(opt.checked) {
+                        answered = true;
+                        if(opt.value === correctVal) {
+                            optLabel.classList.add('correct');
+                            feedback.className = 'q-feedback show-correct';
+                            feedback.innerHTML = 'إجابة صحيحة! أحسنت.';
+                        } else {
+                            optLabel.classList.add('wrong');
+                            feedback.className = 'q-feedback show-wrong';
+                            feedback.innerHTML = 'إجابة خاطئة. الخيار الصحيح مظلل بالأخضر.';
+                        }
+                    }
+                    if(opt.value === correctVal) {
+                        optLabel.classList.add('correct');
+                    }
+                });
+
+                if(!answered) {
+                    feedback.className = 'q-feedback show-wrong';
+                    feedback.innerHTML = 'يرجى اختيار إجابة لمعرفة التقييم.';
+                }
+            });
+        }
+    </script>
+    
+    <!-- السكريبت الإلزامي المركزي للعلامة التجارية -->
+    <script src="credit.js"></script>
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 4 | عدد رسوم SVG في الدرس النظري = 4 | عدد المحاكيات = 2 -->
+</body>
+</html>

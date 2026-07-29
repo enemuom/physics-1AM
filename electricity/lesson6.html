@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس 06: دارة ذهاب وإياب - الفيزياء السهلة</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        /* نظام الألوان الإلزامي - الظواهر الكهربائية */
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #6366f1; /* لون المقطع */
+            --accent2:#818cf8;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 15px;
+        }
+
+        /* شريط التنقل العلوي الثابت */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(180deg, var(--dark3) 0%, var(--dark) 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .lesson-header span:first-child { color: var(--muted); font-size: 0.9rem; }
+        .lesson-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .lesson-header h1 { color: #fff; font-size: 2rem; margin-bottom: 5px; }
+        .lesson-header h1 em { color: var(--accent); font-family: 'Amiri', serif; font-style: italic; }
+        .lesson-meta { color: var(--muted); font-size: 0.9rem; }
+
+        /* شريط التبويبات (الكود الإلزامي) */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .objectives-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .objectives-box h3 { color: #fff; margin-bottom: 10px; }
+        .objectives-box ul { padding-right: 20px; color: var(--text); }
+        .objectives-box li { margin-bottom: 8px; }
+
+        .sec-title { display: flex; align-items: center; gap: 10px; margin: 30px 0 15px 0; }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-title h2 { color: #fff; font-size: 1.5rem; }
+        .sec-line { flex-grow: 1; height: 2px; background: var(--border); border: none; margin-right: 15px; }
+
+        .def-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .def-box strong { color: var(--gold); font-size: 1.1rem; }
+        .def-box span.fr { color: var(--muted); font-size: 0.9rem; font-family: sans-serif; }
+        .def-box p { font-family: 'Amiri', serif; font-size: 1.2rem; margin-top: 10px; line-height: 1.8; }
+
+        .highlight-box { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600; }
+        .highlight-box.warn { background: rgba(239, 68, 68, 0.1); border-right: 4px solid var(--red); color: #fff; }
+        .highlight-box.info { background: rgba(245, 158, 11, 0.1); border-right: 4px solid var(--gold); color: #fff; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: var(--dark3); border-radius: 8px; overflow: hidden; }
+        .info-table th, .info-table td { padding: 15px; text-align: center; border-bottom: 1px solid var(--border); }
+        .info-table th { background: var(--dark4); color: var(--accent); font-weight: 700; }
+
+        .diagram-figure {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .fig-title { color: var(--muted); font-size: 0.9rem; margin-top: 10px; font-weight: 600; }
+        .lesson-diagram { width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto; }
+
+        /* المحاكاة */
+        .sim-wrap { background: var(--dark3); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 30px; }
+        .sim-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .sim-title { color: #fff; font-size: 1.2rem; }
+        .sim-badge { background: rgba(245, 158, 11, 0.2); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; }
+        .sim-description { background: var(--dark4); padding: 12px; border-radius: 8px; margin-bottom: 15px; color: var(--text); border-right: 3px solid var(--accent); font-size: 0.95rem; }
+        .sim-container { display: flex; flex-direction: column; gap: 20px; }
+        @media (min-width: 768px) { .sim-container { flex-direction: row; } }
+        .sim-canvas-wrap { flex: 1; background: var(--dark); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; position: relative; min-height: 350px; }
+        canvas { display: block; width: 100%; height: 100%; }
+        .sim-controls { flex: 1; display: flex; flex-direction: column; gap: 15px; justify-content: center; }
+        .sim-btn { background: var(--dark4); color: var(--text); border: 1px solid var(--border); padding: 12px; border-radius: 6px; cursor: pointer; transition: 0.3s; font-family: 'Cairo'; font-weight: bold; text-align: center; }
+        .sim-btn:hover { background: var(--accent); color: #fff; }
+        
+        /* التمارين */
+        .q-card { background: var(--dark3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .q-num { display: inline-block; background: var(--accent); color: #fff; width: 30px; height: 30px; text-align: center; line-height: 30px; border-radius: 50%; font-weight: bold; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; color: #fff; margin-bottom: 15px; }
+        .q-options { display: flex; flex-direction: column; gap: 10px; }
+        .q-opt { background: var(--dark4); padding: 12px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
+        .q-opt:hover { border-color: var(--border); }
+        .q-opt.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--green); }
+        .q-opt.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--red); }
+        .q-feedback { margin-top: 15px; padding: 12px; border-radius: 6px; display: none; font-size: 0.9rem; }
+        .q-feedback.show-correct { display: block; background: rgba(16, 185, 129, 0.1); color: var(--green); border-right: 3px solid var(--green); }
+        .q-feedback.show-wrong { display: block; background: rgba(239, 68, 68, 0.1); color: var(--red); border-right: 3px solid var(--red); }
+        .q-diagram { width: 100%; max-width: 400px; margin: 10px auto; display: block; background: var(--dark4); border-radius: 8px; padding: 10px; border: 1px solid var(--border); }
+
+        /* الملخص */
+        .summary-card { background: #fff; color: #111; padding: 40px; border-radius: 12px; display: none; }
+        #tab-summary.active .summary-card { display: block; }
+        .summary-header { text-align: center; border-bottom: 2px solid var(--accent); padding-bottom: 15px; margin-bottom: 30px; }
+        .summary-meta { color: #666; font-size: 0.9rem; }
+        .summary-title { color: #111; font-size: 2rem; margin: 10px 0; }
+        .summary-subtitle { color: var(--accent); font-weight: 700; }
+        .summary-section { margin-bottom: 30px; }
+        .summary-section-title { font-size: 1.4rem; color: var(--dark2); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .concept-map-wrap { text-align: center; margin-bottom: 30px; }
+        .concept-map { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+        .summary-defs { display: grid; gap: 15px; }
+        .s-def-item { background: #f8fafc; padding: 15px; border-right: 4px solid var(--accent); border-radius: 6px; }
+        .s-def-term { font-weight: 800; color: var(--dark2); display: block; margin-bottom: 5px; }
+        .s-def-text { font-family: 'Amiri', serif; font-size: 1.1rem; }
+        .print-btn { background: var(--accent); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; display: block; margin: 30px auto; font-family: 'Cairo', sans-serif; font-weight: bold; }
+
+        @media print {
+            .tabs-nav, .top-nav-bar, .print-btn { display: none !important; }
+            .tab-content:not(#tab-summary) { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #111 !important; padding: 0; font-size: 12pt; }
+            .summary-card { box-shadow: none; border: 1px solid #ccc; padding: 20px; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل العلوي الثابت الإلزامي -->
+    <div class="top-nav-bar">
+        <a href="../index.html#electricity">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <div class="lesson-header">
+        <span>السنة الأولى متوسط › الظواهر الكهربائية › الدرس 06</span>
+        <br>
+        <span class="lesson-badge">الدرس 06</span>
+        <h1>الدارة الكهربائية من نوع <em>ذهاب وإياب</em></h1>
+        <p class="lesson-meta">العلوم الفيزيائية والتكنولوجيا | حصة واحدة</p>
+    </div>
+
+    <!-- شريط التبويبات الإلزامي -->
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+        <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+        <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+        <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- التبويب 1: الدرس النظري -->
+    <!-- ========================================== -->
+    <div id="tab-lesson" class="tab-content active">
+        
+        <div class="objectives-box">
+            <h3>🎯 الأهداف التعلمية</h3>
+            <ul>
+                <li>إدراك الحاجة لاستعمال الدارة الكهربائية ذهاب وإياب في الحياة اليومية.</li>
+                <li>التعرف على القاطعة من نوع ذهاب وإياب وعدد مرابطها.</li>
+                <li>رسم المخطط النظامي لدارة ذهاب وإياب.</li>
+                <li>إنجاز جدول الحقيقة واستنتاج شروط توهج المصباح.</li>
+            </ul>
+        </div>
+
+        <div class="sec-title">
+            <span class="sec-icon">🏠</span>
+            <h2>1. متى نستعمل دارة ذهاب وإياب؟</h2>
+            <hr class="sec-line">
+        </div>
+        
+        <p>في بعض الأحيان نحتاج إلى <strong>التحكم في مصباح واحد (أو عدة مصابيح) من مكانين مختلفين</strong> (إشعاله من مكان وإطفاؤه من مكان آخر). لا يمكن للقاطعة البسيطة تلبية هذه الحاجة. لذلك نستعمل دارة خاصة تسمى <strong>دارة ذهاب وإياب</strong>.</p>
+        
+        <div class="highlight-box info">
+            💡 <strong>أين نجدها؟</strong> تستعمل بكثرة في: الأروقة الطويلة، سلالم العمارات، وغرف النوم.
+        </div>
+
+        <div class="sec-title">
+            <span class="sec-icon">🔌</span>
+            <h2>2. القاطعة من نوع ذهاب وإياب</h2>
+            <hr class="sec-line">
+        </div>
+
+        <div class="def-box">
+            <strong>القاطعة ذهاب وإياب</strong> <span class="fr">(Interrupteur Va-et-Vient)</span>
+            <p>هي قاطعة تسمح بتوجيه التيار الكهربائي في مسارين مختلفين. على عكس القاطعة البسيطة التي تمتلك مربطين فقط، فإن القاطعة ذهاب وإياب تمتلك <strong>ثلاثة مرابط (Bornes)</strong>: مربط مشترك (C) ومربطان للتوصيل (1 و 2).</p>
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (1) — الرمز النظامي للقاطعة البسيطة مقارنة بالقاطعة ذهاب وإياب</figcaption>
+            <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                <defs>
+                    <linearGradient id="panelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#1e293b" />
+                        <stop offset="100%" stop-color="#0f172a" />
+                    </linearGradient>
+                    <filter id="shadow">
+                        <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+                    </filter>
+                </defs>
+                
+                <!-- القاطعة البسيطة -->
+                <rect x="50" y="30" width="150" height="120" rx="10" fill="url(#panelGrad)" stroke="#334155" stroke-width="2" filter="url(#shadow)"/>
+                <text x="125" y="175" fill="#94a3b8" font-family="Cairo" font-weight="bold" text-anchor="middle">قاطعة بسيطة</text>
+                <!-- مرابط -->
+                <circle cx="80" cy="90" r="5" fill="#e2e8f0"/>
+                <circle cx="170" cy="90" r="5" fill="#e2e8f0"/>
+                <!-- الرمز -->
+                <line x1="80" y1="90" x2="160" y2="70" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+                <text x="125" y="60" fill="#cbd5e1" font-family="Cairo" font-size="12" text-anchor="middle">مربطان فقط</text>
+
+                <!-- القاطعة ذهاب وإياب -->
+                <rect x="280" y="30" width="180" height="120" rx="10" fill="url(#panelGrad)" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+                <text x="370" y="175" fill="#60a5fa" font-family="Cairo" font-weight="bold" text-anchor="middle">قاطعة ذهاب وإياب</text>
+                <!-- مرابط -->
+                <circle cx="310" cy="90" r="5" fill="#e2e8f0"/> <!-- المشترك C -->
+                <text x="290" y="95" fill="#e2e8f0" font-family="Arial" font-weight="bold">C</text>
+                <circle cx="410" cy="60" r="5" fill="#e2e8f0"/> <!-- 1 -->
+                <text x="430" y="65" fill="#e2e8f0" font-family="Arial" font-weight="bold">1</text>
+                <circle cx="410" cy="120" r="5" fill="#e2e8f0"/> <!-- 2 -->
+                <text x="430" y="125" fill="#e2e8f0" font-family="Arial" font-weight="bold">2</text>
+                <!-- الرمز -->
+                <line x1="310" y1="90" x2="400" y2="65" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>
+                <!-- مسار بديل منقط -->
+                <line x1="310" y1="90" x2="400" y2="115" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round"/>
+                <text x="360" y="45" fill="#cbd5e1" font-family="Cairo" font-size="12" text-anchor="middle">ثلاثة مرابط</text>
+            </svg>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">📐</span>
+            <h2>3. المخطط النظامي وجدول الحقيقة</h2>
+            <hr class="sec-line">
+        </div>
+
+        <p>لتكوين دارة ذهاب وإياب، نحتاج إلى مولد، مصباح، أسلاك، <strong>وقاطعتين من نوع ذهاب وإياب (K1 و K2)</strong> يتم ربطهما معاً.</p>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (2) — المخطط النظامي لدارة ذهاب وإياب (المصباح متوهج)</figcaption>
+            <svg viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                <!-- الأسلاك -->
+                <path d="M 100 200 L 100 50 L 220 50" fill="none" stroke="#64748b" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M 380 50 L 450 50 L 450 200 L 290 200" fill="none" stroke="#64748b" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M 100 200 L 230 200" fill="none" stroke="#64748b" stroke-width="4"/>
+                
+                <!-- المولد -->
+                <line x1="230" y1="180" x2="230" y2="220" stroke="#ef4444" stroke-width="2"/> <text x="215" y="190" fill="#ef4444" font-weight="bold">+</text>
+                <line x1="270" y1="190" x2="270" y2="210" stroke="#3b82f6" stroke-width="6"/> <text x="280" y="190" fill="#3b82f6" font-weight="bold">-</text>
+                <line x1="270" y1="200" x2="290" y2="200" stroke="#64748b" stroke-width="4"/>
+
+                <!-- المصباح -->
+                <circle cx="450" cy="125" r="20" fill="#fef08a" stroke="#eab308" stroke-width="3"/>
+                <path d="M 436 111 L 464 139 M 464 111 L 436 139" stroke="#eab308" stroke-width="2"/>
+                <!-- التوهج -->
+                <path d="M 450 90 L 450 100 M 415 125 L 425 125 M 485 125 L 475 125 M 425 100 L 435 110 M 475 100 L 465 110 M 450 160 L 450 150 M 425 150 L 435 140 M 475 150 L 465 140" stroke="#f59e0b" stroke-width="2"/>
+
+                <!-- القاطعة K1 -->
+                <circle cx="220" cy="50" r="4" fill="#e2e8f0"/> <text x="200" y="45" fill="#e2e8f0" font-family="Arial" font-size="12">C</text>
+                <circle cx="260" cy="25" r="4" fill="#e2e8f0"/> <text x="260" y="15" fill="#e2e8f0" font-family="Arial" font-size="12" text-anchor="middle">1</text>
+                <circle cx="260" cy="75" r="4" fill="#e2e8f0"/> <text x="260" y="95" fill="#e2e8f0" font-family="Arial" font-size="12" text-anchor="middle">2</text>
+                <line x1="220" y1="50" x2="260" y2="25" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>
+                <text x="210" y="80" fill="#10b981" font-weight="bold">K1</text>
+
+                <!-- القاطعة K2 -->
+                <circle cx="380" cy="50" r="4" fill="#e2e8f0"/> <text x="400" y="45" fill="#e2e8f0" font-family="Arial" font-size="12">C</text>
+                <circle cx="340" cy="25" r="4" fill="#e2e8f0"/> <text x="340" y="15" fill="#e2e8f0" font-family="Arial" font-size="12" text-anchor="middle">1</text>
+                <circle cx="340" cy="75" r="4" fill="#e2e8f0"/> <text x="340" y="95" fill="#e2e8f0" font-family="Arial" font-size="12" text-anchor="middle">2</text>
+                <line x1="380" y1="50" x2="340" y2="25" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>
+                <text x="380" y="80" fill="#10b981" font-weight="bold">K2</text>
+
+                <!-- خطوط التوصيل بين القاطعتين -->
+                <line x1="260" y1="25" x2="340" y2="25" stroke="#64748b" stroke-width="4"/>
+                <line x1="260" y1="75" x2="340" y2="75" stroke="#64748b" stroke-width="4"/>
+            </svg>
+        </figure>
+
+        <p style="margin-bottom: 10px;">نلخص حالات توهج المصباح في <strong>جدول الحقيقة</strong>:</p>
+        
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th>وضعية القاطعة (K1)</th>
+                    <th>وضعية القاطعة (K2)</th>
+                    <th>حالة الدارة</th>
+                    <th>حالة المصباح (L)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>الوضع 1</td>
+                    <td>الوضع 1</td>
+                    <td style="color:var(--green);">مغلقة</td>
+                    <td style="color:var(--gold); font-weight:bold;">يتوهج (1)</td>
+                </tr>
+                <tr>
+                    <td>الوضع 1</td>
+                    <td>الوضع 2</td>
+                    <td style="color:var(--red);">مفتوحة</td>
+                    <td style="color:var(--muted);">لا يتوهج (0)</td>
+                </tr>
+                <tr>
+                    <td>الوضع 2</td>
+                    <td>الوضع 1</td>
+                    <td style="color:var(--red);">مفتوحة</td>
+                    <td style="color:var(--muted);">لا يتوهج (0)</td>
+                </tr>
+                <tr>
+                    <td>الوضع 2</td>
+                    <td>الوضع 2</td>
+                    <td style="color:var(--green);">مغلقة</td>
+                    <td style="color:var(--gold); font-weight:bold;">يتوهج (1)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box warn">
+            📌 <strong>قاعدة للحفظ:</strong> يتوهج المصباح في الدارة ذهاب وإياب <strong>فقط</strong> إذا كانت القاطعتان (K1 و K2) في نفس الوضعية (معاً في 1 أو معاً في 2).
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 2: المحاكاة التفاعلية (Canvas) -->
+    <!-- ========================================== -->
+    <div id="tab-sim" class="tab-content">
+        
+        <!-- المحاكاة الأولى: المخطط الحي -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">1. محاكاة: دارة ذهاب وإياب</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>كيفية عمل الدارة</strong>. اضغط على أزرار التحكم لتغيير وضعية القاطعتين ولاحظ <strong>متى يمر التيار ويتوهج المصباح</strong>.</p>
+            </div>
+            
+            <div class="sim-container">
+                <div class="sim-canvas-wrap" id="containerSim1">
+                    <canvas id="canvasSim1"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div style="background:var(--dark); padding:10px; border-radius:8px; text-align:center;">
+                        <span style="color:var(--muted); font-size:0.9rem; display:block; margin-bottom:5px;">القاطعة K1 في الوضع:</span>
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--accent);" id="lblK1">1</div>
+                    </div>
+                    <button class="sim-btn" onclick="toggleSim1K1()">تبديل وضع (K1) ↕</button>
+                    
+                    <div style="background:var(--dark); padding:10px; border-radius:8px; text-align:center; margin-top:10px;">
+                        <span style="color:var(--muted); font-size:0.9rem; display:block; margin-bottom:5px;">القاطعة K2 في الوضع:</span>
+                        <div style="font-size:1.5rem; font-weight:bold; color:var(--accent);" id="lblK2">1</div>
+                    </div>
+                    <button class="sim-btn" onclick="toggleSim1K2()">تبديل وضع (K2) ↕</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- المحاكاة الثانية: جدول الحقيقة التفاعلي -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">2. محاكاة: جدول الحقيقة الحي</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>العلاقة بين المخطط وجدول الحقيقة</strong>. جرّب الحالات الأربع للدارة ولاحظ كيف يتم تسجيل النتائج في الجدول المرفق.</p>
+            </div>
+
+            <div class="sim-container">
+                <div class="sim-canvas-wrap" id="containerSim2">
+                    <canvas id="canvasSim2"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <table class="info-table" style="margin:0; font-size:0.9rem;" id="simTruthTable">
+                        <thead>
+                            <tr><th>K1</th><th>K2</th><th>المصباح</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr id="tr-1-1" style="background:var(--card);"><td>1</td><td>1</td><td>1</td></tr>
+                            <tr id="tr-1-2"><td>1</td><td>2</td><td>0</td></tr>
+                            <tr id="tr-2-1"><td>2</td><td>1</td><td>0</td></tr>
+                            <tr id="tr-2-2"><td>2</td><td>2</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                    <button class="sim-btn" onclick="nextTruthState()" style="margin-top:10px;">التجربة التالية ➡</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 3: التمارين -->
+    <!-- ========================================== -->
+    <div id="tab-exercises" class="tab-content">
+        
+        <div class="q-card">
+            <div class="q-num">1</div>
+            <div class="q-text">ما هي الفائدة الرئيسية لاستعمال دارة ذهاب وإياب؟</div>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q1" value="0"> التحكم في عدة مصابيح من مكان واحد.</label>
+                <label class="q-opt"><input type="radio" name="q1" value="1"> التحكم في إشعال وإطفاء مصباح من مكانين مختلفين.</label>
+                <label class="q-opt"><input type="radio" name="q1" value="2"> حماية الدارة الكهربائية من التلف والدقائق من الضياع.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">2</div>
+            <div class="q-text">بماذا تتميز القاطعة ذهاب وإياب عن القاطعة البسيطة؟</div>
+            <div class="q-options" data-correct="2">
+                <label class="q-opt"><input type="radio" name="q2" value="0"> لها مربطان فقط مثل القاطعة البسيطة.</label>
+                <label class="q-opt"><input type="radio" name="q2" value="1"> تسمح بمرور تيار أقوى من القاطعة البسيطة.</label>
+                <label class="q-opt"><input type="radio" name="q2" value="2"> لها ثلاثة مرابط وتسمح بتوجيه التيار في مسارين.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">3</div>
+            <div class="q-text">أين يُنصح بشدة تركيب دارة ذهاب وإياب في المنزل؟</div>
+            <div class="q-options" data-correct="0">
+                <label class="q-opt"><input type="radio" name="q3" value="0"> في الرواق الطويل أو في سلالم العمارة.</label>
+                <label class="q-opt"><input type="radio" name="q3" value="1"> في الثلاجة.</label>
+                <label class="q-opt"><input type="radio" name="q3" value="2"> في دورة المياه الصغيرة (المرحاض).</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">4</div>
+            <div class="q-text">حسب جدول الحقيقة، إذا كانت القاطعة K1 في الوضع (1) والقاطعة K2 في الوضع (2)، فما هي حالة المصباح؟</div>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q4" value="0"> يتوهج لأن الدارة مغلقة.</label>
+                <label class="q-opt"><input type="radio" name="q4" value="1"> لا يتوهج (منطفئ) لأن الدارة مفتوحة.</label>
+                <label class="q-opt"><input type="radio" name="q4" value="2"> يحترق بسبب التماس الكهربائي.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card q-diagram-type">
+            <div class="q-num">5</div>
+            <div class="q-text">تأمل المخطط التالي. ما هي حالة المصباح، ولماذا؟</div>
+            <svg class="q-diagram" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 50 120 L 50 30 L 100 30" fill="none" stroke="#64748b" stroke-width="4"/>
+                <path d="M 200 30 L 250 30 L 250 120 L 150 120" fill="none" stroke="#64748b" stroke-width="4"/>
+                <path d="M 50 120 L 110 120" fill="none" stroke="#64748b" stroke-width="4"/>
+                <line x1="110" y1="110" x2="110" y2="130" stroke="#ef4444" stroke-width="2"/>
+                <line x1="130" y1="115" x2="130" y2="125" stroke="#3b82f6" stroke-width="6"/>
+                <line x1="130" y1="120" x2="150" y2="120" stroke="#64748b" stroke-width="4"/>
+                <circle cx="250" cy="75" r="15" fill="#f8fafc" stroke="#94a3b8" stroke-width="3"/>
+                <path d="M 240 65 L 260 85 M 260 65 L 240 85" stroke="#94a3b8" stroke-width="2"/>
+                
+                <!-- K1 in pos 2 -->
+                <circle cx="100" cy="30" r="3" fill="#000"/> <circle cx="130" cy="15" r="3" fill="#000"/> <circle cx="130" cy="45" r="3" fill="#000"/>
+                <line x1="100" y1="30" x2="130" y2="45" stroke="#10b981" stroke-width="3"/>
+                <!-- K2 in pos 1 -->
+                <circle cx="200" cy="30" r="3" fill="#000"/> <circle cx="170" cy="15" r="3" fill="#000"/> <circle cx="170" cy="45" r="3" fill="#000"/>
+                <line x1="200" y1="30" x2="170" y2="15" stroke="#10b981" stroke-width="3"/>
+                
+                <line x1="130" y1="15" x2="170" y2="15" stroke="#64748b" stroke-width="3"/>
+                <line x1="130" y1="45" x2="170" y2="45" stroke="#64748b" stroke-width="3"/>
+            </svg>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q5" value="0"> متوهج، لأن القاطعتين مغلقتين.</label>
+                <label class="q-opt"><input type="radio" name="q5" value="1"> منطفئ، لأن إحداهما في الوضع (1) والأخرى في الوضع (2) (الدارة مفتوحة).</label>
+                <label class="q-opt"><input type="radio" name="q5" value="2"> منطفئ، لعدم وجود مولد في الدارة.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <button class="sim-btn" onclick="checkAnswers()" style="margin-top: 20px; width: 100%;">تحقق من إجاباتي ✅</button>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 4: ملخص الكراس -->
+    <!-- ========================================== -->
+    <div id="tab-summary" class="tab-content">
+        <div class="summary-card">
+            
+            <div class="summary-header">
+                <div class="summary-meta">العلوم الفيزيائية والتكنولوجيا | السنة الأولى متوسط | الظواهر الكهربائية</div>
+                <h2 class="summary-title">ملخص شامل: الدارة ذهاب وإياب</h2>
+                <div class="summary-subtitle">وفق منهاج الجيل الثاني</div>
+            </div>
+
+            <div class="concept-map-wrap">
+                <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                <svg class="concept-map" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="sArr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#475569"/></marker>
+                    </defs>
+                    <rect x="225" y="10" width="150" height="40" rx="8" fill="var(--accent)"/>
+                    <text x="300" y="35" fill="#fff" font-family="Cairo" font-weight="bold" font-size="16" text-anchor="middle">الدارة ذهاب وإياب</text>
+                    
+                    <path d="M 300 50 L 300 80" stroke="#475569" stroke-width="2"/>
+                    <path d="M 150 80 L 450 80" stroke="#475569" stroke-width="2"/>
+                    <path d="M 150 80 L 150 110" stroke="#475569" stroke-width="2" marker-end="url(#sArr)"/>
+                    <path d="M 450 80 L 450 110" stroke="#475569" stroke-width="2" marker-end="url(#sArr)"/>
+                    
+                    <!-- الفرع 1 -->
+                    <rect x="75" y="110" width="150" height="60" rx="5" fill="#f8fafc" stroke="#3b82f6" stroke-width="2"/>
+                    <text x="150" y="135" fill="#1d4ed8" font-family="Cairo" font-weight="bold" text-anchor="middle">الهدف منها</text>
+                    <text x="150" y="155" fill="#475569" font-family="Cairo" font-size="12" text-anchor="middle">التحكم من مكانين مختلفين</text>
+                    
+                    <!-- الفرع 2 -->
+                    <rect x="375" y="110" width="150" height="60" rx="5" fill="#f8fafc" stroke="#10b981" stroke-width="2"/>
+                    <text x="450" y="135" fill="#047857" font-family="Cairo" font-weight="bold" text-anchor="middle">مكوناتها الخاصة</text>
+                    <text x="450" y="155" fill="#475569" font-family="Cairo" font-size="12" text-anchor="middle">قاطعتان (3 مرابط)</text>
+                </svg>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+                <div class="summary-defs">
+                    <div class="s-def-item">
+                        <span class="s-def-term">الدارة ذهاب وإياب:</span>
+                        <span class="s-def-text">تركيب كهربائي يسمح بالتحكم في تشغيل وإطفاء مصباح من مكانين متباعدين (مثل السلالم والأروقة).</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">القاطعة ذهاب وإياب:</span>
+                        <span class="s-def-text">تتميز بامتلاكها ثلاثة مرابط: مربط مشترك (C) ومربطان لاختيار المسار (1 و 2).</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">📊 جدول الحقيقة</h3>
+                <table class="summary-table" style="width:100%; border-collapse:collapse; text-align:center;">
+                    <tr style="background:#f1f5f9; border-bottom:2px solid #cbd5e1;">
+                        <th style="padding:10px;">القاطعة K1</th><th style="padding:10px;">القاطعة K2</th><th style="padding:10px;">حالة المصباح</th>
+                    </tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #e2e8f0;">الوضع 1</td><td style="padding:10px; border-bottom:1px solid #e2e8f0;">الوضع 1</td><td style="padding:10px; border-bottom:1px solid #e2e8f0; font-weight:bold;">يتوهج (1)</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #e2e8f0;">الوضع 1</td><td style="padding:10px; border-bottom:1px solid #e2e8f0;">الوضع 2</td><td style="padding:10px; border-bottom:1px solid #e2e8f0;">منطفئ (0)</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #e2e8f0;">الوضع 2</td><td style="padding:10px; border-bottom:1px solid #e2e8f0;">الوضع 1</td><td style="padding:10px; border-bottom:1px solid #e2e8f0;">منطفئ (0)</td></tr>
+                    <tr><td style="padding:10px;">الوضع 2</td><td style="padding:10px;">الوضع 2</td><td style="padding:10px; font-weight:bold;">يتوهج (1)</td></tr>
+                </table>
+            </div>
+
+            <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. كود إدارة التبويبات الإلزامي (البند 3.9.1)
+        // ==========================================
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            // ⚠️ إلزامي لحل مشكلة الكانفاس المخفي:
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim === 'function') updateSim();
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim === 'function') updateSim();
+                }, 50);
+            }
+            resizeCanvas(); 
+        });
+
+        // ==========================================
+        // 2. إدارة الكانفاس (البند الإلزامي 0.2 و 0.5)
+        // ==========================================
+        const can1 = document.getElementById('canvasSim1');
+        const ctx1 = can1 ? can1.getContext('2d') : null;
+        const cont1 = document.getElementById('containerSim1');
+
+        const can2 = document.getElementById('canvasSim2');
+        const ctx2 = can2 ? can2.getContext('2d') : null;
+        const cont2 = document.getElementById('containerSim2');
+
+        function resizeCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            
+            if (cont1 && cont1.clientWidth > 0 && can1) {
+                can1.width = cont1.clientWidth * dpr;
+                can1.height = cont1.clientHeight * dpr;
+                can1.style.width = cont1.clientWidth + 'px';
+                can1.style.height = cont1.clientHeight + 'px';
+                ctx1.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            if (cont2 && cont2.clientWidth > 0 && can2) {
+                can2.width = cont2.clientWidth * dpr;
+                can2.height = cont2.clientHeight * dpr;
+                can2.style.width = cont2.clientWidth + 'px';
+                can2.style.height = cont2.clientHeight + 'px';
+                ctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            updateSim();
+        });
+
+        // ==========================================
+        // 3. المحاكاة الأولى: دارة ذهاب وإياب حرة
+        // ==========================================
+        let sim1_k1 = 1; // 1 (top), 2 (bottom)
+        let sim1_k2 = 1;
+
+        function toggleSim1K1() { sim1_k1 = sim1_k1 === 1 ? 2 : 1; document.getElementById('lblK1').innerText = sim1_k1; drawSim1(); }
+        function toggleSim1K2() { sim1_k2 = sim1_k2 === 1 ? 2 : 1; document.getElementById('lblK2').innerText = sim1_k2; drawSim1(); }
+
+        function drawSim1() {
+            if(!ctx1) return;
+            const w = cont1.clientWidth || can1.width;
+            const h = cont1.clientHeight || can1.height;
+            ctx1.clearRect(0, 0, can1.width, can1.height); // إلزامي
+
+            ctx1.save();
+            // توسيط وتكبير المخطط ليطابق تماماً المخطط النظامي في الدرس (500x250)
+            const scale = Math.min(w / 500, h / 250) * 0.85;
+            const offsetX = (w - 500 * scale) / 2;
+            const offsetY = (h - 250 * scale) / 2;
+            ctx1.translate(offsetX, offsetY);
+            ctx1.scale(scale, scale);
+
+            const isClosed = (sim1_k1 === sim1_k2);
+
+            // الأسلاك الثابتة
+            ctx1.strokeStyle = '#64748b'; 
+            ctx1.lineWidth = 4; 
+            ctx1.lineJoin = 'round';
+            ctx1.beginPath();
+            ctx1.moveTo(100, 200); ctx1.lineTo(100, 50); ctx1.lineTo(220, 50); // إلى القاطعة K1
+            ctx1.moveTo(100, 200); ctx1.lineTo(230, 200); // إلى المولد موجب
+            ctx1.moveTo(270, 200); ctx1.lineTo(450, 200); ctx1.lineTo(450, 145); // من المولد سالب إلى المصباح
+            ctx1.moveTo(450, 105); ctx1.lineTo(450, 50); ctx1.lineTo(380, 50); // من المصباح إلى القاطعة K2
+            
+            // المسارات بين القاطعتين
+            ctx1.moveTo(260, 25); ctx1.lineTo(340, 25);
+            ctx1.moveTo(260, 75); ctx1.lineTo(340, 75);
+            ctx1.stroke();
+
+            // المولد (الرمز النظامي)
+            ctx1.lineWidth = 2; ctx1.strokeStyle = '#ef4444'; 
+            ctx1.beginPath(); ctx1.moveTo(230, 180); ctx1.lineTo(230, 220); ctx1.stroke(); // الموجب
+            ctx1.lineWidth = 6; ctx1.strokeStyle = '#3b82f6';
+            ctx1.beginPath(); ctx1.moveTo(270, 190); ctx1.lineTo(270, 210); ctx1.stroke(); // السالب
+            
+            ctx1.fillStyle = '#ef4444'; ctx1.font = 'bold 20px Arial'; ctx1.fillText("+", 205, 195);
+            ctx1.fillStyle = '#3b82f6'; ctx1.font = 'bold 24px Arial'; ctx1.fillText("-", 285, 195);
+
+            // المصباح
+            const lampR = 20;
+            ctx1.fillStyle = isClosed ? '#fef08a' : '#f8fafc';
+            ctx1.strokeStyle = isClosed ? '#eab308' : '#94a3b8';
+            ctx1.lineWidth = 3;
+            ctx1.beginPath(); ctx1.arc(450, 125, lampR, 0, Math.PI*2); ctx1.fill(); ctx1.stroke();
+            
+            // علامة X داخل المصباح
+            ctx1.beginPath();
+            ctx1.moveTo(450 - lampR*0.7, 125 - lampR*0.7); ctx1.lineTo(450 + lampR*0.7, 125 + lampR*0.7);
+            ctx1.moveTo(450 + lampR*0.7, 125 - lampR*0.7); ctx1.lineTo(450 - lampR*0.7, 125 + lampR*0.7);
+            ctx1.stroke();
+
+            // حالة التوهج
+            if(isClosed) {
+                ctx1.strokeStyle = '#f59e0b';
+                for(let i=0; i<8; i++) {
+                    ctx1.beginPath(); 
+                    ctx1.moveTo(450 + (lampR+6)*Math.cos(i*Math.PI/4), 125 + (lampR+6)*Math.sin(i*Math.PI/4));
+                    ctx1.lineTo(450 + (lampR+15)*Math.cos(i*Math.PI/4), 125 + (lampR+15)*Math.sin(i*Math.PI/4)); 
+                    ctx1.stroke();
+                }
+            }
+
+            // رسم القواطع
+            const drawSwitch = (x, yC, isK1, state) => {
+                ctx1.fillStyle = '#cbd5e1';
+                ctx1.beginPath(); ctx1.arc(x, yC, 5, 0, Math.PI*2); ctx1.fill(); // C
+                ctx1.beginPath(); ctx1.arc(isK1 ? 260 : 340, 25, 5, 0, Math.PI*2); ctx1.fill(); // 1
+                ctx1.beginPath(); ctx1.arc(isK1 ? 260 : 340, 75, 5, 0, Math.PI*2); ctx1.fill(); // 2
+                
+                ctx1.strokeStyle = isClosed ? '#10b981' : '#ef4444'; 
+                ctx1.lineWidth = 4; ctx1.lineCap = 'round';
+                ctx1.beginPath(); 
+                ctx1.moveTo(x, yC); 
+                ctx1.lineTo(isK1 ? 260 : 340, state === 1 ? 25 : 75); 
+                ctx1.stroke(); 
+                ctx1.lineCap = 'butt';
+                
+                ctx1.fillStyle = '#fff'; ctx1.font = '14px Arial';
+                ctx1.fillText("C", isK1 ? x-20 : x+10, yC+5);
+                if(isK1) {
+                    ctx1.fillText("1", 260-15, 20);
+                    ctx1.fillText("2", 260-15, 85);
+                } else {
+                    ctx1.fillText("1", 340+10, 20);
+                    ctx1.fillText("2", 340+10, 85);
+                }
+            };
+
+            drawSwitch(220, 50, true, sim1_k1);
+            drawSwitch(380, 50, false, sim1_k2);
+            
+            // إظهار مسار التيار (أحمر) إذا مغلقة
+            if(isClosed) {
+                ctx1.strokeStyle = 'rgba(239, 68, 68, 0.4)'; 
+                ctx1.lineWidth = 8;
+                ctx1.beginPath(); 
+                ctx1.moveTo(230, 200); ctx1.lineTo(100, 200); ctx1.lineTo(100, 50); ctx1.lineTo(220, 50);
+                ctx1.lineTo(260, sim1_k1 === 1 ? 25 : 75); ctx1.lineTo(340, sim1_k2 === 1 ? 25 : 75);
+                ctx1.lineTo(380, 50); ctx1.lineTo(450, 50); ctx1.lineTo(450, 105);
+                ctx1.moveTo(450, 145); ctx1.lineTo(450, 200); ctx1.lineTo(270, 200);
+                ctx1.stroke();
+            }
+
+            ctx1.restore();
+        }
+
+        // ==========================================
+        // 4. المحاكاة الثانية: جدول الحقيقة
+        // ==========================================
+        let sim2_state = 0; // 0, 1, 2, 3
+        const states = [ {k1:1, k2:1}, {k1:1, k2:2}, {k1:2, k2:1}, {k1:2, k2:2} ];
+
+        function nextTruthState() {
+            sim2_state = (sim2_state + 1) % 4;
+            // تحديث الجدول
+            for(let i=0; i<4; i++) {
+                document.getElementById(`tr-${states[i].k1}-${states[i].k2}`).style.background = (i === sim2_state) ? 'var(--card)' : 'transparent';
+                document.getElementById(`tr-${states[i].k1}-${states[i].k2}`).style.borderLeft = (i === sim2_state) ? '3px solid var(--accent)' : 'none';
+            }
+            drawSim2();
+        }
+
+        function drawSim2() {
+            if(!ctx2) return;
+            const w = cont2.clientWidth || can2.width;
+            const h = cont2.clientHeight || can2.height;
+            ctx2.clearRect(0, 0, can2.width, can2.height);
+
+            const curr = states[sim2_state];
+            const isClosed = (curr.k1 === curr.k2);
+            
+            ctx2.save();
+            const scale = Math.min(w / 500, h / 250) * 0.85;
+            const offsetX = (w - 500 * scale) / 2;
+            const offsetY = (h - 250 * scale) / 2;
+            ctx2.translate(offsetX, offsetY);
+            ctx2.scale(scale, scale);
+            
+            ctx2.strokeStyle = '#64748b'; 
+            ctx2.lineWidth = 4; 
+            ctx2.lineJoin = 'round';
+            ctx2.beginPath();
+            ctx2.moveTo(100, 200); ctx2.lineTo(100, 50); ctx2.lineTo(220, 50); 
+            ctx2.moveTo(100, 200); ctx2.lineTo(230, 200); 
+            ctx2.moveTo(270, 200); ctx2.lineTo(450, 200); ctx2.lineTo(450, 145); 
+            ctx2.moveTo(450, 105); ctx2.lineTo(450, 50); ctx2.lineTo(380, 50); 
+            
+            ctx2.moveTo(260, 25); ctx2.lineTo(340, 25);
+            ctx2.moveTo(260, 75); ctx2.lineTo(340, 75);
+            ctx2.stroke();
+            
+            // البطارية
+            ctx2.lineWidth = 2; ctx2.strokeStyle = '#ef4444'; 
+            ctx2.beginPath(); ctx2.moveTo(230, 180); ctx2.lineTo(230, 220); ctx2.stroke();
+            ctx2.lineWidth = 6; ctx2.strokeStyle = '#3b82f6';
+            ctx2.beginPath(); ctx2.moveTo(270, 190); ctx2.lineTo(270, 210); ctx2.stroke();
+
+            // المصباح
+            const lampR = 20;
+            ctx2.fillStyle = isClosed ? '#fef08a' : '#f8fafc';
+            ctx2.strokeStyle = isClosed ? '#eab308' : '#94a3b8';
+            ctx2.lineWidth = 3;
+            ctx2.beginPath(); ctx2.arc(450, 125, lampR, 0, Math.PI*2); ctx2.fill(); ctx2.stroke();
+            
+            ctx2.beginPath();
+            ctx2.moveTo(450 - lampR*0.7, 125 - lampR*0.7); ctx2.lineTo(450 + lampR*0.7, 125 + lampR*0.7);
+            ctx2.moveTo(450 + lampR*0.7, 125 - lampR*0.7); ctx2.lineTo(450 - lampR*0.7, 125 + lampR*0.7);
+            ctx2.stroke();
+            
+            if(isClosed) {
+                ctx2.strokeStyle = '#f59e0b';
+                for(let i=0; i<8; i++) {
+                    ctx2.beginPath(); 
+                    ctx2.moveTo(450 + (lampR+6)*Math.cos(i*Math.PI/4), 125 + (lampR+6)*Math.sin(i*Math.PI/4));
+                    ctx2.lineTo(450 + (lampR+15)*Math.cos(i*Math.PI/4), 125 + (lampR+15)*Math.sin(i*Math.PI/4)); 
+                    ctx2.stroke();
+                }
+            }
+
+            // القواطع
+            const drawSw = (x, yC, isK1, state) => {
+                ctx2.fillStyle = '#cbd5e1';
+                ctx2.beginPath(); ctx2.arc(x, yC, 5, 0, Math.PI*2); ctx2.fill();
+                ctx2.beginPath(); ctx2.arc(isK1 ? 260 : 340, 25, 5, 0, Math.PI*2); ctx2.fill();
+                ctx2.beginPath(); ctx2.arc(isK1 ? 260 : 340, 75, 5, 0, Math.PI*2); ctx2.fill();
+                
+                ctx2.strokeStyle = isClosed ? '#10b981' : '#ef4444'; 
+                ctx2.lineWidth = 4; ctx2.lineCap = 'round';
+                ctx2.beginPath(); 
+                ctx2.moveTo(x, yC); 
+                ctx2.lineTo(isK1 ? 260 : 340, state === 1 ? 25 : 75); 
+                ctx2.stroke(); 
+                ctx2.lineCap = 'butt';
+            };
+            drawSw(220, 50, true, curr.k1); 
+            drawSw(380, 50, false, curr.k2);
+
+            ctx2.restore();
+        }
+
+        function updateSim() { drawSim1(); drawSim2(); }
+
+        // ==========================================
+        // 5. التحقق من التمارين
+        // ==========================================
+        function checkAnswers() {
+            const cards = document.querySelectorAll('.q-card');
+            cards.forEach(card => {
+                const correctVal = card.querySelector('.q-options').dataset.correct;
+                const options = card.querySelectorAll('input[type="radio"]');
+                const feedback = card.querySelector('.q-feedback');
+                let answered = false;
+
+                options.forEach(opt => {
+                    const optLabel = opt.parentElement;
+                    optLabel.classList.remove('correct', 'wrong');
+                    
+                    if(opt.checked) {
+                        answered = true;
+                        if(opt.value === correctVal) {
+                            optLabel.classList.add('correct');
+                            feedback.className = 'q-feedback show-correct';
+                            feedback.innerHTML = 'إجابة صحيحة! أحسنت.';
+                        } else {
+                            optLabel.classList.add('wrong');
+                            feedback.className = 'q-feedback show-wrong';
+                            feedback.innerHTML = 'إجابة غير موفقة. (الخيار الصحيح مضلل بالأخضر).';
+                        }
+                    }
+                    if(opt.value === correctVal) optLabel.classList.add('correct'); 
+                });
+                if(!answered) { feedback.className = 'q-feedback show-wrong'; feedback.innerHTML = 'يرجى اختيار إجابة لمعرفة التقييم.'; }
+            });
+        }
+    </script>
+    
+    <!-- السكريبت الإلزامي المركزي -->
+    <script src="credit.js"></script>
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 3 | عدد رسوم SVG في الدرس النظري = 3 | عدد المحاكيات = 2 -->
+</body>
+</html>

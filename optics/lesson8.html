@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الشمس مصدر للطاقة - الظواهر الضوئية</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- تضمين MathJax للمعادلات الإلزامية -->
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        /* المتغيرات الإلزامية */
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #f97316; /* لون الظواهر الضوئية */
+            --accent2:#fb923c;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 10px;
+        }
+
+        /* 0.4 — شريط التنقل العلوي الثابت */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        /* الترويسة */
+        .lesson-header {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--dark3);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .lesson-header > span:first-child {
+            color: var(--muted);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .lesson-badge {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .lesson-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .lesson-header h1 em {
+            color: var(--accent);
+            font-style: normal;
+        }
+        .lesson-meta { color: var(--muted); font-size: 0.9rem; }
+
+        /* 0.1 — شريط التبويبات الإلزامي */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* الدرس النظري */
+        .objectives-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--accent);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .objectives-box h3 { color: var(--text); margin-bottom: 10px; }
+        .objectives-box ul { margin-right: 20px; color: var(--muted); }
+
+        .sec-title { display: flex; align-items: center; gap: 10px; margin: 30px 0 15px; }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-line { flex: 1; border: none; border-top: 1px solid var(--border); }
+
+        .def-box {
+            background: var(--card);
+            border-right: 4px solid var(--gold);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .def-box strong { font-family: 'Amiri', serif; font-size: 1.2rem; color: var(--text); }
+        .def-box span.fr { color: var(--muted); font-size: 0.9rem; }
+
+        .highlight-box { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600; }
+        .highlight-box.tip { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--green); color: #6ee7b7; }
+        .highlight-box.warn { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--red); color: #fca5a5; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .info-table th, .info-table td { padding: 12px; border: 1px solid var(--border); text-align: right; }
+        .info-table th { background: var(--accent); color: #fff; }
+        .info-table tr:nth-child(even) { background: var(--card); }
+        .info-table td.unit { font-style: italic; color: var(--muted); text-align: center;}
+
+        /* المعادلات */
+        .formula-box { background: var(--dark3); border: 1px solid var(--accent); border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .formula-title { color: var(--accent2); font-weight: bold; margin-bottom: 15px; }
+        .formula-display { font-size: 1.8rem; color: var(--text); margin-bottom: 15px; direction: ltr; }
+        .symbol-table { width: 100%; margin-top: 15px; border-collapse: collapse; font-size: 0.9rem; }
+        .symbol-table th, .symbol-table td { border: 1px solid var(--border); padding: 8px; text-align: center; }
+        .symbol-table th { background: var(--dark4); color: var(--text); }
+        .sym-cell { font-family: 'Amiri', serif; font-style: italic; font-size: 1.2rem; color: var(--text); }
+
+        /* الرسوم SVG */
+        .diagram-figure {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .diagram-wrap { max-width: 100%; overflow: hidden; border-radius: 8px; background: var(--dark2); }
+        .lesson-diagram { width: 100%; height: auto; max-width: 500px; }
+        .fig-title { margin-top: 10px; color: var(--muted); font-size: 0.9rem; }
+
+        /* المحاكاة */
+        .sim-wrap { background: var(--dark3); border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 25px; }
+        .sim-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
+        .sim-title { color: var(--text); font-size: 1.2rem; }
+        .sim-badge { background: rgba(245, 158, 11, 0.2); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; }
+        .sim-description { background: var(--card); border-right: 3px solid var(--accent); padding: 10px; margin-bottom: 15px; font-size: 0.95rem; border-radius: 4px; }
+        .sim-canvas-container { width: 100%; height: 300px; background: #000; border-radius: 8px; overflow: hidden; position: relative; border: 1px solid var(--border); }
+        canvas { display: block; width: 100%; height: 100%; }
+        
+        .sim-controls { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .control-group { display: flex; align-items: center; gap: 10px; background: var(--dark4); padding: 10px; border-radius: 6px; }
+        .control-group label { flex: 1; color: var(--muted); font-size: 0.9rem; }
+        .val-badge { background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
+        input[type="range"] { flex: 2; accent-color: var(--accent); }
+
+        /* أزرار الألوان في المحاكاة 2 */
+        .color-btns { display: flex; gap: 10px; flex: 2; }
+        .color-btn { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform 0.2s; }
+        .color-btn.active { border-color: var(--accent); transform: scale(1.2); }
+
+        /* التمارين */
+        .q-card { background: var(--dark3); border: 1px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .q-num { color: var(--accent); font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; }
+        .q-text { margin-bottom: 15px; font-size: 1.1rem; }
+        .q-options { display: flex; flex-direction: column; gap: 8px; }
+        .q-option { background: var(--dark4); padding: 10px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; }
+        .q-option:hover { border-color: var(--accent); }
+        .q-option input { margin-left: 10px; accent-color: var(--accent); }
+        .q-feedback { margin-top: 10px; padding: 10px; border-radius: 6px; display: none; font-size: 0.9rem; }
+        .q-feedback.correct { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--green); color: var(--green); }
+        .q-feedback.wrong { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--red); color: #fca5a5; }
+        .q-diagram { width: 100%; max-width: 400px; display: block; margin: 0 auto 15px; background: var(--dark2); border-radius: 8px; }
+        .submit-btn { background: var(--accent); color: #fff; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; width: 100%; font-size: 1.1rem; font-weight: bold; margin-top: 10px; }
+
+        /* الملخص */
+        .summary-card { background: var(--dark3); border-radius: 12px; padding: 20px; border: 1px solid var(--border); }
+        .summary-header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .summary-title { color: var(--accent); font-size: 1.5rem; }
+        .summary-section-title { color: var(--gold); margin: 20px 0 10px; font-size: 1.2rem; border-bottom: 1px dashed var(--border); padding-bottom: 5px; }
+        .concept-map { width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; }
+        .summary-list { list-style: none; padding: 0; }
+        .summary-list li { position: relative; padding-right: 25px; margin-bottom: 10px; color: var(--text); }
+        .summary-list li::before { content: "✦"; position: absolute; right: 0; color: var(--accent); }
+        .print-btn { background: var(--dark4); color: var(--text); border: 1px solid var(--border); padding: 10px 20px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 20px; font-size: 1rem; transition: background 0.3s; }
+        .print-btn:hover { background: var(--accent); color: #fff; }
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #111 !important; }
+            .summary-card { box-shadow: none; border: 1px solid #ccc; padding: 0; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; } 
+            body { font-size: 12pt; }
+            .summary-section-title { font-size: 14pt; color: #000; }
+            .print-btn { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 0.4 — شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="../index.html#optics">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <div class="lesson-header">
+        <span>السنة الأولى متوسط › الظواهر الضوئية › الدرس 08</span>
+        <span class="lesson-badge">المقطع الرابع</span>
+        <h1><em>الشمس</em> مصدر للطاقة</h1>
+        <p class="lesson-meta">منهاج الجيل الثاني | حصة واحدة</p>
+    </div>
+
+    <!-- 0.1 — شريط التبويبات -->
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+        <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+        <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+        <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+    </nav>
+
+    <!-- التبويب 1: الدرس النظري -->
+    <div id="tab-lesson" class="tab-content active">
+        
+        <div class="objectives-box">
+            <h3>🎯 الأهداف التعلمية</h3>
+            <ul>
+                <li>إدراك أن الشمس هي المصدر الأساسي والأهم للطاقة على كوكب الأرض.</li>
+                <li>تحديد بعض التحولات الطاقوية المفيدة انطلاقاً من الطاقة الشمسية.</li>
+                <li>تفسير أثر لون الأجسام على درجة امتصاصها للإشعاع الشمسي الحراري.</li>
+            </ul>
+        </div>
+
+        <div class="sec-title">
+            <span class="sec-icon">☀️</span>
+            <h2>1. الشمس والطاقة الحرارية</h2>
+            <hr class="sec-line">
+        </div>
+
+        <div class="def-box">
+            <strong>الطاقة الشمسية</strong> <span class="fr">(L'énergie solaire)</span>
+            <p>هي الطاقة الصادرة عن أشعة الشمس والتي تصل إلى الأرض على شكل <strong>ضوء وحرارة</strong>. تعتبر المصدر الأساسي الأول لجميع الطاقات، وهي طاقة نظيفة ومتجددة.</p>
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (1) — انتقال الطاقة من الشمس إلى الأرض</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#fef08a" />
+                            <stop offset="50%" stop-color="#f59e0b" />
+                            <stop offset="100%" stop-color="#ea580c" />
+                        </radialGradient>
+                        <radialGradient id="earthGrad" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#60a5fa" />
+                            <stop offset="100%" stop-color="#1e3a8a" />
+                        </radialGradient>
+                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 Z" fill="#fcd34d"/>
+                        </marker>
+                    </defs>
+
+                    <!-- أشعة الطاقة -->
+                    <path d="M 120 70 L 350 70 M 120 100 L 350 100 M 120 130 L 350 130" stroke="#fcd34d" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+                    <text x="235" y="55" fill="#fcd34d" font-size="12" text-anchor="middle">إشعاع ضوئي + حراري</text>
+
+                    <!-- الشمس -->
+                    <circle cx="60" cy="100" r="50" fill="url(#sunGrad)" filter="drop-shadow(0 0 15px #f59e0b)"/>
+                    <text x="60" y="170" fill="#fbbf24" font-size="14" font-weight="bold" text-anchor="middle">الشمس</text>
+
+                    <!-- الأرض -->
+                    <circle cx="410" cy="100" r="40" fill="url(#earthGrad)"/>
+                    <!-- غلاف جوي -->
+                    <circle cx="410" cy="100" r="45" fill="none" stroke="#93c5fd" stroke-width="2" opacity="0.5"/>
+                    <text x="410" y="170" fill="#60a5fa" font-size="14" font-weight="bold" text-anchor="middle">الأرض</text>
+                </svg>
+            </div>
+        </figure>
+
+        <p>عندما تسقط أشعة الشمس على جسم ما، ترتفع درجة حرارته. هذا يدل على أن <strong>الضوء يحمل طاقة</strong> تتحول عند اصطدامها بالأجسام إلى <strong>طاقة حرارية</strong>.</p>
+
+        <div class="sec-title">
+            <span class="sec-icon">⚙️</span>
+            <h2>2. تحويل الطاقة الشمسية إلى أشكال مفيدة</h2>
+            <hr class="sec-line">
+        </div>
+
+        <p>ابتكر الإنسان تكنولوجيات لاستغلال الطاقة الشمسية وتحويلها إلى أشكال أخرى لتلبية احتياجاته اليومية:</p>
+
+        <table class="info-table">
+            <tr>
+                <th>التكنولوجيا المستخدمة</th>
+                <th>شكل الطاقة الناتج</th>
+                <th>الاستعمالات الشائعة</th>
+            </tr>
+            <tr>
+                <td><strong>الخلايا الكهروضوئية (الألواح الشمسية)</strong></td>
+                <td>طاقة كهربائية</td>
+                <td>توليد الكهرباء للمنازل، إنارة الشوارع، الأقمار الصناعية.</td>
+            </tr>
+            <tr>
+                <td><strong>السخان الشمسي المائي</strong></td>
+                <td>طاقة حرارية</td>
+                <td>تسخين المياه للاستحمام والتدفئة المنزلية.</td>
+            </tr>
+        </table>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (2) — مبدأ عمل الخلية الكهروضوئية والسخان الشمسي</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <linearGradient id="panelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e3a8a" />
+                            <stop offset="50%" stop-color="#3b82f6" />
+                            <stop offset="100%" stop-color="#1e40af" />
+                        </linearGradient>
+                        <linearGradient id="heaterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#94a3b8" />
+                            <stop offset="100%" stop-color="#475569" />
+                        </linearGradient>
+                    </defs>
+
+                    <!-- الشمس المركزية -->
+                    <circle cx="250" cy="40" r="25" fill="url(#sunGrad)" filter="drop-shadow(0 0 10px #f59e0b)"/>
+                    
+                    <!-- الأشعة لليسار (كهرباء) -->
+                    <path d="M 230 55 L 140 90" stroke="#fcd34d" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrow)"/>
+                    <!-- الأشعة لليمين (حرارة) -->
+                    <path d="M 270 55 L 360 90" stroke="#fcd34d" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrow)"/>
+
+                    <!-- 1. لوح شمسي (يسار) -->
+                    <g transform="translate(100, 110)">
+                        <polygon points="0,30 60,0 80,20 20,50" fill="url(#panelGrad)" stroke="#60a5fa" stroke-width="1"/>
+                        <line x1="20" y1="15" x2="40" y2="35" stroke="#93c5fd" stroke-width="1"/>
+                        <line x1="40" y1="5" x2="60" y2="25" stroke="#93c5fd" stroke-width="1"/>
+                        <text x="40" y="70" fill="#e2e8f0" font-size="12" text-anchor="middle">لوح كهروضوئي</text>
+                        <!-- مخرج كهرباء -->
+                        <path d="M 40 40 L 40 85 L 10 85" fill="none" stroke="#ef4444" stroke-width="2"/>
+                        <circle cx="5" cy="85" r="5" fill="#fcd34d"/>
+                        <text x="40" y="100" fill="#fcd34d" font-size="12" text-anchor="middle">طاقة كهربائية</text>
+                    </g>
+
+                    <!-- 2. سخان شمسي (يمين) -->
+                    <g transform="translate(340, 110)">
+                        <rect x="0" y="0" width="80" height="40" fill="url(#heaterGrad)" rx="4"/>
+                        <!-- أنابيب التسخين داخل المجمع -->
+                        <path d="M 10 10 L 70 10 M 10 20 L 70 20 M 10 30 L 70 30" stroke="#1e293b" stroke-width="2"/>
+                        <text x="40" y="60" fill="#e2e8f0" font-size="12" text-anchor="middle">مجمع حراري</text>
+                        <!-- أنابيب ماء -->
+                        <path d="M 0 20 L -20 20 L -20 85" fill="none" stroke="#60a5fa" stroke-width="3"/> <!-- ماء بارد -->
+                        <path d="M 80 20 L 100 20 L 100 85" fill="none" stroke="#ef4444" stroke-width="3"/> <!-- ماء ساخن -->
+                        <text x="40" y="100" fill="#ef4444" font-size="12" text-anchor="middle">ماء ساخن (طاقة حرارية)</text>
+                    </g>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="formula-box">
+            <div class="formula-title">مبدأ انحفاظ الطاقة أثناء التحويل</div>
+            <div class="formula-display">
+                $$ E_{reçue} = E_{utile} + E_{perdue} $$
+            </div>
+            <table class="symbol-table">
+                <thead>
+                    <tr><th>الرمز</th><th>التسمية</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="sym-cell">E_{reçue}</td><td>الطاقة الكلية المستقبلة من الشمس.</td></tr>
+                    <tr><td class="sym-cell">E_{utile}</td><td>الطاقة المفيدة المنتجة (كهرباء أو حرارة مستغلة).</td></tr>
+                    <tr><td class="sym-cell">E_{perdue}</td><td>الطاقة الضائعة (حرارة متبددة في الجو غالباً).</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="sec-title">
+            <span class="sec-icon">🎨</span>
+            <h2>3. أثر لون الأجسام على امتصاص الإشعاع</h2>
+            <hr class="sec-line">
+        </div>
+
+        <p>لا تمتص كل الأجسام نفس المقدار من الطاقة الحرارية للشمس، بل يعتمد ذلك بشكل كبير على <strong>لون الجسم</strong>:</p>
+
+        <div class="highlight-box tip">
+            💡 <strong>قاعدة الامتصاص والانعكاس:</strong>
+            <ul style="margin-right: 20px; margin-top: 10px;">
+                <li><strong>الأجسام الداكنة (كالأسود):</strong> تمتص معظم أشعة الشمس الساقطة عليها، فترتفع درجة حرارتها <strong>بسرعة</strong> وبشكل كبير.</li>
+                <li><strong>الأجسام الفاتحة (كالأبيض):</strong> تعكس معظم أشعة الشمس المضاءة ولا تمتص إلا القليل، فترتفع حرارتها <strong>ببطء</strong> وبشكل أقل.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- التبويب 2: المحاكاة التفاعلية -->
+    <div id="tab-sim" class="tab-content">
+        
+        <!-- المحاكاة 1 -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">المحاكاة 1: الخلية الكهروضوئية وتأثير الغيوم</h3>
+                <span class="sim-badge">تفاعلي - تحويل طاقوي</span>
+            </div>
+            <div class="sim-description">
+                <p>يوضح هذا المحاكي تحويل <strong>الطاقة الشمسية إلى طاقة كهربائية</strong> لإنارة المصباح. حرك <strong>شريط الغيوم</strong> لترى كيف ينخفض إنتاج الكهرباء عندما يُحجب الإشعاع الشمسي.</p>
+            </div>
+            
+            <div class="sim-canvas-container">
+                <canvas id="simCanvasPanel"></canvas>
+            </div>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>كثافة الغيوم: <span id="val-clouds" class="val-badge">0%</span></label>
+                    <input type="range" id="slider-clouds" min="0" max="100" value="0" step="1">
+                </div>
+            </div>
+        </div>
+
+        <!-- المحاكاة 2 -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">المحاكاة 2: امتصاص الحرارة واللون</h3>
+                <span class="sim-badge">تفاعلي - قياس حراري</span>
+            </div>
+            <div class="sim-description">
+                <p>يوضح هذا المحاكي <strong>تأثير لون الجسم على امتصاصه للحرارة</strong>. اختر <strong>اللون</strong> ثم حرك <strong>شريط الزمن</strong> لترى كيف يرتفع الزئبق في المحرار بشكل مختلف حسب اللون.</p>
+            </div>
+            
+            <div class="sim-canvas-container">
+                <canvas id="simCanvasColor"></canvas>
+            </div>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>اختر لون الجسم:</label>
+                    <div class="color-btns">
+                        <div class="color-btn active" style="background:#111827" onclick="selectColorBox(this, 'black')"></div>
+                        <div class="color-btn" style="background:#3b82f6" onclick="selectColorBox(this, 'blue')"></div>
+                        <div class="color-btn" style="background:#f8fafc" onclick="selectColorBox(this, 'white')"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label>مدة التعرض للشمس: <span id="val-time" class="val-badge">0 د</span></label>
+                    <input type="range" id="slider-time" min="0" max="60" value="0" step="1">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- التبويب 3: التمارين -->
+    <div id="tab-exercises" class="tab-content">
+        <div class="objectives-box">
+            <h3>اختبر معلوماتك</h3>
+            <p style="color: var(--muted); font-size:0.9rem;">أجب عن الأسئلة لتقييم استيعابك للمفاهيم الفيزيائية المدروسة.</p>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 1</div>
+            <div class="q-text">ما هو المصدر الأساسي والأول لمعظم الطاقات على كوكب الأرض؟</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q1" value="0"> الرياح وحركة المياه.</label>
+                <label class="q-option"><input type="radio" name="q1" value="1"> الشمس.</label>
+                <label class="q-option"><input type="radio" name="q1" value="0"> الوقود الأحفوري (البترول).</label>
+            </div>
+            <div class="q-feedback" id="fb1">الشرح: الشمس هي المنبع الأول، وبدونها لا توجد حياة أو طاقات أخرى متجددة.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 2</div>
+            <div class="q-text">الخلايا الكهروضوئية (الألواح الشمسية) تقوم بتحويل الطاقة الشمسية إلى:</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q2" value="0"> طاقة حركية.</label>
+                <label class="q-option"><input type="radio" name="q2" value="0"> طاقة حرارية فقط.</label>
+                <label class="q-option"><input type="radio" name="q2" value="1"> طاقة كهربائية.</label>
+            </div>
+            <div class="q-feedback" id="fb2">الشرح: الألواح الكهروضوئية تصنع خصيصاً لتوليد التيار الكهربائي من الضوء.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 3</div>
+            <div class="q-text">أي الألوان التالية يمتص أكبر قدر من الطاقة الحرارية للإشعاع الشمسي؟</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q3" value="1"> الأسود (الداكن).</label>
+                <label class="q-option"><input type="radio" name="q3" value="0"> الأبيض (الفاتح).</label>
+                <label class="q-option"><input type="radio" name="q3" value="0"> الأصفر.</label>
+            </div>
+            <div class="q-feedback" id="fb3">الشرح: الأجسام الداكنة تمتص معظم الأشعة وتخزنها كحرارة.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 4</div>
+            <div class="q-text">يستخدم "السخان الشمسي" أنابيب مطلية باللون الأسود. لماذا؟</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q4" value="0"> ليعطي منظراً جميلاً للسقف.</label>
+                <label class="q-option"><input type="radio" name="q4" value="1"> لزيادة امتصاص الحرارة لتسخين الماء بسرعة.</label>
+                <label class="q-option"><input type="radio" name="q4" value="0"> لمنع تسرب الماء من الأنابيب.</label>
+            </div>
+            <div class="q-feedback" id="fb4">الشرح: الطلاء الأسود يضمن أقصى مردود لامتصاص الطاقة الحرارية من الشمس.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 5</div>
+            <div class="q-text">في فصل الصيف الحار جداً، يُنصح علمياً بارتداء ملابس:</div>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q5" value="0"> داكنة وسوداء.</label>
+                <label class="q-option"><input type="radio" name="q5" value="1"> فاتحة وبيضاء.</label>
+                <label class="q-option"><input type="radio" name="q5" value="0"> اللون لا يؤثر على الحرارة.</label>
+            </div>
+            <div class="q-feedback" id="fb5">الشرح: الملابس الفاتحة تعكس أشعة الشمس ولا تمتصها، مما يخفف الشعور بالحرارة.</div>
+        </div>
+
+        <!-- السؤال السادس: المخطط -->
+        <div class="q-card q-diagram-type">
+            <div class="q-num">السؤال 6</div>
+            <div class="q-text">تأمل المخطط الذي يمثل سخاناً شمسياً. ما هو شكل الطاقة المفيدة التي نحصل عليها عند المخرج (B)؟</div>
+            <svg class="q-diagram" viewBox="0 0 300 150">
+                <rect width="300" height="150" fill="var(--dark2)"/>
+                <circle cx="50" cy="50" r="20" fill="#f59e0b"/>
+                <path d="M 70 50 L 120 70" stroke="#fcd34d" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrow)"/>
+                <rect x="130" y="60" width="80" height="40" fill="#475569" rx="4"/>
+                <text x="170" y="85" fill="#fff" font-size="12" text-anchor="middle">مجمع</text>
+                
+                <!-- دخول A -->
+                <path d="M 130 90 L 100 90 L 100 130" fill="none" stroke="#60a5fa" stroke-width="3"/>
+                <text x="100" y="145" fill="#60a5fa" font-size="12" text-anchor="middle">دخول (A)</text>
+                
+                <!-- خروج B -->
+                <path d="M 210 70 L 250 70 L 250 110" fill="none" stroke="#ef4444" stroke-width="3" marker-end="url(#arrow)"/>
+                <text x="250" y="130" fill="#ef4444" font-size="14" font-weight="bold" text-anchor="middle">خروج (B)</text>
+            </svg>
+            <div class="q-options">
+                <label class="q-option"><input type="radio" name="q6" value="0"> طاقة كهربائية لتشغيل المنزل.</label>
+                <label class="q-option"><input type="radio" name="q6" value="0"> طاقة ضوئية للإنارة.</label>
+                <label class="q-option"><input type="radio" name="q6" value="1"> طاقة حرارية (ماء ساخن).</label>
+            </div>
+            <div class="q-feedback" id="fb6">الشرح: السخان الشمسي المائي يستقبل الماء البارد (A) ويعطيه طاقة حرارية ليخرج ماءً ساخناً (B).</div>
+        </div>
+
+        <button class="submit-btn" onclick="checkQuiz()">تحقق من الإجابات</button>
+        <div id="quiz-msg" style="display:none; text-align:center; margin-top:10px; font-weight:bold; color:var(--gold);"></div>
+    </div>
+
+    <!-- التبويب 4: ملخص الكراس -->
+    <div id="tab-summary" class="tab-content">
+        <div class="summary-card">
+            <div class="summary-header">
+                <div class="lesson-meta">السنة الأولى متوسط | المقطع 4 | الظواهر الضوئية</div>
+                <h2 class="summary-title">ملخص: الشمس مصدر للطاقة</h2>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                <div class="concept-map-wrap">
+                    <svg class="concept-map" viewBox="0 0 500 200">
+                        <defs>
+                            <marker id="arrowSum" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--muted)"/>
+                            </marker>
+                        </defs>
+                        <rect x="200" y="10" width="100" height="40" rx="5" fill="var(--dark4)" stroke="#f59e0b"/>
+                        <text x="250" y="35" fill="var(--text)" font-size="14" font-weight="bold" text-anchor="middle">الطاقة الشمسية</text>
+
+                        <!-- فرع الكهرباء -->
+                        <line x1="250" y1="50" x2="120" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowSum)"/>
+                        <rect x="50" y="80" width="140" height="35" rx="5" fill="var(--dark2)" stroke="var(--border)"/>
+                        <text x="120" y="102" fill="var(--text)" font-size="12" text-anchor="middle">تحويل بواسطة لوح شمسي</text>
+                        <line x1="120" y1="115" x2="120" y2="145" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowSum)"/>
+                        <rect x="60" y="145" width="120" height="35" rx="5" fill="var(--dark3)" stroke="var(--accent)"/>
+                        <text x="120" y="167" fill="var(--text)" font-size="12" text-anchor="middle">طاقة كهربائية</text>
+
+                        <!-- فرع الحرارة -->
+                        <line x1="250" y1="50" x2="380" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowSum)"/>
+                        <rect x="310" y="80" width="140" height="35" rx="5" fill="var(--dark2)" stroke="var(--border)"/>
+                        <text x="380" y="102" fill="var(--text)" font-size="12" text-anchor="middle">تحويل بواسطة سخان مائي</text>
+                        <line x1="380" y1="115" x2="380" y2="145" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrowSum)"/>
+                        <rect x="320" y="145" width="120" height="35" rx="5" fill="var(--dark3)" stroke="#ef4444"/>
+                        <text x="380" y="167" fill="var(--text)" font-size="12" text-anchor="middle">طاقة حرارية</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+                <ul class="summary-list">
+                    <li>الشمس هي <strong>المصدر الأساسي والأول</strong> للطاقة على كوكب الأرض.</li>
+                    <li>يحمل الضوء طاقة تتحول عند اصطدامها بالأجسام إلى <strong>طاقة حرارية</strong>.</li>
+                    <li><strong>اللوح الكهروضوئي</strong> يحول الطاقة الشمسية إلى طاقة كهربائية.</li>
+                    <li><strong>السخان الشمسي</strong> يحول الطاقة الشمسية إلى طاقة حرارية لتسخين الماء.</li>
+                    <li><strong>الأجسام الداكنة (كالأسود):</strong> تمتص إشعاعاً أكثر وتسخن بسرعة.</li>
+                    <li><strong>الأجسام الفاتحة (كالأبيض):</strong> تعكس الإشعاع وتسخن ببطء.</li>
+                </ul>
+            </div>
+
+            <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+        </div>
+    </div>
+
+    <script>
+        // 3.9.1 كود إدارة التبويبات (إلزامي لحل مشكلة الكانفاس المخفي)
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSimulations === 'function') updateSimulations();
+                }, 50);
+            }
+        }
+
+        // إعدادات Canvas
+        const canvasPanel = document.getElementById('simCanvasPanel');
+        const ctxPanel = canvasPanel.getContext('2d');
+        const canvasColor = document.getElementById('simCanvasColor');
+        const ctxColor = canvasColor.getContext('2d');
+
+        // متغيرات المحاكاة
+        let simClouds = 0;
+        let simTime = 0;
+        let selectedColor = 'black'; // black, blue, white
+        
+        const colorsData = {
+            'black': { fill: '#111827', factor: 1.5 },
+            'blue':  { fill: '#3b82f6', factor: 1.0 },
+            'white': { fill: '#f8fafc', factor: 0.3 }
+        };
+
+        // 0.2 — دالة resizeCanvas الإلزامية
+        function resizeCanvas() {
+            const containers = [
+                { canvas: canvasPanel, ctx: ctxPanel },
+                { canvas: canvasColor, ctx: ctxColor }
+            ];
+
+            containers.forEach(item => {
+                const container = item.canvas.parentElement;
+                if (container.clientWidth === 0) return;
+                
+                const dpr = window.devicePixelRatio || 1;
+                item.canvas.width  = container.clientWidth  * dpr;
+                item.canvas.height = container.clientHeight * dpr;
+                item.canvas.style.width  = container.clientWidth  + 'px';
+                item.canvas.style.height = container.clientHeight + 'px';
+                
+                item.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            });
+        }
+
+        // --- رسم محاكاة 1: اللوح الشمسي والغيوم ---
+        function drawSimPanel() {
+            // البند 0.5: clearRect كأول سطر
+            const w = canvasPanel.parentElement.clientWidth;
+            const h = canvasPanel.parentElement.clientHeight;
+            ctxPanel.clearRect(0, 0, w, h);
+            if (w === 0) return;
+
+            // السماء والأرض
+            ctxPanel.fillStyle = "#87CEEB"; // سماء
+            ctxPanel.fillRect(0, 0, w, h);
+            ctxPanel.fillStyle = "#4ade80"; // عشب
+            ctxPanel.fillRect(0, h * 0.7, w, h * 0.3);
+
+            // حساب الطاقة المنتجة (من 1.0 إلى 0.0)
+            const powerRatio = 1 - (simClouds / 100);
+
+            // الشمس
+            ctxPanel.beginPath();
+            ctxPanel.arc(80, 60, 35, 0, Math.PI * 2);
+            ctxPanel.fillStyle = "#f59e0b";
+            ctxPanel.fill();
+            // توهج الشمس يقل مع الغيوم
+            ctxPanel.beginPath();
+            ctxPanel.arc(80, 60, 45, 0, Math.PI * 2);
+            ctxPanel.fillStyle = `rgba(253, 230, 138, ${0.5 * powerRatio})`;
+            ctxPanel.fill();
+
+            // أشعة الشمس
+            ctxPanel.strokeStyle = `rgba(245, 158, 11, ${powerRatio})`;
+            ctxPanel.lineWidth = 2;
+            ctxPanel.setLineDash([5, 5]);
+            for(let i=0; i<3; i++) {
+                ctxPanel.beginPath();
+                ctxPanel.moveTo(110, 80 + i*15);
+                ctxPanel.lineTo(w/2 - 20, h*0.5 + i*15);
+                ctxPanel.stroke();
+            }
+            ctxPanel.setLineDash([]);
+
+            // الغيوم (تغطي الشمس حسب النسبة)
+            if (simClouds > 0) {
+                ctxPanel.fillStyle = `rgba(255, 255, 255, ${simClouds / 100})`;
+                ctxPanel.beginPath();
+                ctxPanel.arc(70, 60, 25, 0, Math.PI*2);
+                ctxPanel.arc(100, 50, 35, 0, Math.PI*2);
+                ctxPanel.arc(130, 65, 25, 0, Math.PI*2);
+                ctxPanel.fill();
+            }
+
+            // اللوح الشمسي
+            const pX = w/2;
+            const pY = h*0.6;
+            ctxPanel.fillStyle = "#1e3a8a"; // أزرق داكن
+            ctxPanel.beginPath();
+            ctxPanel.moveTo(pX - 40, pY + 20);
+            ctxPanel.lineTo(pX + 40, pY - 10);
+            ctxPanel.lineTo(pX + 60, pY + 10);
+            ctxPanel.lineTo(pX - 20, pY + 40);
+            ctxPanel.fill();
+            ctxPanel.strokeStyle = "#60a5fa";
+            ctxPanel.stroke();
+            // عمود اللوح
+            ctxPanel.fillStyle = "#475569";
+            ctxPanel.fillRect(pX, pY + 15, 10, h*0.7 - (pY + 15));
+
+            // المنزل
+            const hX = w * 0.75;
+            const hY = h * 0.5;
+            ctxPanel.fillStyle = "#fcd34d";
+            ctxPanel.fillRect(hX, hY, 80, h*0.7 - hY); // واجهة
+            ctxPanel.fillStyle = "#ef4444";
+            ctxPanel.beginPath(); // سقف
+            ctxPanel.moveTo(hX - 10, hY);
+            ctxPanel.lineTo(hX + 40, hY - 30);
+            ctxPanel.lineTo(hX + 90, hY);
+            ctxPanel.fill();
+            
+            // سلك التوصيل
+            ctxPanel.strokeStyle = "#111827";
+            ctxPanel.beginPath();
+            ctxPanel.moveTo(pX + 20, pY + 25);
+            ctxPanel.lineTo(hX + 40, hY + 10);
+            ctxPanel.stroke();
+
+            // المصباح داخل المنزل
+            const bulbColor = powerRatio > 0.2 ? "#fbbf24" : "#475569"; // مضيء أم مطفأ
+            const bulbGlow = powerRatio > 0.2 ? `rgba(251, 191, 36, ${powerRatio})` : "transparent";
+            
+            ctxPanel.fillStyle = "#1e293b"; // نافذة مظلمة
+            ctxPanel.fillRect(hX + 25, hY + 20, 30, 30);
+            
+            // توهج المصباح
+            ctxPanel.beginPath();
+            ctxPanel.arc(hX + 40, hY + 35, 15, 0, Math.PI*2);
+            ctxPanel.fillStyle = bulbGlow;
+            ctxPanel.fill();
+            // جسم المصباح
+            ctxPanel.beginPath();
+            ctxPanel.arc(hX + 40, hY + 35, 6, 0, Math.PI*2);
+            ctxPanel.fillStyle = bulbColor;
+            ctxPanel.fill();
+        }
+
+        // --- رسم محاكاة 2: الألوان وامتصاص الحرارة ---
+        function drawSimColor() {
+            const w = canvasColor.parentElement.clientWidth;
+            const h = canvasColor.parentElement.clientHeight;
+            ctxColor.clearRect(0, 0, w, h);
+            if (w === 0) return;
+
+            const cx = w / 2;
+            const cy = h / 2;
+
+            // الشمس (ثابتة)
+            ctxColor.beginPath();
+            ctxColor.arc(cx, 40, 25, 0, Math.PI * 2);
+            ctxColor.fillStyle = "#f59e0b";
+            ctxColor.fill();
+
+            // أشعة حرارية تزيد كثافتها مع الزمن
+            if (simTime > 0) {
+                ctxColor.strokeStyle = `rgba(239, 68, 68, ${simTime/60})`;
+                ctxColor.lineWidth = 2;
+                ctxColor.setLineDash([4, 4]);
+                ctxColor.beginPath();
+                ctxColor.moveTo(cx, 70); ctxColor.lineTo(cx, 130);
+                ctxColor.moveTo(cx - 20, 70); ctxColor.lineTo(cx - 40, 130);
+                ctxColor.moveTo(cx + 20, 70); ctxColor.lineTo(cx + 40, 130);
+                ctxColor.stroke();
+                ctxColor.setLineDash([]);
+            }
+
+            // الصندوق المستقبِل
+            const boxSize = 80;
+            const boxY = 150;
+            ctxColor.fillStyle = colorsData[selectedColor].fill;
+            ctxColor.fillRect(cx - boxSize/2, boxY, boxSize, boxSize);
+            // حد خفيف للصندوق الأبيض ليظهر
+            ctxColor.strokeStyle = "#475569";
+            ctxColor.lineWidth = 2;
+            ctxColor.strokeRect(cx - boxSize/2, boxY, boxSize, boxSize);
+
+            // المحرار (الترمومتر) بجانب الصندوق
+            const tX = cx + boxSize/2 + 30;
+            const tY = 60;
+            const tHeight = 150;
+            
+            // هيكل المحرار
+            ctxColor.fillStyle = "#e2e8f0";
+            ctxColor.beginPath();
+            ctxColor.roundRect(tX, tY, 16, tHeight, 8);
+            ctxColor.fill();
+            
+            // بصلة المحرار
+            ctxColor.beginPath();
+            ctxColor.arc(tX + 8, tY + tHeight + 10, 14, 0, Math.PI*2);
+            ctxColor.fillStyle = "#ef4444";
+            ctxColor.fill();
+
+            // حساب ارتفاع الزئبق
+            // درجة الحرارة الابتدائية: 10% من الارتفاع
+            // الزيادة = الزمن * معامل اللون
+            const maxRise = tHeight * 0.8; 
+            const factor = colorsData[selectedColor].factor;
+            const rise = (simTime / 60) * maxRise * (factor / 1.5); // 1.5 هو أقصى عامل للأسود
+            
+            const mercuryHeight = 15 + rise;
+            const mercuryY = (tY + tHeight) - mercuryHeight;
+
+            // عمود الزئبق
+            ctxColor.fillStyle = "#ef4444";
+            ctxColor.beginPath();
+            ctxColor.roundRect(tX + 4, mercuryY, 8, mercuryHeight, 4);
+            ctxColor.fill();
+
+            // تدريجات
+            ctxColor.fillStyle = "#94a3b8";
+            ctxColor.font = "12px Cairo";
+            ctxColor.fillText("Hot", tX + 25, tY + 20);
+            ctxColor.fillText("Cold", tX + 25, tY + tHeight - 10);
+            
+            for(let i=0; i<=4; i++){
+                const lineY = tY + 10 + i*(tHeight/4 - 5);
+                ctxColor.beginPath();
+                ctxColor.moveTo(tX, lineY);
+                ctxColor.lineTo(tX + 8, lineY);
+                ctxColor.strokeStyle = "#94a3b8";
+                ctxColor.stroke();
+            }
+        }
+
+        function updateSimulations() {
+            drawSimPanel();
+            drawSimColor();
+        }
+
+        // مستمعات التفاعل للمحاكاة 1
+        document.getElementById('slider-clouds').addEventListener('input', (e) => {
+            simClouds = parseInt(e.target.value);
+            document.getElementById('val-clouds').innerText = simClouds + "%";
+            drawSimPanel();
+        });
+
+        // مستمعات التفاعل للمحاكاة 2
+        document.getElementById('slider-time').addEventListener('input', (e) => {
+            simTime = parseInt(e.target.value);
+            document.getElementById('val-time').innerText = simTime + " د";
+            drawSimColor();
+        });
+
+        function selectColorBox(btn, color) {
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedColor = color;
+            drawSimColor();
+        }
+
+        // 3.9.1 ضمان الرسم عند تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    updateSimulations();
+                }, 50);
+            }
+        });
+        
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            updateSimulations();
+        });
+
+        // نظام التمارين
+        function checkQuiz() {
+            let answeredCount = 0;
+            const answers = { q1: "1", q2: "1", q3: "1", q4: "1", q5: "1", q6: "1" };
+            let score = 0;
+            
+            // تحقق من أن كل الأسئلة مجابة
+            for (let q in answers) {
+                if(document.querySelector(`input[name="${q}"]:checked`)) answeredCount++;
+            }
+
+            const msgBox = document.getElementById('quiz-msg');
+            if(answeredCount < 6) {
+                msgBox.innerText = "⚠️ الرجاء الإجابة على جميع الأسئلة قبل التحقق.";
+                msgBox.style.display = "block";
+                return;
+            }
+            msgBox.style.display = "none";
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                const feedback = document.getElementById(`fb${q.replace('q','')}`);
+                
+                if (selected) {
+                    if (selected.value === answers[q]) {
+                        feedback.innerHTML = "✅ إجابة صحيحة! <br>" + feedback.innerHTML.split('الشرح:')[1];
+                        feedback.className = "q-feedback correct";
+                        score++;
+                    } else {
+                        feedback.innerHTML = "❌ إجابة خاطئة. <br>" + feedback.innerHTML.split('الشرح:')[1];
+                        feedback.className = "q-feedback wrong";
+                    }
+                    feedback.style.display = "block";
+                }
+            }
+            
+            msgBox.innerText = `النتيجة النهائية: ${score} من 6`;
+            msgBox.style.color = score >= 4 ? "var(--green)" : "var(--red)";
+            msgBox.style.display = "block";
+        }
+    </script>
+
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 3 | عدد رسوم SVG في الدرس النظري = 3 | عدد المحاكيات = 2 -->
+    <script src="credit.js"></script>
+</body>
+</html>

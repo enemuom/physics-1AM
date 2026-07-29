@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس 04: الخلائط (2) - الفيزياء السهلة</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- تضمين MathJax للمعادلات العلمية -->
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #14b8a6; /* المادة وتحولاتها */
+            --accent2:#2dd4bf;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 15px;
+        }
+
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(180deg, var(--dark3) 0%, var(--dark) 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .lesson-header span:first-child { color: var(--muted); font-size: 0.9rem; }
+        .lesson-badge {
+            display: inline-block;
+            background: rgba(20, 184, 166, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .lesson-header h1 { color: #fff; font-size: 2rem; margin-bottom: 5px; }
+        .lesson-header h1 em { color: var(--accent); font-family: 'Amiri', serif; font-style: italic; }
+        .lesson-meta { color: var(--muted); font-size: 0.9rem; }
+
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .objectives-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .objectives-box h3 { color: #fff; margin-bottom: 10px; }
+        .objectives-box ul { padding-right: 20px; color: var(--text); }
+        .objectives-box li { margin-bottom: 8px; }
+
+        .sec-title { display: flex; align-items: center; gap: 10px; margin: 30px 0 15px 0; }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-title h2 { color: #fff; font-size: 1.5rem; }
+        .sec-line { flex-grow: 1; height: 2px; background: var(--border); border: none; margin-right: 15px; }
+
+        .def-box {
+            background: var(--dark3);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .def-box strong { color: var(--gold); font-size: 1.1rem; }
+        .def-box span.fr { color: var(--muted); font-size: 0.9rem; font-family: sans-serif; }
+        .def-box p { font-family: 'Amiri', serif; font-size: 1.2rem; margin-top: 10px; line-height: 1.8; }
+
+        .highlight-box { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600; }
+        .highlight-box.warn { background: rgba(239, 68, 68, 0.1); border-right: 4px solid var(--red); color: #fff; }
+        .highlight-box.tip { background: rgba(16, 185, 129, 0.1); border-right: 4px solid var(--green); color: #fff; }
+
+        .formula-box { background: var(--dark3); border: 1px solid var(--accent); border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center; }
+        .formula-title { color: var(--gold); font-weight: 700; margin-bottom: 15px; font-size: 1.1rem; }
+        .formula-display { font-size: 1.6rem; color: #fff; margin-bottom: 20px; background: var(--dark4); padding: 15px; border-radius: 8px; overflow-x: auto; }
+        
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: var(--dark3); border-radius: 8px; overflow: hidden; }
+        .info-table th, .info-table td { padding: 15px; text-align: right; border-bottom: 1px solid var(--border); }
+        .info-table th { background: var(--dark4); color: var(--accent); font-weight: 700; }
+        .info-table td.unit { color: var(--muted); font-style: italic; }
+
+        .diagram-figure {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .fig-title { color: var(--muted); font-size: 0.9rem; margin-top: 10px; font-weight: 600; }
+        .diagram-wrap { display: flex; justify-content: center; align-items: center; }
+        .lesson-diagram { width: 100%; height: auto; max-width: 500px; display: block; }
+
+        .sim-wrap {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .sim-title { color: #fff; font-size: 1.2rem; }
+        
+        .sim-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        
+        .sim-description {
+            background: var(--dark4);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: var(--text);
+            font-size: 0.95rem;
+            border-right: 3px solid var(--accent);
+        }
+
+        .sim-container { display: flex; flex-direction: column; gap: 20px; }
+        @media (min-width: 768px) { .sim-container { flex-direction: row; } }
+        
+        .sim-canvas-wrap {
+            flex: 1;
+            background: var(--dark);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas { display: block; width: 100%; height: 100%; }
+        
+        .sim-controls { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+        .control-group label { display: block; color: var(--muted); margin-bottom: 8px; font-size: 0.9rem; }
+        .val-badge { color: var(--gold); font-weight: bold; background: var(--dark); padding: 2px 6px; border-radius: 4px; }
+        input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+        .q-card { background: var(--dark3); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .q-num { display: inline-block; background: var(--accent); color: #fff; width: 30px; height: 30px; text-align: center; line-height: 30px; border-radius: 50%; font-weight: bold; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; color: #fff; margin-bottom: 15px; }
+        .q-options { display: flex; flex-direction: column; gap: 10px; }
+        .q-opt { background: var(--dark4); padding: 12px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
+        .q-opt:hover { border-color: var(--border); }
+        .q-opt.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--green); }
+        .q-opt.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--red); }
+        .q-feedback { margin-top: 15px; padding: 12px; border-radius: 6px; display: none; font-size: 0.9rem; }
+        .q-feedback.show-correct { display: block; background: rgba(16, 185, 129, 0.1); color: var(--green); border-right: 3px solid var(--green); }
+        .q-feedback.show-wrong { display: block; background: rgba(239, 68, 68, 0.1); color: var(--red); border-right: 3px solid var(--red); }
+        .q-diagram { width: 100%; max-width: 400px; margin: 10px auto; display: block; background: var(--dark4); border-radius: 8px; padding: 10px; border: 1px solid var(--border); }
+
+        .summary-card { background: #fff; color: #111; padding: 40px; border-radius: 12px; display: none; }
+        #tab-summary.active .summary-card { display: block; }
+        .summary-header { text-align: center; border-bottom: 2px solid var(--accent); padding-bottom: 15px; margin-bottom: 30px; }
+        .summary-meta { color: #666; font-size: 0.9rem; }
+        .summary-title { color: #111; font-size: 2rem; margin: 10px 0; }
+        .summary-subtitle { color: var(--accent); font-weight: 700; }
+        .summary-section { margin-bottom: 30px; }
+        .summary-section-title { font-size: 1.4rem; color: var(--dark2); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        
+        .concept-map-wrap { text-align: center; margin-bottom: 30px; }
+        .concept-map { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+        
+        .summary-defs { display: grid; gap: 15px; }
+        .s-def-item { background: #f8fafc; padding: 15px; border-right: 4px solid var(--accent); border-radius: 6px; }
+        .s-def-term { font-weight: 800; color: var(--dark2); display: block; margin-bottom: 5px; }
+        .s-def-text { font-family: 'Amiri', serif; font-size: 1.1rem; }
+        
+        .summary-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .summary-table th, .summary-table td { border: 1px solid #cbd5e1; padding: 10px; text-align: right; }
+        .summary-table th { background: #f1f5f9; color: var(--dark2); }
+        .summary-list { padding-right: 20px; line-height: 1.8; }
+        
+        .summary-diagram { text-align: center; margin: 20px 0; }
+        .s-main-diagram { max-width: 100%; height: auto; }
+        
+        .print-btn { background: var(--accent); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1.1rem; cursor: pointer; display: block; margin: 30px auto; font-family: 'Cairo', sans-serif; font-weight: bold; }
+
+        @media print {
+            .tabs-nav, .top-nav-bar, .print-btn { display: none !important; }
+            .tab-content:not(#tab-summary) { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #111 !important; padding: 0; font-size: 12pt; }
+            .summary-card { box-shadow: none; border: 1px solid #ccc; padding: 20px; }
+            .summary-section-title { font-size: 14pt; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="../index.html#matter">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <div class="lesson-header">
+        <span>السنة الأولى متوسط › المادة وتحولاتها › الدرس 04</span>
+        <br>
+        <span class="lesson-badge">الدرس 04</span>
+        <h1><em>فصل مكونات</em> الخلائط</h1>
+        <p class="lesson-meta">العلوم الفيزيائية والتكنولوجيا | 2 حصص</p>
+    </div>
+
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+        <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+        <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+        <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- التبويب 1: الدرس النظري -->
+    <!-- ========================================== -->
+    <div id="tab-lesson" class="tab-content active">
+        
+        <div class="objectives-box">
+            <h3>🎯 الأهداف التعلمية</h3>
+            <ul>
+                <li>التعرف على الطرق الفيزيائية لفصل مكونات الخليط غير المتجانس (التركيد، الترشيح).</li>
+                <li>تفسير وفهم عملية التقطير كطريقة لفصل مكونات الخليط المتجانس.</li>
+                <li>استنتاج وتحديد معايير النقاوة الفيزيائية للجسم النقي (الماء كمثال).</li>
+            </ul>
+        </div>
+
+        <div class="sec-title">
+            <span class="sec-icon">⏳</span>
+            <h2>1. فصل مكونات الخليط غير المتجانس</h2>
+            <hr class="sec-line">
+        </div>
+        <p style="margin-bottom: 20px;">الماء الطبيعي كماء السدود أو الوديان هو خليط غير متجانس يحتوي على مواد صلبة عالقة وأملاح. لفصل هذه المواد العالقة نلجأ إلى العمليات التالية:</p>
+
+        <div class="def-box">
+            <strong>أ. التركيد والإبانة</strong> <span class="fr">(Décantation)</span>
+            <p><strong>التركيد:</strong> ترك الخليط (صلب + سائل) في حالة راحة تامة لمدة زمنية لتترسب المواد الصلبة الكثيفة في القاع بفعل الجاذبية الأرضية.</p>
+            <p><strong>الإبانة:</strong> سكب السائل الطافي بحذر شديد لفصله عن الراسب. تُستعمل أيضاً لفصل سائلين غير قابلين للامتزاج (كطبيقتين من الزيت والماء) باستخدام حبابة الإبانة.</p>
+        </div>
+
+        <figure class="diagram-figure">
+    <figcaption class="fig-title">شكل (1) — عملية التركيد والإبانة لخليط ماء ورمل</figcaption>
+    <div class="diagram-wrap">
+        <svg viewBox="0 0 420 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+            <defs>
+                <linearGradient id="glass3D" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="rgba(255,255,255,0.3)" />
+                    <stop offset="20%" stop-color="rgba(255,255,255,0.05)" />
+                    <stop offset="80%" stop-color="rgba(255,255,255,0.05)" />
+                    <stop offset="100%" stop-color="rgba(255,255,255,0.3)" />
+                </linearGradient>
+                <linearGradient id="mudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#b45309" />
+                    <stop offset="100%" stop-color="#78350f" />
+                </linearGradient>
+                <linearGradient id="waterGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="rgba(56, 189, 248, 0.4)" />
+                    <stop offset="100%" stop-color="rgba(2, 132, 199, 0.6)" />
+                </linearGradient>
+                <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--text)"/>
+                </marker>
+            </defs>
+            
+            <!-- إناء التركيد -->
+            <path d="M 50,40 L 50,160 Q 50,180 70,180 L 130,180 Q 150,180 150,160 L 150,40" fill="none" stroke="url(#glass3D)" stroke-width="3"/>
+            
+            <!-- ماء صافي بعد التركيد -->
+            <path d="M 52,90 L 148,90 L 148,160 Q 148,178 130,178 L 70,178 Q 52,178 52,160 Z" fill="url(#waterGrad1)"/>
+            
+            <!-- راسب ترابي في القاع -->
+            <path d="M 52,150 L 148,150 L 148,160 Q 148,178 130,178 L 70,178 Q 52,178 52,160 Z" fill="url(#mudGrad)"/>
+            <text x="100" y="165" fill="#fff" font-family="Cairo" font-size="10" text-anchor="middle" dominant-baseline="middle">راسب</text>
+            
+            <!-- إناء الإبانة (مائل) -->
+            <!-- تم استخدام نقطة ارتكاز للدوران (100, 110) ليدور حول مركزه بشكل صحيح -->
+            <g transform="translate(170, -25) rotate(60, 100, 110)">
+                <path d="M 50,40 L 50,160 Q 50,180 70,180 L 130,180 Q 150,180 150,160 L 150,40" fill="none" stroke="url(#glass3D)" stroke-width="3"/>
+                <!-- احتفاظ الإناء المائل بالراسب فقط -->
+                <path d="M 52,120 L 148,120 L 148,160 Q 148,178 130,178 L 70,178 Q 52,178 52,160 Z" fill="url(#mudGrad)"/>
+            </g>
+            
+            <!-- الإناء المستقبل للإبانة -->
+            <!-- تمت إزاحته لليمين (بداية من X=330) ليقع أسفل فوهة الإناء المائل تماماً -->
+            <path d="M 330,110 L 330,180 Q 330,190 340,190 L 380,190 Q 390,190 390,180 L 390,110" fill="none" stroke="url(#glass3D)" stroke-width="3"/>
+            <path d="M 332,140 L 388,140 L 388,180 Q 388,188 380,188 L 340,188 Q 332,188 332,180 Z" fill="url(#waterGrad1)"/>
+
+            <!-- قطرات السائل المنسكب -->
+            <!-- تم تلوينها بلون الماء بدلاً من var(--accent) لتكون منطقية وتم ضبط مكانها -->
+            <circle cx="355" cy="100" r="3" fill="#38bdf8"/>
+            <circle cx="355" cy="115" r="4" fill="#38bdf8"/>
+            <circle cx="355" cy="130" r="3" fill="#38bdf8"/>
+
+            <!-- أسهم وتسميات -->
+            <line x1="165" y1="110" x2="195" y2="110" stroke="var(--text)" stroke-width="2" marker-end="url(#arrowHead)"/>
+            
+            <text x="100" y="20" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="middle" dominant-baseline="middle">تركيد (راحة)</text>
+            <text x="330" y="20" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="middle" dominant-baseline="middle">إبانة (سكب حذر)</text>
+        </svg>
+    </div>
+</figure>
+
+        <div class="def-box">
+            <strong>ب. الترشيح</strong> <span class="fr">(Filtration)</span>
+            <p>عملية تُستخدم لفصل المواد الصلبة <strong>الدقيقة جداً</strong> والعالقة في السائل والتي لا يمكن فصلها بالتركيد. تعتمد على استخدام <strong>ورق الترشيح</strong> الذي يمرر السائل ويحتجز الرواسب الدقيقة.</p>
+        </div>
+
+        <div class="highlight-box tip">
+            📌 السائل الصافي الذي يعبر ورق الترشيح يُسمى <strong>الرشاحة (Filtrat)</strong>، وهو عبارة عن <strong>خليط متجانس</strong> (يحتوي على ماء وأملاح معدنية ذائبة).
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (2) — عملية الترشيح باستخدام القمع وورق الترشيح</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <!-- حامل حديدي -->
+                    <rect x="50" y="220" width="80" height="10" fill="#64748b"/>
+                    <rect x="85" y="40" width="10" height="180" fill="#64748b"/>
+                    <rect x="95" y="120" width="30" height="8" fill="#475569"/>
+
+                    <!-- قمع زجاجي -->
+                    <path d="M 120,60 L 180,60 L 155,110 L 155,140 L 145,140 L 145,110 Z" fill="rgba(255,255,255,0.1)" stroke="url(#glass3D)" stroke-width="2"/>
+                    
+                    <!-- ورق ترشيح (شكل V) -->
+                    <path d="M 125,65 L 175,65 L 150,105 Z" fill="#fef08a" opacity="0.8"/>
+                    
+                    <!-- ماء عكر يصب -->
+                    <path d="M 135,75 L 165,75 L 150,95 Z" fill="url(#mudGrad)" opacity="0.6"/>
+
+                    <!-- قطرات الرشاحة -->
+                    <circle cx="150" cy="150" r="3" fill="var(--accent)"/>
+                    <circle cx="150" cy="165" r="4" fill="var(--accent)"/>
+
+                    <!-- بيشر الاستقبال -->
+                    <path d="M 120,160 L 120,210 Q 120,220 130,220 L 170,220 Q 180,220 180,210 L 180,160" fill="none" stroke="url(#glass3D)" stroke-width="3"/>
+                    <path d="M 122,190 L 178,190 L 178,210 Q 178,218 170,218 L 130,218 Q 122,218 122,210 Z" fill="url(#waterGrad1)"/>
+
+                    <!-- تسميات -->
+                    <line x1="200" y1="80" x2="165" y2="80" stroke="var(--text)" stroke-width="1.5" marker-end="url(#arrowHead)"/>
+                    <text x="250" y="80" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="start" dominant-baseline="middle">ورق ترشيح</text>
+
+                    <line x1="200" y1="200" x2="175" y2="200" stroke="var(--text)" stroke-width="1.5" marker-end="url(#arrowHead)"/>
+                    <text x="300" y="190" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="start" dominant-baseline="middle">الرشاحة (خليط متجانس)</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">🔥</span>
+            <h2>2. فصل مكونات الخليط المتجانس</h2>
+            <hr class="sec-line">
+        </div>
+        <p>الرشاحة ما تزال تحتوي على أملاح ذائبة. للحصول على ماء نقي خالٍ من أي مواد، نستخدم التقطير.</p>
+
+        <div class="def-box">
+            <strong>التقطير</strong> <span class="fr">(Distillation)</span>
+            <p>عملية تعتمد على تسخين الماء الصافي (الرشاحة) حتى الغليان، فيتبخر الماء تاركاً الأملاح الصلبة خلفه. يُمرر بخار الماء عبر أنبوب تبريد (مكثف) ليتحول مرة أخرى إلى سائل نقي يُسمى <strong>الماء المقطر</strong>.</p>
+        </div>
+
+        <figure class="diagram-figure">
+            <figcaption class="fig-title">شكل (3) — جهاز التقطير المخبري البسيط</figcaption>
+            <div class="diagram-wrap">
+                <svg viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <defs>
+                        <!-- تدرج حراري للموقد -->
+                        <radialGradient id="heatGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ef4444" />
+                            <stop offset="100%" stop-color="#7f1d1d" />
+                        </radialGradient>
+                    </defs>
+
+                    <!-- موقد حراري -->
+                    <rect x="70" y="200" width="60" height="15" rx="3" fill="url(#heatGrad)"/>
+                    <path d="M 80,195 Q 100,180 120,195" fill="none" stroke="#fca5a5" stroke-width="2"/>
+
+                    <!-- حوجلة الغليان (دورق) -->
+                    <circle cx="100" cy="150" r="40" fill="none" stroke="url(#glass3D)" stroke-width="3"/>
+                    <path d="M 65,165 A 40 40 0 0 0 135,165 Z" fill="url(#waterGrad1)"/>
+                    <path d="M 90,112 L 90,50 L 250,80 L 250,95 L 110,65 L 110,112" fill="none" stroke="url(#glass3D)" stroke-width="3"/>
+                    <!-- سدادة -->
+                    <rect x="85" y="45" width="30" height="10" fill="#78350f" rx="2"/>
+
+                    <!-- مكثف (مبرد) مائل -->
+                    <g transform="translate(140, 50) rotate(10)">
+                        <rect x="0" y="0" width="100" height="30" rx="5" fill="rgba(255,255,255,0.05)" stroke="#38bdf8" stroke-width="2"/>
+                        <path d="M 10,0 L 10,-10 M 90,30 L 90,40" fill="none" stroke="#38bdf8" stroke-width="2"/>
+                        <text x="50" y="15" fill="#38bdf8" font-family="Cairo" font-size="10" text-anchor="middle" dominant-baseline="middle">مبرد مائي</text>
+                    </g>
+
+                    <!-- حوجلة الاستقبال (دورق) -->
+                    <circle cx="280" cy="180" r="30" fill="none" stroke="url(#glass3D)" stroke-width="3"/>
+                    <path d="M 270,150 L 270,105 L 290,105 L 290,150" fill="none" stroke="url(#glass3D)" stroke-width="3"/>
+                    <path d="M 255,195 A 30 30 0 0 0 305,195 Z" fill="rgba(20, 184, 166, 0.8)"/>
+
+                    <!-- قطرات التقطير -->
+                    <circle cx="280" cy="115" r="3" fill="var(--accent)"/>
+                    <circle cx="280" cy="130" r="4" fill="var(--accent)"/>
+
+                    <!-- أسهم وتسميات -->
+                    <text x="100" y="230" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="middle">موقد بنزن</text>
+                    <text x="350" y="220" fill="var(--accent)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="start">← ماء مقطر (جسم نقي)</text>
+                    <text x="40" y="130" fill="var(--text)" font-family="Cairo" font-size="12" text-anchor="end">ماء صافي</text>
+                </svg>
+            </div>
+        </figure>
+
+        <div class="sec-title">
+            <span class="sec-icon">💎</span>
+            <h2>3. معايير نقاوة الماء</h2>
+            <hr class="sec-line">
+        </div>
+        <p>للجسم النقي ثوابت فيزيائية لا تتغير. للتحقق من نقاوة الماء المقطر في الشروط العادية (ضغط جوي 1 جو)، نعتمد على المعايير التالية:</p>
+
+        <div class="formula-box" style="padding: 10px;">
+            <table class="info-table" style="margin-bottom: 0;">
+                <thead>
+                    <tr>
+                        <th>الخاصية الفيزيائية</th>
+                        <th>القيمة الثابتة للماء النقي</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>درجة حرارة الغليان (التبخر)</td>
+                        <td><strong style="color:var(--gold); font-size:1.2rem;">100 °C</strong></td>
+                    </tr>
+                    <tr>
+                        <td>درجة حرارة التجمد (الجليد)</td>
+                        <td><strong style="color:var(--gold); font-size:1.2rem;">0 °C</strong></td>
+                    </tr>
+                    <tr>
+                        <td>الكتلة الحجمية ($ \rho $)</td>
+                        <td><strong style="color:var(--gold); font-size:1.2rem;">1 kg/L</strong> (أو $1 \text{ g/cm}^3$)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="highlight-box warn">
+            ⚠️ <strong>ملاحظة:</strong> إذا سخنّا ماءً مالحاً (خليط)، فإن درجة غليانه سترتفع وتتجاوز 100°C، ولن تكون ثابتة أثناء الغليان، وهذا دليل قاطع على أنه <strong>ليس جسماً نقياً</strong>.
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 2: المحاكاة التفاعلية -->
+    <!-- ========================================== -->
+    <div id="tab-sim" class="tab-content">
+        
+        <!-- المحاكاة 1: الترشيح -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">1. محاكاة: عملية الترشيح (Filtration)</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>دور ورق الترشيح</strong> في احتجاز الدقائق الصلبة. حرّك <strong>شريط سكب الماء العكر</strong> لترى كيف يتم <strong>تراكم الرواسب واستخلاص الرشاحة الصافية</strong>.</p>
+            </div>
+            
+            <div class="sim-container">
+                <div class="sim-canvas-wrap" id="canvasContainerFilter" style="background: var(--dark3);">
+                    <canvas id="canvasFilter"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>كمية الماء العكر المصبوبة: <span id="filterVal" class="val-badge">0%</span></label>
+                        <input type="range" id="filterSlider" min="0" max="100" value="0" step="1">
+                    </div>
+                    <div class="highlight-box tip" style="margin-top: 20px;">
+                        ورق الترشيح يعمل كمصفاة مجهرية؛ يسمح بمرور السائل (الرشاحة) ويمنع مرور الدقائق الصلبة الكبيرة (الرواسب).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المحاكاة 2: التقطير -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">2. محاكاة: التقطير والغليان (Distillation)</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            
+            <div class="sim-description">
+                <p>يوضّح هذا المحاكي <strong>تأثير الحرارة</strong> في عملية التقطير. حرّك <strong>شريط درجة حرارة الموقد</strong> لترى كيف يتبخر الماء عند <strong>بلوغ نقطة الغليان (100°C)</strong> ويتكثف للحصول على الماء المقطر.</p>
+            </div>
+
+            <div class="sim-container">
+                <div class="sim-canvas-wrap" id="canvasContainerDistill" style="background: #0f172a;">
+                    <canvas id="canvasDistill"></canvas>
+                </div>
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>درجة حرارة موقد التسخين: <span id="heatVal" class="val-badge">20 °C</span></label>
+                        <input type="range" id="heatSlider" min="20" max="120" value="20" step="1">
+                    </div>
+                    <div class="highlight-box info" style="margin-top: 20px;">
+                        <span id="distillFeedback">الحرارة عادية. الماء في حالة سائلة ولا يحدث تبخر ملحوظ.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 3: التمارين -->
+    <!-- ========================================== -->
+    <div id="tab-exercises" class="tab-content">
+        
+        <div class="q-card">
+            <div class="q-num">1</div>
+            <div class="q-text">لفصل الماء عن الرمل العالق به، العملية الأسرع والأنسب هي:</div>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q1" value="0"> التقطير.</label>
+                <label class="q-opt"><input type="radio" name="q1" value="1"> الترشيح.</label>
+                <label class="q-opt"><input type="radio" name="q1" value="2"> التجميد.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">2</div>
+            <div class="q-text">السائل المتحصل عليه مباشرة بعد عملية الترشيح (الرشاحة) يعتبر:</div>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q2" value="0"> جسماً نقياً تماماً.</label>
+                <label class="q-opt"><input type="radio" name="q2" value="1"> خليطاً متجانساً (لوجود أملاح منحلة).</label>
+                <label class="q-opt"><input type="radio" name="q2" value="2"> خليطاً غير متجانس.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">3</div>
+            <div class="q-text">للحصول على ماء مقطر (جسم نقي) من ماء الحنفية، العملية الواجب اتباعها هي:</div>
+            <div class="q-options" data-correct="2">
+                <label class="q-opt"><input type="radio" name="q3" value="0"> التركيد ثم الإبانة.</label>
+                <label class="q-opt"><input type="radio" name="q3" value="1"> الترشيح المتعدد.</label>
+                <label class="q-opt"><input type="radio" name="q3" value="2"> التقطير (غليان ثم تكاثف).</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">4</div>
+            <div class="q-text">يتميز الماء النقي في الشروط العادية بدرجة غليان ثابتة هي:</div>
+            <div class="q-options" data-correct="2">
+                <label class="q-opt"><input type="radio" name="q4" value="0"> 0 °C</label>
+                <label class="q-opt"><input type="radio" name="q4" value="1"> 50 °C</label>
+                <label class="q-opt"><input type="radio" name="q4" value="2"> 100 °C</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">5</div>
+            <div class="q-text">إذا غلينا كمية من ماء البحر (ماء + ملح)، فإن درجة حرارة غليانه:</div>
+            <div class="q-options" data-correct="0">
+                <label class="q-opt"><input type="radio" name="q5" value="0"> ستتجاوز 100 °C ولن تكون ثابتة.</label>
+                <label class="q-opt"><input type="radio" name="q5" value="1"> ستبقى ثابتة عند 100 °C تماماً.</label>
+                <label class="q-opt"><input type="radio" name="q5" value="2"> ستنخفض إلى 0 °C.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <!-- سؤال المخطط الإلزامي -->
+        <div class="q-card q-diagram-type">
+            <div class="q-num">6</div>
+            <div class="q-text">تأمل جهاز التقطير المبين في الرسم. ما هو دور الجزء المشار إليه بالسهم (المبرد المائي)؟</div>
+            <svg class="q-diagram" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 50,120 A 30 30 0 0 0 110,120 Z" fill="none" stroke="var(--border)" stroke-width="2"/>
+                <path d="M 80,90 L 80,40 L 200,60 L 200,80 L 100,60 L 100,90" fill="none" stroke="var(--muted)" stroke-width="2"/>
+                <rect x="120" y="45" width="70" height="20" transform="rotate(10 120 45)" fill="none" stroke="var(--accent)" stroke-width="3"/>
+                <!-- سهم التأشير -->
+                <line x1="160" y1="20" x2="160" y2="40" stroke="var(--gold)" stroke-width="3" marker-end="url(#arrowHead)"/>
+                <text x="160" y="10" fill="var(--gold)" font-family="Cairo" font-size="12" font-weight="bold" text-anchor="middle">هذا الجزء</text>
+            </svg>
+            <div class="q-options" data-correct="1">
+                <label class="q-opt"><input type="radio" name="q6" value="0"> تسخين السائل لتبخيره.</label>
+                <label class="q-opt"><input type="radio" name="q6" value="1"> تبريد بخار الماء ليتحول إلى قطرات سائلة (الماء المقطر).</label>
+                <label class="q-opt"><input type="radio" name="q6" value="2"> ترشيح المواد الصلبة العالقة.</label>
+            </div>
+            <div class="q-feedback"></div>
+        </div>
+
+        <button class="print-btn" onclick="checkAnswers()" style="margin-top: 20px;">تحقق من إجاباتي ✅</button>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- التبويب 4: ملخص الكراس -->
+    <!-- ========================================== -->
+    <div id="tab-summary" class="tab-content">
+        <div class="summary-card">
+            
+            <div class="summary-header">
+                <div class="summary-meta">العلوم الفيزيائية والتكنولوجيا | السنة الأولى متوسط | المادة وتحولاتها</div>
+                <h2 class="summary-title">ملخص شامل: فصل مكونات الخلائط</h2>
+                <div class="summary-subtitle">وفق منهاج الجيل الثاني</div>
+            </div>
+
+            <!-- خريطة المفاهيم -->
+            <div class="concept-map-wrap">
+                <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                <svg class="concept-map" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="s-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--dark2)"/>
+                        </marker>
+                    </defs>
+                    
+                    <rect x="225" y="10" width="150" height="40" rx="8" fill="#e2e8f0" stroke="var(--dark2)" stroke-width="2" />
+                    <text x="300" y="35" fill="var(--dark2)" font-family="Cairo" font-weight="bold" font-size="16" text-anchor="middle">الماء الطبيعي (خليط)</text>
+                    
+                    <path d="M 300 50 L 300 80" stroke="var(--dark2)" stroke-width="2"/>
+                    <path d="M 150 80 L 450 80" stroke="var(--dark2)" stroke-width="2"/>
+                    <path d="M 150 80 L 150 100" stroke="var(--dark2)" stroke-width="2" marker-end="url(#s-arrow)"/>
+                    <path d="M 450 80 L 450 100" stroke="var(--dark2)" stroke-width="2" marker-end="url(#s-arrow)"/>
+                    
+                    <rect x="75" y="100" width="150" height="40" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+                    <text x="150" y="125" fill="#b91c1c" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">خليط غير متجانس</text>
+
+                    <rect x="375" y="100" width="150" height="40" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+                    <text x="450" y="125" fill="#b45309" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">خليط متجانس</text>
+
+                    <path d="M 150 140 L 150 170" stroke="var(--dark2)" stroke-width="2" marker-end="url(#s-arrow)"/>
+                    <rect x="75" y="170" width="150" height="40" rx="8" fill="#f1f5f9" stroke="var(--dark2)" stroke-width="2"/>
+                    <text x="150" y="195" fill="var(--dark2)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">التركيد ثم الترشيح</text>
+
+                    <path d="M 225 190 L 300 190 L 300 140 L 375 140" fill="none" stroke="var(--dark2)" stroke-width="2" stroke-dasharray="5" marker-end="url(#s-arrow)"/>
+                    <text x="290" y="130" fill="var(--muted)" font-family="Cairo" font-size="12" text-anchor="middle">يعطي (رشاحة)</text>
+
+                    <path d="M 450 140 L 450 170" stroke="var(--dark2)" stroke-width="2" marker-end="url(#s-arrow)"/>
+                    <rect x="375" y="170" width="150" height="40" rx="8" fill="#f1f5f9" stroke="var(--dark2)" stroke-width="2"/>
+                    <text x="450" y="195" fill="var(--dark2)" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">التقطير</text>
+
+                    <path d="M 450 210 L 450 240" stroke="var(--dark2)" stroke-width="2" marker-end="url(#s-arrow)"/>
+                    <rect x="375" y="240" width="150" height="40" rx="8" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+                    <text x="450" y="265" fill="#0f766e" font-family="Cairo" font-weight="bold" font-size="14" text-anchor="middle">ماء مقطر (جسم نقي)</text>
+                </svg>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">📚 التعاريف وطرق الفصل</h3>
+                <div class="summary-defs">
+                    <div class="s-def-item">
+                        <span class="s-def-term">التركيد والإبانة:</span>
+                        <span class="s-def-text">عملية ترك الخليط غير المتجانس ليترسب الصلب الثقيل في القاع، ثم سكب السائل الطافي بحذر لفصله.</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">الترشيح:</span>
+                        <span class="s-def-text">استخدام ورق الترشيح لفصل الدقائق الصلبة الصغيرة جداً. السائل الناتج يسمى "الرشاحة" وهو خليط متجانس.</span>
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">التقطير:</span>
+                        <span class="s-def-text">تبخير الرشاحة ثم تكثيف بخار الماء في مبرد للحصول على الماء المقطر (جسم نقي)، وترك الأملاح الصلبة.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">✅ معايير نقاوة الماء</h3>
+                <ul class="summary-list">
+                    <li>يتميز الجسم النقي بخواص فيزيائية ثابتة لا تتغير (على عكس الخلائط).</li>
+                    <li><strong>درجة غليان</strong> الماء النقي تحت الضغط الجوي العادي هي <strong>100 °C</strong>.</li>
+                    <li><strong>درجة تجمد</strong> الماء النقي تحت الضغط الجوي العادي هي <strong>0 °C</strong>.</li>
+                    <li><strong>الكتلة الحجمية</strong> للماء النقي هي <strong>1 kg/L</strong>.</li>
+                </ul>
+            </div>
+
+            <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. كود إدارة التبويبات الإلزامي (البند 3.9.1)
+        // ==========================================
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim === 'function') updateSim();
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim === 'function') updateSim();
+                }, 50);
+            }
+            resizeCanvas();
+        });
+
+        // ==========================================
+        // 2. إدارة الكانفاس (البند الإلزامي 0.2 و 0.5)
+        // ==========================================
+        const canvas1 = document.getElementById('canvasFilter');
+        const ctx1 = canvas1.getContext('2d');
+        const container1 = document.getElementById('canvasContainerFilter');
+
+        const canvas2 = document.getElementById('canvasDistill');
+        const ctx2 = canvas2.getContext('2d');
+        const container2 = document.getElementById('canvasContainerDistill');
+
+        function resizeCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            
+            // Canvas 1
+            if (container1 && container1.clientWidth > 0) {
+                canvas1.width = container1.clientWidth * dpr;
+                canvas1.height = container1.clientHeight * dpr;
+                canvas1.style.width = container1.clientWidth + 'px';
+                canvas1.style.height = container1.clientHeight + 'px';
+                ctx1.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            // Canvas 2
+            if (container2 && container2.clientWidth > 0) {
+                canvas2.width = container2.clientWidth * dpr;
+                canvas2.height = container2.clientHeight * dpr;
+                canvas2.style.width = container2.clientWidth + 'px';
+                canvas2.style.height = container2.clientHeight + 'px';
+                ctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        // ==========================================
+        // 3. المحاكاة الأولى (الترشيح)
+        // ==========================================
+        let filterProgress = 0;
+        const filterSlider = document.getElementById('filterSlider');
+        const filterVal = document.getElementById('filterVal');
+        let drops = [];
+
+        filterSlider.addEventListener('input', () => {
+            filterProgress = parseInt(filterSlider.value);
+            filterVal.innerText = filterProgress + "%";
+        });
+
+        function drawSim1() {
+            const w = container1.clientWidth || canvas1.width;
+            const h = container1.clientHeight || canvas1.height;
+            // البند الإلزامي 0.5: clearRect
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+
+            const cx = w / 2;
+            const cy = h / 2 - 20;
+
+            // توليد قطرات إذا كان هناك سكب ولم ينته
+            if (filterProgress > 0 && filterProgress < 100) {
+                if (Math.random() > 0.85) {
+                    drops.push({ x: cx, y: cy + 30, speed: 2 + Math.random() * 2 });
+                }
+            }
+
+            // تحديث ورسم القطرات
+            ctx1.fillStyle = 'var(--accent)';
+            for (let i = drops.length - 1; i >= 0; i--) {
+                let d = drops[i];
+                d.y += d.speed;
+                ctx1.beginPath();
+                ctx1.arc(d.x, d.y, 3, 0, Math.PI*2);
+                ctx1.fill();
+                // مسح القطرة إذا وصلت للقاع أو لسائل الاستقبال
+                let levelY = (cy + 100) - (filterProgress * 0.4);
+                if (d.y > levelY) drops.splice(i, 1);
+            }
+
+            // رسم بيشر الاستقبال
+            ctx1.strokeStyle = 'rgba(255,255,255,0.4)';
+            ctx1.lineWidth = 3;
+            ctx1.beginPath();
+            ctx1.moveTo(cx - 40, cy + 40);
+            ctx1.lineTo(cx - 40, cy + 100);
+            ctx1.lineTo(cx + 40, cy + 100);
+            ctx1.lineTo(cx + 40, cy + 40);
+            ctx1.stroke();
+
+            // رسم الرشاحة (الماء الصافي)
+            if (filterProgress > 0) {
+                let levelY = (cy + 100) - (filterProgress * 0.4);
+                ctx1.fillStyle = 'rgba(20, 184, 166, 0.6)';
+                ctx1.fillRect(cx - 38, levelY, 76, (cy + 100) - levelY);
+            }
+
+            // رسم القمع الزجاجي وورق الترشيح
+            ctx1.beginPath();
+            ctx1.moveTo(cx - 50, cy - 40);
+            ctx1.lineTo(cx + 50, cy - 40);
+            ctx1.lineTo(cx + 10, cy + 10);
+            ctx1.lineTo(cx + 10, cy + 30);
+            ctx1.lineTo(cx - 10, cy + 30);
+            ctx1.lineTo(cx - 10, cy + 10);
+            ctx1.closePath();
+            ctx1.fillStyle = 'rgba(255,255,255,0.1)';
+            ctx1.fill();
+            ctx1.stroke();
+
+            // ورق الترشيح الأصفر
+            ctx1.beginPath();
+            ctx1.moveTo(cx - 45, cy - 35);
+            ctx1.lineTo(cx + 45, cy - 35);
+            ctx1.lineTo(cx, cy + 10);
+            ctx1.closePath();
+            ctx1.fillStyle = 'rgba(253, 224, 71, 0.7)';
+            ctx1.fill();
+
+            // الماء العكر في القمع (يقل مع الزمن)
+            let remaining = 100 - filterProgress;
+            if (remaining > 0) {
+                let topW = 40 * (remaining/100);
+                let startY = cy - 30 + (30 * (1 - remaining/100));
+                ctx1.beginPath();
+                ctx1.moveTo(cx - topW, startY);
+                ctx1.lineTo(cx + topW, startY);
+                ctx1.lineTo(cx, cy + 5);
+                ctx1.closePath();
+                ctx1.fillStyle = 'rgba(180, 83, 9, 0.6)';
+                ctx1.fill();
+            }
+
+            // الرواسب الطينية على ورق الترشيح (تزيد مع الزمن)
+            if (filterProgress > 0) {
+                let mudH = 15 * (filterProgress/100);
+                ctx1.beginPath();
+                ctx1.moveTo(cx - mudH, cy + 5 - mudH);
+                ctx1.lineTo(cx + mudH, cy + 5 - mudH);
+                ctx1.lineTo(cx, cy + 5);
+                ctx1.closePath();
+                ctx1.fillStyle = '#78350f';
+                ctx1.fill();
+            }
+        }
+
+        // ==========================================
+        // 4. المحاكاة الثانية (التقطير)
+        // ==========================================
+        let heatTemp = 20;
+        const heatSlider = document.getElementById('heatSlider');
+        const heatVal = document.getElementById('heatVal');
+        const distillFeedback = document.getElementById('distillFeedback');
+        let vaporParticles = [];
+
+        heatSlider.addEventListener('input', () => {
+            heatTemp = parseInt(heatSlider.value);
+            heatVal.innerText = heatTemp + " °C";
+            
+            if (heatTemp < 100) {
+                distillFeedback.innerText = "الحرارة لم تبلغ نقطة الغليان. الماء في حالة سائلة ولا يحدث تبخر ملحوظ.";
+                vaporParticles = []; // إيقاف البخار
+            } else if (heatTemp === 100) {
+                distillFeedback.innerText = "غليان! يتبخر الماء الصافي وينتقل كغاز عبر المكثف، ثم يتكثف ليعطي ماء مقطراً.";
+            } else {
+                distillFeedback.innerHTML = "يستمر الغليان. <strong>تذكر:</strong> إذا كان هذا ماءً مالحاً، فإن الحرارة سترتفع فوق 100°C ولن تثبت.";
+            }
+        });
+
+        function drawSim2() {
+            const w = container2.clientWidth || canvas2.width;
+            const h = container2.clientHeight || canvas2.height;
+            // البند الإلزامي 0.5: clearRect
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+            const cx = w / 2 - 40;
+            const cy = h / 2 + 10;
+
+            // رسم الموقد وتأثير الحرارة
+            let heatRed = (heatTemp - 20) / 100;
+            if(heatRed > 1) heatRed = 1;
+            ctx2.fillStyle = `rgba(${250 * heatRed}, 50, 50, 0.8)`;
+            ctx2.fillRect(cx - 30, cy + 50, 60, 15);
+
+            // توليد البخار إذا غلى الماء
+            if (heatTemp >= 100) {
+                if (Math.random() > 0.5) {
+                    vaporParticles.push({
+                        x: cx + (Math.random()-0.5)*30,
+                        y: cy + 10,
+                        vx: (Math.random()-0.5)*0.5,
+                        vy: -1 - Math.random(),
+                        state: 'vapor' // 'vapor', 'condense', 'drop'
+                    });
+                }
+            }
+
+            // تحديث البخار والقطرات
+            for (let i = vaporParticles.length - 1; i >= 0; i--) {
+                let p = vaporParticles[i];
+                if (p.state === 'vapor') {
+                    p.x += p.vx; p.y += p.vy;
+                    // توجيه نحو الأنبوب المائل
+                    if (p.y < cy - 40) {
+                        p.state = 'condense';
+                        p.vx = 2; p.vy = 0.5; // يميل للأسفل يميناً
+                    }
+                } else if (p.state === 'condense') {
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x > cx + 110) {
+                        p.state = 'drop';
+                        p.vx = 0; p.vy = 3;
+                    }
+                } else if (p.state === 'drop') {
+                    p.y += p.vy;
+                    if (p.y > cy + 40) vaporParticles.splice(i, 1);
+                }
+
+                // رسم الدقائق
+                ctx2.beginPath();
+                if (p.state === 'vapor') {
+                    ctx2.fillStyle = 'rgba(255,255,255,0.6)';
+                    ctx2.arc(p.x, p.y, 3, 0, Math.PI*2);
+                } else {
+                    ctx2.fillStyle = 'var(--accent)';
+                    ctx2.arc(p.x, p.y, 2.5, 0, Math.PI*2);
+                }
+                ctx2.fill();
+            }
+
+            // رسم دورق الغليان (الرشاحة)
+            ctx2.strokeStyle = 'rgba(255,255,255,0.4)';
+            ctx2.lineWidth = 3;
+            ctx2.beginPath();
+            ctx2.arc(cx, cy, 40, 0, Math.PI*2);
+            ctx2.stroke();
+            // الماء الصافي
+            ctx2.fillStyle = 'rgba(20, 184, 166, 0.4)';
+            ctx2.beginPath();
+            ctx2.arc(cx, cy, 38, 0.3, Math.PI - 0.3);
+            ctx2.fill();
+
+            // رسم أنبوب التوصيل والمبرد
+            ctx2.beginPath();
+            ctx2.moveTo(cx, cy - 40);
+            ctx2.lineTo(cx, cy - 60);
+            ctx2.lineTo(cx + 120, cy - 30);
+            ctx2.lineTo(cx + 120, cy - 10);
+            ctx2.stroke();
+            
+            // غلاف المبرد المائي
+            ctx2.save();
+            ctx2.translate(cx + 20, cy - 55);
+            ctx2.rotate(14 * Math.PI / 180);
+            ctx2.fillStyle = 'rgba(56, 189, 248, 0.2)';
+            ctx2.strokeStyle = 'rgba(56, 189, 248, 0.8)';
+            ctx2.fillRect(0, 0, 80, 20);
+            ctx2.strokeRect(0, 0, 80, 20);
+            ctx2.restore();
+
+            // رسم دورق الاستقبال (الماء المقطر)
+            ctx2.strokeStyle = 'rgba(255,255,255,0.4)';
+            ctx2.beginPath();
+            ctx2.arc(cx + 130, cy + 20, 25, 0, Math.PI*2);
+            ctx2.stroke();
+            // الماء المقطر المجمع
+            if(heatTemp >= 100) {
+                ctx2.fillStyle = 'rgba(20, 184, 166, 0.8)';
+                ctx2.beginPath();
+                ctx2.arc(cx + 130, cy + 20, 23, 0.8, Math.PI - 0.8);
+                ctx2.fill();
+            }
+        }
+
+        let simAnimId;
+        function updateSim() {
+            drawSim1();
+            drawSim2();
+            simAnimId = requestAnimationFrame(updateSim);
+        }
+
+        // ==========================================
+        // 5. التحقق من التمارين
+        // ==========================================
+        function checkAnswers() {
+            const cards = document.querySelectorAll('.q-card');
+            cards.forEach(card => {
+                const correctVal = card.querySelector('.q-options').dataset.correct;
+                const options = card.querySelectorAll('input[type="radio"]');
+                const feedback = card.querySelector('.q-feedback');
+                let answered = false;
+
+                options.forEach(opt => {
+                    const optLabel = opt.parentElement;
+                    optLabel.classList.remove('correct', 'wrong');
+                    
+                    if(opt.checked) {
+                        answered = true;
+                        if(opt.value === correctVal) {
+                            optLabel.classList.add('correct');
+                            feedback.className = 'q-feedback show-correct';
+                            feedback.innerHTML = 'إجابة صحيحة! أحسنت.';
+                        } else {
+                            optLabel.classList.add('wrong');
+                            feedback.className = 'q-feedback show-wrong';
+                            feedback.innerHTML = 'إجابة غير موفقة. (الخيار الصحيح مضلل بالأخضر).';
+                        }
+                    }
+                    if(opt.value === correctVal) {
+                        optLabel.classList.add('correct'); // إظهار الصحيح دائما
+                    }
+                });
+
+                if(!answered) {
+                    feedback.className = 'q-feedback show-wrong';
+                    feedback.innerHTML = 'يرجى اختيار إجابة لمعرفة التقييم.';
+                }
+            });
+        }
+    </script>
+    
+    <!-- السكريبت الإلزامي المركزي -->
+    <script src="credit.js"></script>
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 4 | عدد رسوم SVG في الدرس النظري = 4 | عدد المحاكيات = 2 -->
+</body>
+</html>

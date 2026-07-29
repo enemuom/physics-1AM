@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مصباح التوهج - العلوم الفيزيائية</title>
+    
+    <!-- الخطوط الإلزامية -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- MathJax للمعادلات والرموز -->
+    <script>
+    MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']] },
+      svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        /* البند 2: نظام الألوان الإلزامي */
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #6366f1; /* الظواهر الكهربائية */
+            --accent2:#818cf8;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--dark); color: var(--text); font-family: 'Cairo', sans-serif; line-height: 1.6; padding: 20px; }
+
+        /* البند 0.4: شريط التنقل العلوي الإلزامي */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        /* الترويسة */
+        .lesson-header {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            background: linear-gradient(180deg, var(--dark3) 0%, transparent 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .lesson-badge { background: rgba(99, 102, 241, 0.2); color: var(--accent2); padding: 5px 15px; border-radius: 20px; font-weight: 700; border: 1px solid rgba(99, 102, 241, 0.4); display: inline-block; margin-bottom:10px;}
+        .lesson-header h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        .lesson-header h1 em { color: var(--accent); font-style: normal; }
+        .lesson-meta { color: var(--muted); }
+
+        /* البند 0.1: شريط التبويبات (حرفياً بدون تعديل) */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
+        
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
+
+        /* الدرس النظري */
+        .objectives-box { background: var(--dark3); border-right: 4px solid var(--accent); padding: 1.5rem; border-radius: 8px; margin-bottom: 20px; }
+        .objectives-box h3 { color: var(--accent); margin-bottom: 10px; }
+        .objectives-box ul { padding-right: 25px; }
+
+        .sec-title { display: flex; align-items: center; gap: 10px; margin: 2.5rem 0 1.5rem; }
+        .sec-title h2 { color: var(--accent2); }
+        .sec-line { flex-grow: 1; height: 1px; background: linear-gradient(to left, var(--accent), transparent); border: none; }
+
+        .def-box { background: var(--card); border-right: 4px solid var(--gold); padding: 1.5rem; border-radius: 8px; margin-bottom: 20px; }
+        .def-term { font-family: 'Amiri', serif; font-size: 1.4rem; color: var(--gold); font-weight: bold; display: block; margin-bottom: 8px;}
+        .def-fr { color: var(--muted); font-size: 0.9rem; direction: ltr; display: inline-block; }
+        
+        .highlight-box { padding: 1.2rem; border-radius: 8px; margin: 20px 0; font-weight: 600; line-height: 1.8; }
+        .highlight-box.tip { background: rgba(245, 158, 11, 0.1); border: 1px solid var(--gold); color: #fde68a; }
+        .highlight-box.warn { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--red); color: #fca5a5; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--dark3); border-radius: 8px; overflow: hidden; }
+        .info-table th, .info-table td { border: 1px solid var(--border); padding: 12px; text-align: center; }
+        .info-table th { background: var(--accent); color: #fff; }
+        .info-table tr:nth-child(even) { background: var(--dark4); }
+
+        .formula-box { background: var(--dark3); border: 1px solid var(--accent); padding: 1.5rem; border-radius: 8px; text-align: center; margin: 20px 0; }
+        .formula-display { font-size: 1.8rem; font-family: 'Amiri', serif; color: var(--gold); margin: 15px 0; }
+
+        /* الرسوم SVG */
+        .diagram-figure { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center; }
+        .diagram-wrap { width: 100%; max-width: 450px; margin: 0 auto; }
+        .lesson-diagram { width: 100%; height: auto; display: block;}
+        .fig-title { margin-top: 15px; color: var(--muted); font-size: 0.95rem; }
+
+        /* المحاكاة (البند 0.3 و 3.5) */
+        .sim-wrap { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 30px; }
+        .sim-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .sim-title { color: var(--accent2); }
+        /* البند 0.3: النمط الإلزامي */
+        .sim-badge { background: rgba(245, 158, 11, 0.2); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight:bold; }
+        .sim-description { background: var(--dark3); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid var(--accent); }
+        
+        .sim-canvas-container { width: 100%; height: 320px; border: 1px solid var(--border); border-radius: 8px; background: #0f172a; margin-bottom: 20px; overflow: hidden; position: relative;}
+        canvas { display: block; width: 100%; height: 100%; }
+        
+        .sim-controls { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; background: var(--dark3); padding: 15px; border-radius: 8px; align-items: center;}
+        .control-group { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; min-width: 200px; }
+        .val-badge { color: var(--gold); font-weight: bold; font-size: 1.1rem; }
+        input[type=range] { width: 100%; max-width: 250px; accent-color: var(--accent); }
+        button { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-family: 'Cairo'; font-weight: 600; font-size: 1rem; }
+        button:hover { background: var(--accent2); }
+
+        /* التمارين */
+        .q-card { background: var(--dark3); border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .q-num { background: var(--dark4); color: var(--gold); padding: 4px 12px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; display: inline-block; }
+        .q-text { font-size: 1.15rem; font-weight: bold; margin-bottom: 15px; }
+        .q-options { display: grid; gap: 10px; }
+        .q-option { background: var(--dark2); border: 1px solid var(--border); padding: 12px; border-radius: 6px; cursor: pointer; }
+        .q-option.selected { border-color: var(--accent); background: rgba(99, 102, 241, 0.15); }
+        .q-option.correct { border-color: var(--green); background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .q-option.wrong { border-color: var(--red); background: rgba(239, 68, 68, 0.15); color: #f87171; }
+        .q-feedback { margin-top: 15px; padding: 12px; background: var(--dark2); border-radius: 6px; display: none; border-right: 4px solid; }
+        .q-diagram { width: 100%; max-width: 300px; margin: 15px auto; display: block; border-radius: 8px; background: var(--dark2); padding: 10px; border: 1px solid var(--border); }
+
+        /* الملخص */
+        .summary-card { background: #fff; color: #111; padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
+        .summary-header { text-align: center; border-bottom: 3px solid var(--accent); padding-bottom: 15px; margin-bottom: 25px; }
+        .summary-title { font-family: 'Amiri', serif; font-size: 2.2rem; font-weight: bold; }
+        .summary-section-title { color: var(--accent); font-size: 1.4rem; font-weight: bold; border-bottom: 2px solid #eee; padding-bottom: 8px; margin: 25px 0 15px; }
+        .concept-map-wrap { text-align: center; margin: 20px 0; }
+        .summary-defs .s-def-item { margin-bottom: 15px; padding-right: 15px; border-right: 4px solid var(--accent); }
+        .s-def-term { font-weight: bold; font-size: 1.1rem; display: block; }
+        .summary-list { list-style: none; padding: 0; }
+        .summary-list li { position: relative; padding-right: 25px; margin-bottom: 10px; }
+        .summary-list li::before { content: '▪'; color: var(--accent); font-size: 1.5rem; position: absolute; right: 0; top: -5px; }
+        .print-btn { display: block; width: 100%; margin-top: 30px; background: var(--dark3); border: 1px solid var(--border); color: var(--text);}
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar, .print-btn { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; padding: 0; }
+            .summary-card { border: none; }
+            canvas { display: none; }
+            svg { max-width: 100%; height: auto;}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- البند 0.4: شريط التنقل العلوي -->
+    <div class="top-nav-bar">
+        <a href="../index.html#electricity">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <!-- الترويسة -->
+    <div class="lesson-header">
+        <span class="lesson-badge">الظواهر الكهربائية | الدرس 04</span>
+        <h1>مصباح <em>التوهج</em></h1>
+        <p class="lesson-meta">السنة الأولى متوسط — منهاج الجيل الثاني</p>
+    </div>
+
+    <!-- البند 0.1: شريط التبويبات -->
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+        <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+        <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+        <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+    </nav>
+
+    <!-- ================= التبويب 1: الدرس النظري ================= -->
+    <div id="tab-lesson" class="tab-content active">
+        
+        <div class="objectives-box">
+            <h3>🎯 الأهداف التعلمية</h3>
+            <ul>
+                <li>التعرف على المكونات الأساسية لمصباح التوهج.</li>
+                <li>تحديد مربطي المصباح وفهم تماثلهما.</li>
+                <li>فهم أهمية توافق دلالة المصباح مع دلالة المولد للحصول على إضاءة عادية.</li>
+            </ul>
+        </div>
+
+        <!-- المفهوم 1: مكونات المصباح -->
+        <div class="sec-title">
+            <span class="sec-icon">💡</span>
+            <h2>1. مكونات مصباح التوهج</h2>
+            <hr class="sec-line">
+        </div>
+        
+        <div class="def-box">
+            <span class="def-term">مصباح التوهج:</span> <span class="def-fr">(Lampe à incandescence)</span>
+            <p>هو عنصر كهربائي يحول الطاقة الكهربائية إلى ضوء وحرارة بتوهج سلك دقيق بداخله.</p>
+        </div>
+
+        <figure class="diagram-figure">
+            <div class="diagram-wrap">
+                <!-- SVG 1: تشريح المصباح -->
+                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <!-- خطوط التوجيه والتسميات (مع text-anchor صحيح) -->
+                    <text x="310" y="80" fill="var(--text)" font-size="14" text-anchor="end" dominant-baseline="middle">حبابة زجاجية</text>
+                    <line x1="230" y1="80" x2="300" y2="80" stroke="var(--muted)" stroke-dasharray="4"/>
+                    
+                    <text x="310" y="160" fill="var(--gold)" font-size="14" text-anchor="end" dominant-baseline="middle">سلك التنغستين</text>
+                    <line x1="210" y1="160" x2="300" y2="160" stroke="var(--gold)" stroke-dasharray="4"/>
+                    
+                    <text x="40" y="270" fill="var(--text)" font-size="14" text-anchor="start" dominant-baseline="middle">العقب</text>
+                    <line x1="60" y1="270" x2="160" y2="270" stroke="var(--muted)" stroke-dasharray="4"/>
+                    
+                    <text x="80" y="360" fill="var(--accent2)" font-size="14" text-anchor="start" dominant-baseline="middle">القتير المركزي</text>
+                    <line x1="120" y1="360" x2="190" y2="360" stroke="var(--accent2)" stroke-dasharray="4"/>
+
+                    <text x="310" y="320" fill="#ef4444" font-size="14" text-anchor="end" dominant-baseline="middle">مادة عازلة</text>
+                    <line x1="220" y1="320" x2="300" y2="320" stroke="#ef4444" stroke-dasharray="4"/>
+
+                    <!-- رسم المصباح -->
+                    <!-- زجاج -->
+                    <path d="M 160 210 C 120 120, 120 40, 200 40 C 280 40, 280 120, 240 210 L 225 250 L 175 250 Z" fill="rgba(255,255,255,0.05)" stroke="var(--muted)" stroke-width="2"/>
+                    <!-- سلك وسيقان -->
+                    <polyline points="185,180 192,150 200,170 208,150 215,180" fill="none" stroke="var(--gold)" stroke-width="2"/>
+                    <line x1="185" y1="180" x2="185" y2="250" stroke="var(--muted)" stroke-width="2"/>
+                    <line x1="215" y1="180" x2="215" y2="250" stroke="var(--muted)" stroke-width="2"/>
+                    <!-- العقب -->
+                    <rect x="172" y="250" width="56" height="50" fill="#475569" rx="5"/>
+                    <path d="M 172 260 L 228 265 M 172 275 L 228 280 M 172 290 L 228 295" stroke="#94a3b8" stroke-width="2"/>
+                    <!-- عازل وقتير -->
+                    <polygon points="175,300 225,300 215,330 185,330" fill="#ef4444"/>
+                    <path d="M 185 330 Q 200 370 215 330 Z" fill="var(--accent2)"/>
+                    
+                    <!-- التوصيل الداخلي -->
+                    <path d="M 185 250 L 172 280" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="2"/>
+                    <path d="M 215 250 L 200 350" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="2"/>
+                </svg>
+            </div>
+            <figcaption class="fig-title">شكل (1) — مكونات مصباح التوهج ومربطيه</figcaption>
+        </figure>
+
+        <!-- المفهوم 2: المربطان -->
+        <div class="sec-title">
+            <span class="sec-icon">🔌</span>
+            <h2>2. مربطا المصباح</h2>
+            <hr class="sec-line">
+        </div>
+        <div class="highlight-box tip">
+            📌 <strong>معلومة هامة:</strong> للمصباح مربطان هما <strong>العقب</strong> و<strong>القتير المركزي</strong>. هذان المربطان <strong>متماثلان</strong> (لا يوجد قطب موجب أو سالب للمصباح)، لذلك يضيء المصباح مهما عكسنا اتجاه ربطه بالبطارية.
+        </div>
+
+        <figure class="diagram-figure">
+            <div class="diagram-wrap">
+                <!-- SVG 2: مربطا المصباح مقابل قطبا البطارية -->
+                <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <rect x="20" y="50" width="160" height="100" fill="var(--dark3)" rx="8" stroke="var(--border)"/>
+                    <text x="100" y="80" fill="var(--accent2)" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">قطبا البطارية</text>
+                    <text x="60" y="120" fill="var(--red)" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="middle">+</text>
+                    <text x="140" y="120" fill="var(--text)" font-size="24" font-weight="bold" text-anchor="middle" dominant-baseline="middle">-</text>
+                    <text x="100" y="140" fill="var(--muted)" font-size="12" text-anchor="middle" dominant-baseline="middle">غير متماثلين</text>
+
+                    <rect x="220" y="50" width="160" height="100" fill="var(--dark3)" rx="8" stroke="var(--border)"/>
+                    <text x="300" y="80" fill="var(--gold)" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="middle">مربطا المصباح</text>
+                    <text x="260" y="120" fill="var(--text)" font-size="14" text-anchor="middle" dominant-baseline="middle">العقب</text>
+                    <text x="340" y="120" fill="var(--text)" font-size="14" text-anchor="middle" dominant-baseline="middle">القتير</text>
+                    <text x="300" y="140" fill="var(--muted)" font-size="12" text-anchor="middle" dominant-baseline="middle">متماثلان (لا تهم الجهة)</text>
+
+                    <line x1="200" y1="50" x2="200" y2="150" stroke="var(--border)" stroke-width="2"/>
+                </svg>
+            </div>
+            <figcaption class="fig-title">شكل (2) — مقارنة بين أقطاب البطارية ومربطي المصباح</figcaption>
+        </figure>
+
+        <!-- المفهوم 3: الدلالة -->
+        <div class="sec-title">
+            <span class="sec-icon">⚡</span>
+            <h2>3. دلالة المصباح والمولد (التوافق)</h2>
+            <hr class="sec-line">
+        </div>
+        <div class="def-box">
+            <p>يُكتب على زجاج المصباح أو عقبه، وكذلك على المولد، رقم متبوع بالحرف (V) يسمى <strong>الدلالة</strong> (التوتر الكهربائي).</p>
+        </div>
+
+        <div class="formula-box">
+            <div class="formula-title">شرط الحصول على إضاءة عادية:</div>
+            <div class="formula-display">
+                دلالة المصباح $\approx$ دلالة المولد
+            </div>
+        </div>
+
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th>المقارنة</th>
+                    <th>النتيجة (حالة الإضاءة)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>دلالة المولد <strong>تساوي أو تقارب</strong> دلالة المصباح</td>
+                    <td>إضاءة <strong>عادية</strong> (طبيعية ومثالية).</td>
+                </tr>
+                <tr>
+                    <td>دلالة المولد <strong>أصغر بكثير</strong> من دلالة المصباح</td>
+                    <td>إضاءة <strong>ضعيفة</strong> جداً.</td>
+                </tr>
+                <tr>
+                    <td>دلالة المولد <strong>أكبر بكثير</strong> من دلالة المصباح</td>
+                    <td>إضاءة <strong>قوية جداً</strong> تؤدي لاحتراق السلك و<strong>تلف المصباح</strong>.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <figure class="diagram-figure">
+            <div class="diagram-wrap">
+                <!-- SVG 3: مقارنة الإضاءة -->
+                <svg viewBox="0 0 450 150" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                    <!-- ضعيفة -->
+                    <circle cx="75" cy="60" r="30" fill="var(--dark)" stroke="var(--gold)" stroke-width="2"/>
+                    <path d="M 60 45 L 90 75 M 60 75 L 90 45" stroke="var(--gold)" stroke-width="2"/>
+                    <text x="75" y="110" fill="var(--text)" font-size="14" text-anchor="middle">بطارية 1.5V / مصباح 6V</text>
+                    <text x="75" y="130" fill="var(--muted)" font-size="14" text-anchor="middle">(إضاءة ضعيفة)</text>
+
+                    <!-- عادية -->
+                    <circle cx="225" cy="60" r="30" fill="rgba(245, 158, 11, 0.4)" stroke="var(--gold)" stroke-width="2"/>
+                    <path d="M 210 45 L 240 75 M 210 75 L 240 45" stroke="var(--gold)" stroke-width="3"/>
+                    <text x="225" y="110" fill="var(--text)" font-size="14" text-anchor="middle">بطارية 6V / مصباح 6V</text>
+                    <text x="225" y="130" fill="var(--green)" font-size="14" text-anchor="middle" font-weight="bold">(إضاءة عادية)</text>
+
+                    <!-- تالف -->
+                    <circle cx="375" cy="60" r="30" fill="var(--dark)" stroke="#ef4444" stroke-width="2"/>
+                    <path d="M 360 45 L 390 75" stroke="#ef4444" stroke-width="2"/>
+                    <text x="375" y="110" fill="var(--text)" font-size="14" text-anchor="middle">بطارية 12V / مصباح 6V</text>
+                    <text x="375" y="130" fill="var(--red)" font-size="14" text-anchor="middle" font-weight="bold">(يتلف المصباح)</text>
+                </svg>
+            </div>
+            <figcaption class="fig-title">شكل (3) — تأثير دلالة المولد على توهج المصباح</figcaption>
+        </figure>
+
+    </div>
+
+    <!-- ================= التبويب 2: المحاكاة التفاعلية ================= -->
+    <div id="tab-sim" class="tab-content">
+        
+        <!-- المحاكي 1 -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">المحاكي (1): التوصيل الصحيح للمصباح</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            <!-- وصف إلزامي للمحاكاة -->
+            <div class="sim-description">
+                <p>يوضح هذا المخبر <strong>أماكن التوصيل الصحيحة لإضاءة المصباح</strong>. اضغط على الزر لتغيير <strong>مواقع أسلاك التوصيل</strong> على المصباح، ولاحظ كيف يتوهج المصباح <strong>فقط عندما يتصل السلكان بالعقب والقتير المركزي معاً</strong>.</p>
+            </div>
+            
+            <div class="sim-canvas-container">
+                <canvas id="canvasSim1"></canvas>
+            </div>
+            
+            <div class="sim-controls">
+                <button onclick="toggleSim1Connection()">تغيير وضع التوصيل</button>
+                <p id="lblSim1Status" style="width: 100%; margin-top: 10px; font-weight: bold; color: var(--gold);"></p>
+            </div>
+        </div>
+
+        <!-- المحاكي 2 -->
+        <div class="sim-wrap">
+            <div class="sim-head">
+                <h3 class="sim-title">المحاكي (2): قانون التوافق والدلالات</h3>
+                <span class="sim-badge">تفاعلي</span>
+            </div>
+            <!-- وصف إلزامي مختلف للمحاكاة -->
+            <div class="sim-description">
+                <p>يوضح هذا المخبر <strong>تأثير توافق دلالة المولد مع دلالة المصباح</strong>. حرك <strong>شريط التمرير الخاص بتوتر البطارية</strong>، وقارنه مع دلالة المصباح الثابتة (6V). ولاحظ <strong>تغير شدة التوهج أو احتراق المصباح</strong>.</p>
+            </div>
+            
+            <div class="sim-canvas-container">
+                <canvas id="canvasSim2"></canvas>
+            </div>
+            
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label style="color:var(--text);">توتر البطارية (المولد): <span id="lblSim2Volt" class="val-badge">6V</span></label>
+                    <input type="range" id="rngSim2" min="1.5" max="12" step="1.5" value="6">
+                </div>
+                <p id="lblSim2Result" style="width: 100%; margin-top: 10px; font-weight: bold; color: var(--green);">إضاءة عادية ومثالية.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= التبويب 3: التمارين ================= -->
+    <div id="tab-exercises" class="tab-content">
+        
+        <div class="q-card">
+            <div class="q-num">السؤال 1</div>
+            <div class="q-text">ما هي الوظيفة الأساسية للحبابة الزجاجية في مصباح التوهج؟</div>
+            <div class="q-options" data-correct="1">
+                <div class="q-option" onclick="selectAnswer(this, 0)">إعطاء المصباح شكلاً جميلاً فقط.</div>
+                <div class="q-option" onclick="selectAnswer(this, 1)">تحتوي على غاز خامل يمنع احتراق سلك التنغستين.</div>
+                <div class="q-option" onclick="selectAnswer(this, 2)">توصيل الكهرباء بين القتير والعقب.</div>
+            </div>
+            <div class="q-feedback">صحيح. الغاز الخامل داخل الحبابة يمنع السلك المتوهج من الاحتراق والتآكل.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 2</div>
+            <div class="q-text">لدينا بطارية دلالتها 1.5V. أي مصباح من المصابيح التالية يعطينا إضاءة "عادية"؟</div>
+            <div class="q-options" data-correct="0">
+                <div class="q-option" onclick="selectAnswer(this, 0)">مصباح دلالته 1.2V</div>
+                <div class="q-option" onclick="selectAnswer(this, 1)">مصباح دلالته 6V</div>
+                <div class="q-option" onclick="selectAnswer(this, 2)">مصباح دلالته 12V</div>
+            </div>
+            <div class="q-feedback">ممتاز! الدلالة 1.2V قريبة جداً من 1.5V مما يحقق شرط التوافق.</div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-num">السؤال 3</div>
+            <div class="q-text">هل يجب الانتباه إلى اتجاه تركيب المصباح (الزائد والناقص) لكي يضيء؟</div>
+            <div class="q-options" data-correct="1">
+                <div class="q-option" onclick="selectAnswer(this, 0)">نعم، لأن له قطب موجب وقطب سالب.</div>
+                <div class="q-option" onclick="selectAnswer(this, 1)">لا، لأن مربطيه (العقب والقتير) متماثلان.</div>
+            </div>
+            <div class="q-feedback">صحيح. المصباح عنصر متماثل المرابط، لا يهم اتجاه التيار المار فيه ليضيء.</div>
+        </div>
+
+        <!-- البند 3.7: سؤال تكميلي/تخطيطي -->
+        <div class="q-card q-diagram-type">
+            <div class="q-num">السؤال 4 (تطبيقي)</div>
+            <div class="q-text">تأمل حالات الربط الثلاث التالية. في أي حالة سيتوهج المصباح؟</div>
+            <svg class="q-diagram" viewBox="0 0 300 120" style="max-width: 100%;">
+                <!-- الحالة 1 -->
+                <rect x="10" y="20" width="30" height="80" fill="var(--dark)" stroke="var(--muted)" stroke-width="2"/>
+                <text x="25" y="40" fill="var(--text)" font-size="12" text-anchor="middle">+</text>
+                <text x="25" y="90" fill="var(--text)" font-size="14" text-anchor="middle">-</text>
+                <circle cx="70" cy="50" r="15" fill="var(--dark)" stroke="var(--gold)" stroke-width="2"/>
+                <path d="M 70 65 L 70 75" stroke="var(--muted)" stroke-width="4"/> <!-- العقب -->
+                <path d="M 10 30 L 70 30 L 70 35" fill="none" stroke="var(--accent2)" stroke-width="2"/>
+                <path d="M 10 80 L 85 80 L 85 50 L 85 50" fill="none" stroke="var(--accent2)" stroke-width="2"/>
+                <text x="45" y="110" fill="var(--muted)" font-size="12" text-anchor="middle">الحالة (أ)</text>
+
+                <!-- الحالة 2 -->
+                <rect x="110" y="20" width="30" height="80" fill="var(--dark)" stroke="var(--muted)" stroke-width="2"/>
+                <circle cx="170" cy="50" r="15" fill="var(--dark)" stroke="var(--gold)" stroke-width="2"/>
+                <path d="M 170 65 L 170 75" stroke="var(--muted)" stroke-width="4"/>
+                <path d="M 110 30 L 170 30 L 170 35" fill="none" stroke="var(--accent2)" stroke-width="2"/>
+                <path d="M 110 80 L 170 80 L 170 75" fill="none" stroke="var(--accent2)" stroke-width="2"/>
+                <text x="145" y="110" fill="var(--muted)" font-size="12" text-anchor="middle">الحالة (ب)</text>
+
+                <!-- الحالة 3 -->
+                <rect x="210" y="20" width="30" height="80" fill="var(--dark)" stroke="var(--muted)" stroke-width="2"/>
+                <circle cx="270" cy="50" r="15" fill="var(--dark)" stroke="var(--gold)" stroke-width="2"/>
+                <path d="M 270 65 L 270 75" stroke="var(--muted)" stroke-width="4"/>
+                <path d="M 210 30 L 260 30 L 260 70 L 270 70" fill="none" stroke="var(--accent2)" stroke-width="2"/>
+                <path d="M 210 80 L 270 80 L 270 75" fill="none" stroke="var(--accent2)" stroke-width="2"/>
+                <text x="245" y="110" fill="var(--muted)" font-size="12" text-anchor="middle">الحالة (ج)</text>
+            </svg>
+            <div class="q-options" data-correct="2">
+                <div class="q-option" onclick="selectAnswer(this, 0)">الحالة (أ): لأن السلك متصل بزجاج المصباح.</div>
+                <div class="q-option" onclick="selectAnswer(this, 1)">الحالة (ب): لأن السلكين متصلان معاً بنفس المربط.</div>
+                <div class="q-option" onclick="selectAnswer(this, 2)">الحالة (ج): لأن سلكاً يتصل بالعقب والآخر بالقتير.</div>
+            </div>
+            <div class="q-feedback">صحيح جداً! ليتوهج المصباح يجب توصيل القطبين بمربطي المصباح المختلفين (العقب والقتير المركزي).</div>
+        </div>
+
+        <button onclick="evaluateQuiz()" style="width: 100%; padding: 15px; font-size: 1.2rem; border-radius: 8px;">إظهار النتيجة والتصحيح</button>
+        <div id="quiz-result" style="text-align: center; margin-top: 20px; font-size: 1.5rem; font-weight: bold; display: none;"></div>
+    </div>
+
+    <!-- ================= التبويب 4: الملخص ================= -->
+    <div id="tab-summary" class="tab-content">
+        <div class="summary-card">
+            
+            <div class="summary-header">
+                <div class="lesson-meta">السنة 1 متوسط | الظواهر الكهربائية</div>
+                <h2 class="summary-title">ملخص: مصباح التوهج</h2>
+            </div>
+
+            <!-- البند 3.8: خريطة مفاهيم SVG -->
+            <div class="concept-map-wrap">
+                <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+                <svg viewBox="0 0 500 250" style="width:100%; max-width:500px;">
+                    <!-- المركز -->
+                    <rect x="175" y="10" width="150" height="40" rx="8" fill="var(--accent)"/>
+                    <text x="250" y="35" fill="#fff" font-size="16" font-weight="bold" text-anchor="middle">مصباح التوهج</text>
+                    
+                    <path d="M 250 50 L 250 80 M 100 80 L 400 80 M 100 80 L 100 110 M 250 80 L 250 110 M 400 80 L 400 110" fill="none" stroke="#666" stroke-width="2"/>
+                    
+                    <!-- المكونات -->
+                    <rect x="25" y="110" width="150" height="30" rx="4" fill="#f8fafc" stroke="#6366f1" stroke-width="2"/>
+                    <text x="100" y="130" fill="#111" font-size="14" font-weight="bold" text-anchor="middle">سلك التنغستين</text>
+                    <text x="100" y="160" fill="#555" font-size="12" text-anchor="middle">العنصر الذي يتوهج</text>
+
+                    <!-- المرابط -->
+                    <rect x="175" y="110" width="150" height="30" rx="4" fill="#f8fafc" stroke="#f59e0b" stroke-width="2"/>
+                    <text x="250" y="130" fill="#111" font-size="14" font-weight="bold" text-anchor="middle">مربطا المصباح</text>
+                    <text x="250" y="160" fill="#555" font-size="12" text-anchor="middle">العقب + القتير المركزي</text>
+                    <text x="250" y="180" fill="#f59e0b" font-size="12" font-weight="bold" text-anchor="middle">متماثلان</text>
+
+                    <!-- الدلالة -->
+                    <rect x="325" y="110" width="150" height="30" rx="4" fill="#f8fafc" stroke="#10b981" stroke-width="2"/>
+                    <text x="400" y="130" fill="#111" font-size="14" font-weight="bold" text-anchor="middle">دلالة المصباح (V)</text>
+                    <text x="400" y="160" fill="#555" font-size="12" text-anchor="middle">يجب أن تتوافق مع</text>
+                    <text x="400" y="180" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle">دلالة المولد لإضاءة عادية</text>
+                </svg>
+            </div>
+
+            <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+            <div class="summary-defs">
+                <div class="s-def-item">
+                    <span class="s-def-term">الدلالة (التوتر):</span>
+                    قيمة فيزيائية تقاس بوحدة الفولط (V)، تُكتب على العناصر الكهربائية للدلالة على طاقتها.
+                </div>
+            </div>
+
+            <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+            <ul class="summary-list">
+                <li>لمصباح التوهج مربطان متماثلان هما <strong>العقب</strong> و<strong>القتير المركزي</strong>.</li>
+                <li>شرط الحصول على <strong>إضاءة عادية</strong> هو: دلالة المصباح $\approx$ دلالة المولد.</li>
+                <li>إذا كانت دلالة المولد <strong>أكبر بكثير</strong> من المصباح، يحترق سلك التنغستين ويتلف.</li>
+                <li>إذا كانت دلالة المولد <strong>أصغر بكثير</strong>، تكون الإضاءة ضعيفة جداً.</li>
+            </ul>
+
+            <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص للكراس</button>
+        </div>
+    </div>
+
+    <!-- السكريبتات -->
+    <script>
+        // البند 0.1 و 3.9: إدارة التبويبات حرفياً كما طُلب لضمان الكانفاس
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim1 === 'function') updateSim1();
+                    if (typeof updateSim2 === 'function') updateSim2();
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof updateSim1 === 'function') updateSim1();
+                    if (typeof updateSim2 === 'function') updateSim2();
+                }, 50);
+            }
+        });
+
+        // البند 0.2: Canvas متجاوب يمنع التغبيش
+        const canvas1 = document.getElementById('canvasSim1');
+        const ctx1 = canvas1.getContext('2d');
+        const canvas2 = document.getElementById('canvasSim2');
+        const ctx2 = canvas2.getContext('2d');
+
+        function resizeCanvas() {
+            [ {cvs: canvas1, ctx: ctx1}, {cvs: canvas2, ctx: ctx2} ].forEach(item => {
+                const container = item.cvs.parentElement;
+                if (container.clientWidth > 0) {
+                    const dpr = window.devicePixelRatio || 1;
+                    item.cvs.width  = container.clientWidth  * dpr;
+                    item.cvs.height = container.clientHeight * dpr;
+                    item.cvs.style.width  = container.clientWidth  + 'px';
+                    item.cvs.style.height = container.clientHeight + 'px';
+                    item.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                }
+            });
+        }
+        window.addEventListener('resize', () => {
+            if(document.getElementById('tab-sim').classList.contains('active')) {
+                resizeCanvas(); updateSim1(); updateSim2();
+            }
+        });
+
+        // ================= المحاكاة 1 =================
+        let sim1State = 0; // 0: خطأ (زجاج), 1: خطأ (عقب فقط), 2: صحيح (عقب وقتير)
+        const sim1StatesTexts = [
+            "توصيل خاطئ: سلك متصل بزجاج الحبابة. لا يتوهج.",
+            "توصيل خاطئ (استقصار): السلكان متصلان بنفس المربط (العقب).",
+            "توصيل صحيح: سلك للعقب وسلك للقتير المركزي. المصباح يتوهج!"
+        ];
+        
+        function toggleSim1Connection() {
+            sim1State = (sim1State + 1) % 3;
+            updateSim1();
+        }
+
+        function updateSim1() {
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height); // البند 0.5 الإلزامي
+            let cw = canvas1.clientWidth; let ch = canvas1.clientHeight;
+            
+            let cx = cw / 2;
+            let cy = ch / 2 + 20;
+
+            // المولد
+            ctx1.lineWidth = 2; ctx1.strokeStyle = '#e2e8f0';
+            ctx1.strokeRect(cx - 80, ch - 60, 40, 60);
+            ctx1.fillStyle = '#ef4444'; ctx1.fillText("+", cx - 70, ch - 40);
+            ctx1.fillStyle = '#e2e8f0'; ctx1.fillText("-", cx - 70, ch - 20);
+
+            // توهج المصباح
+            let isGlowing = (sim1State === 2);
+            if (isGlowing) {
+                let grd = ctx1.createRadialGradient(cx + 60, cy - 60, 10, cx + 60, cy - 60, 60);
+                grd.addColorStop(0, 'rgba(251, 191, 36, 0.8)'); grd.addColorStop(1, 'rgba(251, 191, 36, 0)');
+                ctx1.fillStyle = grd;
+                ctx1.beginPath(); ctx1.arc(cx + 60, cy - 60, 60, 0, Math.PI*2); ctx1.fill();
+            }
+
+            // رسم المصباح (يمين)
+            ctx1.fillStyle = '#0f172a'; ctx1.beginPath(); ctx1.arc(cx + 60, cy - 60, 30, 0, Math.PI*2); ctx1.fill();
+            ctx1.strokeStyle = isGlowing ? '#fde047' : '#94a3b8'; ctx1.stroke();
+            ctx1.fillStyle = '#475569'; ctx1.fillRect(cx + 45, cy - 30, 30, 30); // العقب
+            ctx1.fillStyle = '#ef4444'; ctx1.fillRect(cx + 45, cy, 30, 10); // عازل
+            ctx1.fillStyle = '#94a3b8'; ctx1.beginPath(); ctx1.arc(cx + 60, cy + 10, 8, 0, Math.PI); ctx1.fill(); // قتير
+
+            // رسم الأسلاك حسب الحالة
+            ctx1.strokeStyle = '#3b82f6'; ctx1.lineWidth = 3;
+            ctx1.beginPath();
+            ctx1.moveTo(cx - 60, ch - 60); // من الموجب
+            
+            if(sim1State === 0) {
+                ctx1.lineTo(cx - 60, cy - 60); ctx1.lineTo(cx + 30, cy - 60); // للزجاج
+                ctx1.stroke();
+                ctx1.strokeStyle = '#10b981'; ctx1.beginPath();
+                ctx1.moveTo(cx - 60, ch); ctx1.lineTo(cx + 60, ch); ctx1.lineTo(cx + 60, cy + 10); // للقتير
+                ctx1.stroke();
+            } else if (sim1State === 1) {
+                ctx1.lineTo(cx - 60, cy - 15); ctx1.lineTo(cx + 45, cy - 15); // للعقب يسار
+                ctx1.stroke();
+                ctx1.strokeStyle = '#10b981'; ctx1.beginPath();
+                ctx1.moveTo(cx - 60, ch); ctx1.lineTo(cx + 80, ch); ctx1.lineTo(cx + 80, cy - 15); ctx1.lineTo(cx + 75, cy - 15); // للعقب يمين
+                ctx1.stroke();
+            } else if (sim1State === 2) {
+                ctx1.lineTo(cx - 60, cy - 15); ctx1.lineTo(cx + 45, cy - 15); // للعقب
+                ctx1.stroke();
+                ctx1.strokeStyle = '#10b981'; ctx1.beginPath();
+                ctx1.moveTo(cx - 60, ch); ctx1.lineTo(cx + 60, ch); ctx1.lineTo(cx + 60, cy + 10); // للقتير
+                ctx1.stroke();
+            }
+
+            let lbl = document.getElementById('lblSim1Status');
+            lbl.innerText = sim1StatesTexts[sim1State];
+            lbl.style.color = isGlowing ? 'var(--green)' : 'var(--red)';
+        }
+
+        // ================= المحاكاة 2 =================
+        const sim2BulbVolt = 6;
+        
+        document.getElementById('rngSim2').addEventListener('input', function() {
+            document.getElementById('lblSim2Volt').innerText = this.value + 'V';
+            updateSim2();
+        });
+
+        function updateSim2() {
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height); // البند 0.5
+            let cw = canvas2.clientWidth; let ch = canvas2.clientHeight;
+            let batVolt = parseFloat(document.getElementById('rngSim2').value);
+
+            let cx = cw / 2; let cy = ch / 2 - 20;
+
+            // المولد
+            ctx2.lineWidth = 2; ctx2.strokeStyle = '#e2e8f0';
+            ctx2.strokeRect(cx - 100, cy, 60, 40);
+            ctx2.fillStyle = '#ef4444'; ctx2.fillText("+", cx - 90, cy + 15);
+            ctx2.fillStyle = '#e2e8f0'; ctx2.fillText("-", cx - 60, cy + 15);
+            ctx2.fillStyle = '#f59e0b'; ctx2.font = "bold 16px Cairo"; ctx2.fillText(batVolt + "V", cx - 85, cy + 30);
+
+            // المصباح
+            ctx2.fillStyle = '#0f172a'; ctx2.beginPath(); ctx2.arc(cx + 100, cy + 20, 30, 0, Math.PI*2); ctx2.fill();
+            ctx2.strokeStyle = '#e2e8f0'; ctx2.stroke();
+            ctx2.fillStyle = '#475569'; ctx2.fillText(sim2BulbVolt + "V", cx + 88, cy - 15);
+
+            // أسلاك
+            ctx2.strokeStyle = '#94a3b8'; ctx2.lineWidth = 2;
+            ctx2.beginPath(); ctx2.moveTo(cx - 40, cy + 10); ctx2.lineTo(cx + 70, cy + 10); ctx2.stroke();
+            ctx2.beginPath(); ctx2.moveTo(cx - 40, cy + 30); ctx2.lineTo(cx + 70, cy + 30); ctx2.stroke();
+
+            let lbl = document.getElementById('lblSim2Result');
+            let isBroken = false;
+            let glowLevel = 0;
+
+            // المنطق
+            if (batVolt > sim2BulbVolt + 2) {
+                lbl.innerText = "دلالة المولد أكبر بكثير.. توهج شديد ثم يتلف المصباح! ❌";
+                lbl.style.color = "var(--red)";
+                isBroken = true;
+            } else if (batVolt >= sim2BulbVolt - 1.5 && batVolt <= sim2BulbVolt + 1.5) {
+                lbl.innerText = "دلالة المولد توافق المصباح.. إضاءة عادية ومثالية. ✔️";
+                lbl.style.color = "var(--green)";
+                glowLevel = 1;
+            } else {
+                lbl.innerText = "دلالة المولد أصغر من المصباح.. إضاءة ضعيفة جداً. ⚠️";
+                lbl.style.color = "var(--gold)";
+                glowLevel = 0.3;
+            }
+
+            if (isBroken) {
+                // سلك مقطوع
+                ctx2.strokeStyle = '#ef4444'; ctx2.beginPath(); ctx2.moveTo(cx + 90, cy + 10); ctx2.lineTo(cx + 110, cy + 30); ctx2.stroke();
+            } else {
+                // توهج
+                let grd = ctx2.createRadialGradient(cx + 100, cy + 20, 10, cx + 100, cy + 20, 60);
+                grd.addColorStop(0, `rgba(251, 191, 36, ${glowLevel})`); grd.addColorStop(1, 'rgba(251, 191, 36, 0)');
+                ctx2.fillStyle = grd;
+                ctx2.beginPath(); ctx2.arc(cx + 100, cy + 20, 60, 0, Math.PI*2); ctx2.fill();
+                // سلك سليم
+                ctx2.strokeStyle = (glowLevel === 1) ? '#fff' : '#f59e0b';
+                ctx2.beginPath(); ctx2.moveTo(cx + 90, cy + 20); ctx2.lineTo(cx + 110, cy + 20); ctx2.stroke();
+            }
+        }
+
+        // ================= التمارين =================
+        let quizAnswers = {};
+
+        function selectAnswer(el, idx) {
+            const card = el.closest('.q-card');
+            const qnum = card.querySelector('.q-num').innerText;
+            card.querySelectorAll('.q-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+            quizAnswers[qnum] = idx;
+        }
+
+        function evaluateQuiz() {
+            const cards = document.querySelectorAll('.q-card');
+            let score = 0;
+            let answeredAll = true;
+
+            cards.forEach(card => {
+                const qnum = card.querySelector('.q-num').innerText;
+                if (quizAnswers[qnum] === undefined) answeredAll = false;
+            });
+
+            if (!answeredAll) { alert("أجب على جميع الأسئلة رجاءً."); return; }
+
+            cards.forEach(card => {
+                const qnum = card.querySelector('.q-num').innerText;
+                const correctIdx = parseInt(card.querySelector('.q-options').getAttribute('data-correct'));
+                const selectedIdx = quizAnswers[qnum];
+                const opts = card.querySelectorAll('.q-option');
+                const feedback = card.querySelector('.q-feedback');
+
+                opts.forEach(o => o.classList.remove('correct', 'wrong', 'selected'));
+                if (selectedIdx === correctIdx) {
+                    score++;
+                    opts[selectedIdx].classList.add('correct');
+                    feedback.style.color = "var(--green)";
+                    feedback.style.borderColor = "var(--green)";
+                } else {
+                    opts[selectedIdx].classList.add('wrong');
+                    opts[correctIdx].classList.add('correct');
+                    feedback.style.color = "var(--red)";
+                    feedback.style.borderColor = "var(--red)";
+                }
+                feedback.style.display = 'block';
+            });
+
+            const resDiv = document.getElementById('quiz-result');
+            resDiv.innerText = `نتيجتك: ${score} من ${cards.length}`;
+            resDiv.style.color = score === cards.length ? 'var(--green)' : 'var(--gold)';
+            resDiv.style.display = 'block';
+        }
+    </script>
+    
+    <!-- السكريبت المركزي الإلزامي -->
+    <script src="credit.js"></script>
+    
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 3 | عدد رسوم SVG في الدرس النظري = 3 | عدد المحاكيات = 2 -->
+</body>
+</html>

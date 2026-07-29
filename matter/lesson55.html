@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الكتلة الحجمية والكثافة - الفيزياء السهلة</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- إدراج MathJax الإلزامي -->
+    <script>
+        MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+        :root {
+            --dark:   #0a0f1e;
+            --dark2:  #111827;
+            --dark3:  #1a2540;
+            --dark4:  #1e2d4a;
+            --border: rgba(255,255,255,.08);
+            --card:   rgba(255,255,255,.04);
+            --text:   #e2e8f0;
+            --muted:  #94a3b8;
+            --accent: #14b8a6; /* لون المادة وتحولاتها */
+            --accent2:#2dd4bf;
+            --gold:   #f59e0b;
+            --green:  #10b981;
+            --red:    #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.7;
+            padding-bottom: 50px;
+        }
+
+        .amiri { font-family: 'Amiri', serif; }
+        main { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        /* شريط التنقل العلوي الثابت */
+        .top-nav-bar {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--dark2);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .top-nav-bar a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+        .top-nav-bar a:hover { color: var(--gold); }
+
+        .lesson-header {
+            background: var(--dark2);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .lesson-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+        }
+        .lesson-badge {
+            display: inline-block;
+            background: rgba(20, 184, 166, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        h1 em { color: var(--accent); font-style: normal; }
+        .lesson-meta { color: var(--muted); font-size: 0.9rem; }
+
+        /* شريط التبويبات الإلزامي */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .tab-btn:hover { background: var(--dark4); }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .objectives-box {
+            background: var(--card);
+            border-right: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .objectives-box h3 { color: var(--accent); margin-bottom: 10px; }
+        .objectives-box ul { padding-right: 20px; }
+
+        .sec-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0 20px;
+        }
+        .sec-icon { font-size: 1.5rem; color: var(--accent); }
+        .sec-line { flex-grow: 1; height: 1px; background: var(--border); border: none; }
+
+        .def-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--gold);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* تنسيق المعادلات الإلزامي */
+        .formula-box {
+            background: rgba(20, 184, 166, 0.05);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .formula-title {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .formula-display {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .symbol-table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            background: var(--dark2);
+        }
+        .symbol-table th { background: var(--dark3); color: var(--muted); padding: 10px; border: 1px solid var(--border); }
+        .symbol-table td { padding: 12px 10px; border: 1px solid var(--border); text-align: center; }
+        .sym-cell { font-family: 'Amiri', serif; font-size: 1.3rem; font-style: italic; color: #fff; }
+        .unit-cell { color: var(--gold); }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--dark2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .info-table th, .info-table td { padding: 12px; text-align: center; border: 1px solid var(--border); }
+        .info-table th { background: var(--dark3); color: var(--accent2); }
+
+        .diagram-figure {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .diagram-wrap { max-width: 100%; overflow: hidden; display: flex; justify-content: center; }
+        .lesson-diagram { width: 100%; max-width: 450px; height: auto; }
+        .fig-title { margin-top: 15px; color: var(--muted); font-size: 0.9rem; }
+
+        /* المحاكاة */
+        .sim-wrap {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .sim-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+        .sim-title { font-size: 1.2rem; color: #fff; }
+        .sim-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        .sim-description {
+            background: rgba(255,255,255,0.02);
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--muted);
+            border-right: 3px solid var(--accent);
+        }
+        .canvas-container {
+            width: 100%;
+            height: 350px;
+            background: var(--dark);
+            border-radius: 8px;
+            border: 1px inset var(--border);
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+        .sim-controls { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; background: var(--dark3); padding: 15px; border-radius: 8px; }
+        .control-group { flex: 1; min-width: 200px; }
+        .control-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; }
+        .val-badge { color: var(--gold); font-weight: bold; font-family: monospace; font-size: 1.1rem; }
+        input[type="range"] { width: 100%; accent-color: var(--accent); height: 6px; border-radius: 3px; outline: none; }
+        .action-btn { background: var(--accent); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-family: inherit; font-weight: 600; cursor: pointer; transition: background 0.3s; }
+        .action-btn:hover { background: var(--accent2); }
+
+        /* التمارين */
+        .q-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .q-num { display: inline-block; background: var(--dark3); color: var(--muted); padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 15px; }
+        .q-options { display: grid; gap: 10px; }
+        .q-option { background: var(--dark); border: 1px solid var(--border); padding: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .q-option:hover { border-color: var(--accent); }
+        .q-option.selected { background: rgba(20, 184, 166, 0.1); border-color: var(--accent); }
+        .q-option.correct { background: rgba(16, 185, 129, 0.1); border-color: var(--green); color: var(--green); }
+        .q-option.wrong { background: rgba(239, 68, 68, 0.1); border-color: var(--red); color: var(--red); }
+        .q-feedback { margin-top: 15px; padding: 10px; border-radius: 6px; font-size: 0.9rem; display: none; background: rgba(255,255,255,0.05); }
+        .q-feedback.show { display: block; }
+
+        /* الملخص */
+        .summary-card { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 30px; }
+        .summary-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+        .summary-meta { color: var(--muted); font-size: 0.9rem; }
+        .summary-title { color: var(--accent); font-size: 1.8rem; margin: 10px 0; }
+        .summary-section-title { color: #fff; border-right: 4px solid var(--accent); padding-right: 10px; margin: 30px 0 15px; font-size: 1.3rem; }
+        .s-def-item { margin-bottom: 15px; }
+        .s-def-term { font-weight: bold; color: var(--accent2); margin-left: 10px; font-size: 1.1rem; }
+        .summary-list { list-style: none; padding: 0; }
+        .summary-list li { position: relative; padding-right: 25px; margin-bottom: 12px; }
+        .summary-list li::before { content: '▪'; position: absolute; right: 5px; color: var(--accent); font-size: 1.5rem; top: -5px; }
+        .print-btn { background: var(--dark3); border: 1px solid var(--border); color: #fff; padding: 12px 25px; border-radius: 6px; cursor: pointer; margin-top: 30px; width: 100%; font-size: 1.1rem; transition: background 0.3s; }
+        .print-btn:hover { background: var(--dark4); }
+
+        @media print {
+            .tabs-nav, .tab-content:not(#tab-summary), .top-nav-bar, .print-btn { display: none !important; }
+            #tab-summary { display: block !important; }
+            body { background: #fff !important; color: #000 !important; font-size: 12pt; }
+            .summary-card { box-shadow: none; border: 1px solid #000; padding: 20px; }
+            .summary-title, .summary-section-title, .s-def-term, .sym-cell, .unit-cell { color: #000 !important; border-right-color: #000 !important; }
+            svg { max-width: 100%; height: auto; }
+            canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل العلوي الثابت -->
+    <div class="top-nav-bar">
+        <a href="../index.html#matter">← العودة إلى فهرس الميدان</a>
+    </div>
+
+    <main>
+        <div class="lesson-header">
+            <span>السنة الأولى متوسط › المقطع 2 › الدرس 05</span><br><br>
+            <span class="lesson-badge">الدرس 05</span>
+            <h1><em>الكتلة الحجمية والكثافة</em></h1>
+            <p class="lesson-meta">المادة وتحولاتها | حصتان</p>
+        </div>
+
+        <nav class="tabs-nav">
+            <button class="tab-btn active" onclick="openTab('tab-lesson', this)">📖 الدرس النظري</button>
+            <button class="tab-btn" onclick="openTab('tab-sim', this)">⚗️ المحاكاة التفاعلية</button>
+            <button class="tab-btn" onclick="openTab('tab-exercises', this)">✏️ التمارين</button>
+            <button class="tab-btn" onclick="openTab('tab-summary', this)">📋 ملخص الكراس</button>
+        </nav>
+
+        <div id="tab-lesson" class="tab-content active">
+            <div class="objectives-box">
+                <h3>🎯 الأهداف التعلمية</h3>
+                <ul>
+                    <li>أن يتعرف التلميذ على مفهوم الكتلة الحجمية ويحسبها.</li>
+                    <li>أن يكتشف مفهوم الكثافة وعلاقتها بالماء.</li>
+                    <li>أن يفسر ظاهرة طفو وغوص الأجسام في السوائل اعتماداً على الكثافة.</li>
+                </ul>
+            </div>
+
+            <!-- Concept 1: Masse Volumique -->
+            <div class="sec-title">
+                <span class="sec-icon">⚖️</span>
+                <h2>1. الكتلة الحجمية (Masse volumique)</h2>
+                <hr class="sec-line">
+            </div>
+            
+            <div class="def-box">
+                <strong>الكتلة الحجمية:</strong> مقدار فيزيائي مميز للمادة، يعبر عن كتلة وحدة الحجم من هذه المادة. أي أنها تمثل <strong>كمية المادة (الكتلة) الموجودة في حجم معين</strong>.
+                <br>نرمز لها بالحرف اليوناني <span class="amiri" style="color:var(--accent2); font-size:1.2rem;">$\rho$</span> (يُقرأ: رو).
+            </div>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (1) — المفهوم الفيزيائي للكتلة الحجمية (علاقة الكتلة بالحجم)</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <linearGradient id="cubeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#3b82f6" />
+                                <stop offset="100%" stop-color="#1d4ed8" />
+                            </linearGradient>
+                            <linearGradient id="cubeGradWood" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#f59e0b" />
+                                <stop offset="100%" stop-color="#b45309" />
+                            </linearGradient>
+                            <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+                                <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.3" />
+                            </filter>
+                        </defs>
+                        
+                        <!-- Iron Cube -->
+                        <g transform="translate(100, 50)" filter="url(#shadow)">
+                            <polygon points="20,0 60,0 40,20 0,20" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1" stroke-linejoin="round"/>
+                            <polygon points="60,0 60,40 40,60 40,20" fill="#475569" stroke="#cbd5e1" stroke-width="1" stroke-linejoin="round"/>
+                            <polygon points="0,20 40,20 40,60 0,60" fill="#64748b" stroke="#cbd5e1" stroke-width="1" stroke-linejoin="round"/>
+                            <!-- Particles (Dense) -->
+                            <circle cx="20" cy="40" r="2" fill="#0f172a"/><circle cx="25" cy="45" r="2" fill="#0f172a"/><circle cx="15" cy="45" r="2" fill="#0f172a"/><circle cx="30" cy="35" r="2" fill="#0f172a"/>
+                            <circle cx="25" cy="35" r="2" fill="#0f172a"/><circle cx="15" cy="35" r="2" fill="#0f172a"/><circle cx="20" cy="50" r="2" fill="#0f172a"/><circle cx="30" cy="45" r="2" fill="#0f172a"/>
+                            
+                            <text x="30" y="80" font-family="Cairo" font-size="14" fill="#fff" text-anchor="middle" dominant-baseline="middle">حديد (كتلة أكبر)</text>
+                        </g>
+
+                        <text x="250" y="80" font-family="Cairo" font-size="16" fill="var(--muted)" text-anchor="middle" dominant-baseline="middle">نفس الحجم ($V$ ثابت)</text>
+                        <path d="M 210 60 L 290 60 M 210 100 L 290 100" stroke="var(--border)" stroke-width="2" stroke-dasharray="4"/>
+
+                        <!-- Wood Cube -->
+                        <g transform="translate(350, 50)" filter="url(#shadow)">
+                            <polygon points="20,0 60,0 40,20 0,20" fill="#fcd34d" stroke="#f59e0b" stroke-width="1" stroke-linejoin="round"/>
+                            <polygon points="60,0 60,40 40,60 40,20" fill="#b45309" stroke="#f59e0b" stroke-width="1" stroke-linejoin="round"/>
+                            <polygon points="0,20 40,20 40,60 0,60" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linejoin="round"/>
+                            <!-- Particles (Sparse) -->
+                            <circle cx="20" cy="40" r="2" fill="#78350f"/><circle cx="30" cy="50" r="2" fill="#78350f"/><circle cx="15" cy="30" r="2" fill="#78350f"/>
+                            
+                            <text x="30" y="80" font-family="Cairo" font-size="14" fill="#fff" text-anchor="middle" dominant-baseline="middle">خشب (كتلة أقل)</text>
+                        </g>
+                    </svg>
+                </div>
+            </figure>
+
+            <div class="formula-box">
+                <div class="formula-title">قانون حساب الكتلة الحجمية</div>
+                <div class="formula-display">
+                    $$ \rho = \frac{m}{V} $$
+                </div>
+                
+                <table class="symbol-table">
+                    <tr><th>الرمز</th><th>الدلالة</th><th>الوحدات العملية</th></tr>
+                    <tr><td class="sym-cell">$\rho$</td><td>الكتلة الحجمية (Masse volumique)</td><td class="unit-cell">$g/cm^3$ أو $kg/L$</td></tr>
+                    <tr><td class="sym-cell">$m$</td><td>الكتلة (Masse)</td><td class="unit-cell">$g$ أو $kg$</td></tr>
+                    <tr><td class="sym-cell">$V$</td><td>الحجم (Volume)</td><td class="unit-cell">$cm^3$ أو $L$</td></tr>
+                </table>
+            </div>
+
+            <!-- Concept 2: Densité -->
+            <div class="sec-title">
+                <span class="sec-icon">⚖️</span>
+                <h2>2. الكثافة (Densité)</h2>
+                <hr class="sec-line">
+            </div>
+            <div class="def-box">
+                <strong>الكثافة:</strong> هي مقدار فيزيائي يُقارن الكتلة الحجمية للمادة بالكتلة الحجمية <strong>للماء النقي</strong>. نرمز لها بالحرف اللاتيني <span class="amiri" style="color:var(--accent2); font-size:1.2rem;">$d$</span>، وهي مقدار <strong>بدون وحدة</strong>.
+            </div>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (2) — الكثافة كنسبة مقارنة بالماء</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <defs>
+                            <linearGradient id="glassScale" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="rgba(255,255,255,0.2)" />
+                                <stop offset="50%" stop-color="rgba(255,255,255,0.05)" />
+                                <stop offset="100%" stop-color="rgba(255,255,255,0.3)" />
+                            </linearGradient>
+                            <linearGradient id="oilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#fde047" />
+                                <stop offset="100%" stop-color="#eab308" />
+                            </linearGradient>
+                            <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#38bdf8" />
+                                <stop offset="100%" stop-color="#0284c7" />
+                            </linearGradient>
+                            <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                                <path d="M 0 0 L 8 4 L 0 8 Z" fill="var(--muted)"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Beaker -->
+                        <g transform="translate(200, 20)">
+                            <rect x="0" y="0" width="100" height="120" rx="10" fill="none" stroke="url(#glassScale)" stroke-width="3"/>
+                            <!-- Water Layer -->
+                            <path d="M 3 60 L 97 60 L 97 110 A 7 7 0 0 1 90 117 L 10 117 A 7 7 0 0 1 3 110 Z" fill="url(#waterGrad)"/>
+                            <!-- Oil Layer -->
+                            <rect x="3" y="30" width="94" height="30" fill="url(#oilGrad)"/>
+                        </g>
+
+                        <!-- Labels -->
+                        <text x="150" y="45" font-family="Cairo" font-size="14" fill="#fde047" text-anchor="end" dominant-baseline="middle">زيت: $\rho = 0.8 g/cm^3$</text>
+                        <line x1="190" y1="45" x2="220" y2="45" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+                        <text x="130" y="90" font-family="Cairo" font-size="14" fill="#38bdf8" text-anchor="end" dominant-baseline="middle">ماء نقي: $\rho = 1 g/cm^3$</text>
+                        <line x1="190" y1="90" x2="220" y2="90" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    </svg>
+                </div>
+            </figure>
+
+            <div class="formula-box">
+                <div class="formula-title">قانون الكثافة للأجسام الصلبة والسائلة</div>
+                <div class="formula-display">
+                    $$ d = \frac{\rho}{\rho_{\text{eau}}} $$
+                </div>
+                <p style="color:var(--muted); font-size:0.9rem; margin-top:-10px; margin-bottom:15px;">حيث $\rho_{\text{eau}}$ هي الكتلة الحجمية للماء النقي وتساوي دائماً $1 g/cm^3$ (أو $1 kg/L$).</p>
+            </div>
+
+            <!-- Concept 3: Flottabilité -->
+            <div class="sec-title">
+                <span class="sec-icon">⚓</span>
+                <h2>3. الطفو والغوص (Flottabilité)</h2>
+                <hr class="sec-line">
+            </div>
+            <p>تسمح لنا الكثافة بمعرفة ما إذا كان الجسم سيطفو فوق الماء أم يغوص فيه بمقارنة كثافته مع كثافة الماء ($d_{\text{eau}} = 1$).</p>
+
+            <table class="info-table">
+                <tr>
+                    <th>المقارنة مع 1</th>
+                    <th>حالة الجسم في الماء</th>
+                    <th>مثال</th>
+                </tr>
+                <tr>
+                    <td dir="ltr" class="amiri" style="color: var(--accent2);">$ d < 1 $</td>
+                    <td style="color: var(--green); font-weight: bold;">يَطْفُو (Flotte)</td>
+                    <td>الخشب، الفلين، الزيت</td>
+                </tr>
+                <tr>
+                    <td dir="ltr" class="amiri" style="color: var(--red);">$ d > 1 $</td>
+                    <td style="color: var(--red); font-weight: bold;">يَغُوص (Coule)</td>
+                    <td>الحديد، النحاس، الحجر</td>
+                </tr>
+            </table>
+
+            <figure class="diagram-figure">
+                <figcaption class="fig-title">شكل (3) — سلوك الأجسام المختلفة في الماء حسب كثافتها</figcaption>
+                <div class="diagram-wrap">
+                    <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" class="lesson-diagram">
+                        <!-- Tank -->
+                        <g transform="translate(100, 20)">
+                            <rect x="0" y="0" width="300" height="180" rx="10" fill="rgba(255,255,255,0.05)" stroke="url(#glassScale)" stroke-width="3"/>
+                            <!-- Water -->
+                            <path d="M 3 60 L 297 60 L 297 170 A 7 7 0 0 1 290 177 L 10 177 A 7 7 0 0 1 3 170 Z" fill="url(#waterGrad)"/>
+                            <line x1="3" y1="60" x2="297" y2="60" stroke="#7dd3fc" stroke-width="2"/>
+                            
+                            <!-- Wood (Floating) -->
+                            <rect x="40" y="45" width="50" height="30" fill="url(#cubeGradWood)" stroke="#f59e0b" stroke-width="2" rx="2" filter="url(#shadow)"/>
+                            <text x="65" y="40" font-family="Cairo" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="middle">خشب ($d<1$)</text>
+
+                            <!-- Iron (Sinking) -->
+                            <circle cx="250" cy="155" r="15" fill="#64748b" stroke="#cbd5e1" stroke-width="2" filter="url(#shadow)"/>
+                            <text x="250" y="130" font-family="Cairo" font-size="12" fill="#fff" text-anchor="middle" dominant-baseline="middle">حديد ($d>1$)</text>
+                            
+                            <!-- Water line label -->
+                            <text x="150" y="80" font-family="Cairo" font-size="14" fill="#0284c7" text-anchor="middle" dominant-baseline="middle">ماء ($d=1$)</text>
+                        </g>
+                    </svg>
+                </div>
+            </figure>
+
+        </div>
+
+        <div id="tab-sim" class="tab-content">
+            
+            <!-- Simulation 1: Density and Flotation -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 1: تغيير الكتلة والحجم (الطفو والغوص)</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي <strong>تأثير كل من الكتلة والحجم على الطفو</strong>. حرّك <strong>شريطي الكتلة والحجم</strong> لترى كيف تتغير الكتلة الحجمية $\rho$ ويستجيب الجسم بالطفو أو الغوص.</p>
+                </div>
+                
+                <div class="canvas-container">
+                    <canvas id="simCanvas1"></canvas>
+                </div>
+                
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>الكتلة $m$ (g): <span id="val-m" class="val-badge">50</span></label>
+                        <input type="range" id="slider-m" min="10" max="200" value="50">
+                    </div>
+                    <div class="control-group">
+                        <label>الحجم $V$ (cm³): <span id="val-v" class="val-badge">100</span></label>
+                        <input type="range" id="slider-v" min="20" max="200" value="100">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Volume Displacement -->
+            <div class="sim-wrap">
+                <div class="sim-head">
+                    <h3 class="sim-title">المحاكاة 2: قياس الحجم بالغمر لحساب $\rho$</h3>
+                    <span class="sim-badge">تفاعلي</span>
+                </div>
+                <div class="sim-description">
+                    <p>يوضّح هذا المحاكي <strong>طريقة الغمر لقياس حجم جسم غير منتظم</strong> تمهيداً لحساب كتلته الحجمية. حرّك شريط <strong>حجم الحجر</strong> لترى كيف يرتفع مستوى الماء.</p>
+                </div>
+                
+                <div class="canvas-container">
+                    <canvas id="simCanvas2"></canvas>
+                </div>
+                
+                <div class="sim-controls" style="justify-content: center;">
+                    <div class="control-group" style="max-width: 400px;">
+                        <label>حجم الحجر المُسقَط (cm³): <span id="val-stone" class="val-badge">0</span></label>
+                        <input type="range" id="slider-stone" min="0" max="60" value="0">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="tab-exercises" class="tab-content">
+            <div id="quiz-container">
+                <!-- MCQ 1 -->
+                <div class="q-card" data-correct="1">
+                    <div class="q-num">السؤال 1</div>
+                    <div class="q-text">ما هي العلاقة الرياضية الصحيحة لحساب الكتلة الحجمية $\rho$؟</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">$\rho = m \times V$</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">$\rho = \frac{m}{V}$</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">$\rho = \frac{V}{m}$</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> الكتلة الحجمية هي حاصل قسمة الكتلة (m) على الحجم (V).</div>
+                </div>
+
+                <!-- MCQ 2 -->
+                <div class="q-card" data-correct="2">
+                    <div class="q-num">السؤال 2</div>
+                    <div class="q-text">الوحدة العملية المتداولة للكتلة الحجمية للأجسام الصغيرة في المخبر هي:</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">$kg/cm^3$</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">$g$ (الغرام)</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">$g/cm^3$</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> الكتلة تُقاس بـ g والحجم بـ $cm^3$، إذن الوحدة هي $g/cm^3$.</div>
+                </div>
+
+                <!-- MCQ 3 -->
+                <div class="q-card" data-correct="0">
+                    <div class="q-num">السؤال 3</div>
+                    <div class="q-text">جسم صلب كتلته $m = 40g$ وحجمه $V = 10cm^3$. ما هي كتلته الحجمية؟</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">$4 \ g/cm^3$</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">$50 \ g/cm^3$</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">$0.25 \ g/cm^3$</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> بتطبيق القانون: $\rho = \frac{40}{10} = 4 \ g/cm^3$.</div>
+                </div>
+
+                <!-- MCQ 4 -->
+                <div class="q-card" data-correct="1">
+                    <div class="q-num">السؤال 4</div>
+                    <div class="q-text">ما هي خاصية الكثافة ($d$)؟</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">وحدتها هي $g/cm^3$</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">هي مقدار فيزيائي بدون وحدة</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">تُحسب بضرب الكتلة في الحجم</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> الكثافة ناتجة عن قسمة مقدارين لهما نفس الوحدة (كتلة حجمية على كتلة حجمية)، لذا فهي بدون وحدة.</div>
+                </div>
+
+                <!-- MCQ 5 -->
+                <div class="q-card" data-correct="0">
+                    <div class="q-num">السؤال 5</div>
+                    <div class="q-text">يطفو الجسم فوق سطح الماء إذا كانت كثافته ($d$):</div>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">أصغر من 1 ($d < 1$)</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">أكبر من 1 ($d > 1$)</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">تساوي 1 ($d = 1$)</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> الأجسام الأقل كثافة من الماء (مثل الزيت والخشب) تطفو فوقه.</div>
+                </div>
+
+                <!-- Diagram Question -->
+                <div class="q-card q-diagram-type" data-correct="2">
+                    <div class="q-num">السؤال 6 (تفاعلي)</div>
+                    <div class="q-text">تأمل الرسم أدناه الذي يمثل ثلاث كرات (A, B, C) موضوعة في حوض ماء. أي الكرات كثافتها أكبر من 1 ($d > 1$)؟</div>
+                    <svg viewBox="0 0 300 150" style="width:100%; max-width:300px; display:block; margin: 0 auto 15px; background:var(--dark); border-radius:8px; border:1px solid var(--border);">
+                        <!-- Tank -->
+                        <rect x="50" y="20" width="200" height="110" rx="5" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+                        <!-- Water -->
+                        <path d="M 52 60 L 248 60 L 248 128 A 2 2 0 0 1 246 130 L 54 130 A 2 2 0 0 1 52 128 Z" fill="rgba(14, 165, 233, 0.4)"/>
+                        
+                        <!-- Ball A (Floating high) -->
+                        <circle cx="90" cy="50" r="15" fill="#f59e0b"/>
+                        <text x="90" y="55" font-family="Arial" font-size="14" fill="#000" text-anchor="middle">A</text>
+                        
+                        <!-- Ball B (Suspended/Floating level) -->
+                        <circle cx="150" cy="90" r="15" fill="#22c55e"/>
+                        <text x="150" y="95" font-family="Arial" font-size="14" fill="#000" text-anchor="middle">B</text>
+                        
+                        <!-- Ball C (Sunken) -->
+                        <circle cx="210" cy="115" r="15" fill="#ef4444"/>
+                        <text x="210" y="120" font-family="Arial" font-size="14" fill="#000" text-anchor="middle">C</text>
+                    </svg>
+                    <div class="q-options">
+                        <div class="q-option" onclick="selectOption(this, 0)">الكرة A فقط</div>
+                        <div class="q-option" onclick="selectOption(this, 1)">الكرة B فقط</div>
+                        <div class="q-option" onclick="selectOption(this, 2)">الكرة C فقط</div>
+                    </div>
+                    <div class="q-feedback"><strong>شرح:</strong> الكرة C تغوص في القاع، مما يعني أن كثافتها أكبر من كثافة الماء ($d > 1$). الكرات التي تطفو كثافتها أقل من أو تساوي 1.</div>
+                </div>
+
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="action-btn" onclick="checkAnswers()" style="font-size: 1.2rem; padding: 12px 30px;">إظهار النتيجة النهائية</button>
+            </div>
+            <div id="quiz-score" style="text-align: center; margin-top: 20px; font-size: 1.5rem; font-weight: bold; color: var(--accent); display: none;"></div>
+        </div>
+
+        <div id="tab-summary" class="tab-content">
+            <div class="summary-card">
+                
+                <div class="summary-header">
+                    <div class="summary-meta">السنة الأولى متوسط | المادة وتحولاتها | الدرس 05</div>
+                    <h2 class="summary-title">ملخص: الكتلة الحجمية والكثافة</h2>
+                    <div class="summary-subtitle">الفيزياء السهلة — منهاج الجيل الثاني</div>
+                </div>
+
+                <div class="concept-map-wrap">
+    <h3 class="summary-section-title">🗺️ خريطة المفاهيم</h3>
+    <svg viewBox="0 0 620 300" style="width: 100%; max-width: 600px; display: block; margin: auto;">
+        <!-- Main Node -->
+        <rect x="150" y="10" width="300" height="40" rx="8" fill="var(--accent)" />
+        <text x="300" y="35" fill="#fff" font-family="Cairo" font-size="16" font-weight="bold" text-anchor="middle">مفاهيم مرتبطة بكتلة وحجم المادة</text>
+        
+        <path d="M300 50 L300 80 M300 80 L150 80 L150 110 M300 80 L450 80 L450 110" stroke="var(--border)" stroke-width="2" fill="none"/>
+        
+        <!-- Left Node: Density Vol -->
+        <rect x="70" y="110" width="160" height="40" rx="8" fill="var(--dark3)" stroke="var(--accent)" stroke-width="1"/>
+        <text x="150" y="135" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle">الكتلة الحجمية (ρ)</text>
+        <path d="M150 150 L150 180" stroke="var(--border)" stroke-width="2" />
+        <rect x="50" y="180" width="200" height="40" rx="8" fill="rgba(20, 184, 166, 0.1)" stroke="var(--accent2)" stroke-width="1"/>
+        <text x="150" y="205" fill="var(--accent2)" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" direction="ltr">ρ = m / V</text>
+
+        <!-- Right Node: Density Rel -->
+        <rect x="370" y="110" width="160" height="40" rx="8" fill="var(--dark3)" stroke="var(--accent)" stroke-width="1"/>
+        <text x="450" y="135" fill="#fff" font-family="Cairo" font-size="14" text-anchor="middle">الكثافة (d)</text>
+        <path d="M450 150 L450 170 M450 170 L350 170 L350 190 M450 170 L550 170 L550 190" stroke="var(--border)" stroke-width="2" fill="none"/>
+        
+        <!-- Bottom Right Leaves -->
+        <rect x="290" y="190" width="120" height="40" rx="8" fill="rgba(34, 197, 94, 0.1)" stroke="var(--green)" stroke-width="1"/>
+        <text x="350" y="215" fill="var(--green)" font-family="Cairo" font-size="14" text-anchor="middle">يطفو (d &lt; 1)</text>
+        
+        <rect x="490" y="190" width="120" height="40" rx="8" fill="rgba(239, 68, 68, 0.1)" stroke="var(--red)" stroke-width="1"/>
+        <text x="550" y="215" fill="var(--red)" font-family="Cairo" font-size="14" text-anchor="middle">يغوص (d &gt; 1)</text>
+    </svg>
+</div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">📚 التعاريف الجوهرية</h3>
+                    <div class="s-def-item">
+                        <span class="s-def-term">الكتلة الحجمية ($\rho$):</span> مقدار فيزيائي مميز للمادة يمثل كتلة وحدة الحجم. وحدتها ($g/cm^3$).
+                    </div>
+                    <div class="s-def-item">
+                        <span class="s-def-term">الكثافة ($d$):</span> نسبة الكتلة الحجمية للمادة إلى الكتلة الحجمية للماء. وهي <strong>بدون وحدة</strong>.
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">⚡ القوانين والعلاقات الرياضية</h3>
+                    <table class="info-table" style="background: transparent;">
+                        <tr>
+                            <td style="text-align: right; border:none; padding:10px;">الكتلة الحجمية:</td>
+                            <td style="border:none; text-align: left; font-size:1.4rem; color: var(--accent2);">$$ \rho = \frac{m}{V} $$</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right; border:none; padding:10px;">الكثافة:</td>
+                            <td style="border:none; text-align: left; font-size:1.4rem; color: var(--accent2);">$$ d = \frac{\rho}{\rho_{\text{eau}}} $$</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="summary-section">
+                    <h3 class="summary-section-title">✅ أهم ما يجب حفظه</h3>
+                    <ul class="summary-list">
+                        <li>الكتلة الحجمية للماء النقي ثابتة وتساوي: $\rho_{\text{eau}} = 1 \ g/cm^3$.</li>
+                        <li>الجسم <strong>يطفو</strong> إذا كانت كثافته <strong>أقل من 1</strong> ($d < 1$).</li>
+                        <li>الجسم <strong>يغوص</strong> إذا كانت كثافته <strong>أكبر من 1</strong> ($d > 1$).</li>
+                    </ul>
+                </div>
+
+                <button class="print-btn" onclick="window.print()">🖨️ طباعة الملخص</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // 1. Mandatory Tab Switcher Logic
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+
+            if (tabId === 'tab-sim') {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof drawSim1 === 'function') drawSim1();
+                    if (typeof drawSim2 === 'function') drawSim2(); 
+                }, 50);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tab-sim') && document.getElementById('tab-sim').classList.contains('active')) {
+                setTimeout(() => {
+                    if (typeof resizeCanvas === 'function') resizeCanvas();
+                    if (typeof drawSim1 === 'function') drawSim1();
+                    if (typeof drawSim2 === 'function') drawSim2(); 
+                }, 50);
+            }
+        });
+
+        // 2. Mandatory Canvas Setup
+        const canvas1 = document.getElementById('simCanvas1');
+        const ctx1 = canvas1.getContext('2d');
+        const canvas2 = document.getElementById('simCanvas2');
+        const ctx2 = canvas2.getContext('2d');
+
+        function resizeCanvas() {
+            [canvas1, canvas2].forEach(cvs => {
+                if(!cvs) return;
+                const container = cvs.parentElement;
+                if (container.clientWidth === 0) return;
+                
+                const dpr = window.devicePixelRatio || 1;
+                cvs.width  = container.clientWidth  * dpr;
+                cvs.height = container.clientHeight * dpr;
+                cvs.style.width  = container.clientWidth  + 'px';
+                cvs.style.height = container.clientHeight + 'px';
+                
+                const ctx = cvs.getContext('2d');
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            });
+        }
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            drawSim1();
+            drawSim2();
+        });
+
+        // 3. Sim 1 Logic (Density and Flotation)
+        const sliderM = document.getElementById('slider-m');
+        const sliderV = document.getElementById('slider-v');
+        const valM = document.getElementById('val-m');
+        const valV = document.getElementById('val-v');
+
+        sliderM.addEventListener('input', () => { valM.textContent = sliderM.value; drawSim1(); });
+        sliderV.addEventListener('input', () => { valV.textContent = sliderV.value; drawSim1(); });
+
+        function drawSim1() {
+            if (canvas1.width === 0) return;
+            // Mandatory ClearRect
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+
+            const m = parseFloat(sliderM.value);
+            const v = parseFloat(sliderV.value);
+            const rho = m / v;
+
+            const w = canvas1.clientWidth;
+            const h = canvas1.clientHeight;
+            const tankW = 200;
+            const tankH = 200;
+            const tankX = (w - tankW) / 2;
+            const tankY = (h - tankH) / 2 + 20;
+            const waterLevelY = tankY + 50;
+
+            // Draw Tank Back
+            ctx1.fillStyle = 'rgba(255,255,255,0.02)';
+            ctx1.fillRect(tankX, tankY, tankW, tankH);
+
+            // Draw Water
+            const waterGrad = ctx1.createLinearGradient(0, waterLevelY, 0, tankY + tankH);
+            waterGrad.addColorStop(0, 'rgba(14, 165, 233, 0.3)');
+            waterGrad.addColorStop(1, 'rgba(14, 165, 233, 0.6)');
+            ctx1.fillStyle = waterGrad;
+            ctx1.fillRect(tankX, waterLevelY, tankW, tankH - 50);
+            
+            // Water Surface Line
+            ctx1.strokeStyle = 'rgba(14, 165, 233, 0.8)';
+            ctx1.lineWidth = 2;
+            ctx1.beginPath();
+            ctx1.moveTo(tankX, waterLevelY);
+            ctx1.lineTo(tankX + tankW, waterLevelY);
+            ctx1.stroke();
+
+            // Calculate Object Size (visual representation based on Volume)
+            // Range of V is 20 to 200. Map to pixel size 40 to 100.
+            const objSize = 40 + ((v - 20) / 180) * 60;
+            const objX = tankX + (tankW - objSize) / 2;
+            let objY;
+
+            // Physics logic for position
+            if (rho < 1) {
+                // Floating: submerged portion = rho * volume
+                const submergedRatio = rho; 
+                const submergedPx = objSize * submergedRatio;
+                objY = waterLevelY - objSize + submergedPx;
+                ctx1.fillStyle = '#f59e0b'; // Wood color
+            } else if (rho > 1) {
+                // Sinking
+                objY = tankY + tankH - objSize;
+                ctx1.fillStyle = '#64748b'; // Iron color
+            } else {
+                // Suspended
+                objY = waterLevelY + 20;
+                ctx1.fillStyle = '#2dd4bf';
+            }
+
+            // Draw Object
+            ctx1.shadowColor = 'rgba(0,0,0,0.5)';
+            ctx1.shadowBlur = 10;
+            ctx1.shadowOffsetY = 5;
+            ctx1.fillRect(objX, objY, objSize, objSize);
+            ctx1.shadowColor = 'transparent'; // reset
+            
+            ctx1.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx1.lineWidth = 2;
+            ctx1.strokeRect(objX, objY, objSize, objSize);
+
+            // Draw Text Status
+            ctx1.fillStyle = '#fff';
+            ctx1.font = 'bold 16px Cairo';
+            ctx1.textAlign = 'center';
+            let status = rho < 1 ? "يطفو" : (rho > 1 ? "يغوص" : "عالق");
+            ctx1.fillText(`الكتلة الحجمية: ${rho.toFixed(2)} g/cm³ (${status})`, w / 2, 30);
+
+            // Draw Tank Front Frame
+            ctx1.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx1.lineWidth = 4;
+            ctx1.strokeRect(tankX, tankY, tankW, tankH);
+        }
+
+        // 4. Sim 2 Logic (Volume Displacement)
+        const sliderStone = document.getElementById('slider-stone');
+        const valStone = document.getElementById('val-stone');
+        
+        sliderStone.addEventListener('input', () => { valStone.textContent = sliderStone.value; drawSim2(); });
+
+        function drawSim2() {
+            if (canvas2.width === 0) return;
+            // Mandatory ClearRect
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+            const vStone = parseFloat(sliderStone.value);
+            const w = canvas2.clientWidth;
+            const h = canvas2.clientHeight;
+            
+            const cylW = 80;
+            const cylH = 220;
+            const cx = w / 2;
+            const cy = h - 40; // Base of cylinder
+            
+            // Base volume = 50cm3. Max extra = 60cm3. Total max = 110cm3.
+            // Map 110cm3 to cylH - 20 pixels.
+            const pxPerVol = (cylH - 30) / 120; 
+            const v1 = 50;
+            const currentVol = v1 + vStone;
+            const liqTopY = cy - (currentVol * pxPerVol);
+            const baseLiqTopY = cy - (v1 * pxPerVol);
+
+            // Draw Cylinder Back
+            ctx2.fillStyle = 'rgba(255,255,255,0.03)';
+            ctx2.beginPath();
+            ctx2.roundRect(cx - cylW/2, cy - cylH, cylW, cylH, 8);
+            ctx2.fill();
+
+            // Draw Water
+            ctx2.fillStyle = 'rgba(14, 165, 233, 0.5)';
+            ctx2.beginPath();
+            ctx2.roundRect(cx - cylW/2 + 2, liqTopY, cylW - 4, cy - liqTopY, 5);
+            ctx2.fill();
+
+            // Draw Stone if dropped
+            if(vStone > 0) {
+                // Stone size depends on volume
+                const stoneR = 10 + (vStone/60) * 15;
+                ctx2.fillStyle = '#64748b';
+                ctx2.beginPath();
+                ctx2.arc(cx, cy - stoneR - 5, stoneR, 0, Math.PI*2);
+                ctx2.fill();
+                
+                // Add some detail to stone
+                ctx2.fillStyle = '#475569';
+                ctx2.beginPath();
+                ctx2.arc(cx - stoneR/3, cy - stoneR - 5 - stoneR/3, stoneR/3, 0, Math.PI*2);
+                ctx2.fill();
+            }
+
+            // Draw Cylinder Outline
+            ctx2.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx2.lineWidth = 3;
+            ctx2.beginPath();
+            ctx2.roundRect(cx - cylW/2, cy - cylH, cylW, cylH, 8);
+            ctx2.stroke();
+
+            // Ticks & Labels
+            ctx2.fillStyle = '#fff';
+            ctx2.font = '16px Cairo';
+            ctx2.textAlign = 'right';
+            
+            // Initial V1 line
+            ctx2.strokeStyle = 'rgba(255,255,255,0.5)';
+            ctx2.setLineDash([5, 5]);
+            ctx2.beginPath();
+            ctx2.moveTo(cx - cylW/2 - 20, baseLiqTopY);
+            ctx2.lineTo(cx + cylW/2, baseLiqTopY);
+            ctx2.stroke();
+            ctx2.setLineDash([]);
+            ctx2.fillText(`V₁=50`, cx - cylW/2 - 25, baseLiqTopY + 5);
+
+            if(vStone > 0) {
+                // Current V2 line
+                ctx2.strokeStyle = 'var(--red)';
+                ctx2.beginPath();
+                ctx2.moveTo(cx + cylW/2, liqTopY);
+                ctx2.lineTo(cx + cylW/2 + 20, liqTopY);
+                ctx2.stroke();
+                
+                ctx2.textAlign = 'left';
+                ctx2.fillStyle = 'var(--red)';
+                ctx2.fillText(`V₂=${currentVol}`, cx + cylW/2 + 25, liqTopY + 5);
+
+                // Math formula
+                ctx2.fillStyle = 'var(--accent)';
+                ctx2.textAlign = 'center';
+                ctx2.font = 'bold 18px Cairo';
+                ctx2.fillText(`حجم الحجر = V₂ - V₁ = ${vStone} cm³`, cx, 30);
+            } else {
+                ctx2.fillStyle = 'var(--muted)';
+                ctx2.textAlign = 'center';
+                ctx2.fillText(`اسحب الشريط لإسقاط الحجر في الماء`, cx, 30);
+            }
+        }
+
+        // 5. Quiz Logic
+        let userAnswers = {};
+
+        function selectOption(elem, index) {
+            const card = elem.closest('.q-card');
+            const qIndex = Array.from(document.querySelectorAll('.q-card')).indexOf(card);
+            
+            card.querySelectorAll('.q-option').forEach(opt => opt.classList.remove('selected'));
+            elem.classList.add('selected');
+            userAnswers[qIndex] = index;
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            const cards = document.querySelectorAll('.q-card');
+            
+            cards.forEach((card, index) => {
+                const correctIndex = parseInt(card.getAttribute('data-correct'));
+                const options = card.querySelectorAll('.q-option');
+                const feedback = card.querySelector('.q-feedback');
+                
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'wrong');
+                    opt.style.pointerEvents = 'none'; 
+                });
+
+                if (userAnswers[index] === correctIndex) {
+                    score++;
+                    options[correctIndex].classList.add('correct');
+                    feedback.style.borderRight = "4px solid var(--green)";
+                } else {
+                    if(userAnswers[index] !== undefined) {
+                        options[userAnswers[index]].classList.add('wrong');
+                    }
+                    options[correctIndex].classList.add('correct');
+                    feedback.style.borderRight = "4px solid var(--red)";
+                }
+                
+                feedback.classList.add('show');
+            });
+
+            const scoreDiv = document.getElementById('quiz-score');
+            scoreDiv.style.display = 'block';
+            scoreDiv.innerHTML = `النتيجة: ${score} من ${cards.length}`;
+            scoreDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+    
+    <!-- تدقيق ذاتي: عدد المفاهيم الأساسية = 3 | عدد رسوم SVG في الدرس النظري = 3 | عدد المحاكيات = 2 -->
+    <script src="credit.js"></script>
+</body>
+</html>
